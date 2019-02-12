@@ -3,7 +3,7 @@ wp-content/backup/*
 wp-content/cache/*
 wp-content/upgrade/*
 # wp-content/uploads/*
-sitemap.*
+# sitemap.*
 wp-config.php
 
 # Hidden system files
