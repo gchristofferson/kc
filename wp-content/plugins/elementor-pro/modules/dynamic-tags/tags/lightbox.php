@@ -5,6 +5,7 @@ use Elementor\Core\DynamicTags\Tag;
 use ElementorPro\Modules\DynamicTags\Module;
 use Elementor\Controls_Manager;
 use Elementor\Embed;
+use ElementorPro\Modules\LinkActions\Module as LinkActionsModule;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -107,22 +108,23 @@ class Lightbox extends Tag {
 
 	public function render() {
 		$settings = $this->get_settings();
-		$value = '';
-		if ( empty( $settings['type'] ) ) {
-			return $value;
+
+		$value = [];
+
+		if ( ! $settings['type'] ) {
+			return;
 		}
 
-		if ( 'image' === $settings['type'] && ! empty( $settings['image'] ) ) {
+		if ( 'image' === $settings['type'] && $settings['image'] ) {
 			$value = $this->get_image_settings( $settings );
-		} elseif ( 'video' === $settings['type'] && ! empty( $settings['video_url'] ) ) {
+		} elseif ( 'video' === $settings['type'] && $settings['video_url'] ) {
 			$value = $this->get_video_settings( $settings );
 		}
 
-		if ( empty( $value ) ) {
-			return $value;
+		if ( ! $value ) {
+			return;
 		}
 
-		$trigger = '!#elementor-lightbox|' . wp_json_encode( $value );
-		echo esc_attr( $trigger );
+		echo LinkActionsModule::create_action_url( 'lightbox', $value );
 	}
 }

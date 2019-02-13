@@ -37,6 +37,11 @@ class Child_Of extends Condition_Base {
 	}
 
 	protected function _register_controls() {
+		$hierarchical_post_types = get_post_types( [
+			'hierarchical' => true,
+			'public' => true,
+		] );
+
 		$this->add_control(
 			'parent_id',
 			[
@@ -46,7 +51,11 @@ class Child_Of extends Condition_Base {
 					'dropdownCssClass' => 'elementor-conditions-select2-dropdown',
 				],
 				'filter_type' => 'post',
-				'object_type' => 'page',
+				'object_type' => '',
+				'include_type' => '',
+				'query' => [
+					'post_type' => array_keys( $hierarchical_post_types ),
+				],
 			]
 		);
 	}

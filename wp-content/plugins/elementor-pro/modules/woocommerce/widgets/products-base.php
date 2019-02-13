@@ -441,7 +441,7 @@ abstract class Products_Base extends Widget_Base {
 				'label' => __( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}}..elementor-wc-products ul.products li.product .button:hover' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}}.elementor-wc-products ul.products li.product .button:hover' => 'border-color: {{VALUE}};',
 				],
 			]
 		);

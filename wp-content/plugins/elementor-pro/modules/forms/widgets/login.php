@@ -564,8 +564,6 @@ class Login extends Base_Widget {
 		$this->add_group_control(
 			Group_Control_Border::get_type(), [
 				'name' => 'button_border',
-				'placeholder' => '1px',
-				'default' => '1px',
 				'selector' => '{{WRAPPER}} .elementor-button',
 				'separator' => 'before',
 			]

@@ -11,6 +11,7 @@ use ElementorPro\Classes\Utils;
 use ElementorPro\Modules\Forms\Classes\Ajax_Handler;
 use ElementorPro\Modules\Forms\Classes\Form_Base;
 use ElementorPro\Modules\Forms\Module;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -1069,8 +1070,6 @@ class Form extends Form_Base {
 		$this->add_group_control(
 			Group_Control_Border::get_type(), [
 				'name' => 'button_border',
-				'placeholder' => '1px',
-				'default' => '1px',
 				'selector' => '{{WRAPPER}} .elementor-button',
 			]
 		);
@@ -1214,6 +1213,20 @@ class Form extends Form_Base {
 
 	protected function render() {
 		$instance = $this->get_settings_for_display();
+
+		if ( ! Plugin::elementor()->editor->is_edit_mode() ) {
+			/**
+			 * Elementor form Pre render.
+			 *
+			 * Fires before the from is rendered in the frontend
+			 *
+			 * @since 2.4.0
+			 *
+			 * @param array $instance current form settings
+			 * @param Form $this current form widget instance
+			 */
+			do_action( 'elementor-pro/forms/pre_render', $instance, $this );
+		}
 
 		$this->add_render_attribute(
 			[
@@ -1383,7 +1396,10 @@ class Form extends Form_Base {
 						<span <?php echo $this->get_render_attribute_string( 'content-wrapper' ); ?>>
 							<?php if ( ! empty( $instance['button_icon'] ) ) : ?>
 								<span <?php echo $this->get_render_attribute_string( 'icon-align' ); ?>>
-									<i class="<?php echo esc_attr( $instance['button_icon'] ); ?>"></i>
+									<i class="<?php echo esc_attr( $instance['button_icon'] ); ?>" aria-hidden="true"></i>
+									<?php if ( empty( $instance['button_text'] ) ) : ?>
+										<span class="elementor-screen-only"><?php _e( 'Submit', 'elementor-pro' ); ?></span>
+									<?php endif; ?>
 								</span>
 							<?php endif; ?>
 							<?php if ( ! empty( $instance['button_text'] ) ) : ?>
@@ -1398,6 +1414,7 @@ class Form extends Form_Base {
 	}
 
 	protected function _content_template() {
+		$submit_text = esc_html__( 'Submit', 'elementor-pro' );
 		?>
 		<form class="elementor-form" id="{{settings.form_id}}" name="{{settings.form_name}}">
 			<div class="elementor-form-fields-wrapper elementor-labels-{{settings.label_position}}">
@@ -1574,7 +1591,8 @@ class Form extends Form_Base {
 							<span>
 								<# if ( settings.button_icon ) { #>
 									<span class="elementor-button-icon elementor-align-icon-{{ settings.button_icon_align }}">
-										<i class="{{ settings.button_icon }}"></i>
+										<i class="{{ settings.button_icon }}" aria-hidden="true"></i>
+										<span class="elementor-screen-only"><?php echo $submit_text; ?></span>
 									</span>
 								<# } #>
 

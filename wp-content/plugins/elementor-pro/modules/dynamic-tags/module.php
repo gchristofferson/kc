@@ -84,6 +84,7 @@ class Module extends TagsModule {
 			'Featured_Image_Data',
 			'Shortcode',
 			'Contact_URL',
+			'User_Info',
 		];
 	}
 

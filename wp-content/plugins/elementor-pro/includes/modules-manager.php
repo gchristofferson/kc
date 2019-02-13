@@ -44,6 +44,8 @@ final class Manager {
 			'dynamic-tags',
 			'sticky',
 			'wp-cli',
+			'link-actions',
+			'popup',
 		];
 
 		foreach ( $modules as $module_name ) {

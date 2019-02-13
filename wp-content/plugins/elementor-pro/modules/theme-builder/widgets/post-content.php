@@ -37,8 +37,8 @@ class Post_Content extends Widget_Base {
 	}
 
 	public function show_in_panel() {
-		// TODO: Since Elementor 2.2.5, By default don't show. (but keep BC to show it in older versions.)
-		return version_compare( ELEMENTOR_VERSION, '2.2.5', '<' );
+		// By default don't show.
+		return false;
 	}
 
 	protected function _register_controls() {

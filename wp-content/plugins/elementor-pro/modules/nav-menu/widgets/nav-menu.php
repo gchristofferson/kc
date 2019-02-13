@@ -1119,6 +1119,7 @@ class Nav_Menu extends Widget_Base {
 		?>
 		<div <?php echo $this->get_render_attribute_string( 'menu-toggle' ); ?>>
 			<i class="eicon" aria-hidden="true"></i>
+			<span class="elementor-screen-only"><?php _e( 'Menu', 'elementor-pro' ); ?></span>
 		</div>
 		<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container"><?php echo $dropdown_menu_html; ?></nav>
 		<?php

@@ -1096,8 +1096,6 @@ class Price_Table extends Base_Widget {
 		$this->add_group_control(
 			Group_Control_Border::get_type(), [
 				'name' => 'button_border',
-				'placeholder' => '1px',
-				'default' => '1px',
 				'selector' => '{{WRAPPER}} .elementor-price-table__button',
 				'condition' => [
 					'button_text!' => '',
@@ -1412,6 +1410,10 @@ class Price_Table extends Base_Widget {
 
 			if ( ! empty( $settings['link']['is_external'] ) ) {
 				$this->add_render_attribute( 'button_text', 'target', '_blank' );
+			}
+
+			if ( $settings['link']['nofollow'] ) {
+				$this->add_render_attribute( 'button_text', 'rel', 'nofollow' );
 			}
 		}
 

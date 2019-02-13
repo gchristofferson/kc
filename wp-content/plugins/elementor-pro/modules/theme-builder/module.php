@@ -107,15 +107,17 @@ class Module extends Module_Base {
 
 		$settings = array_replace_recursive( $settings, [
 			'i18n' => [
+				'publish_settings' => __( 'Publish Settings', 'elementor-pro' ),
+				'conditions' => __( 'Conditions', 'elementor-pro' ),
 				'display_conditions' => __( 'Display Conditions', 'elementor-pro' ),
 				'choose' => __( 'Choose', 'elementor-pro' ),
 				'add_condition' => __( 'Add Condition', 'elementor-pro' ),
-				'save_without_conditions' => __( 'Save Without Conditions', 'elementor-pro' ),
 				'conditions_title' => sprintf( __( 'Where Do You Want to Display Your %s?', 'elementor-pro' ), $document::get_title() ),
 				'conditions_description' => sprintf( __( 'Set the conditions that determine where your %s is used throughout your site.<br />For example, choose \'Entire Site\' to display the template across your site.', 'elementor-pro' ), $document::get_title() ),
+				'conditions_publish_screen_description' => __( 'Apply current template to these pages.', 'elementor-pro' ),
+				'save_and_close' => __( 'Save & Close', 'elementor-pro' ),
 			],
 			'theme_builder' => [
-				'groups' => Plugin::elementor()->documents->get_groups(),
 				'types' => $types_manager->get_types_config(),
 				'conditions' => $conditions_manager->get_conditions_config(),
 				'template_conditions' => ( new Classes\Template_Conditions() )->get_config(),
@@ -154,7 +156,9 @@ class Module extends Module_Base {
 	}
 
 	public function print_location_field() {
-		$locations = $this->get_locations_manager()->get_locations_without_core();
+		$locations = $this->get_locations_manager()->get_locations( [
+			'public' => true,
+		] );
 
 		if ( empty( $locations ) ) {
 			return;
@@ -197,7 +201,7 @@ class Module extends Module_Base {
 				<?php echo __( 'Select Post Type', 'elementor-pro' ); ?>
 			</label>
 			<div class="elementor-form-field__select__wrapper">
-				<select id="elementor-new-template__form__post-type" class="elementor-form-field__select" name="<?php echo Single::SUB_TYPE_META_KEY; ?>">
+				<select id="elementor-new-template__form__post-type" class="elementor-form-field__select" name="<?php echo Single::REMOTE_CATEGORY_META_KEY; ?>">
 					<option value="">
 						<?php echo __( 'Select', 'elementor-pro' ); ?>...
 					</option>
@@ -259,6 +263,40 @@ class Module extends Module_Base {
 		Plugin::elementor()->common->add_template( __DIR__ . '/views/panel-template.php' );
 	}
 
+	public function add_finder_items( array $categories ) {
+		$categories['general']['items']['theme-builder'] = [
+			'title' => __( 'Theme Builder', 'elementor-pro' ),
+			'icon' => 'library-save',
+			'url' => $this->get_admin_templates_url(),
+			'keywords' => [ 'template', 'header', 'footer', 'single', 'archive', 'search', '404', 'library' ],
+		];
+
+		$categories['create']['items']['theme-template'] = [
+			'title' => __( 'Add New Theme Template', 'elementor-pro' ),
+			'icon' => 'plus-circle',
+			'url' => $this->get_admin_templates_url() . '#add_new',
+			'keywords' => [ 'template', 'theme', 'new', 'create' ],
+		];
+
+		return $categories;
+	}
+
+	/**
+	 * Add New item to admin menu.
+	 *
+	 * Fired by `admin_menu` action.
+	 *
+	 * @since 2.4.0
+	 * @access public
+	 */
+	public function admin_menu() {
+		add_submenu_page( Source_Local::ADMIN_MENU_SLUG, '', __( 'Theme Builder', 'elementor-pro' ), 'publish_posts', $this->get_admin_templates_url() );
+	}
+
+	private function get_admin_templates_url() {
+		return add_query_arg( 'tabs_group', 'theme', admin_url( Source_Local::ADMIN_MENU_SLUG ) );
+	}
+
 	public function __construct() {
 		parent::__construct();
 
@@ -278,9 +316,13 @@ class Module extends Module_Base {
 
 		// Admin
 		add_action( 'admin_head', [ $this, 'admin_head' ] );
+		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'manage_' . Source_Local::CPT . '_posts_custom_column', [ $this, 'admin_columns_content' ], 10, 2 );
 		add_action( 'elementor/template-library/create_new_dialog_fields', [ $this, 'print_location_field' ] );
 		add_action( 'elementor/template-library/create_new_dialog_fields', [ $this, 'print_post_type_field' ] );
 		add_filter( 'elementor/template-library/create_new_dialog_types', [ $this, 'create_new_dialog_types' ] );
+
+		// Common
+		add_filter( 'elementor/finder/categories', [ $this, 'add_finder_items' ] );
 	}
 }

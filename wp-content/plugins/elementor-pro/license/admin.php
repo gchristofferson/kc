@@ -69,7 +69,7 @@ class Admin {
 
 				<?php if ( ! empty( $button_text ) ) : ?>
 					<div class="elementor-message-action">
-						<a class="button elementor-button <?php echo $button_class; ?>" href="<?php echo esc_url( $button_url ); ?>"><?php echo $button_text; ?></a>
+						<a class="elementor-button <?php echo $button_class; ?>" href="<?php echo esc_url( $button_url ); ?>"><?php echo $button_text; ?></a>
 					</div>
 				<?php endif; ?>
 			</div>
@@ -193,7 +193,7 @@ class Admin {
 							<?php echo __( 'Activate Manually', 'elementor-pro' ); ?>
 						</a>
 
-						<a class="button button-primary elementor-connect-popup" href="<?php echo esc_url( $this->get_connect_url() ); ?>">
+						<a class="button button-primary" href="<?php echo esc_url( $this->get_connect_url() ); ?>">
 							<?php echo __( 'Connect & Activate', 'elementor-pro' ); ?>
 						</a>
 					</div>
@@ -237,11 +237,11 @@ class Admin {
 						$connected_user = $this->get_connected_account();
 
 						if ( $connected_user ) :?>
-							 <span>You're connected as <strong><?php echo $this->get_connected_account(); ?></strong>.
+							 <span><?php echo __( 'You\'re connected as', 'elementor-pro' ); ?> <strong><?php echo $this->get_connected_account(); ?></strong>.
 						<?php endif; ?>
 
 						<?php echo __( 'Want to activate this website by a different license?', 'elementor-pro' ); ?></span>
-						<a class="button button-primary elementor-connect-popup" href="<?php echo esc_url( $this->get_switch_license_url() ); ?>">
+						<a class="button button-primary" href="<?php echo esc_url( $this->get_switch_license_url() ); ?>">
 							<?php echo __( 'Switch Account', 'elementor-pro' ); ?>
 						</a>
 					</p>
@@ -249,7 +249,7 @@ class Admin {
 					<p class="e-row-stretch">
 						<span>Want to deactivate the license for any reason?</span>
 						<a class="button" href="<?php echo esc_url( $this->get_deactivate_url() ); ?>">
-							Disconnect
+							<?php echo __( 'Disconnect', 'elementor-pro' ); ?>
 						</a>
 					</p>
 				<?php endif; ?>
@@ -301,8 +301,8 @@ class Admin {
 					</div>
 
 					<div class="elementor-message-action">
-						<a class="button elementor-button elementor-connect-popup" href="<?php echo esc_url( $this->get_connect_url() ); ?>">
-							<i class="dashicons dashicons-update"></i>
+						<a class="elementor-button" href="<?php echo esc_url( $this->get_connect_url() ); ?>">
+							<i class="dashicons dashicons-update" aria-hidden="true"></i>
 							<?php echo __( 'Connect & Activate', 'elementor-pro' ); ?>
 						</a>
 						<a class="elementor-link" href="<?php echo $this->get_activate_manually_url(); ?>"><?php echo __( 'Activate Manually', 'elementor-pro' ); ?></a>
@@ -432,7 +432,7 @@ class Admin {
 					<?php _e( 'Activate Manually', 'elementor-pro' ); ?>
 					<?php if ( empty( $license_key ) ) : ?>
 						<small>
-							<a href="<?php echo $this->get_connect_url(); ?>" class="elementor-connect-link elementor-connect-popup">
+							<a href="<?php echo $this->get_connect_url(); ?>" class="elementor-connect-link">
 								<?php _e( 'Connect & Activate', 'elementor-pro' ); ?>
 							</a>
 						</small>

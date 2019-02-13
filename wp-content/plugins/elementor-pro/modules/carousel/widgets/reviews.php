@@ -702,7 +702,7 @@ class Reviews extends Base {
 
 		$this->add_render_attribute( 'icon_wrapper_' . $element_key, 'class', 'elementor-testimonial__icon elementor-icon' );
 
-		$icon = '<i class="' . $slide['social_icon'] . '"></i>';
+		$icon = '<i class="' . $slide['social_icon'] . '" aria-hidden="true"></i><span class="elementor-screen-only">' . esc_html__( 'Read More', 'elementor-pro' ) . '</span>';
 		$social = str_replace( 'fa fa-', '', $slide['social_icon'] );
 		$this->add_render_attribute( 'icon_wrapper_' . $element_key, 'class', 'elementor-icon-' . $social );
 

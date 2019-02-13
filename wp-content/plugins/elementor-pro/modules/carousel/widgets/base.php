@@ -489,10 +489,12 @@ abstract class Base extends Base_Widget {
 					<?php endif; ?>
 					<?php if ( $settings['show_arrows'] ) : ?>
 						<div class="elementor-swiper-button elementor-swiper-button-prev">
-							<i class="eicon-chevron-left"></i>
+							<i class="eicon-chevron-left" aria-hidden="true"></i>
+							<span class="elementor-screen-only"><?php _e( 'Previous', 'elementor-pro' ); ?></span>
 						</div>
 						<div class="elementor-swiper-button elementor-swiper-button-next">
-							<i class="eicon-chevron-right"></i>
+							<i class="eicon-chevron-right" aria-hidden="true"></i>
+							<span class="elementor-screen-only"><?php _e( 'Next', 'elementor-pro' ); ?></span>
 						</div>
 					<?php endif; ?>
 				<?php endif; ?>

@@ -47,6 +47,10 @@ class Singular extends Condition_Base {
 			$this->register_sub_condition( $condition );
 		}
 
+		$this->sub_conditions[] = 'child_of';
+
+		$this->sub_conditions[] = 'any_child_of';
+
 		$this->sub_conditions[] = 'by_author';
 
 		// Last condition.

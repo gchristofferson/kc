@@ -17,7 +17,7 @@ abstract class Theme_Document extends Library_Document {
 
 	public function get_location_label() {
 		$location = $this->get_location();
-		$locations_settings = Module::instance()->get_locations_manager()->get_locations( $location );
+		$locations_settings = Module::instance()->get_locations_manager()->get_location( $location );
 		$label = '';
 		$is_section_doc_type = 'section' === $this->get_name();
 
@@ -85,21 +85,21 @@ abstract class Theme_Document extends Library_Document {
 	public static function get_properties() {
 		$properties = parent::get_properties();
 
-		$properties['group'] = 'blocks';
+		$properties['admin_tab_group'] = 'theme';
 
 		return $properties;
 	}
 
-	public function get_container_classes() {
-		$classes = parent::get_container_classes();
-		$classes .= ' elementor-type-' . $this->get_name();
+	public function get_container_attributes() {
+		$attributes = parent::get_container_attributes();
 
 		$location = Module::instance()->get_locations_manager()->get_current_location();
+
 		if ( $location ) {
-			$classes .= ' elementor-location-' . $location;
+			$attributes['class'] .= ' elementor-location-' . $location;
 		}
 
-		return $classes;
+		return $attributes;
 	}
 
 	/**

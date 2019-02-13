@@ -1,5 +1,59 @@
 # Elementor Pro - by Elementor.com
 
+#### 2.4.4 - 2019-02-11
+Tweak: Added ACF Date Time Picker field support ([#6690](https://github.com/pojome/elementor/issues/6690))
+Tweak: Changed the term of `All Posts` condition to `Posts`
+Fix: Added `<IfModule>` to avoid 500 error when `mod-headers` is missing ([#7034](https://github.com/pojome/elementor/issues/7034))
+Fix: Include post CSS deletion in Global Widget update ([#6856](https://github.com/pojome/elementor/issues/6856))
+Fix: `Textarea` default value in Forms Widget ([#6934](https://github.com/pojome/elementor/issues/6934))
+Fix: MailPoet latest version caused fatal error ([#6996](https://github.com/pojome/elementor/issues/6996))
+Fix: Fatal Error caused by calling MailPoet deleted method
+Notice: MailPoet `Auto Confirm` option will now default to "On"
+
+#### 2.4.3 - 2019-01-30
+* Fix: Custom Add to Cart widget responsive alignment settings
+* Fix: Links in Post Info widget
+* Fix: WooCommerce `View Cart` string translate
+* Fix: Wrapper classes for header/footer templates ([#6884](https://github.com/pojome/elementor/issues/6884))
+
+#### 2.4.2 - 2019-01-25
+* Tweak: Added pixel units to Close Button position control in Popups
+* Fix: Exclude error in WC Products widget
+
+#### 2.4.1 - 2019-01-24
+* Tweak: Added CSS classes control to Popup ([#6826](https://github.com/pojome/elementor/issues/6826))
+* Tweak: Added responsive image size to Testimonial Carousel widget
+* Fix: PHP warning when Toolset Date dynamic is empty ([#6842](https://github.com/pojome/elementor/issues/6842))
+* Fix: Support of exclude-ids in WC Products widget
+* Fix: Popup close button not clickable
+* Fix: Alignment justify issue of Add to Cart widget ([#6749](https://github.com/pojome/elementor/issues/6749))
+* Fix: Bad anchors breaks the page JS
+* Fix: Popup overlay shown when turned off
+
+#### 2.4.0 - 2019-01-21
+* New: Introducing Popup Builder ([#628](https://github.com/pojome/elementor/issues/628))
+* New: Added `Popup` Dynamic Tag
+* New: Added `Popup` forms action after submit
+* New: Added User Info dynamic tag ([#6322](https://github.com/pojome/elementor/issues/6322))
+* Tweak: Added dynamic capabilities for "Nothing Found" message
+* Tweak: Added `elementor_pro/theme_builder/archive/escape_nothing_found_message` Filter to avoid HTML escaping in "Nothing Found" message ([#6053](https://github.com/pojome/elementor/issues/6053))
+* Tweak: Added `add_doc_to_location` method to Allow insertion of a document to a location
+* Fix: `z-index` issue with CTA widget ([#6486](https://github.com/pojome/elementor/issues/6486))
+* Fix: Hide the Post Content widget and show it only in a Single document
+* Fix: `selector` replacement in Custom CSS
+* Fix: Apply `the_content` on the real content only
+* Fix: CSS for WC products selector ([#6559](https://github.com/pojome/elementor/issues/6559))
+* Fix: Odnoklassniki share URL ([#6638](https://github.com/pojome/elementor/issues/6638))
+* Fix: Custom link new tab in Post Info widget ([#5766](https://github.com/pojome/elementor/issues/5766))
+* Fix: `nofollow` link in Flip Box & CTA widgets
+* Fix: Post Terms in Post Info widget
+* Fix: Added screen reader to some icons & buttons for better accessibility ([#5386](https://github.com/pojome/elementor/issues/5386))
+* Fix: Accessibility labels in Reviews widget ([#6630](https://github.com/pojome/elementor/issues/6630))
+* Fix: Link to cart page not working when WooCommerce Subscriptions is active
+* Fix: MailChimp Selected list not showing on reloading in Form widget
+* Fix: Sub-menu arrow position in Nav Menu widget
+* Fix: Conflict with WP Security Audit Log plugin ([#6648](https://github.com/pojome/elementor/issues/6648))
+
 #### 2.3.1 - 2018-12-19
 * Fix: Template widget search functionality ([#6473](https://github.com/pojome/elementor/issues/6473))
 * Fix: Apply `the_content` filter to post content in theme builder
@@ -218,11 +272,11 @@
 * Tweak: Added `is_scroll` trigger to scrolling effect ([#4340](https://github.com/pojome/elementor/issues/4340))
 * Tweak: Added In Same Term support for Post Navigation widget ([#4177](https://github.com/pojome/elementor/issues/4177))
 * Tweak: Added responsive control for Slides To Scroll control in all carousel widgets ([#3697](https://github.com/pojome/elementor/issues/3697))
+* Tweak: Added style options for Posts widget ([#1335](https://github.com/pojome/elementor/issues/1335))
 * Tweak: Added button CSS ID for Forms widget
 * Tweak: Added pixel units to Post-Info divider height control
 * Tweak: Rewrite sticky library to handle with stretch section, auto scroller & more bugs
 * Tweak: Re-organize the panel categories per document type
-* Tweak: Added style options for Posts widget
 * Tweak: Added ACF support for `options-page` fields
 * Tweak: Added dynamic tag for Animated headlines
 * Tweak: Added dynamic tag for BlockQuote widget

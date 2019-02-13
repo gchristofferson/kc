@@ -41,7 +41,7 @@ class Post extends Condition_Base {
 
 	public function get_all_label() {
 		/* translators: %s: Post type label. */
-		return sprintf( __( 'All %s', 'elementor-pro' ), $this->post_type->label );
+		return $this->post_type->label;
 	}
 
 	public function check( $args ) {
@@ -70,10 +70,6 @@ class Post extends Condition_Base {
 			}
 		}
 
-		if ( $this->post_type->hierarchical ) {
-			$this->register_sub_condition( new Child_Of() );
-			$this->register_sub_condition( new Any_Child_Of() );
-		}
 		$by_author = new Post_Type_By_Author( $this->post_type );
 		$this->register_sub_condition( $by_author );
 

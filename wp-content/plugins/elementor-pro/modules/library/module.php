@@ -47,7 +47,7 @@ class Module extends Module_Base {
 		return $settings;
 	}
 
-	public function get_autocomplete_for_library_widget_templates( $results, $data ) {
+	public function get_autocomplete_for_library_widget_templates( array $results, array $data ) {
 		$document_types = Plugin::elementor()->documents->get_document_types( [
 			'show_in_library' => true,
 		] );
@@ -127,7 +127,7 @@ class Module extends Module_Base {
 
 	public static function empty_templates_message() {
 		return '<div id="elementor-widget-template-empty-templates">
-				<div class="elementor-widget-template-empty-templates-icon"><i class="eicon-nerd"></i></div>
+				<div class="elementor-widget-template-empty-templates-icon"><i class="eicon-nerd" aria-hidden="true"></i></div>
 				<div class="elementor-widget-template-empty-templates-title">' . __( 'You Haven’t Saved Templates Yet.', 'elementor-pro' ) . '</div>
 				<div class="elementor-widget-template-empty-templates-footer">' . __( 'Want to learn more about Elementor library?', 'elementor-pro' ) . ' <a class="elementor-widget-template-empty-templates-footer-url" href="https://go.elementor.com/docs-library/" target="_blank">' . __( 'Click Here', 'elementor-pro' ) . '</a>
 				</div>

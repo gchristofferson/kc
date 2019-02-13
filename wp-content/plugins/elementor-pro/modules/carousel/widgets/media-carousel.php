@@ -326,7 +326,8 @@ class Media_Carousel extends Base {
 		<div <?php echo $this->get_render_attribute_string( $element_key . '-image' ); ?>>
 			<?php if ( 'video' === $slide['type'] && $settings['video_play_icon'] ) : ?>
 				<div class="elementor-custom-embed-play">
-					<i class="eicon-play"></i>
+					<i class="eicon-play" aria-hidden="true"></i>
+					<span class="elementor-screen-only"><?php _e( 'Play', 'elementor-pro' ); ?></span>
 				</div>
 			<?php endif; ?>
 		</div>

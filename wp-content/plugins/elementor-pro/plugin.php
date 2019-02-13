@@ -5,6 +5,7 @@ use ElementorPro\Core\Connect;
 use Elementor\Core\Responsive\Files\Frontend as FrontendFile;
 use Elementor\Core\Responsive\Responsive;
 use Elementor\Utils;
+use ElementorPro\Core\Upgrade\Manager as UpgradeManager;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -24,6 +25,11 @@ class Plugin {
 	 * @var Manager
 	 */
 	public $modules_manager;
+
+	/**
+	 * @var UpgradeManager
+	 */
+	public $upgrade;
 
 	private $classes_aliases = [
 		'ElementorPro\Modules\PanelPostsControl\Module' => 'ElementorPro\Modules\QueryControl\Module',
@@ -88,7 +94,6 @@ class Plugin {
 		require ELEMENTOR_PRO_PATH . 'includes/modules-manager.php';
 
 		if ( is_admin() ) {
-			require ELEMENTOR_PRO_PATH . 'includes/upgrades.php';
 			require ELEMENTOR_PRO_PATH . 'includes/admin.php';
 		}
 	}
@@ -166,7 +171,7 @@ class Plugin {
 			'elementor-pro-frontend',
 			ELEMENTOR_PRO_URL . 'assets/js/frontend' . $suffix . '.js',
 			[
-				'jquery',
+				'elementor-frontend-modules',
 				'elementor-sticky',
 			],
 			ELEMENTOR_PRO_VERSION,
@@ -204,6 +209,8 @@ class Plugin {
 			ELEMENTOR_PRO_URL . 'assets/js/editor' . $suffix . '.js',
 			[
 				'backbone-marionette',
+				'elementor-common-modules',
+				'elementor-editor-modules',
 			],
 			ELEMENTOR_PRO_VERSION,
 			true
@@ -224,6 +231,9 @@ class Plugin {
 		$locale_settings = [
 			'i18n' => [],
 			'isActive' => $is_license_active,
+			'urls' => [
+				'modules' => ELEMENTOR_PRO_MODULES_URL,
+			],
 		];
 
 		/**
@@ -308,6 +318,11 @@ class Plugin {
 	public function on_elementor_init() {
 		$this->modules_manager = new Manager();
 
+		/** TODO: BC for Elementor v2.4.0 */
+		if ( class_exists( '\Elementor\Core\Upgrade\Manager' ) ) {
+			$this->upgrade = UpgradeManager::instance();
+		}
+
 		/**
 		 * Elementor Pro init.
 		 *
@@ -355,7 +370,6 @@ class Plugin {
 		$this->setup_hooks();
 
 		if ( is_admin() ) {
-			new Upgrades();
 			new Admin();
 			new License\Admin();
 		}

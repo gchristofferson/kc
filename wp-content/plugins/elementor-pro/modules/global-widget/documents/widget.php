@@ -13,6 +13,7 @@ class Widget extends Library_Document {
 	public static function get_properties() {
 		$properties = parent::get_properties();
 
+		$properties['admin_tab_group'] = 'library';
 		$properties['show_in_library'] = false;
 		$properties['is_editable'] = false;
 

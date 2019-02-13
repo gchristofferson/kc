@@ -2,13 +2,9 @@
 namespace ElementorPro\Modules\Woocommerce\Widgets;
 
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Border;
-use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Scheme_Typography;
-use Elementor\Utils;
 use ElementorPro\Modules\Woocommerce\Module;
-use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -80,7 +76,7 @@ class Menu_Cart extends Widget_Base {
 		$this->add_control(
 			'hide_empty_indicator',
 			[
-				'label' => _x( 'Hide Empty', 'Menu Cart Widget', 'elementor-pro' ),
+				'label' => __( 'Hide Empty', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'label_on' => __( 'Yes', 'elementor-pro' ),
 				'label_off' => __( 'No', 'elementor-pro' ),
@@ -350,7 +346,7 @@ class Menu_Cart extends Widget_Base {
 			'items_indicator_style',
 			[
 				'type' => Controls_Manager::HEADING,
-				'label' => _x( 'Items Indicator', 'Menu Cart Widget', 'elementor-pro' ),
+				'label' => __( 'Items Indicator', 'elementor-pro' ),
 				'separator' => 'before',
 				'condition' => [
 					'items_indicator!' => 'none',

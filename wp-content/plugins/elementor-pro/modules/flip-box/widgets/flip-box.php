@@ -531,7 +531,7 @@ class Flip_Box extends Base_Widget {
 		$this->add_control(
 			'image_width',
 			[
-				'label' => __( 'Size (%)', 'elementor-pro' ),
+				'label' => __( 'Size', 'elementor-pro' ) . ' (%)',
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ '%' ],
 				'default' => [
@@ -1276,7 +1276,6 @@ class Flip_Box extends Base_Widget {
 		$settings = $this->get_settings();
 		$wrapper_tag = 'div';
 		$button_tag = 'a';
-		$link_url = empty( $settings['link']['url'] ) ? '#' : $settings['link']['url'];
 		$this->add_render_attribute( 'button', 'class', [
 			'elementor-flip-box__button',
 			'elementor-button',
@@ -1284,17 +1283,23 @@ class Flip_Box extends Base_Widget {
 		] );
 
 		$this->add_render_attribute( 'wrapper', 'class', 'elementor-flip-box__layer elementor-flip-box__back' );
-		if ( 'box' === $settings['link_click'] ) {
-			$wrapper_tag = 'a';
-			$button_tag = 'button';
-			$this->add_render_attribute( 'wrapper', 'href', $link_url );
-			if ( $settings['link']['is_external'] ) {
-				$this->add_render_attribute( 'wrapper', 'target', '_blank' );
+
+		if ( ! empty( $settings['link']['url'] ) ) {
+			$link_element = 'button';
+
+			if ( 'box' === $settings['link_click'] ) {
+				$wrapper_tag = 'a';
+				$button_tag = 'button';
+				$link_element = 'wrapper';
 			}
-		} else {
-			$this->add_render_attribute( 'button', 'href', $link_url );
+
+			$this->add_render_attribute( $link_element, 'href', $settings['link']['url'] );
 			if ( $settings['link']['is_external'] ) {
-				$this->add_render_attribute( 'button', 'target', '_blank' );
+				$this->add_render_attribute( $link_element, 'target', '_blank' );
+			}
+
+			if ( $settings['link']['nofollow'] ) {
+				$this->add_render_attribute( $link_element, 'rel', 'nofollow' );
 			}
 		}
 

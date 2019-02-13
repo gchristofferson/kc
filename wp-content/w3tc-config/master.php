@@ -740,7 +740,7 @@
         }
     },
     "common.support": "",
-    "common.track_usage": "0",
+    "common.track_usage": true,
     "common.tweeted": false,
     "config.check": "1",
     "config.path": "",

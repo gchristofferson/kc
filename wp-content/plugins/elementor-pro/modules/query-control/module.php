@@ -75,7 +75,7 @@ class Module extends Module_Base {
 				'label' => __( 'Avoid Duplicates', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => '',
-				'description' => __( 'Set to Yes to avoid duplicate posts from showing up. This only effects the frontend.', 'elementor-pro' ),
+				'description' => __( 'Set to Yes to avoid duplicate posts from showing up on the page. This only affects the frontend.', 'elementor-pro' ),
 			]
 		);
 
@@ -101,7 +101,7 @@ class Module extends Module_Base {
 		switch ( $data['filter_type'] ) {
 			case 'taxonomy':
 				$query_params = [
-					'taxonomy' => $data['object_type'],
+					'taxonomy' => $this->extract_post_type( $data ),
 					'search' => $data['q'],
 					'hide_empty' => false,
 				];
@@ -129,7 +129,7 @@ class Module extends Module_Base {
 			case 'by_id':
 			case 'post':
 				$query_params = [
-					'post_type' => $data['object_type'],
+					'post_type' => $this->extract_post_type( $data ),
 					's' => $data['q'],
 					'posts_per_page' => -1,
 				];
@@ -252,6 +252,15 @@ class Module extends Module_Base {
 		$controls_manager->add_group_control( Group_Control_Posts::get_type(), new Group_Control_Posts() );
 
 		$controls_manager->register_control( self::QUERY_CONTROL_ID, new Query() );
+	}
+
+	private function extract_post_type( $data ) {
+
+		if ( ! empty( $data['query'] ) && ! empty( $data['query']['post_type'] ) ) {
+			return $data['query']['post_type'];
+		}
+
+		return $data['object_type'];
 	}
 
 	/**

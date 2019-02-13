@@ -2,13 +2,9 @@
 namespace ElementorPro\Modules\Woocommerce\Widgets;
 
 use Elementor\Controls_Manager;
-use Elementor\Controls_Stack;
 use Elementor\Group_Control_Typography;
 use Elementor\Scheme_Color;
 use Elementor\Scheme_Typography;
-use ElementorPro\Modules\QueryControl\Controls\Group_Control_Posts;
-use ElementorPro\Modules\QueryControl\Module;
-use ElementorPro\Modules\Woocommerce\Classes\Products_Renderer;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
