@@ -238,7 +238,7 @@
     "minify.configuration_overloaded": false,
     "minify.enabled": "0",
     "minify.auto": "1",
-    "minify.debug": false,
+    "minify.debug": "0",
     "minify.engine": "file",
     "minify.error.notification": "",
     "minify.file.gc": 86400,
@@ -740,7 +740,7 @@
         }
     },
     "common.support": "",
-    "common.track_usage": true,
+    "common.track_usage": "1",
     "common.tweeted": false,
     "config.check": "1",
     "config.path": "",
