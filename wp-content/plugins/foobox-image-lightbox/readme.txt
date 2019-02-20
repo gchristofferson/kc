@@ -3,7 +3,7 @@ Contributors: bradvin, fooplugins, freemius
 Donate link: http://fooplugins.com
 Tags: lightbox,media,images,gallery,modal,gutenberg
 Requires at least: 3.5.1
-Tested up to: 4.9.8
+Tested up to: 5.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -47,6 +47,7 @@ This new feature was only available in the PRO version beforehand, but we feel c
 *	Deeplinking
 *	Fullscreen and slideshow modes
 *	Metro lightbox style
+*	Flat lightbox style
 *	5 color schemes, 12 buttons icons and 11 loader icons
 *	85+ settings to customize
 
@@ -56,7 +57,7 @@ This new feature was only available in the PRO version beforehand, but we feel c
 *	NextGen
 *	[Justified Image Grid](http://codecanyon.net/item/justified-image-grid-premium-wordpress-gallery/2594251)
 *   Envira Gallery
-*	WooCommerce product images
+*	WooCommerce product images (Works with WooCommerce v3+)
 *	JetPack Tiled Gallery
 *	AutOptimize
 
@@ -87,6 +88,12 @@ There is a setting to try and disable hard coded lightboxes, but this is not a s
 2. Phone example
 
 == Changelog ==
+
+= 2.6.3 =
+* Added support for loading FooGallery galleries within a FooBox
+* Fixed layout bugs with certain notched iPhones
+* Updated to latest client JS & CSS fixing a few bugs
+* Updated to latest Freemius SDK 2.2.3
 
 = 2.6.0 =
 * Added support for the Gutenberg gallery and image blocks

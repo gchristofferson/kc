@@ -150,7 +150,8 @@ $button_text = $show_trial_message ? __( 'Already convinced? Upgrade to PRO!', '
 
 			.demo-gallery a img
 			{
-				padding: 2px;
+				padding: 0px;
+				width: 70px;
 				display: block;
 			}
 

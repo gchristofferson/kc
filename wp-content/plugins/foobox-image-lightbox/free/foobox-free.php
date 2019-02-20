@@ -52,6 +52,8 @@ if (!class_exists('Foobox_Free')) {
 
 				add_filter( 'foobox-free-has_settings_page', '__return_false' );
 
+				add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+
 			} else {
 
 				// Render JS to the front-end pages
@@ -67,6 +69,17 @@ if (!class_exists('Foobox_Free')) {
 			}
 
 			new FooBox_Free_Exclude();
+		}
+
+		function enqueue_block_editor_assets() {
+			$this->admin_print_scripts();
+			$this->admin_print_styles();
+			$script = $this->generate_javascript();
+
+			wp_add_inline_script(
+				'foobox-free-min',
+				$script
+			);
 		}
 
 		function custom_admin_settings_render($args = array()) {
@@ -110,10 +123,6 @@ if (!class_exists('Foobox_Free')) {
 			require_once FOOBOXFREE_PATH . "includes/upgrade.php";
 		}
 
-		function frontend_init() {
-			add_action('wp_head', array($this, 'inline_dynamic_js'));
-		}
-
 		function admin_print_styles() {
 			parent::admin_print_styles();
 			$this->frontend_print_styles();
@@ -150,6 +159,13 @@ if (!class_exists('Foobox_Free')) {
 				$d = array('jquery'),
 				$v = false,
 				$f = false);
+
+			$foobox_js = $this->generate_javascript();
+
+			wp_add_inline_script(
+				'foobox-free-min',
+				$foobox_js
+			);
 		}
 
 		function inline_dynamic_js() {
