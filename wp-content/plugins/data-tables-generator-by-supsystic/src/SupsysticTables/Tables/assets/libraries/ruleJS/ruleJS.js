@@ -1031,7 +1031,7 @@ var ruleJS = (function (root) {
 		"DOLLAR",
 		"EXACT",
 		"FIND", "FIXED",
-		"HTML2TEXT", "HUMANIZE",
+		"HTML2TEXT", "HUMANIZE", "HYPERLINK",
 		"JOIN",
 		"LEFT", "LEN", "LOWER",
 		"MID",

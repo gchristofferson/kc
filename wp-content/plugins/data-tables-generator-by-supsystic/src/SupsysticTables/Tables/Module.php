@@ -20,6 +20,7 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 	 * Contains the value of "search" shortcode param for applying it to table
 	 */
 	private $tableSearch = '';
+	private $shortAttributes = array();
 	/**
 	 * Variables for appending of table styles to site header
 	 */
@@ -216,6 +217,7 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
         $cachePath = $this->cacheDirectory . DIRECTORY_SEPARATOR . $id;
 
 		$environment = $this->getEnvironment();
+		$dispatcher = $environment->getDispatcher();
 		$twig = $environment->getTwig();
 		$core = $environment->getModule('core');				// @var SupsysticTables_Core_Module $core
 		$tables = $core->getModelsFactory()->get('tables');		// @var SupsysticTables_Tables_Model_Tables $tables
@@ -235,14 +237,18 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 		if (!$table) {
 			return sprintf($environment->translate('The table with ID %d not exists.'), $id);
 		}
-
-		$table->isSSP = (!$this->isSingleCell && !$this->isTablePart && isset($table->settings['serverSideProcessing']) && $table->settings['serverSideProcessing'] == 'on');
+		$table->isSSP = (!$this->isSingleCell
+			&& !$this->isTablePart
+			&& isset($table->settings['features']['paging'])
+			&& $table->settings['features']['paging'] == 'on'
+			&& isset($table->settings['serverSideProcessing'])
+			&& $table->settings['serverSideProcessing'] == 'on'
+		);
 		$table->isDB = ($environment->isPro() && !$this->isSingleCell && !$this->isTablePart && isset($table->settings['source']) && isset($table->settings['source']['database']) && $table->settings['source']['database'] == 'on');
 		
 		if(!isset($table->isPageRows)) {
 			$table->isPageRows = false;
 		}
-
 		$this->checkSpreadsheet = $this->checkSpreadsheet && !$table->isPageRows
 			&& $environment->isPro()
 			&& isset($table->settings['features']['import']['google']['automatically_update'])
@@ -258,9 +264,7 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 			&& file_exists($cachePath)
 			&& $this->getEnvironment()->isProd()
 		) {
-			$table->rows = $tables->getNeededRows($id, $table->settings, $table->isSSP);
 			// Connect scripts and styles depending on table settings and table's cells settings for table cache
-			$dispatcher = $this->getEnvironment()->getDispatcher();
 			$dispatcher->apply('before_table_render', array($table));
 			$dispatcher->apply('before_table_render_from_cache', array($table));
 			return file_get_contents($cachePath);
@@ -275,7 +279,8 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 			$table->meta = $tables->getMeta($id);
 		}
 		if(!$table->isPageRows) {
-			$table->rows = $tables->getNeededRows($id, $table->settings, $table->isSSP);
+			$table->rows = $tables->getNeededRows($id, $table->settings, $table->isSSP, $this->shortAttributes);
+			$this->shortAttributes = array();
 
         	if (isset($table->meta['columnsWidth'])) {
             	$columnsTotalWidth = array_sum($table->meta['columnsWidth']);
@@ -300,8 +305,7 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 			unset($table->settings['features']['paging']);
 			unset($table->settings['features']['searching']);
 			unset($table->settings['features']['after_table_loaded_script']);
-		}
-		if($this->isSingleCell) {
+
 			$table->meta['css'] = $table->meta['css'] .
 				'#supsystic-table-' . $table->view_id . ' #supsystic-table-' . $id . ' { margin-left: 0; }' .
 				'#supsystic-table-' . $table->view_id . ' #supsystic-table-' . $id . ',
@@ -371,10 +375,18 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 		$table->history_data = $this->historyData;
 		$table->encoded_title = htmlspecialchars($table->title, ENT_QUOTES);
 
+		// Fix for some crashed logo links
+		if(!empty($table->settings['exportLogo']['src']) && strpos($table->settings['exportLogo']['src'], 'http') === false) {
+			// Try to fix link
+			if(strpos($table->settings['exportLogo']['src'], '/wp-content') === 0) {
+				$table->settings['exportLogo']['src'] = home_url($table->settings['exportLogo']['src']);
+			}
+		}
 		// Connect scripts and styles depending on table settings and table's cells settings
-		$dispatcher = $this->getEnvironment()->getDispatcher();
 		$dispatcher->apply('before_table_render', array($table));
-
+		if($table->isSSP) {
+			$dispatcher->apply('before_table_render_ssp', array($table));
+		}
 		$searchValue = '';
 
 		if(!empty($this->tableSearch)) {
@@ -507,6 +519,7 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
                 add_action('wp_footer', array($asset, 'load'));
             }
         }
+        $this->shortAttributes = $attributes;
         return $this->render((int)$attributes['id']);
     }
 
@@ -783,6 +796,9 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 			}
 
 			if ($environment->isAction('view')) {
+				// WordPress Media Library JavaScript APIs
+				add_action($hookName, array($this, 'loadMediaScripts'));
+
 				// Styles
 				$ui->add(
 					$ui->createStyle('supsystic-tables-tables-editor-css')
@@ -852,6 +868,10 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 				);
 			}
 		}
+	}
+
+	public function loadMediaScripts() {
+		wp_enqueue_media();
 	}
 
 	private function loadDataTables(SupsysticTables_Ui_Module $ui)
@@ -1370,6 +1390,11 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 				'name' => $config->get('shortcode_name'),
 				'label' => $environment->translate('History Shortcode'),
 				'attrs' => 'use_history=1',
+			);
+			$shortcodes['sql_shortcode'] = array(
+				'name' => $config->get('shortcode_name'),
+				'label' => $environment->translate('SQL Shortcode'),
+				'attrs' => 'sql1=1 sql2="yes"',
 			);
 		}
 

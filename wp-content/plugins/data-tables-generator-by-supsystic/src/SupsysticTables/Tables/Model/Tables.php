@@ -408,13 +408,13 @@ class SupsysticTables_Tables_Model_Tables extends SupsysticTables_Core_BaseModel
      * Returns needed table rows
      * @return array
      */
-    public function getNeededRows($id, &$settings, $isSSP, $all = false)
+    public function getNeededRows($id, &$settings, $isSSP, $attributes = false, $all = false)
     {
         $source = ($this->environment->isPro() && isset($settings['source']) ? $settings['source'] : '');
         if (isset($source['database']) && $source['database'] == 'on' && isset($source['dbTable'])){
             $core = $this->environment->getModule('core');
             $dbTableModel = $core->getModelsFactory()->get('DBTables', 'tables');
-            return $dbTableModel->getRowsData($settings);
+            return $dbTableModel->getRowsData($settings, false, $attributes);
         }
 		if($this->environment->isWooPro()){
 			$table = $this->getWooSettings($id);
@@ -428,11 +428,12 @@ class SupsysticTables_Tables_Model_Tables extends SupsysticTables_Core_BaseModel
         if (!$all && $isSSP) {
             $cntHead = 1;
             $footers = array();
-            if (isset($settings['elements']['head']) && $settings['elements']['head'] == 'on' &&
-                isset($settings['headerRowsCount']) && $settings['headerRowsCount'] > 0) {
-                $cntHead = $this->getRows($id, $settings['headerRowsCount']);
-            }
-            $headers = $this->getRows($id, $cntHead);
+			if (isset($settings['elements']['head']) && $settings['elements']['head'] == 'on' &&
+				isset($settings['headerRowsCount']) && $settings['headerRowsCount'] > 0) {
+				$headers = $this->getRows($id, $settings['headerRowsCount']);
+			} else {
+				$headers = $this->getRows($id, $cntHead);
+			}
             if (isset($settings['elements']['foot']) && $settings['elements']['foot'] == 'on' &&
                 isset($settings['customFooter']) && $settings['customFooter'] == 'on' &&
                 isset($settings['footerRowsCount']) && $settings['footerRowsCount'] > 0) {
@@ -448,14 +449,14 @@ class SupsysticTables_Tables_Model_Tables extends SupsysticTables_Core_BaseModel
      * Returns needed table rows
      * @return array
      */
-    public function getRowsByIds($id, &$settings, $ids)
+    public function getRowsByIds($id, &$settings, $ids, $attributes = false)
     {
         $source = ($this->environment->isPro() && isset($settings['source']) ? $settings['source'] : '');
 
         if (isset($source['database']) && $source['database'] == 'on' && isset($source['dbTable'])){
             $core = $this->environment->getModule('core');
             $dbTableModel = $core->getModelsFactory()->get('DBTables', 'tables');
-            return $dbTableModel->getRowsData($settings, $ids);
+            return $dbTableModel->getRowsData($settings, $ids, $attributes);
         }
 
         $bodyStop = $this->getCountRows($id);

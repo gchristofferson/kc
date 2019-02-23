@@ -18,8 +18,8 @@ class SupsysticTables_Overview_Controller extends SupsysticTables_Core_BaseContr
                 'contactForm' => array(
                     'name' => $current_user->user_firstname,
                     'email' => $current_user->user_email,
-                    'website' => get_bloginfo('url')
-                )
+                    'website' => get_bloginfo('url'),
+                ),
             )
         );
     }

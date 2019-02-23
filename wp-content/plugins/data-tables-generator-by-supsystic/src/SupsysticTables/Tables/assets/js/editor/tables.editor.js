@@ -504,26 +504,21 @@ var g_stbRowsPerPage = 1;
 							j = 0;
 						}
 						if(g_stbCopyPasteCellsMetaData[j]) {
-							var value = editor.getDataAtCell(row, col),
-								deltaRow = row - g_stbCopyPasteCellsMetaData[j].row,
-								deltaCol = col - g_stbCopyPasteCellsMetaData[j].col,
-								direction = '';
+							var value = editor.getDataAtCell(row, col);
 
-							if(deltaRow) {
-								if(deltaRow > 0) {
-									direction = 'down';
-								} else {
-									direction = 'up';
+							if(value && value[0] == '=') {
+								var deltaRow = row - g_stbCopyPasteCellsMetaData[j].row,
+									deltaCol = col - g_stbCopyPasteCellsMetaData[j].col,
+									direction;
+
+								if(deltaRow) {
+									direction = deltaRow > 0 ? 'down' : 'up';
+									value = editor.plugin.utils.updateFormula(value, direction, Math.abs(deltaRow));
 								}
-								value = editor.plugin.utils.updateFormula(value, direction, Math.abs(deltaRow));
-							}
-							if(deltaCol) {
-								if(deltaCol > 0) {
-									direction = 'right';
-								} else {
-									direction = 'left';
+								if(deltaCol) {
+									direction = deltaCol > 0 ? 'right' : 'left';
+									value = editor.plugin.utils.updateFormula(value, direction, Math.abs(deltaCol));
 								}
-								value = editor.plugin.utils.updateFormula(value, direction, Math.abs(deltaCol));
 							}
 							editor.setDataAtCell(row, col, value);
 							editor.setCellMetaObject(row, col, g_stbCopyPasteCellsMetaData[j]);

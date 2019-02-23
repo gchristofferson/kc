@@ -438,12 +438,18 @@ var g_stbCopyPasteColsCount = [];
 					}
 				}
 			}
-			if($('#woocommerce-settings').length){
+			if($('#woocommerce-settings').length > 0){
 				//remove html with options
 				$('input[name="woocommerce[order]"]').val('');
 				$('input[name="woocommerce[productids]"]').val('');
 				$('input[name="woocommerce[enable]"]').prop('checked', false).iCheck('update');
-				tablesModel.saveTable();
+
+				app.request({
+					module: 'woocommerce',
+					action: 'saveWoocommerceSettings'
+				}, { id: app.getParameterByName('id'), settings: '' });
+
+
 				setTimeout(function() {
 					location.reload();
 				}, 500);
@@ -559,8 +565,9 @@ var g_stbCopyPasteColsCount = [];
 		});
 
 		// Search by Columns - Position
-		$('input[name="searching[columnSearch]"]').on('change ifChanged', function() {
-			if($(this).is(':checked')) {
+		$('input[name="searching[columnSearch]"]').on('change ifChanged', function(e, isParentEnabled) {
+			isParentEnabled = typeof isParentEnabled != 'undefined' ? isParentEnabled : true;
+			if($(this).is(':checked') && isParentEnabled) {
 				$('select[name="searching[columnSearchPosition]"]').parents('.setting-wrapper:first').fadeIn(300);
 			} else {
 				$('select[name="searching[columnSearchPosition]"]').parents('.setting-wrapper:first').fadeOut(300);
@@ -568,16 +575,18 @@ var g_stbCopyPasteColsCount = [];
 		});
 
 		// Show results only - Show empty table
-		$('input[name="searching[resultOnly]"]').on('change ifChanged', function() {
-			if($(this).is(':checked')) {
+		$('input[name="searching[resultOnly]"]').on('change ifChanged', function(e, isParentEnabled) {
+			isParentEnabled = typeof isParentEnabled != 'undefined' ? isParentEnabled : true;
+			if($(this).is(':checked') && isParentEnabled) {
 				$('input[name="searching[showTable]"]').parents('.setting-wrapper:first').fadeIn(300);
 			} else {
 				$('input[name="searching[showTable]"]').parents('.setting-wrapper:first').fadeOut(300);
 			}
 		});
 		$('input[name="features[searching]"]').on('change ifChanged', function() {
-			$('input[name="searching[resultOnly]"]').trigger('change');
-			$('input[name="searching[columnSearch]"]').trigger('change');
+			var isChecked = $(this).is(':checked');
+			$('input[name="searching[resultOnly]"]').trigger('change', isChecked);
+			$('input[name="searching[columnSearch]"]').trigger('change', isChecked);
 		});
 
 		// Table Loader

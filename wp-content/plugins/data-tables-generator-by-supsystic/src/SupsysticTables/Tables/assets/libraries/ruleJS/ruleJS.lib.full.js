@@ -20817,6 +20817,25 @@ this.j$ = this.jStat = (function(Math, undefined) {
     };
 
 	  // Custom supsystic formulas
+	  Formula.HYPERLINK = function(url, linkLabel) {
+		  linkLabel = linkLabel ? linkLabel : url;
+
+		  var res = linkLabel,
+			  protocols = ['http', 'https', 'mailto', 'aim:', 'ftp', 'gopher', 'telnet'],
+			  linkArr = url.split(':'),
+			  protocolChecked = false;
+
+		  if(linkArr && linkArr.length > 0) {
+			  if(linkArr.length === 1) {
+				  url = 'http://'+ url;
+				  protocolChecked = true;
+			  }
+			  if(protocols.indexOf(linkArr[0]) !== -1 || protocolChecked) {
+				  res = '<a href="'+ url+ '" target="_blank">'+ linkLabel+ '</a>';
+			  }
+		  }
+		  return res;
+	  };
 	  Formula.INDEX = function(arrayValues, rowNum, colNum) {
 		  if ((rowNum < 0) || (colNum < 0)) {
 			  return '#VALUE!';

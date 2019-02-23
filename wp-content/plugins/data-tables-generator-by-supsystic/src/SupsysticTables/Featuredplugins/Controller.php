@@ -39,9 +39,12 @@ class SupsysticTables_Featuredplugins_Controller extends SupsysticTables_Core_Ba
 			array('label' => $environment->translate('Contact Form Plugin'), 'url' => $pluginsUrl. 'contact-form-plugin/', 'img' => $uploadsUrl. '2016/07/Contact_Form_256.png', 'desc' => $environment->translate('One of the best plugin for creating Contact Forms on your WordPress site. Changeable fonts, backgrounds, an option for adding fields etc.'), 'download' => $downloadsUrl. 'contact-form-by-supsystic.zip'),
 			array('label' => $environment->translate('Newsletter Plugin'), 'url' => $pluginsUrl. 'newsletter-plugin/', 'img' => $uploadsUrl. '2016/08/icon-256x256.png', 'desc' => $environment->translate('Supsystic Newsletter plugin for automatic mailing of your letters. You will have no need to control it or send them manually. No coding, hard skills or long hours of customizing are required.'), 'download' => $downloadsUrl. 'newsletter-by-supsystic.zip'),
 			array('label' => $environment->translate('Membership by Supsystic'), 'url' => $pluginsUrl. 'membership-plugin/', 'img' => $uploadsUrl. '2016/09/256.png', 'desc' => $environment->translate('Create online membership community with custom user profiles, roles, FrontEnd registration and login. Members Directory, activity, groups, messages.'), 'download' => $downloadsUrl. 'membership-by-supsystic.zip'),
+			array('label' => $environment->translate('Kinsta Hosting'), 'url' => 'https://kinsta.com?kaid=MNRQQASUYJRT', 'external' => true, 'img' => $this->getEnvironment()->getModule('core')->getPluginDirectoryUrl('app/assets/img/kinsta_banner.png'), 'desc' => $environment->translate('If you want to host a business site or a blog, Kinsta managed WordPress hosting is the best place to stop on. Without any hesitation, we can say Kinsta is incredible when it comes to uptime and speed.')),
 		);
 		foreach($pluginsList as $i => $p) {
-			$pluginsList[ $i ]['url'] = $pluginsList[ $i ]['url']. '?utm_source=plugin&utm_medium=featured_plugins&utm_campaign='. $promoCampaign;
+			if(empty($p['external'])) {
+				$pluginsList[ $i ]['url'] = $pluginsList[ $i ]['url']. '?utm_source=plugin&utm_medium=featured_plugins&utm_campaign='. $promoCampaign;
+			}
 		}
 
         return $this->response(

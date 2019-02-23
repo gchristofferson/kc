@@ -2,18 +2,17 @@
 
 {% block content %}
     <div class="supsystic-overview">
-        <div class="half-page-left">
-            <h3>{{ translate('Step-by-step Tutorial') }}</h3>
-            <div>
+        <div class="half-page half-page-left">
+            <div class="tutorial">
+                <h3>{{ translate('Step-by-step Tutorial') }}</h3>
                 <a href="{{ environment.generateUrl('promo', 'showTutorial') }}" class="button button-primary button-hero">
                     <i class="fa fa-info-circle"></i>
                     {{ translate('Begin Step-by-step Tutorial') }}
                 </a>
+                <div class="clear"></div>
             </div>
-            <div class="clear"></div>
-
-            <h3>FAQ and Documentation</h3>
             <div class="faq-list">
+                <h3>FAQ and Documentation</h3>
                 <div class="faq-title">
                     <i class="fa fa-info-circle"></i>
                     Data Tables Plugin Installation
@@ -119,7 +118,6 @@
                 </a>
                 <div style="clear: both;"></div>
             </div>
-
             <div class="video">
                 <h3>Video tutorial</h3>
                 <iframe type="text/html"
@@ -129,7 +127,6 @@
                         frameborder="0">
                 </iframe>
             </div>
-
             <div class="server-settings">
                 <h3>Server Settings</h3>
                 <ul class="settings-list">
@@ -142,18 +139,17 @@
                 </ul>
             </div>
         </div>
-        <div class="half-page-right">
-            <h3>News</h3>
-            <div class="supsystic-overview-news">
-                {{ news|raw }}
-            </div>
-            <p style="padding-bottom: 70px; border-bottom: 1px solid rgba(164, 170, 172, 0.28);">
+        <div class="half-page half-page-right">
+            <div class="supsystic-overview-news-container">
+                <h3>News</h3>
+                <div class="supsystic-overview-news">
+                    {{ news|raw }}
+                </div>
                 <a href="http://supsystic.com/plugins/data-tables-generator-plugin/" class="button button-primary button-hero">
-                    <i class="fa fa-info-circle"></i>
-                    All news
+                    <i class="fa fa-info-circle"></i>All news
                 </a>
-            </p>
-
+                <div class="clear"></div>
+            </div>
             <div class="overview-contact-form">
                 <h3>Contact form</h3>
                 {#<div class="description">Translate plugin in your language and get a Premium license for FREE</div>#}
@@ -163,7 +159,6 @@
 
                 <table class="contact-form-table" style="width: 100%;">
                     <thead>
-
                     {{ form.row(translate('Name') ~ ' *',
                         form.text('name', contactForm.name, { 'required': '' })) }}
 
@@ -175,7 +170,6 @@
 
                     {{ form.row(translate('Subject') ~ ' *',
                         form.text('subject', '', { 'required': '' })) }}
-
                     <tr>
                         <th scope="row">
                             <label for="select-question">{{ translate('Topic') }}</label>
@@ -197,7 +191,6 @@
                             </select>
                         </td>
                     </tr>
-
                     <tr>
                         <th scope="row" style="vertical-align: top;">
                             <label for="mail-text">{{ translate('Message') ~ ' *' }}</label>
@@ -206,17 +199,21 @@
                             <textarea id="mail-text" name="message" cols="50" rows="3" placeholder="{{ translate('Hello Supsystic Team!') }}" required=""></textarea>
                         </td>
                     </tr>
-
                     </thead>
                 </table>
-
                 <button id="send-mail" type="submit" class="button button-primary button-hero">
                     <i class="fa fa-upload"></i>
                     Send email
                 </button>
-
                 <div class="required-notification" style="color: red; float: left;" hidden>Fields with * are required to fill</div>
                 {{ form.close() }}
+                <div class="clear"></div>
+            </div>
+            <div class="banner">
+                <div class="text-block">{{ translate('If you want to host a business site or a blog, Kinsta managed WordPress hosting is the best place to stop on. Without any hesitation, we can say Kinsta is incredible when it comes to uptime and speed.') }}</div>
+                <a href="https://kinsta.com?kaid=MNRQQASUYJRT">
+                    <img src="{{ plugin_directory_url('app/assets/img/kinsta_banner.png') }}" style="width: 300px;height: 250px;" />
+                </a>
             </div>
         </div>
         <div id="contact-form-dialog" hidden>

@@ -108,7 +108,9 @@ class SupsysticTables_Tables_Controller extends SupsysticTables_Core_BaseControl
 		$languages = $this->getModel('languages', 'tables');
 
 		try {
-            wp_enqueue_media();
+			add_action('admin_enqueue_scripts', function(){
+				wp_enqueue_media();
+			});
             $id = $request->query->get('id');
 			$table = $this->getModel('tables')->getById($id);
         } catch (Exception $e) {

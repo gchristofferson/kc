@@ -572,10 +572,18 @@ class SupsysticTables_Core_Module extends SupsysticTables_Core_BaseModule
         update_option($config->get('revision_key'), $revision['current']);
 	}
 
+	public function getPluginDirectoryUrl($path)
+	{
+		return plugin_dir_url($this->getEnvironment()->getPluginPath() . '/index.php') . '/' . $path;
+	}
+
     private function registerTwigFunctions()
     {
         $twig = $this->getEnvironment()->getTwig();
 
+		$twig->addFunction(
+			new Twig_SimpleFunction('plugin_directory_url', array($this, 'getPluginDirectoryUrl'))
+		);
 		$twig->addFunction(
 			new Twig_SimpleFunction('build_pro_url', array($this, 'buildProUrl'))
 		);

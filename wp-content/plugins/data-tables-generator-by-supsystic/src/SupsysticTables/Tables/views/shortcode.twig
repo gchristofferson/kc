@@ -373,8 +373,12 @@
                             {% endif %}
                             {% set cellIter = cellIter + 1 %}
                         {% else %}
-                            {% if cell.hiddenCell != true%}
-                                <th style="width:{{ table.meta.columnsWidth[cellIndex] }}%; padding: 0 !important;"></th>
+                            {% if cell.hiddenCell != true %}
+                                {% set fakeCellClass = '' %}
+                                {% if cell.invisibleCell == true %}
+                                    {% set fakeCellClass = 'invisibleCell' %}
+                                {% endif %}
+                                <th class="{{ fakeCellClass }}" style="width:{{ table.meta.columnsWidth[cellIndex] }}%; padding: 0 !important;"></th>
                             {% endif %}
                         {% endif %}
                     {% endfor %}

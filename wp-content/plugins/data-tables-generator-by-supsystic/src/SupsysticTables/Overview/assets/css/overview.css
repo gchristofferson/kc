@@ -18,11 +18,6 @@
     width: 40%;
 }
 
-.supsystic-overview .description {
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(164, 170, 172, 0.28);
-}
-
 .supsystic-overview .faq-title {
     cursor: pointer;
 }
@@ -30,12 +25,6 @@
 .supsystic-overview .faq-title .description {
     margin-top: 10px;
     border: none !important;
-}
-
-.supsystic-overview .faq-list {
-    padding-bottom: 20px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid rgba(164, 170, 172, 0.28);
 }
 
 .supsystic-overview .faq-title,
@@ -53,12 +42,6 @@
     float: right;
     margin-top: 24px;
     display: block;
-}
-
-.supsystic-overview .video {
-    padding: 10px 20px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid rgba(164, 170, 172, 0.28);
 }
 
 .supsystic-overview .settings-title {
@@ -122,6 +105,19 @@
     font-weight: 800;
     margin-top: 10px;
     white-space: nowrap;
+}
+
+.supsystic-overview .half-page > div {
+	border-bottom: 1px solid rgba(164, 170, 172, 0.28);
+	padding-bottom: 20px;
+}
+
+.supsystic-overview .half-page > div:last-child {
+	border-bottom: none;
+}
+
+.supsystic-overview .text-block {
+	margin: 10px 0;
 }
 
 #contact-form-dialog p {

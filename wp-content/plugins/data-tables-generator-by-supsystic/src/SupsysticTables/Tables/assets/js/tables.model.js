@@ -458,7 +458,8 @@ var g_stbPreviewTimeoutSet = false;
 					mergeData = [],
 					rowsData = [],
 					columnsWidth = [],
-					rowCounter = 0;
+					rowCounter = 0,
+					requiredAssets = {};
 
 				// Put textareas data into the hidden fields before the saving of table settings
 				formData.find('input[name="elements[descriptionText]"]').val( formData.find('#descriptionText').val() );
@@ -579,6 +580,9 @@ var g_stbPreviewTimeoutSet = false;
 						if (metaClasses !== undefined) {
 							$.each(metaClasses.split(' '), function (index, element) {
 								if (element.length) {
+									if(toeInArray(element, ['datefield', 'tooltipCell', 'collapsibleCell']) != -1 && !requiredAssets[element]) {
+										requiredAssets[element] = true;
+									}
 									classes.push($.trim(element));
 								}
 							});
@@ -594,7 +598,18 @@ var g_stbPreviewTimeoutSet = false;
 						if (x == 0) {
 							columnsWidth.push(editor.getColWidth(y));
 						}
+						var diagramsExists = cell && cell.toString().match(/(\[\s*supsystic-table-diagram[^\]]*\])+?/gi);
+						
+						if(diagramsExists) {
+							for(var i = 0; i < diagramsExists.length; i++) {
+								var diagramId = /id=[\'|\"](\d+)[\'|\"]/gi.exec(diagramsExists[i]);
 
+								if(diagramId && diagramId[1]) {
+									requiredAssets.diagrams = requiredAssets.diagrams ? requiredAssets.diagrams : [];
+									requiredAssets.diagrams.push(diagramId[1]);
+								}
+							}
+						}
 						currentRow.cells.push(cellData);
 					});
 
@@ -613,6 +628,7 @@ var g_stbPreviewTimeoutSet = false;
 					}
 				}
 				metaData = {
+					requiredAssets: requiredAssets,
 					mergedCells: mergeData,
 					columnsWidth: columnsWidth,
 					columnsFixedWidth: g_stbFixedColumnsWidth,
@@ -876,66 +892,69 @@ var g_stbPreviewTimeoutSet = false;
 					delimiters,
 					preparedFormat;
 
+				if(!format && typeof format !== 'string' && !format.match(/\d+/)) return value;
+
 				switch(formatType) {
-				case 'number':
-					delimiters = (format.match(/[^\d]/g) || [',', '.']).reverse();
-					languageData.delimiters = {
-						decimal: delimiters[0],
-						thousands: delimiters[1] || ''
-					};
+					case 'number':
+						delimiters = (format.match(/[^\d]/g) || [',', '.']).reverse();
+						languageData.delimiters = {
+							decimal: delimiters[0],
+							thousands: delimiters[1] || ''
+						};
 
-					// We need to use dafault delimiters for format string
-					preparedFormat = format
-						.replace(format, format
-							.replace(delimiters[0], '.')
-							.replace(delimiters[1], ',')
-					);
-					break;
-				case 'percent':
-					var clearFormat = format.indexOf('%') > -1 ? format.replace('%', '') : format;
+						// We need to use dafault delimiters for format string
+						preparedFormat = format
+							.replace(format, format
+								.replace(delimiters[0], '.')
+								.replace(delimiters[1], ',')
+						);
+						break;
+					case 'percent':
+						var clearFormat = format.indexOf('%') > -1 ? format.replace('%', '') : format;
 
-					delimiters = (clearFormat.match(/[^\d]/g) || [',', '.']).reverse();
-					languageData.delimiters = {
-						decimal: delimiters[0],
-						thousands: delimiters[1] || ''
-					};
+						delimiters = (clearFormat.match(/[^\d]/g) || [',', '.']).reverse();
+						languageData.delimiters = {
+							decimal: delimiters[0],
+							thousands: delimiters[1] || ''
+						};
 
-					// We need to use dafault delimiters for format string
-					preparedFormat = format.replace(
-						clearFormat, clearFormat
-							.replace(delimiters[0], '.')
-							.replace(delimiters[1], ',')
-					);
-					break;
-				case 'currency':
-					var formatWithoutCurrency = format.match(/\d.?\d*.?\d*/)[0],
-						currencySymbol = format.replace(formatWithoutCurrency, '') || '$';
+						// We need to use dafault delimiters for format string
+						preparedFormat = format.replace(
+							clearFormat, clearFormat
+								.replace(delimiters[0], '.')
+								.replace(delimiters[1], ',')
+						);
+						break;
+					case 'currency':
+						var currencySymbolMatch = format.match(/^[^\d]?|[^\d]?$/),
+							currencySymbol = currencySymbolMatch[0] || '$',
+							formatWithoutCurrency = format.replace(currencySymbol, '');
 
-					delimiters = (formatWithoutCurrency.match(/[^\d]/g) || [',', '.']).reverse();
-					languageData.delimiters = {
-						decimal: delimiters[0],
-						thousands: delimiters[1] || ''
-					};
-					languageData.currency.symbol = currencySymbol;
+						delimiters = (formatWithoutCurrency.match(/[^\d]/g) || [',', '.']).reverse();
+						languageData.delimiters = {
+							decimal: delimiters[0],
+							thousands: delimiters[1] || ''
+						};
+						languageData.currency.symbol = currencySymbol;
 
-					// We need to use dafault delimiters for format string
-					preparedFormat = format
-						.replace(formatWithoutCurrency, formatWithoutCurrency
-							.replace(delimiters[0], '.')
-							.replace(delimiters[1], ','))
-						.replace(currencySymbol, '$');
+						// We need to use dafault delimiters for format string
+						preparedFormat = format
+							.replace(formatWithoutCurrency, formatWithoutCurrency
+								.replace(delimiters[0], '.')
+								.replace(delimiters[1], ','))
+							.replace(currencySymbol, '$');
 
-					app.Editor.Hot.currencySymbol = currencySymbol;
-					app.Editor.Hot.currencyFormat = preparedFormat;
-					break;
-				default:
-					break;
+						app.Editor.Hot.currencySymbol = currencySymbol;
+						app.Editor.Hot.currencyFormat = preparedFormat;
+						break;
+					default:
+						break;
 				}
-
 				numeral.language('en', languageData);
-				value = numeral(value).format(preparedFormat);
+				if(preparedFormat) {
+					value = numeral(value).format(preparedFormat);
+				}
 			}
-
 			return value;
 		};
 

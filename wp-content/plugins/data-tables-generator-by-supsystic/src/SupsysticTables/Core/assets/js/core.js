@@ -170,6 +170,124 @@ var g_stbServerSideProcessingIsActive = false;
             return deferred.promise();
         });
 
+		vendor[appName].initTablesOnPage = (function() {
+			this._initTablesOnPage();
+		});
+
+		vendor[appName]._initTablesOnPage = (function() {
+			var self = this,
+				firstTableId = '',
+				firstTableViewId = '',
+				firstTable = '',
+				firstTableWrapper = '',
+				firstTableFirstRow = '';
+
+			if($(window).width() <= 991) {
+				$('div .supsystic-tables-wrap').each(function () {
+					var ssDiv = $(this),
+						widthMobile = ssDiv.data('table-width-mobile');
+					if(typeof(widthMobile) != 'undefined') {
+						ssDiv.css('display', (widthMobile == 'auto' ? 'inline-block' : '')).css('width', widthMobile);
+					}
+				});
+			}
+			$('.supsystic-table').each(function () {
+				self.initializeTable(this, self.showTable, function(table) {
+					// This is used when table is hidden in tabs and can't calculate itself width to adjust on small screens
+					if (table.is(':visible')) {
+						// Fix bug in FF and IE which not supporting max-width 100% for images in td
+						self._calculateImages(table);
+					} else {
+						table.data('isVisible', setInterval(function(){
+							if (table.is(':visible')) {
+								clearInterval(table.data('isVisible'));
+								self._calculateImages(table);
+							}
+						}, 250));
+					}
+					// Align all tables on page by the columns width depending on the columns width of first table on page
+					if(table.data('align-by-first-table')) {
+						firstTableId = firstTableId || $('.supsystic-table:first').data('id');
+						firstTable = firstTable || $('#supsystic-table-' + firstTableId);
+						firstTableViewId = firstTable.data('view-id');
+						firstTableWrapper = firstTableWrapper || firstTable.parents('#supsystic-table-' + firstTableViewId);
+						firstTableFirstRow = firstTable.data('head') ? firstTable.find('thead tr:first-child th') : firstTable.find('tbody tr:first-child td');
+
+						if(firstTableViewId != table.data('view-id')) {
+							var currentTableWrapper = table.parents('#supsystic-table-' + table.data('view-id'));
+
+							currentTableWrapper.css({
+								width: firstTableWrapper.get(0).style.width
+							});
+							table.css({
+								width: firstTable.get(0).style.width
+							});
+							currentTableWrapper.find('.supsystic-table').each(function() {
+								var curTable = $(this),
+									curTableFirstRow = curTable.data('head') ? curTable.find('thead tr:first-child th') : curTable.find('tbody tr:first-child td');
+
+								$.each(curTableFirstRow, function (index, element) {
+									if(firstTableFirstRow[index]) {
+										$(this).width($(firstTableFirstRow[index]).get(0).style.width);
+									}
+								});
+							});
+						}
+					}
+					//if row has merged cells no need place header there
+					if(table.data('merged') && table.hasClass('ColWithMergeCellsAlign')) {
+						var mergedData = table.data('merged');
+						$.each(mergedData, function( index, value ) {
+							var rowNumWithMergeCell = value.row;
+							var numForEq = Number(rowNumWithMergeCell)-1;
+							table.find('tbody tr:eq('+numForEq+')').closest('tr').addClass('haveMergedCell');
+						});
+						self.setCellAttributes(table.parents('.supsystic-tables-wrap:first').find('.DTFC_LeftWrapper, DTFC_RightWrapper, .dataTables_scrollHead, .dataTables_scrollFoot').find('th, td'));
+					}
+					if(typeof self.getTableInstanceById(table.data('id')).fnAdjustColumnSizing == 'function' ) {
+						setTimeout(function(){
+							self.getTableInstanceById(table.data('id')).fnAdjustColumnSizing(false);
+						}, 350);
+					}
+				});
+			});
+		});
+
+		vendor[appName]._getOriginalImageSizes = (function(img) {
+			var tempImage = new Image(),
+				width,
+				height;
+			if ('naturalWidth' in tempImage && 'naturalHeight' in tempImage) {
+				width = img.naturalWidth;
+				height = img.naturalHeight;
+			} else {
+				tempImage.src= img.src;
+				width = tempImage.width;
+				height = tempImage.height;
+			}
+			return {
+				width: width,
+				height: height
+			};
+		});
+
+		vendor[appName]._calculateImages = (function($table) {
+			var self = this,
+				$images = $table.find('img');
+			if ($images.length > 0 && /firefox|trident|msie/i.test(navigator.userAgent)) {
+				$images.hide();
+				$.each($images, function(index, el) {
+					var $img = $(this),
+						originalSizes = self._getOriginalImageSizes(this);
+					if ($img.closest('td, th').width() < originalSizes.width) {
+						$img.css('width', '100%');
+					}
+				});
+				$images.show();
+
+			}
+		});
+
         vendor[appName].createSpinner = (function(elem) {
             elem = typeof(elem) != 'undefined' ? elem : false;
 
@@ -227,28 +345,8 @@ var g_stbServerSideProcessingIsActive = false;
                         });
                     }
                 };
-            if($table.data('server-side-processing') && $table.data('server-side-processing') == 'on') {
-                g_stbServerSideProcessing = true;
-            }
-
-			// Fix of correct displaying of tables with hidden rows / columns for tables without headers.
-			if (!$table.data('head')) {
-				$table.find('thead th').each(function(iter, item) {
-					var th = $(this),
-						itemIndex = iter + 1,
-						hidden = true;
-
-					$table.find('tbody td:nth-child(' + itemIndex + ')').each(function() {
-						if(!$(this).hasClass('invisibleCell')) {
-							hidden = false;
-							return false; // stop current .each() iteration
-						}
-					});
-					if(hidden) {
-						th.addClass('invisibleCell');
-					}
-				});
-			}
+			
+			g_stbServerSideProcessing = $table.data('server-side-processing') && $table.data('server-side-processing') == 'on';
 
 			// Fix for searching by merged cells
 			$table.find('tbody td[data-colspan], tbody td[data-rowspan]').each(function(index, item) {
@@ -370,13 +468,17 @@ var g_stbServerSideProcessingIsActive = false;
 						if(headerRow.length) {
 							var searchRow = '<tr class="stbColumnsSearchWrapper">',
 								func = inputTop ? 'prepend' : 'append';
-
 							for (var i = 0; i < headerRow.length; i++) {
-								var style = '';
+								var cellItem = $(headerRow[i]),
+									cellClass = '',
+									cellStyle = '';
 								if(!g_stbServerSideProcessing){
-									var style = $(headerRow[i]).is(':visible') ? '' : 'style="display: none;"';
+									cellStyle = cellItem.is(':visible') ? '' : 'style="display: none;"';
 								}
-								searchRow += '<th ' + style + '><input class="search-column" type="text" /></th>';
+								if(cellItem.hasClass('invisibleCell')){
+									cellClass = ' class="invisibleCell"'
+								}
+								searchRow += '<th ' + cellClass + cellStyle + '><input class="search-column" type="text" /></th>';
 							}
 							searchRow += '</tr>';
 							if($table.find(tPosition).length == 0) {
@@ -749,6 +851,7 @@ var g_stbServerSideProcessingIsActive = false;
             var self = vendor[appName],	// it is callback so "this" does not equal vendor[appName] object
 				$table = this instanceof $ ? this : settings,	// for compatibility with old pro versions
                 $tableWrap = $table.closest('.supsystic-tables-wrap'),
+				tableSelector = '#supsystic-table-' + $table.data('view-id') + ' #supsystic-table-' + $table.data('id'),
                 afterTableLoadedScriptString = $table.attr('data-after-table-loaded-script'),
                 _ruleJS = self.setRuleJSInstance($table),
                 responsiveMode = $table.data('responsive-mode'),
@@ -837,6 +940,8 @@ var g_stbServerSideProcessingIsActive = false;
 					$table.trigger('page.dt');
 				});
 			}
+
+			self.applyTableEventClb(self.fixHeaderOfHiddenColumns, 50, tableSelector);
 
 			$table.trigger('beforeShowTable', $table);
 
@@ -978,7 +1083,8 @@ var g_stbServerSideProcessingIsActive = false;
             }
         });
 
-		vendor[appName].applyTableEventClb = (function(clb, timeout, tableSelector) {
+		vendor[appName].applyTableEventClb = (function(clb, timeout) {
+			// Callback for applying events' actions and other functions to tables with server side processing (SSP)
 			timeout = timeout ? timeout : 0;
 			var self = this,
 				args = Array.from(arguments);
@@ -1003,13 +1109,37 @@ var g_stbServerSideProcessingIsActive = false;
 
 			this.getRuleJSInstance(table).init();
 			this.formatDataAtTable(table, true);
+			this.fixHeaderOfHiddenColumns(table);
 			if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
 				tableWrapper.find('td, th').on('click', this.applyMobileTableComments);
 			}
 			tableWrapper.find('td, th').each(this._contactFormBtnCellClb);
 		});
 
-		vendor[appName].applyMobileTableComments = function(e) {
+		vendor[appName].fixHeaderOfHiddenColumns = (function($table) {
+			$table = $table instanceof $ ? $table : $($table);
+
+			var tableWrapper = $table.parents('.supsystic-tables-wrap:first');
+
+			if(!$table.data('head')) {
+				tableWrapper.find('thead').each(function() {
+					var thead = $(this);
+					thead.find('th').each(function(iter, item) {
+						var th = $(this),
+							itemIndex = iter + 1,
+							columnAllTd = thead.parents('table:first').find('tbody td:nth-child(' + itemIndex + ')'),
+							columnInvTd = columnAllTd.filter('.invisibleCell'),
+							hidden = columnAllTd.length > 0 && columnAllTd.length == columnInvTd.length;
+						if(hidden) {
+							// Fix of correct displaying of tables with hidden rows / columns for tables without headers
+							th.addClass('invisibleCell');
+						}
+					});
+				});
+			}
+		});
+
+		vendor[appName].applyMobileTableComments = (function(e) {
 			var $elem = $(this),
 				title = $elem.attr('title');
 
@@ -1036,7 +1166,7 @@ var g_stbServerSideProcessingIsActive = false;
 					comment.fadeOut('slow');
 				}, 2500);
 			}
-		};
+		});
 
         vendor[appName]._contactFormBtnCellClb = (function(e) {
 			var cell = $(this),

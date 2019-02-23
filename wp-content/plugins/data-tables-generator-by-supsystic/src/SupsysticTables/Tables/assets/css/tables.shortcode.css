@@ -65,6 +65,9 @@ table.supsystic-table th, table.supsystic-table td {
 table.supsystic-table.nowrap th, table.supsystic-table.nowrap td {
   white-space: nowrap !important;
 }
+table.supsystic-table img.wp-post-image {
+  max-width:none;
+}
 table.supsystic-table img {
   max-width:100%;
   height:auto;
@@ -122,19 +125,20 @@ table.supsystic-table .ww-v {
   margin-bottom: 10px;
 }
 
-table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child:before,
-table.dataTable.dtr-inline.collapsed > tbody > tr > th:first-child:before {
+table.supsystic-table.collapsed > tbody > tr > td:first-child:before,
+table.supsystic-table.collapsed > tbody > tr > th:first-child:before {
   background-color: #2B2B2B;
-  text-indent: .5px;
-  line-height: 14.5px;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: normal;
+  font-style: normal;
+  text-align: center !important;
+  text-indent: 1px !important;
 }
 
-table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before,
-table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th:first-child:before {
+table.supsystic-table.collapsed > tbody > tr.parent > td:first-child:before,
+table.supsystic-table.collapsed > tbody > tr.parent > th:first-child:before {
   background-color: #888;
-  line-height: 16px;
-  font-size: 14px;
 }
 /* Reset border styles for data tables, because border and border-left, border-right etc. styles are applied on table at the same time */
 table.dataTable tbody th, table.dataTable tbody td {
@@ -210,6 +214,10 @@ table.oneColumnWithLabels tr:not(.haveMergedCell) td:after {
 	font-style: normal;
 	font-weight: 500;
 	color: #a4aaac;
+}
+.supsystic-tables-wrap .supsystic-table.compact .stbColumnsSearchWrapper th,
+.supsystic-tables-wrap .supsystic-table.compact .stbColumnsSearchWrapper td {
+	padding: 4px;
 }
 
 /* For search by hidden cells and for invisible cells */

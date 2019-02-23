@@ -30,12 +30,14 @@
 						</div>
 					</div>
 					<div class="dp-buttons">
-						<a href="{{ p.url }}" target="_blank" class="btn btn-full hvr-shutter-out-horizontal">
-							{{ translate('More info', PPS_LANG_CODE) }}
+						<a href="{{ p.url }}" target="_blank" class="btn btn-full hvr-shutter-out-horizontal {% if p.download is empty %}btn-center{% endif %}">
+							{{ translate('More info') }}
 						</a>
+                        {% if p.download is not empty %}
 						<a href="{{ p.download }}" target="_blank" class="btn btn-full btn-info hvr-shutter-out-horizontal">
-							{{ translate('Download', PPS_LANG_CODE) }}
+							{{ translate('Download') }}
 						</a>
+                        {% endif %}
 					</div>
 				</div>
 			</div>

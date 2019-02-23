@@ -32,7 +32,7 @@
                             </select>
                         </div>
                         <div class="col-md-1 col-sm-1 col-xs-2 stbTooltipInfo">
-                            {{ tooltip.icon("<b>Table Shortcode:</b> lets display the table in the site content.<br /><br /><b>Table Part Shortcode:</b> lets display just a part of table in the site content. You can display several rows or cols, for example, 'row=1,2,3', or set diapazone: 'row=1-3' or 'row=1-3,6'.<br /><br /><b>Value Shortcode:</b> lets display a value of single table cell in the site content.<br /><br /><b>Cell Shortcode:</b> lets display a table with single cell in the site content.<br /><br /><b>History Shortcode:</b> lets display an individual table data for each autorized user. Users can change the table data through editable fields on frontend. All user tables can be shown on Table History tab.<br /><br /><b>Table PHP code:</b> lets display the table through themes/plugins files (for example in the site footer). You can use any shortcode in this way.", 'top', true) }}
+                            {{ tooltip.icon("<b>Table Shortcode:</b> lets display the table in the site content.<br /><br /><b>Table Part Shortcode:</b> lets display just a part of table in the site content. You can display several rows or cols, for example, 'row=1,2,3', or set diapazone: 'row=1-3' or 'row=1-3,6'.<br /><br /><b>Value Shortcode:</b> lets display a value of single table cell in the site content.<br /><br /><b>Cell Shortcode:</b> lets display a table with single cell in the site content.<br /><br /><b>History Shortcode:</b> lets display an individual table data for each autorized user. Users can change the table data through editable fields on frontend. All user tables can be shown on Table History tab.<br /><br /><b>SQL Shortcode:</b> lets build a table using SQL-query with variables. SQL-query you can set on Settings->Source Tab.<br /><br /><b>Table PHP code:</b> lets display the table through themes/plugins files (for example in the site footer). You can use any shortcode in this way.", 'top', true) }}
                         </div>
                         {% for index, option in shortcodeOptions %}
                             <div class="col-md-8 col-sm-6 col-xs-10 stbCopyTextCodeShowBlock ShortCodeFirstBlock" data-for="{{ index }}" style="display: none;">
@@ -1230,7 +1230,7 @@
                                     <div class="setting-item col-md-6 col-sm-6 col-xs-12">
                                         <label for="lightboxImg">
                                             {{ environment.translate('Lightbox') }}
-                                            {{ tooltip.icon(environment.translate('Add Lightbox fo images')) }}
+                                            {{ tooltip.icon(environment.translate('Add Lightbox fo images . <a href="https://supsystic.com/documentation/lightbox-with-full-size-images/">https://supsystic.com/documentation/lightbox-with-full-size-images/</a>')) }}
 											{% if environment.isPro() == false %}
 												<a target="_blank" class="supsystic-pro-feature" href="{{ build_pro_url({ 'utm_medium': 'editable_fields_feature' }) }}">{{ environment.translate('PRO option') }}</a>
 											{% endif %}
@@ -1493,15 +1493,19 @@
                                 <div class="setting-wrapper row">
                                     <div class="setting-item col-md-6 col-sm-6 col-xs-12">
                                         <label for="table-source-database-unavailable">
+                                            {% set urlTables = environment.getModule('tables').getLocationUrl()  %}
                                             {{ environment.translate('Data from Database') }}
-                                            {{ tooltip.icon('You can retrieve data for table from the database.', 'top', true) }}
+                                            {{ tooltip.icon('Database Source Pro feature allows you display table and its fields data from any table of WP database or External databases on the front-end. <a target="_blank" href="https://supsystic.com/documentation/database-source/"></br>Read more</a>' | raw, 'top', true)}}
                                         </label>
-                                        <a target="_blank" class="supsystic-pro-feature" href="{{ build_pro_url({ 'utm_medium': 'table-source-database' }) }}">{{ environment.translate('PRO option') }}</a>
+                                        <a target="_blank" class="supsystic-pro-feature" href="{{ build_pro_url({ 'utm_medium': 'table-source-database' }) }}">{{ environment.translate('PRO option') }}</a></br>
                                     </div>
                                     <div class="setting-item col-md-6 col-sm-6 col-xs-12">
                                         <input type="checkbox" disabled="disabled" name="source[database]" id="table-source-database-unavailable" />
                                     </div>
-                                </div>                                
+                                    <div class="setting-item col-md-12 col-sm-12 col-xs-12">
+                                        <a target="_blank" href="{{build_pro_url({ 'utm_medium': notify })}}"><img style="max-width:800px" src="{{ environment.getModule('tables').getLocationUrl() }}/assets/img/database.gif"/></a>
+                                    </div>
+                                </div>
                             </div>
                             {% endif %}
                             {{ environment.getDispatcher().dispatch('tables-view-source', [table]) }}

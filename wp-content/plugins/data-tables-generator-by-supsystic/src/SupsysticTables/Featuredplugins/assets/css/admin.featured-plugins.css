@@ -75,6 +75,10 @@
 	font-size: 18px !important;
 	padding: 12px 0 !important;
 }
+.catitem .download-product-item .dp-buttons a.btn-center {
+	display: block;
+	margin: 0 auto;
+}
 .catitem .download-product-item .dp-buttons a.dp-full {
 	border-color: #e8eded!important;
 }

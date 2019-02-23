@@ -33,6 +33,29 @@
     font-size: 15px;
 }
 
+/* Helps avoid to conflict with some user themes */
+.supsystic-plugin .supsystic-content .row {
+	display: block;
+	width: auto;
+	table-layout: unset;
+}
+
+.supsystic-plugin  .supsystic-content .row > div {
+	display: block;
+	min-height: 1px;
+	padding-left: initial;
+	padding-right: initial;
+}
+
+.supsystic-plugin  .supsystic-content .row > [class*="col-lg-"],
+.supsystic-plugin  .supsystic-content .row > [class*="col-md-"],
+.supsystic-plugin  .supsystic-content .row > [class*="col-sm-"],
+.supsystic-plugin  .supsystic-content .row > [class*="col-xs-"] {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+/* Helps avoid to conflict with some user themes */
+
 .supsystic-plugin a {
     color: #4ae8ea;
 }

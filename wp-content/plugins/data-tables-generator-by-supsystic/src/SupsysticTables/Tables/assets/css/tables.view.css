@@ -193,11 +193,11 @@
   -moz-box-shadow: none;
   box-shadow: none;
 }
-.tables-view .row-settings-tab {
-  display: none;
+.tables-view #settings .row-settings-tabs .row-settings-tab {
+	display: none;
 }
-.tables-view .row-settings-tab.active {
-  display: block;
+.tables-view #settings .row-settings-tabs .row-settings-tab.active {
+	display: block;
 }
 .tables-view #settings input, .tables-view #settings select, .history-settings input, .history-settings select {
 	width: 100% !important;
