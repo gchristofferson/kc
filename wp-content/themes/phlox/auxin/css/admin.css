@@ -644,6 +644,8 @@ figure { *zoom: 1; }
 
 a.toplevel_page_auxin-welcome .dashicons-before:before { background: url(images/elements/admin-logo.svg) no-repeat left center; content: ' '; }
 
+.auxin-alarm-top-bar { background-color: #cd4909 !important; padding: 0 10px; }
+
 .aux-hide { display: none; }
 
 .field-row.collaspe-head.open { border-top: 1px dashed #B0B0B0 !important; }
@@ -999,6 +1001,9 @@ body.wp-admin #wpwrap #qm { margin-left: 160px !important; }
 .aux-controller-wrapper .aux-controller-btn-wrapper .aux-reset > i:before { font-size: inherit; vertical-align: middle; padding-top: 0; }
 .aux-controller-wrapper .aux-controller-btn-wrapper [data-type='popover'] { float: right; }
 .aux-controller-wrapper .aux-controller-input { position: absolute; overflow: hidden; clip: rect(0 0 0 0); height: 1px !important; width: 1px !important; margin: -1px; padding: 0; border: 0; }
+.aux-controller-wrapper .aux-typo-controller-container { float: none; display: block; }
+.aux-controller-wrapper .aux-typo-controller-container .aux-controller-label { float: left; }
+.aux-controller-wrapper .aux-typo-controller-container .aux-reset { float: right; }
 
 .aux-control { overflow: hidden; position: relative; }
 .aux-control label { display: block; font-size: 12px; color: #444444; margin-bottom: 10px; }
@@ -1035,6 +1040,9 @@ body.wp-admin #wpwrap #qm { margin-left: 160px !important; }
 .aux-control[data-type='dimension'] .aux-dimension-inputs .aux-links-value.aux-is-active { background-color: #0077a4; }
 .aux-control[data-type='dimension'] .aux-dimension-inputs .aux-links-value > i:before { font-size: inherit; vertical-align: middle; padding-top: 0; margin-top: -2px; }
 .aux-control[data-type='dimension'] .aux-dimension-inputs .aux-side-name { position: absolute; bottom: -5px; left: 0; right: 0; -webkit-transform: translateY(100%); -ms-transform: translateY(100%); transform: translateY(100%); text-align: center; color: #aaaaaa; font-size: 10px; font-weight: 400; text-transform: uppercase; }
+.aux-control[data-type='hover'] .aux-states { display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-flex-flow: row wrap; -ms-flex-flow: row wrap; flex-flow: row wrap; text-align: center; border: 1px solid #b2b2b2; border-radius: 3px; overflow: hidden; margin-bottom: 10px; }
+.aux-control[data-type='hover'] .aux-states .aux-option-item { -webkit-flex-basis: 50%; -ms-flex-preferred-size: 50%; flex-basis: 50%; background: #FFF; padding: 5px 0px; color: #303030; box-sizing: border-box; margin-bottom: 0; cursor: pointer; }
+.aux-control[data-type='hover'] .aux-states .aux-option-item.aux-option-selected { background-color: #0077a4; color: #FFF; }
 .aux-control .select2-container { width: 100% !important; }
 .aux-control .select2-container .select2-selection { border-radius: 0px; height: 35px; }
 .aux-control .select2-container .select2-selection .select2-selection__rendered { line-height: 35px; padding-left: 15px; }
@@ -4304,349 +4312,339 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 
 /** Auxin Modern Button Element */
 /** Button Elements Default Config file */
-a.button.aux-tiny, button.aux-tiny, input[type="button"].aux-tiny, .aux-button.aux-tiny, input[type="submit"].aux-tiny, input[type="reset"].aux-tiny { padding: 8px  15px; font-size: 0.6875em; font-weight: 400; }
+input[type="button"].aux-tiny, .aux-button.aux-tiny { padding: 8px  15px; font-size: 0.6875em; font-weight: 400; }
 
-a.button.aux-small, button.aux-small, input[type="button"].aux-small, .aux-button.aux-small, input[type="submit"].aux-small, input[type="reset"].aux-small { padding: 9px 18px; font-size: 0.6875em; font-weight: 500; }
+input[type="button"].aux-small, .aux-button.aux-small { padding: 9px 18px; font-size: 0.6875em; font-weight: 500; }
 
-a.button.aux-medium, button.aux-medium, input[type="button"].aux-medium, .aux-button.aux-medium, input[type="submit"].aux-medium, input[type="reset"].aux-medium { padding: 12px 23px; font-size: 0.75em; font-weight: 500; }
+input[type="button"].aux-medium, .aux-button.aux-medium { padding: 12px 23px; font-size: 0.75em; font-weight: 500; }
 
-a.button, button, input[type="button"], .aux-button, a.button.aux-large, button.aux-large, input[type="button"].aux-large, .aux-button.aux-large, input[type="submit"], input[type="reset"], input[type="submit"].aux-large, input[type="reset"].aux-large { padding: 20px 35px; font-size: 0.8125em; font-weight: 700; }
+input[type="button"], .aux-button, input[type="button"].aux-large, .aux-button.aux-large { padding: 20px 35px; font-size: 0.8125em; font-weight: 700; }
 
-a.button.aux-exlarge, button.aux-exlarge, input[type="button"].aux-exlarge, .aux-button.aux-exlarge, input[type="submit"].aux-exlarge, input[type="reset"].aux-exlarge { padding: 27px 55px; font-size: 0.8125em; font-weight: 700; }
+input[type="button"].aux-exlarge, .aux-button.aux-exlarge { padding: 27px 55px; font-size: 0.8125em; font-weight: 700; }
 
-a.button.aux-round, button.aux-round, input[type="button"].aux-round, .aux-button.aux-round { border-radius: 5px; }
+input[type="button"].aux-round, .aux-button.aux-round { border-radius: 5px; }
 
-a.button.aux-curve, button.aux-curve, input[type="button"].aux-curve, .aux-button.aux-curve { border-radius: 100em; /* a large value */ }
+input[type="button"].aux-curve, .aux-button.aux-curve { border-radius: 100em; /* a large value */ }
 
-a.button, button, input[type="button"], .aux-button, a.button.aux-normal, button.aux-normal, input[type="button"].aux-normal, .aux-button.aux-normal, input[type="submit"], input[type="reset"] { border-radius: 0; }
+input[type="button"], .aux-button, input[type="button"].aux-normal, .aux-button.aux-normal { border-radius: 0; }
 
-a.button.aux-outline, button.aux-outline, input[type="button"].aux-outline, .aux-button.aux-outline { text-shadow: none !important; }
-a.aux-black.button.aux-outline, button.aux-black.aux-outline, input.aux-black[type="button"].aux-outline, .aux-black.aux-button.aux-outline { box-shadow: 0 0 0 1px #3D3D3D inset; background-color: transparent !important; color: #3D3D3D; }
-a.aux-black.button.aux-outline:hover, button.aux-black.aux-outline:hover, input.aux-black[type="button"].aux-outline:hover, .aux-black.aux-button.aux-outline:hover { color: white; }
-a.aux-black.button.aux-outline .aux-overlay::after, button.aux-black.aux-outline .aux-overlay::after, input.aux-black[type="button"].aux-outline .aux-overlay::after, .aux-black.aux-button.aux-outline .aux-overlay::after { background-color: #3D3D3D; }
-a.aux-white.button.aux-outline, button.aux-white.aux-outline, input.aux-white[type="button"].aux-outline, .aux-white.aux-button.aux-outline { box-shadow: 0 0 0 1px #FFFFFF inset; background-color: transparent !important; color: white; }
-a.aux-white.button.aux-outline:hover, button.aux-white.aux-outline:hover, input.aux-white[type="button"].aux-outline:hover, .aux-white.aux-button.aux-outline:hover { color: black; }
-a.aux-white.button.aux-outline .aux-overlay::after, button.aux-white.aux-outline .aux-overlay::after, input.aux-white[type="button"].aux-outline .aux-overlay::after, .aux-white.aux-button.aux-outline .aux-overlay::after { background-color: #FFFFFF; }
-a.aux-masala.button.aux-outline, button.aux-masala.aux-outline, input.aux-masala[type="button"].aux-outline, .aux-masala.aux-button.aux-outline { box-shadow: 0 0 0 1px #3D3D3D inset; background-color: transparent !important; color: #3D3D3D; }
-a.aux-masala.button.aux-outline:hover, button.aux-masala.aux-outline:hover, input.aux-masala[type="button"].aux-outline:hover, .aux-masala.aux-button.aux-outline:hover { color: white; }
-a.aux-masala.button.aux-outline .aux-overlay::after, button.aux-masala.aux-outline .aux-overlay::after, input.aux-masala[type="button"].aux-outline .aux-overlay::after, .aux-masala.aux-button.aux-outline .aux-overlay::after { background-color: #3D3D3D; }
-a.aux-dark-gray.button.aux-outline, button.aux-dark-gray.aux-outline, input.aux-dark-gray[type="button"].aux-outline, .aux-dark-gray.aux-button.aux-outline { box-shadow: 0 0 0 1px #AAAAAA inset; background-color: transparent !important; color: #AAAAAA; }
-a.aux-dark-gray.button.aux-outline:hover, button.aux-dark-gray.aux-outline:hover, input.aux-dark-gray[type="button"].aux-outline:hover, .aux-dark-gray.aux-button.aux-outline:hover { color: white; }
-a.aux-dark-gray.button.aux-outline .aux-overlay::after, button.aux-dark-gray.aux-outline .aux-overlay::after, input.aux-dark-gray[type="button"].aux-outline .aux-overlay::after, .aux-dark-gray.aux-button.aux-outline .aux-overlay::after { background-color: #AAAAAA; }
-a.aux-ball-blue.button.aux-outline, button.aux-ball-blue.aux-outline, input.aux-ball-blue[type="button"].aux-outline, .aux-ball-blue.aux-button.aux-outline { box-shadow: 0 0 0 1px #1BB0CE inset; background-color: transparent !important; color: #1BB0CE; }
-a.aux-ball-blue.button.aux-outline:hover, button.aux-ball-blue.aux-outline:hover, input.aux-ball-blue[type="button"].aux-outline:hover, .aux-ball-blue.aux-button.aux-outline:hover { color: white; }
-a.aux-ball-blue.button.aux-outline .aux-overlay::after, button.aux-ball-blue.aux-outline .aux-overlay::after, input.aux-ball-blue[type="button"].aux-outline .aux-overlay::after, .aux-ball-blue.aux-button.aux-outline .aux-overlay::after { background-color: #1BB0CE; }
-a.aux-fountain-blue.button.aux-outline, button.aux-fountain-blue.aux-outline, input.aux-fountain-blue[type="button"].aux-outline, .aux-fountain-blue.aux-button.aux-outline { box-shadow: 0 0 0 1px #5BACBA inset; background-color: transparent !important; color: #5BACBA; }
-a.aux-fountain-blue.button.aux-outline:hover, button.aux-fountain-blue.aux-outline:hover, input.aux-fountain-blue[type="button"].aux-outline:hover, .aux-fountain-blue.aux-button.aux-outline:hover { color: white; }
-a.aux-fountain-blue.button.aux-outline .aux-overlay::after, button.aux-fountain-blue.aux-outline .aux-overlay::after, input.aux-fountain-blue[type="button"].aux-outline .aux-overlay::after, .aux-fountain-blue.aux-button.aux-outline .aux-overlay::after { background-color: #5BACBA; }
-a.aux-shamrock.button.aux-outline, button.aux-shamrock.aux-outline, input.aux-shamrock[type="button"].aux-outline, .aux-shamrock.aux-button.aux-outline { box-shadow: 0 0 0 1px #2CC990 inset; background-color: transparent !important; color: #2CC990; }
-a.aux-shamrock.button.aux-outline:hover, button.aux-shamrock.aux-outline:hover, input.aux-shamrock[type="button"].aux-outline:hover, .aux-shamrock.aux-button.aux-outline:hover { color: white; }
-a.aux-shamrock.button.aux-outline .aux-overlay::after, button.aux-shamrock.aux-outline .aux-overlay::after, input.aux-shamrock[type="button"].aux-outline .aux-overlay::after, .aux-shamrock.aux-button.aux-outline .aux-overlay::after { background-color: #2CC990; }
-a.aux-curios-blue.button.aux-outline, button.aux-curios-blue.aux-outline, input.aux-curios-blue[type="button"].aux-outline, .aux-curios-blue.aux-button.aux-outline { box-shadow: 0 0 0 1px #2C82C9 inset; background-color: transparent !important; color: #2C82C9; }
-a.aux-curios-blue.button.aux-outline:hover, button.aux-curios-blue.aux-outline:hover, input.aux-curios-blue[type="button"].aux-outline:hover, .aux-curios-blue.aux-button.aux-outline:hover { color: white; }
-a.aux-curios-blue.button.aux-outline .aux-overlay::after, button.aux-curios-blue.aux-outline .aux-overlay::after, input.aux-curios-blue[type="button"].aux-outline .aux-overlay::after, .aux-curios-blue.aux-button.aux-outline .aux-overlay::after { background-color: #2C82C9; }
-a.aux-light-sea-green.button.aux-outline, button.aux-light-sea-green.aux-outline, input.aux-light-sea-green[type="button"].aux-outline, .aux-light-sea-green.aux-button.aux-outline { box-shadow: 0 0 0 1px #1ABC9C inset; background-color: transparent !important; color: #1ABC9C; }
-a.aux-light-sea-green.button.aux-outline:hover, button.aux-light-sea-green.aux-outline:hover, input.aux-light-sea-green[type="button"].aux-outline:hover, .aux-light-sea-green.aux-button.aux-outline:hover { color: white; }
-a.aux-light-sea-green.button.aux-outline .aux-overlay::after, button.aux-light-sea-green.aux-outline .aux-overlay::after, input.aux-light-sea-green[type="button"].aux-outline .aux-overlay::after, .aux-light-sea-green.aux-button.aux-outline .aux-overlay::after { background-color: #1ABC9C; }
-a.aux-emerald.button.aux-outline, button.aux-emerald.aux-outline, input.aux-emerald[type="button"].aux-outline, .aux-emerald.aux-button.aux-outline { box-shadow: 0 0 0 1px #4EBA6F inset; background-color: transparent !important; color: #4EBA6F; }
-a.aux-emerald.button.aux-outline:hover, button.aux-emerald.aux-outline:hover, input.aux-emerald[type="button"].aux-outline:hover, .aux-emerald.aux-button.aux-outline:hover { color: white; }
-a.aux-emerald.button.aux-outline .aux-overlay::after, button.aux-emerald.aux-outline .aux-overlay::after, input.aux-emerald[type="button"].aux-outline .aux-overlay::after, .aux-emerald.aux-button.aux-outline .aux-overlay::after { background-color: #4EBA6F; }
-a.aux-energy-yellow.button.aux-outline, button.aux-energy-yellow.aux-outline, input.aux-energy-yellow[type="button"].aux-outline, .aux-energy-yellow.aux-button.aux-outline { box-shadow: 0 0 0 1px #EEE657 inset; background-color: transparent !important; color: #EEE657; }
-a.aux-energy-yellow.button.aux-outline:hover, button.aux-energy-yellow.aux-outline:hover, input.aux-energy-yellow[type="button"].aux-outline:hover, .aux-energy-yellow.aux-button.aux-outline:hover { color: white; }
-a.aux-energy-yellow.button.aux-outline .aux-overlay::after, button.aux-energy-yellow.aux-outline .aux-overlay::after, input.aux-energy-yellow[type="button"].aux-outline .aux-overlay::after, .aux-energy-yellow.aux-button.aux-outline .aux-overlay::after { background-color: #EEE657; }
-a.aux-mikado-yellow.button.aux-outline, button.aux-mikado-yellow.aux-outline, input.aux-mikado-yellow[type="button"].aux-outline, .aux-mikado-yellow.aux-button.aux-outline { box-shadow: 0 0 0 1px #FCCD0F inset; background-color: transparent !important; color: #FCCD0F; }
-a.aux-mikado-yellow.button.aux-outline:hover, button.aux-mikado-yellow.aux-outline:hover, input.aux-mikado-yellow[type="button"].aux-outline:hover, .aux-mikado-yellow.aux-button.aux-outline:hover { color: white; }
-a.aux-mikado-yellow.button.aux-outline .aux-overlay::after, button.aux-mikado-yellow.aux-outline .aux-overlay::after, input.aux-mikado-yellow[type="button"].aux-outline .aux-overlay::after, .aux-mikado-yellow.aux-button.aux-outline .aux-overlay::after { background-color: #FCCD0F; }
-a.aux-pink-salmon.button.aux-outline, button.aux-pink-salmon.aux-outline, input.aux-pink-salmon[type="button"].aux-outline, .aux-pink-salmon.aux-button.aux-outline { box-shadow: 0 0 0 1px #FF91A9 inset; background-color: transparent !important; color: #FF91A9; }
-a.aux-pink-salmon.button.aux-outline:hover, button.aux-pink-salmon.aux-outline:hover, input.aux-pink-salmon[type="button"].aux-outline:hover, .aux-pink-salmon.aux-button.aux-outline:hover { color: white; }
-a.aux-pink-salmon.button.aux-outline .aux-overlay::after, button.aux-pink-salmon.aux-outline .aux-overlay::after, input.aux-pink-salmon[type="button"].aux-outline .aux-overlay::after, .aux-pink-salmon.aux-button.aux-outline .aux-overlay::after { background-color: #FF91A9; }
-a.aux-wisteria.button.aux-outline, button.aux-wisteria.aux-outline, input.aux-wisteria[type="button"].aux-outline, .aux-wisteria.aux-button.aux-outline { box-shadow: 0 0 0 1px #9E69AF inset; background-color: transparent !important; color: #9E69AF; }
-a.aux-wisteria.button.aux-outline:hover, button.aux-wisteria.aux-outline:hover, input.aux-wisteria[type="button"].aux-outline:hover, .aux-wisteria.aux-button.aux-outline:hover { color: white; }
-a.aux-wisteria.button.aux-outline .aux-overlay::after, button.aux-wisteria.aux-outline .aux-overlay::after, input.aux-wisteria[type="button"].aux-outline .aux-overlay::after, .aux-wisteria.aux-button.aux-outline .aux-overlay::after { background-color: #9E69AF; }
-a.aux-lilac.button.aux-outline, button.aux-lilac.aux-outline, input.aux-lilac[type="button"].aux-outline, .aux-lilac.aux-button.aux-outline { box-shadow: 0 0 0 1px #CEACD2 inset; background-color: transparent !important; color: #CEACD2; }
-a.aux-lilac.button.aux-outline:hover, button.aux-lilac.aux-outline:hover, input.aux-lilac[type="button"].aux-outline:hover, .aux-lilac.aux-button.aux-outline:hover { color: white; }
-a.aux-lilac.button.aux-outline .aux-overlay::after, button.aux-lilac.aux-outline .aux-overlay::after, input.aux-lilac[type="button"].aux-outline .aux-overlay::after, .aux-lilac.aux-button.aux-outline .aux-overlay::after { background-color: #CEACD2; }
-a.aux-pale-sky.button.aux-outline, button.aux-pale-sky.aux-outline, input.aux-pale-sky[type="button"].aux-outline, .aux-pale-sky.aux-button.aux-outline { box-shadow: 0 0 0 1px #5F7487 inset; background-color: transparent !important; color: #5F7487; }
-a.aux-pale-sky.button.aux-outline:hover, button.aux-pale-sky.aux-outline:hover, input.aux-pale-sky[type="button"].aux-outline:hover, .aux-pale-sky.aux-button.aux-outline:hover { color: white; }
-a.aux-pale-sky.button.aux-outline .aux-overlay::after, button.aux-pale-sky.aux-outline .aux-overlay::after, input.aux-pale-sky[type="button"].aux-outline .aux-overlay::after, .aux-pale-sky.aux-button.aux-outline .aux-overlay::after { background-color: #5F7487; }
-a.aux-tower-gray.button.aux-outline, button.aux-tower-gray.aux-outline, input.aux-tower-gray[type="button"].aux-outline, .aux-tower-gray.aux-button.aux-outline { box-shadow: 0 0 0 1px #ADBCC3 inset; background-color: transparent !important; color: #ADBCC3; }
-a.aux-tower-gray.button.aux-outline:hover, button.aux-tower-gray.aux-outline:hover, input.aux-tower-gray[type="button"].aux-outline:hover, .aux-tower-gray.aux-button.aux-outline:hover { color: white; }
-a.aux-tower-gray.button.aux-outline .aux-overlay::after, button.aux-tower-gray.aux-outline .aux-overlay::after, input.aux-tower-gray[type="button"].aux-outline .aux-overlay::after, .aux-tower-gray.aux-button.aux-outline .aux-overlay::after { background-color: #ADBCC3; }
-a.aux-william.button.aux-outline, button.aux-william.aux-outline, input.aux-william[type="button"].aux-outline, .aux-william.aux-button.aux-outline { box-shadow: 0 0 0 1px #3A5F6F inset; background-color: transparent !important; color: #3A5F6F; }
-a.aux-william.button.aux-outline:hover, button.aux-william.aux-outline:hover, input.aux-william[type="button"].aux-outline:hover, .aux-william.aux-button.aux-outline:hover { color: white; }
-a.aux-william.button.aux-outline .aux-overlay::after, button.aux-william.aux-outline .aux-overlay::after, input.aux-william[type="button"].aux-outline .aux-overlay::after, .aux-william.aux-button.aux-outline .aux-overlay::after { background-color: #3A5F6F; }
-a.aux-carmine-pink.button.aux-outline, button.aux-carmine-pink.aux-outline, input.aux-carmine-pink[type="button"].aux-outline, .aux-carmine-pink.aux-button.aux-outline { box-shadow: 0 0 0 1px #E74C3C inset; background-color: transparent !important; color: #E74C3C; }
-a.aux-carmine-pink.button.aux-outline:hover, button.aux-carmine-pink.aux-outline:hover, input.aux-carmine-pink[type="button"].aux-outline:hover, .aux-carmine-pink.aux-button.aux-outline:hover { color: white; }
-a.aux-carmine-pink.button.aux-outline .aux-overlay::after, button.aux-carmine-pink.aux-outline .aux-overlay::after, input.aux-carmine-pink[type="button"].aux-outline .aux-overlay::after, .aux-carmine-pink.aux-button.aux-outline .aux-overlay::after { background-color: #E74C3C; }
-a.aux-persimmon.button.aux-outline, button.aux-persimmon.aux-outline, input.aux-persimmon[type="button"].aux-outline, .aux-persimmon.aux-button.aux-outline { box-shadow: 0 0 0 1px #FF6A55 inset; background-color: transparent !important; color: #FF6A55; }
-a.aux-persimmon.button.aux-outline:hover, button.aux-persimmon.aux-outline:hover, input.aux-persimmon[type="button"].aux-outline:hover, .aux-persimmon.aux-button.aux-outline:hover { color: white; }
-a.aux-persimmon.button.aux-outline .aux-overlay::after, button.aux-persimmon.aux-outline .aux-overlay::after, input.aux-persimmon[type="button"].aux-outline .aux-overlay::after, .aux-persimmon.aux-button.aux-outline .aux-overlay::after { background-color: #FF6A55; }
-a.aux-tan-hide.button.aux-outline, button.aux-tan-hide.aux-outline, input.aux-tan-hide[type="button"].aux-outline, .aux-tan-hide.aux-button.aux-outline { box-shadow: 0 0 0 1px #FF9F55 inset; background-color: transparent !important; color: #FF9F55; }
-a.aux-tan-hide.button.aux-outline:hover, button.aux-tan-hide.aux-outline:hover, input.aux-tan-hide[type="button"].aux-outline:hover, .aux-tan-hide.aux-button.aux-outline:hover { color: white; }
-a.aux-tan-hide.button.aux-outline .aux-overlay::after, button.aux-tan-hide.aux-outline .aux-overlay::after, input.aux-tan-hide[type="button"].aux-outline .aux-overlay::after, .aux-tan-hide.aux-button.aux-outline .aux-overlay::after { background-color: #FF9F55; }
-a.aux-wild-watermelon.button.aux-outline, button.aux-wild-watermelon.aux-outline, input.aux-wild-watermelon[type="button"].aux-outline, .aux-wild-watermelon.aux-button.aux-outline { box-shadow: 0 0 0 1px #FF6E78 inset; background-color: transparent !important; color: #FF6E78; }
-a.aux-wild-watermelon.button.aux-outline:hover, button.aux-wild-watermelon.aux-outline:hover, input.aux-wild-watermelon[type="button"].aux-outline:hover, .aux-wild-watermelon.aux-button.aux-outline:hover { color: white; }
-a.aux-wild-watermelon.button.aux-outline .aux-overlay::after, button.aux-wild-watermelon.aux-outline .aux-overlay::after, input.aux-wild-watermelon[type="button"].aux-outline .aux-overlay::after, .aux-wild-watermelon.aux-button.aux-outline .aux-overlay::after { background-color: #FF6E78; }
-a.aux-iceberg.button.aux-outline, button.aux-iceberg.aux-outline, input.aux-iceberg[type="button"].aux-outline, .aux-iceberg.aux-button.aux-outline { box-shadow: 0 0 0 1px #73B1D6 inset; background-color: transparent !important; color: #73B1D6; }
-a.aux-iceberg.button.aux-outline:hover, button.aux-iceberg.aux-outline:hover, input.aux-iceberg[type="button"].aux-outline:hover, .aux-iceberg.aux-button.aux-outline:hover { color: white; }
-a.aux-iceberg.button.aux-outline .aux-overlay::after, button.aux-iceberg.aux-outline .aux-overlay::after, input.aux-iceberg[type="button"].aux-outline .aux-overlay::after, .aux-iceberg.aux-button.aux-outline .aux-overlay::after { background-color: #73B1D6; }
-a.aux-dark-lavender.button.aux-outline, button.aux-dark-lavender.aux-outline, input.aux-dark-lavender[type="button"].aux-outline, .aux-dark-lavender.aux-button.aux-outline { box-shadow: 0 0 0 1px #745A90 inset; background-color: transparent !important; color: #745A90; }
-a.aux-dark-lavender.button.aux-outline:hover, button.aux-dark-lavender.aux-outline:hover, input.aux-dark-lavender[type="button"].aux-outline:hover, .aux-dark-lavender.aux-button.aux-outline:hover { color: white; }
-a.aux-dark-lavender.button.aux-outline .aux-overlay::after, button.aux-dark-lavender.aux-outline .aux-overlay::after, input.aux-dark-lavender[type="button"].aux-outline .aux-overlay::after, .aux-dark-lavender.aux-button.aux-outline .aux-overlay::after { background-color: #745A90; }
-a.aux-viking.button.aux-outline, button.aux-viking.aux-outline, input.aux-viking[type="button"].aux-outline, .aux-viking.aux-button.aux-outline { box-shadow: 0 0 0 1px #5CD5E6 inset; background-color: transparent !important; color: #5CD5E6; }
-a.aux-viking.button.aux-outline:hover, button.aux-viking.aux-outline:hover, input.aux-viking[type="button"].aux-outline:hover, .aux-viking.aux-button.aux-outline:hover { color: white; }
-a.aux-viking.button.aux-outline .aux-overlay::after, button.aux-viking.aux-outline .aux-overlay::after, input.aux-viking[type="button"].aux-outline .aux-overlay::after, .aux-viking.aux-button.aux-outline .aux-overlay::after { background-color: #5CD5E6; }
-a.aux-tiffany-blue.button.aux-outline, button.aux-tiffany-blue.aux-outline, input.aux-tiffany-blue[type="button"].aux-outline, .aux-tiffany-blue.aux-button.aux-outline { box-shadow: 0 0 0 1px #00B5B5 inset; background-color: transparent !important; color: #00B5B5; }
-a.aux-tiffany-blue.button.aux-outline:hover, button.aux-tiffany-blue.aux-outline:hover, input.aux-tiffany-blue[type="button"].aux-outline:hover, .aux-tiffany-blue.aux-button.aux-outline:hover { color: white; }
-a.aux-tiffany-blue.button.aux-outline .aux-overlay::after, button.aux-tiffany-blue.aux-outline .aux-overlay::after, input.aux-tiffany-blue[type="button"].aux-outline .aux-overlay::after, .aux-tiffany-blue.aux-button.aux-outline .aux-overlay::after { background-color: #00B5B5; }
-a.aux-pastel-orange.button.aux-outline, button.aux-pastel-orange.aux-outline, input.aux-pastel-orange[type="button"].aux-outline, .aux-pastel-orange.aux-button.aux-outline { box-shadow: 0 0 0 1px #FCB941 inset; background-color: transparent !important; color: #FCB941; }
-a.aux-pastel-orange.button.aux-outline:hover, button.aux-pastel-orange.aux-outline:hover, input.aux-pastel-orange[type="button"].aux-outline:hover, .aux-pastel-orange.aux-button.aux-outline:hover { color: white; }
-a.aux-pastel-orange.button.aux-outline .aux-overlay::after, button.aux-pastel-orange.aux-outline .aux-overlay::after, input.aux-pastel-orange[type="button"].aux-outline .aux-overlay::after, .aux-pastel-orange.aux-button.aux-outline .aux-overlay::after { background-color: #FCB941; }
-a.aux-east-bay.button.aux-outline, button.aux-east-bay.aux-outline, input.aux-east-bay[type="button"].aux-outline, .aux-east-bay.aux-button.aux-outline { box-shadow: 0 0 0 1px #395781 inset; background-color: transparent !important; color: #395781; }
-a.aux-east-bay.button.aux-outline:hover, button.aux-east-bay.aux-outline:hover, input.aux-east-bay[type="button"].aux-outline:hover, .aux-east-bay.aux-button.aux-outline:hover { color: white; }
-a.aux-east-bay.button.aux-outline .aux-overlay::after, button.aux-east-bay.aux-outline .aux-overlay::after, input.aux-east-bay[type="button"].aux-outline .aux-overlay::after, .aux-east-bay.aux-button.aux-outline .aux-overlay::after { background-color: #395781; }
-a.aux-steel-blue.button.aux-outline, button.aux-steel-blue.aux-outline, input.aux-steel-blue[type="button"].aux-outline, .aux-steel-blue.aux-button.aux-outline { box-shadow: 0 0 0 1px #4589B0 inset; background-color: transparent !important; color: #4589B0; }
-a.aux-steel-blue.button.aux-outline:hover, button.aux-steel-blue.aux-outline:hover, input.aux-steel-blue[type="button"].aux-outline:hover, .aux-steel-blue.aux-button.aux-outline:hover { color: white; }
-a.aux-steel-blue.button.aux-outline .aux-overlay::after, button.aux-steel-blue.aux-outline .aux-overlay::after, input.aux-steel-blue[type="button"].aux-outline .aux-overlay::after, .aux-steel-blue.aux-button.aux-outline .aux-overlay::after { background-color: #4589B0; }
-a.aux-half-backed.button.aux-outline, button.aux-half-backed.aux-outline, input.aux-half-backed[type="button"].aux-outline, .aux-half-backed.aux-button.aux-outline { box-shadow: 0 0 0 1px #84CCD1 inset; background-color: transparent !important; color: #84CCD1; }
-a.aux-half-backed.button.aux-outline:hover, button.aux-half-backed.aux-outline:hover, input.aux-half-backed[type="button"].aux-outline:hover, .aux-half-backed.aux-button.aux-outline:hover { color: white; }
-a.aux-half-backed.button.aux-outline .aux-overlay::after, button.aux-half-backed.aux-outline .aux-overlay::after, input.aux-half-backed[type="button"].aux-outline .aux-overlay::after, .aux-half-backed.aux-button.aux-outline .aux-overlay::after { background-color: #84CCD1; }
-a.aux-tapestry.button.aux-outline, button.aux-tapestry.aux-outline, input.aux-tapestry[type="button"].aux-outline, .aux-tapestry.aux-button.aux-outline { box-shadow: 0 0 0 1px #B95A84 inset; background-color: transparent !important; color: #B95A84; }
-a.aux-tapestry.button.aux-outline:hover, button.aux-tapestry.aux-outline:hover, input.aux-tapestry[type="button"].aux-outline:hover, .aux-tapestry.aux-button.aux-outline:hover { color: white; }
-a.aux-tapestry.button.aux-outline .aux-overlay::after, button.aux-tapestry.aux-outline .aux-overlay::after, input.aux-tapestry[type="button"].aux-outline .aux-overlay::after, .aux-tapestry.aux-button.aux-outline .aux-overlay::after { background-color: #B95A84; }
-a.aux-fire-engine-red.button.aux-outline, button.aux-fire-engine-red.aux-outline, input.aux-fire-engine-red[type="button"].aux-outline, .aux-fire-engine-red.aux-button.aux-outline { box-shadow: 0 0 0 1px #CD2C24 inset; background-color: transparent !important; color: #CD2C24; }
-a.aux-fire-engine-red.button.aux-outline:hover, button.aux-fire-engine-red.aux-outline:hover, input.aux-fire-engine-red[type="button"].aux-outline:hover, .aux-fire-engine-red.aux-button.aux-outline:hover { color: white; }
-a.aux-fire-engine-red.button.aux-outline .aux-overlay::after, button.aux-fire-engine-red.aux-outline .aux-overlay::after, input.aux-fire-engine-red[type="button"].aux-outline .aux-overlay::after, .aux-fire-engine-red.aux-button.aux-outline .aux-overlay::after { background-color: #CD2C24; }
-a.aux-dark-orange.button.aux-outline, button.aux-dark-orange.aux-outline, input.aux-dark-orange[type="button"].aux-outline, .aux-dark-orange.aux-button.aux-outline { box-shadow: 0 0 0 1px #FF8C00 inset; background-color: transparent !important; color: #FF8C00; }
-a.aux-dark-orange.button.aux-outline:hover, button.aux-dark-orange.aux-outline:hover, input.aux-dark-orange[type="button"].aux-outline:hover, .aux-dark-orange.aux-button.aux-outline:hover { color: white; }
-a.aux-dark-orange.button.aux-outline .aux-overlay::after, button.aux-dark-orange.aux-outline .aux-overlay::after, input.aux-dark-orange[type="button"].aux-outline .aux-overlay::after, .aux-dark-orange.aux-button.aux-outline .aux-overlay::after { background-color: #FF8C00; }
-a.aux-brick-red.button.aux-outline, button.aux-brick-red.aux-outline, input.aux-brick-red[type="button"].aux-outline, .aux-brick-red.aux-button.aux-outline { box-shadow: 0 0 0 1px #CC4452 inset; background-color: transparent !important; color: #CC4452; }
-a.aux-brick-red.button.aux-outline:hover, button.aux-brick-red.aux-outline:hover, input.aux-brick-red[type="button"].aux-outline:hover, .aux-brick-red.aux-button.aux-outline:hover { color: white; }
-a.aux-brick-red.button.aux-outline .aux-overlay::after, button.aux-brick-red.aux-outline .aux-overlay::after, input.aux-brick-red[type="button"].aux-outline .aux-overlay::after, .aux-brick-red.aux-button.aux-outline .aux-overlay::after { background-color: #CC4452; }
-a.aux-khaki.button.aux-outline, button.aux-khaki.aux-outline, input.aux-khaki[type="button"].aux-outline, .aux-khaki.aux-button.aux-outline { box-shadow: 0 0 0 1px khaki inset; background-color: transparent !important; color: khaki; }
-a.aux-khaki.button.aux-outline:hover, button.aux-khaki.aux-outline:hover, input.aux-khaki[type="button"].aux-outline:hover, .aux-khaki.aux-button.aux-outline:hover { color: white; }
-a.aux-khaki.button.aux-outline .aux-overlay::after, button.aux-khaki.aux-outline .aux-overlay::after, input.aux-khaki[type="button"].aux-outline .aux-overlay::after, .aux-khaki.aux-button.aux-outline .aux-overlay::after { background-color: khaki; }
+input[type="button"].aux-outline, .aux-button.aux-outline { text-shadow: none !important; }
+input.aux-black[type="button"].aux-outline, .aux-black.aux-button.aux-outline { box-shadow: 0 0 0 1px #3D3D3D inset; background-color: transparent !important; color: #3D3D3D; }
+input.aux-black[type="button"].aux-outline:hover, .aux-black.aux-button.aux-outline:hover { color: white; }
+input.aux-black[type="button"].aux-outline .aux-overlay::after, .aux-black.aux-button.aux-outline .aux-overlay::after { background-color: #3D3D3D; }
+input.aux-white[type="button"].aux-outline, .aux-white.aux-button.aux-outline { box-shadow: 0 0 0 1px #FFFFFF inset; background-color: transparent !important; color: white; }
+input.aux-white[type="button"].aux-outline:hover, .aux-white.aux-button.aux-outline:hover { color: black; }
+input.aux-white[type="button"].aux-outline .aux-overlay::after, .aux-white.aux-button.aux-outline .aux-overlay::after { background-color: #FFFFFF; }
+input.aux-masala[type="button"].aux-outline, .aux-masala.aux-button.aux-outline { box-shadow: 0 0 0 1px #3D3D3D inset; background-color: transparent !important; color: #3D3D3D; }
+input.aux-masala[type="button"].aux-outline:hover, .aux-masala.aux-button.aux-outline:hover { color: white; }
+input.aux-masala[type="button"].aux-outline .aux-overlay::after, .aux-masala.aux-button.aux-outline .aux-overlay::after { background-color: #3D3D3D; }
+input.aux-dark-gray[type="button"].aux-outline, .aux-dark-gray.aux-button.aux-outline { box-shadow: 0 0 0 1px #AAAAAA inset; background-color: transparent !important; color: #AAAAAA; }
+input.aux-dark-gray[type="button"].aux-outline:hover, .aux-dark-gray.aux-button.aux-outline:hover { color: white; }
+input.aux-dark-gray[type="button"].aux-outline .aux-overlay::after, .aux-dark-gray.aux-button.aux-outline .aux-overlay::after { background-color: #AAAAAA; }
+input.aux-ball-blue[type="button"].aux-outline, .aux-ball-blue.aux-button.aux-outline { box-shadow: 0 0 0 1px #1BB0CE inset; background-color: transparent !important; color: #1BB0CE; }
+input.aux-ball-blue[type="button"].aux-outline:hover, .aux-ball-blue.aux-button.aux-outline:hover { color: white; }
+input.aux-ball-blue[type="button"].aux-outline .aux-overlay::after, .aux-ball-blue.aux-button.aux-outline .aux-overlay::after { background-color: #1BB0CE; }
+input.aux-fountain-blue[type="button"].aux-outline, .aux-fountain-blue.aux-button.aux-outline { box-shadow: 0 0 0 1px #5BACBA inset; background-color: transparent !important; color: #5BACBA; }
+input.aux-fountain-blue[type="button"].aux-outline:hover, .aux-fountain-blue.aux-button.aux-outline:hover { color: white; }
+input.aux-fountain-blue[type="button"].aux-outline .aux-overlay::after, .aux-fountain-blue.aux-button.aux-outline .aux-overlay::after { background-color: #5BACBA; }
+input.aux-shamrock[type="button"].aux-outline, .aux-shamrock.aux-button.aux-outline { box-shadow: 0 0 0 1px #2CC990 inset; background-color: transparent !important; color: #2CC990; }
+input.aux-shamrock[type="button"].aux-outline:hover, .aux-shamrock.aux-button.aux-outline:hover { color: white; }
+input.aux-shamrock[type="button"].aux-outline .aux-overlay::after, .aux-shamrock.aux-button.aux-outline .aux-overlay::after { background-color: #2CC990; }
+input.aux-curios-blue[type="button"].aux-outline, .aux-curios-blue.aux-button.aux-outline { box-shadow: 0 0 0 1px #2C82C9 inset; background-color: transparent !important; color: #2C82C9; }
+input.aux-curios-blue[type="button"].aux-outline:hover, .aux-curios-blue.aux-button.aux-outline:hover { color: white; }
+input.aux-curios-blue[type="button"].aux-outline .aux-overlay::after, .aux-curios-blue.aux-button.aux-outline .aux-overlay::after { background-color: #2C82C9; }
+input.aux-light-sea-green[type="button"].aux-outline, .aux-light-sea-green.aux-button.aux-outline { box-shadow: 0 0 0 1px #1ABC9C inset; background-color: transparent !important; color: #1ABC9C; }
+input.aux-light-sea-green[type="button"].aux-outline:hover, .aux-light-sea-green.aux-button.aux-outline:hover { color: white; }
+input.aux-light-sea-green[type="button"].aux-outline .aux-overlay::after, .aux-light-sea-green.aux-button.aux-outline .aux-overlay::after { background-color: #1ABC9C; }
+input.aux-emerald[type="button"].aux-outline, .aux-emerald.aux-button.aux-outline { box-shadow: 0 0 0 1px #4EBA6F inset; background-color: transparent !important; color: #4EBA6F; }
+input.aux-emerald[type="button"].aux-outline:hover, .aux-emerald.aux-button.aux-outline:hover { color: white; }
+input.aux-emerald[type="button"].aux-outline .aux-overlay::after, .aux-emerald.aux-button.aux-outline .aux-overlay::after { background-color: #4EBA6F; }
+input.aux-energy-yellow[type="button"].aux-outline, .aux-energy-yellow.aux-button.aux-outline { box-shadow: 0 0 0 1px #EEE657 inset; background-color: transparent !important; color: #EEE657; }
+input.aux-energy-yellow[type="button"].aux-outline:hover, .aux-energy-yellow.aux-button.aux-outline:hover { color: white; }
+input.aux-energy-yellow[type="button"].aux-outline .aux-overlay::after, .aux-energy-yellow.aux-button.aux-outline .aux-overlay::after { background-color: #EEE657; }
+input.aux-mikado-yellow[type="button"].aux-outline, .aux-mikado-yellow.aux-button.aux-outline { box-shadow: 0 0 0 1px #FCCD0F inset; background-color: transparent !important; color: #FCCD0F; }
+input.aux-mikado-yellow[type="button"].aux-outline:hover, .aux-mikado-yellow.aux-button.aux-outline:hover { color: white; }
+input.aux-mikado-yellow[type="button"].aux-outline .aux-overlay::after, .aux-mikado-yellow.aux-button.aux-outline .aux-overlay::after { background-color: #FCCD0F; }
+input.aux-pink-salmon[type="button"].aux-outline, .aux-pink-salmon.aux-button.aux-outline { box-shadow: 0 0 0 1px #FF91A9 inset; background-color: transparent !important; color: #FF91A9; }
+input.aux-pink-salmon[type="button"].aux-outline:hover, .aux-pink-salmon.aux-button.aux-outline:hover { color: white; }
+input.aux-pink-salmon[type="button"].aux-outline .aux-overlay::after, .aux-pink-salmon.aux-button.aux-outline .aux-overlay::after { background-color: #FF91A9; }
+input.aux-wisteria[type="button"].aux-outline, .aux-wisteria.aux-button.aux-outline { box-shadow: 0 0 0 1px #9E69AF inset; background-color: transparent !important; color: #9E69AF; }
+input.aux-wisteria[type="button"].aux-outline:hover, .aux-wisteria.aux-button.aux-outline:hover { color: white; }
+input.aux-wisteria[type="button"].aux-outline .aux-overlay::after, .aux-wisteria.aux-button.aux-outline .aux-overlay::after { background-color: #9E69AF; }
+input.aux-lilac[type="button"].aux-outline, .aux-lilac.aux-button.aux-outline { box-shadow: 0 0 0 1px #CEACD2 inset; background-color: transparent !important; color: #CEACD2; }
+input.aux-lilac[type="button"].aux-outline:hover, .aux-lilac.aux-button.aux-outline:hover { color: white; }
+input.aux-lilac[type="button"].aux-outline .aux-overlay::after, .aux-lilac.aux-button.aux-outline .aux-overlay::after { background-color: #CEACD2; }
+input.aux-pale-sky[type="button"].aux-outline, .aux-pale-sky.aux-button.aux-outline { box-shadow: 0 0 0 1px #5F7487 inset; background-color: transparent !important; color: #5F7487; }
+input.aux-pale-sky[type="button"].aux-outline:hover, .aux-pale-sky.aux-button.aux-outline:hover { color: white; }
+input.aux-pale-sky[type="button"].aux-outline .aux-overlay::after, .aux-pale-sky.aux-button.aux-outline .aux-overlay::after { background-color: #5F7487; }
+input.aux-tower-gray[type="button"].aux-outline, .aux-tower-gray.aux-button.aux-outline { box-shadow: 0 0 0 1px #ADBCC3 inset; background-color: transparent !important; color: #ADBCC3; }
+input.aux-tower-gray[type="button"].aux-outline:hover, .aux-tower-gray.aux-button.aux-outline:hover { color: white; }
+input.aux-tower-gray[type="button"].aux-outline .aux-overlay::after, .aux-tower-gray.aux-button.aux-outline .aux-overlay::after { background-color: #ADBCC3; }
+input.aux-william[type="button"].aux-outline, .aux-william.aux-button.aux-outline { box-shadow: 0 0 0 1px #3A5F6F inset; background-color: transparent !important; color: #3A5F6F; }
+input.aux-william[type="button"].aux-outline:hover, .aux-william.aux-button.aux-outline:hover { color: white; }
+input.aux-william[type="button"].aux-outline .aux-overlay::after, .aux-william.aux-button.aux-outline .aux-overlay::after { background-color: #3A5F6F; }
+input.aux-carmine-pink[type="button"].aux-outline, .aux-carmine-pink.aux-button.aux-outline { box-shadow: 0 0 0 1px #E74C3C inset; background-color: transparent !important; color: #E74C3C; }
+input.aux-carmine-pink[type="button"].aux-outline:hover, .aux-carmine-pink.aux-button.aux-outline:hover { color: white; }
+input.aux-carmine-pink[type="button"].aux-outline .aux-overlay::after, .aux-carmine-pink.aux-button.aux-outline .aux-overlay::after { background-color: #E74C3C; }
+input.aux-persimmon[type="button"].aux-outline, .aux-persimmon.aux-button.aux-outline { box-shadow: 0 0 0 1px #FF6A55 inset; background-color: transparent !important; color: #FF6A55; }
+input.aux-persimmon[type="button"].aux-outline:hover, .aux-persimmon.aux-button.aux-outline:hover { color: white; }
+input.aux-persimmon[type="button"].aux-outline .aux-overlay::after, .aux-persimmon.aux-button.aux-outline .aux-overlay::after { background-color: #FF6A55; }
+input.aux-tan-hide[type="button"].aux-outline, .aux-tan-hide.aux-button.aux-outline { box-shadow: 0 0 0 1px #FF9F55 inset; background-color: transparent !important; color: #FF9F55; }
+input.aux-tan-hide[type="button"].aux-outline:hover, .aux-tan-hide.aux-button.aux-outline:hover { color: white; }
+input.aux-tan-hide[type="button"].aux-outline .aux-overlay::after, .aux-tan-hide.aux-button.aux-outline .aux-overlay::after { background-color: #FF9F55; }
+input.aux-wild-watermelon[type="button"].aux-outline, .aux-wild-watermelon.aux-button.aux-outline { box-shadow: 0 0 0 1px #FF6E78 inset; background-color: transparent !important; color: #FF6E78; }
+input.aux-wild-watermelon[type="button"].aux-outline:hover, .aux-wild-watermelon.aux-button.aux-outline:hover { color: white; }
+input.aux-wild-watermelon[type="button"].aux-outline .aux-overlay::after, .aux-wild-watermelon.aux-button.aux-outline .aux-overlay::after { background-color: #FF6E78; }
+input.aux-iceberg[type="button"].aux-outline, .aux-iceberg.aux-button.aux-outline { box-shadow: 0 0 0 1px #73B1D6 inset; background-color: transparent !important; color: #73B1D6; }
+input.aux-iceberg[type="button"].aux-outline:hover, .aux-iceberg.aux-button.aux-outline:hover { color: white; }
+input.aux-iceberg[type="button"].aux-outline .aux-overlay::after, .aux-iceberg.aux-button.aux-outline .aux-overlay::after { background-color: #73B1D6; }
+input.aux-dark-lavender[type="button"].aux-outline, .aux-dark-lavender.aux-button.aux-outline { box-shadow: 0 0 0 1px #745A90 inset; background-color: transparent !important; color: #745A90; }
+input.aux-dark-lavender[type="button"].aux-outline:hover, .aux-dark-lavender.aux-button.aux-outline:hover { color: white; }
+input.aux-dark-lavender[type="button"].aux-outline .aux-overlay::after, .aux-dark-lavender.aux-button.aux-outline .aux-overlay::after { background-color: #745A90; }
+input.aux-viking[type="button"].aux-outline, .aux-viking.aux-button.aux-outline { box-shadow: 0 0 0 1px #5CD5E6 inset; background-color: transparent !important; color: #5CD5E6; }
+input.aux-viking[type="button"].aux-outline:hover, .aux-viking.aux-button.aux-outline:hover { color: white; }
+input.aux-viking[type="button"].aux-outline .aux-overlay::after, .aux-viking.aux-button.aux-outline .aux-overlay::after { background-color: #5CD5E6; }
+input.aux-tiffany-blue[type="button"].aux-outline, .aux-tiffany-blue.aux-button.aux-outline { box-shadow: 0 0 0 1px #00B5B5 inset; background-color: transparent !important; color: #00B5B5; }
+input.aux-tiffany-blue[type="button"].aux-outline:hover, .aux-tiffany-blue.aux-button.aux-outline:hover { color: white; }
+input.aux-tiffany-blue[type="button"].aux-outline .aux-overlay::after, .aux-tiffany-blue.aux-button.aux-outline .aux-overlay::after { background-color: #00B5B5; }
+input.aux-pastel-orange[type="button"].aux-outline, .aux-pastel-orange.aux-button.aux-outline { box-shadow: 0 0 0 1px #FCB941 inset; background-color: transparent !important; color: #FCB941; }
+input.aux-pastel-orange[type="button"].aux-outline:hover, .aux-pastel-orange.aux-button.aux-outline:hover { color: white; }
+input.aux-pastel-orange[type="button"].aux-outline .aux-overlay::after, .aux-pastel-orange.aux-button.aux-outline .aux-overlay::after { background-color: #FCB941; }
+input.aux-east-bay[type="button"].aux-outline, .aux-east-bay.aux-button.aux-outline { box-shadow: 0 0 0 1px #395781 inset; background-color: transparent !important; color: #395781; }
+input.aux-east-bay[type="button"].aux-outline:hover, .aux-east-bay.aux-button.aux-outline:hover { color: white; }
+input.aux-east-bay[type="button"].aux-outline .aux-overlay::after, .aux-east-bay.aux-button.aux-outline .aux-overlay::after { background-color: #395781; }
+input.aux-steel-blue[type="button"].aux-outline, .aux-steel-blue.aux-button.aux-outline { box-shadow: 0 0 0 1px #4589B0 inset; background-color: transparent !important; color: #4589B0; }
+input.aux-steel-blue[type="button"].aux-outline:hover, .aux-steel-blue.aux-button.aux-outline:hover { color: white; }
+input.aux-steel-blue[type="button"].aux-outline .aux-overlay::after, .aux-steel-blue.aux-button.aux-outline .aux-overlay::after { background-color: #4589B0; }
+input.aux-half-backed[type="button"].aux-outline, .aux-half-backed.aux-button.aux-outline { box-shadow: 0 0 0 1px #84CCD1 inset; background-color: transparent !important; color: #84CCD1; }
+input.aux-half-backed[type="button"].aux-outline:hover, .aux-half-backed.aux-button.aux-outline:hover { color: white; }
+input.aux-half-backed[type="button"].aux-outline .aux-overlay::after, .aux-half-backed.aux-button.aux-outline .aux-overlay::after { background-color: #84CCD1; }
+input.aux-tapestry[type="button"].aux-outline, .aux-tapestry.aux-button.aux-outline { box-shadow: 0 0 0 1px #B95A84 inset; background-color: transparent !important; color: #B95A84; }
+input.aux-tapestry[type="button"].aux-outline:hover, .aux-tapestry.aux-button.aux-outline:hover { color: white; }
+input.aux-tapestry[type="button"].aux-outline .aux-overlay::after, .aux-tapestry.aux-button.aux-outline .aux-overlay::after { background-color: #B95A84; }
+input.aux-fire-engine-red[type="button"].aux-outline, .aux-fire-engine-red.aux-button.aux-outline { box-shadow: 0 0 0 1px #CD2C24 inset; background-color: transparent !important; color: #CD2C24; }
+input.aux-fire-engine-red[type="button"].aux-outline:hover, .aux-fire-engine-red.aux-button.aux-outline:hover { color: white; }
+input.aux-fire-engine-red[type="button"].aux-outline .aux-overlay::after, .aux-fire-engine-red.aux-button.aux-outline .aux-overlay::after { background-color: #CD2C24; }
+input.aux-dark-orange[type="button"].aux-outline, .aux-dark-orange.aux-button.aux-outline { box-shadow: 0 0 0 1px #FF8C00 inset; background-color: transparent !important; color: #FF8C00; }
+input.aux-dark-orange[type="button"].aux-outline:hover, .aux-dark-orange.aux-button.aux-outline:hover { color: white; }
+input.aux-dark-orange[type="button"].aux-outline .aux-overlay::after, .aux-dark-orange.aux-button.aux-outline .aux-overlay::after { background-color: #FF8C00; }
+input.aux-brick-red[type="button"].aux-outline, .aux-brick-red.aux-button.aux-outline { box-shadow: 0 0 0 1px #CC4452 inset; background-color: transparent !important; color: #CC4452; }
+input.aux-brick-red[type="button"].aux-outline:hover, .aux-brick-red.aux-button.aux-outline:hover { color: white; }
+input.aux-brick-red[type="button"].aux-outline .aux-overlay::after, .aux-brick-red.aux-button.aux-outline .aux-overlay::after { background-color: #CC4452; }
+input.aux-khaki[type="button"].aux-outline, .aux-khaki.aux-button.aux-outline { box-shadow: 0 0 0 1px khaki inset; background-color: transparent !important; color: khaki; }
+input.aux-khaki[type="button"].aux-outline:hover, .aux-khaki.aux-button.aux-outline:hover { color: white; }
+input.aux-khaki[type="button"].aux-outline .aux-overlay::after, .aux-khaki.aux-button.aux-outline .aux-overlay::after { background-color: khaki; }
 
-a.aux-overlay.button.aux-3d, button.aux-overlay.aux-3d, input.aux-overlay[type="button"].aux-3d, .aux-overlay.aux-button.aux-3d { display: none; }
-a.aux-black.button.aux-3d, button.aux-black.aux-3d, input.aux-black[type="button"].aux-3d, .aux-black.aux-button.aux-3d { box-shadow: 0 6px #242424; }
-a.aux-black.button.aux-3d:hover, button.aux-black.aux-3d:hover, input.aux-black[type="button"].aux-3d:hover, .aux-black.aux-button.aux-3d:hover { box-shadow: 0 3px #242424; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-white.button.aux-3d, button.aux-white.aux-3d, input.aux-white[type="button"].aux-3d, .aux-white.aux-button.aux-3d { box-shadow: 0 6px #e6e6e6; }
-a.aux-white.button.aux-3d:hover, button.aux-white.aux-3d:hover, input.aux-white[type="button"].aux-3d:hover, .aux-white.aux-button.aux-3d:hover { box-shadow: 0 3px #e6e6e6; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-masala.button.aux-3d, button.aux-masala.aux-3d, input.aux-masala[type="button"].aux-3d, .aux-masala.aux-button.aux-3d { box-shadow: 0 6px #242424; }
-a.aux-masala.button.aux-3d:hover, button.aux-masala.aux-3d:hover, input.aux-masala[type="button"].aux-3d:hover, .aux-masala.aux-button.aux-3d:hover { box-shadow: 0 3px #242424; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-dark-gray.button.aux-3d, button.aux-dark-gray.aux-3d, input.aux-dark-gray[type="button"].aux-3d, .aux-dark-gray.aux-button.aux-3d { box-shadow: 0 6px #919191; }
-a.aux-dark-gray.button.aux-3d:hover, button.aux-dark-gray.aux-3d:hover, input.aux-dark-gray[type="button"].aux-3d:hover, .aux-dark-gray.aux-button.aux-3d:hover { box-shadow: 0 3px #919191; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-ball-blue.button.aux-3d, button.aux-ball-blue.aux-3d, input.aux-ball-blue[type="button"].aux-3d, .aux-ball-blue.aux-button.aux-3d { box-shadow: 0 6px #1589a1; }
-a.aux-ball-blue.button.aux-3d:hover, button.aux-ball-blue.aux-3d:hover, input.aux-ball-blue[type="button"].aux-3d:hover, .aux-ball-blue.aux-button.aux-3d:hover { box-shadow: 0 3px #1589a1; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-fountain-blue.button.aux-3d, button.aux-fountain-blue.aux-3d, input.aux-fountain-blue[type="button"].aux-3d, .aux-fountain-blue.aux-button.aux-3d { box-shadow: 0 6px #43919f; }
-a.aux-fountain-blue.button.aux-3d:hover, button.aux-fountain-blue.aux-3d:hover, input.aux-fountain-blue[type="button"].aux-3d:hover, .aux-fountain-blue.aux-button.aux-3d:hover { box-shadow: 0 3px #43919f; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-shamrock.button.aux-3d, button.aux-shamrock.aux-3d, input.aux-shamrock[type="button"].aux-3d, .aux-shamrock.aux-button.aux-3d { box-shadow: 0 6px #239f72; }
-a.aux-shamrock.button.aux-3d:hover, button.aux-shamrock.aux-3d:hover, input.aux-shamrock[type="button"].aux-3d:hover, .aux-shamrock.aux-button.aux-3d:hover { box-shadow: 0 3px #239f72; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-curios-blue.button.aux-3d, button.aux-curios-blue.aux-3d, input.aux-curios-blue[type="button"].aux-3d, .aux-curios-blue.aux-button.aux-3d { box-shadow: 0 6px #23679f; }
-a.aux-curios-blue.button.aux-3d:hover, button.aux-curios-blue.aux-3d:hover, input.aux-curios-blue[type="button"].aux-3d:hover, .aux-curios-blue.aux-button.aux-3d:hover { box-shadow: 0 3px #23679f; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-light-sea-green.button.aux-3d, button.aux-light-sea-green.aux-3d, input.aux-light-sea-green[type="button"].aux-3d, .aux-light-sea-green.aux-button.aux-3d { box-shadow: 0 6px #148f77; }
-a.aux-light-sea-green.button.aux-3d:hover, button.aux-light-sea-green.aux-3d:hover, input.aux-light-sea-green[type="button"].aux-3d:hover, .aux-light-sea-green.aux-button.aux-3d:hover { box-shadow: 0 3px #148f77; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-emerald.button.aux-3d, button.aux-emerald.aux-3d, input.aux-emerald[type="button"].aux-3d, .aux-emerald.aux-button.aux-3d { box-shadow: 0 6px #3c9958; }
-a.aux-emerald.button.aux-3d:hover, button.aux-emerald.aux-3d:hover, input.aux-emerald[type="button"].aux-3d:hover, .aux-emerald.aux-button.aux-3d:hover { box-shadow: 0 3px #3c9958; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-energy-yellow.button.aux-3d, button.aux-energy-yellow.aux-3d, input.aux-energy-yellow[type="button"].aux-3d, .aux-energy-yellow.aux-button.aux-3d { box-shadow: 0 6px #e9df29; }
-a.aux-energy-yellow.button.aux-3d:hover, button.aux-energy-yellow.aux-3d:hover, input.aux-energy-yellow[type="button"].aux-3d:hover, .aux-energy-yellow.aux-button.aux-3d:hover { box-shadow: 0 3px #e9df29; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-mikado-yellow.button.aux-3d, button.aux-mikado-yellow.aux-3d, input.aux-mikado-yellow[type="button"].aux-3d, .aux-mikado-yellow.aux-button.aux-3d { box-shadow: 0 6px #d5ac03; }
-a.aux-mikado-yellow.button.aux-3d:hover, button.aux-mikado-yellow.aux-3d:hover, input.aux-mikado-yellow[type="button"].aux-3d:hover, .aux-mikado-yellow.aux-button.aux-3d:hover { box-shadow: 0 3px #d5ac03; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-pink-salmon.button.aux-3d, button.aux-pink-salmon.aux-3d, input.aux-pink-salmon[type="button"].aux-3d, .aux-pink-salmon.aux-button.aux-3d { box-shadow: 0 6px #ff5e81; }
-a.aux-pink-salmon.button.aux-3d:hover, button.aux-pink-salmon.aux-3d:hover, input.aux-pink-salmon[type="button"].aux-3d:hover, .aux-pink-salmon.aux-button.aux-3d:hover { box-shadow: 0 3px #ff5e81; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-wisteria.button.aux-3d, button.aux-wisteria.aux-3d, input.aux-wisteria[type="button"].aux-3d, .aux-wisteria.aux-button.aux-3d { box-shadow: 0 6px #845095; }
-a.aux-wisteria.button.aux-3d:hover, button.aux-wisteria.aux-3d:hover, input.aux-wisteria[type="button"].aux-3d:hover, .aux-wisteria.aux-button.aux-3d:hover { box-shadow: 0 3px #845095; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-lilac.button.aux-3d, button.aux-lilac.aux-3d, input.aux-lilac[type="button"].aux-3d, .aux-lilac.aux-button.aux-3d { box-shadow: 0 6px #ba8bc0; }
-a.aux-lilac.button.aux-3d:hover, button.aux-lilac.aux-3d:hover, input.aux-lilac[type="button"].aux-3d:hover, .aux-lilac.aux-button.aux-3d:hover { box-shadow: 0 3px #ba8bc0; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-pale-sky.button.aux-3d, button.aux-pale-sky.aux-3d, input.aux-pale-sky[type="button"].aux-3d, .aux-pale-sky.aux-button.aux-3d { box-shadow: 0 6px #4a5a69; }
-a.aux-pale-sky.button.aux-3d:hover, button.aux-pale-sky.aux-3d:hover, input.aux-pale-sky[type="button"].aux-3d:hover, .aux-pale-sky.aux-button.aux-3d:hover { box-shadow: 0 3px #4a5a69; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-tower-gray.button.aux-3d, button.aux-tower-gray.aux-3d, input.aux-tower-gray[type="button"].aux-3d, .aux-tower-gray.aux-button.aux-3d { box-shadow: 0 6px #90a4ad; }
-a.aux-tower-gray.button.aux-3d:hover, button.aux-tower-gray.aux-3d:hover, input.aux-tower-gray[type="button"].aux-3d:hover, .aux-tower-gray.aux-button.aux-3d:hover { box-shadow: 0 3px #90a4ad; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-william.button.aux-3d, button.aux-william.aux-3d, input.aux-william[type="button"].aux-3d, .aux-william.aux-button.aux-3d { box-shadow: 0 6px #28424e; }
-a.aux-william.button.aux-3d:hover, button.aux-william.aux-3d:hover, input.aux-william[type="button"].aux-3d:hover, .aux-william.aux-button.aux-3d:hover { box-shadow: 0 3px #28424e; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-carmine-pink.button.aux-3d, button.aux-carmine-pink.aux-3d, input.aux-carmine-pink[type="button"].aux-3d, .aux-carmine-pink.aux-button.aux-3d { box-shadow: 0 6px #d62c1a; }
-a.aux-carmine-pink.button.aux-3d:hover, button.aux-carmine-pink.aux-3d:hover, input.aux-carmine-pink[type="button"].aux-3d:hover, .aux-carmine-pink.aux-button.aux-3d:hover { box-shadow: 0 3px #d62c1a; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-persimmon.button.aux-3d, button.aux-persimmon.aux-3d, input.aux-persimmon[type="button"].aux-3d, .aux-persimmon.aux-button.aux-3d { box-shadow: 0 6px #ff3d22; }
-a.aux-persimmon.button.aux-3d:hover, button.aux-persimmon.aux-3d:hover, input.aux-persimmon[type="button"].aux-3d:hover, .aux-persimmon.aux-button.aux-3d:hover { box-shadow: 0 3px #ff3d22; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-tan-hide.button.aux-3d, button.aux-tan-hide.aux-3d, input.aux-tan-hide[type="button"].aux-3d, .aux-tan-hide.aux-button.aux-3d { box-shadow: 0 6px #ff8222; }
-a.aux-tan-hide.button.aux-3d:hover, button.aux-tan-hide.aux-3d:hover, input.aux-tan-hide[type="button"].aux-3d:hover, .aux-tan-hide.aux-button.aux-3d:hover { box-shadow: 0 3px #ff8222; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-wild-watermelon.button.aux-3d, button.aux-wild-watermelon.aux-3d, input.aux-wild-watermelon[type="button"].aux-3d, .aux-wild-watermelon.aux-button.aux-3d { box-shadow: 0 6px #ff3b49; }
-a.aux-wild-watermelon.button.aux-3d:hover, button.aux-wild-watermelon.aux-3d:hover, input.aux-wild-watermelon[type="button"].aux-3d:hover, .aux-wild-watermelon.aux-button.aux-3d:hover { box-shadow: 0 3px #ff3b49; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-iceberg.button.aux-3d, button.aux-iceberg.aux-3d, input.aux-iceberg[type="button"].aux-3d, .aux-iceberg.aux-button.aux-3d { box-shadow: 0 6px #4c9bca; }
-a.aux-iceberg.button.aux-3d:hover, button.aux-iceberg.aux-3d:hover, input.aux-iceberg[type="button"].aux-3d:hover, .aux-iceberg.aux-button.aux-3d:hover { box-shadow: 0 3px #4c9bca; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-dark-lavender.button.aux-3d, button.aux-dark-lavender.aux-3d, input.aux-dark-lavender[type="button"].aux-3d, .aux-dark-lavender.aux-button.aux-3d { box-shadow: 0 6px #5b4671; }
-a.aux-dark-lavender.button.aux-3d:hover, button.aux-dark-lavender.aux-3d:hover, input.aux-dark-lavender[type="button"].aux-3d:hover, .aux-dark-lavender.aux-button.aux-3d:hover { box-shadow: 0 3px #5b4671; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-viking.button.aux-3d, button.aux-viking.aux-3d, input.aux-viking[type="button"].aux-3d, .aux-viking.aux-button.aux-3d { box-shadow: 0 6px #30cadf; }
-a.aux-viking.button.aux-3d:hover, button.aux-viking.aux-3d:hover, input.aux-viking[type="button"].aux-3d:hover, .aux-viking.aux-button.aux-3d:hover { box-shadow: 0 3px #30cadf; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-tiffany-blue.button.aux-3d, button.aux-tiffany-blue.aux-3d, input.aux-tiffany-blue[type="button"].aux-3d, .aux-tiffany-blue.aux-button.aux-3d { box-shadow: 0 6px #008282; }
-a.aux-tiffany-blue.button.aux-3d:hover, button.aux-tiffany-blue.aux-3d:hover, input.aux-tiffany-blue[type="button"].aux-3d:hover, .aux-tiffany-blue.aux-button.aux-3d:hover { box-shadow: 0 3px #008282; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-pastel-orange.button.aux-3d, button.aux-pastel-orange.aux-3d, input.aux-pastel-orange[type="button"].aux-3d, .aux-pastel-orange.aux-button.aux-3d { box-shadow: 0 6px #fba70f; }
-a.aux-pastel-orange.button.aux-3d:hover, button.aux-pastel-orange.aux-3d:hover, input.aux-pastel-orange[type="button"].aux-3d:hover, .aux-pastel-orange.aux-button.aux-3d:hover { box-shadow: 0 3px #fba70f; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-east-bay.button.aux-3d, button.aux-east-bay.aux-3d, input.aux-east-bay[type="button"].aux-3d, .aux-east-bay.aux-button.aux-3d { box-shadow: 0 6px #293f5e; }
-a.aux-east-bay.button.aux-3d:hover, button.aux-east-bay.aux-3d:hover, input.aux-east-bay[type="button"].aux-3d:hover, .aux-east-bay.aux-button.aux-3d:hover { box-shadow: 0 3px #293f5e; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-steel-blue.button.aux-3d, button.aux-steel-blue.aux-3d, input.aux-steel-blue[type="button"].aux-3d, .aux-steel-blue.aux-button.aux-3d { box-shadow: 0 6px #376c8b; }
-a.aux-steel-blue.button.aux-3d:hover, button.aux-steel-blue.aux-3d:hover, input.aux-steel-blue[type="button"].aux-3d:hover, .aux-steel-blue.aux-button.aux-3d:hover { box-shadow: 0 3px #376c8b; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-half-backed.button.aux-3d, button.aux-half-backed.aux-3d, input.aux-half-backed[type="button"].aux-3d, .aux-half-backed.aux-button.aux-3d { box-shadow: 0 6px #5fbdc3; }
-a.aux-half-backed.button.aux-3d:hover, button.aux-half-backed.aux-3d:hover, input.aux-half-backed[type="button"].aux-3d:hover, .aux-half-backed.aux-button.aux-3d:hover { box-shadow: 0 3px #5fbdc3; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-tapestry.button.aux-3d, button.aux-tapestry.aux-3d, input.aux-tapestry[type="button"].aux-3d, .aux-tapestry.aux-button.aux-3d { box-shadow: 0 6px #9d436b; }
-a.aux-tapestry.button.aux-3d:hover, button.aux-tapestry.aux-3d:hover, input.aux-tapestry[type="button"].aux-3d:hover, .aux-tapestry.aux-button.aux-3d:hover { box-shadow: 0 3px #9d436b; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-fire-engine-red.button.aux-3d, button.aux-fire-engine-red.aux-3d, input.aux-fire-engine-red[type="button"].aux-3d, .aux-fire-engine-red.aux-button.aux-3d { box-shadow: 0 6px #a2231c; }
-a.aux-fire-engine-red.button.aux-3d:hover, button.aux-fire-engine-red.aux-3d:hover, input.aux-fire-engine-red[type="button"].aux-3d:hover, .aux-fire-engine-red.aux-button.aux-3d:hover { box-shadow: 0 3px #a2231c; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-dark-orange.button.aux-3d, button.aux-dark-orange.aux-3d, input.aux-dark-orange[type="button"].aux-3d, .aux-dark-orange.aux-button.aux-3d { box-shadow: 0 6px #cc7000; }
-a.aux-dark-orange.button.aux-3d:hover, button.aux-dark-orange.aux-3d:hover, input.aux-dark-orange[type="button"].aux-3d:hover, .aux-dark-orange.aux-button.aux-3d:hover { box-shadow: 0 3px #cc7000; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-brick-red.button.aux-3d, button.aux-brick-red.aux-3d, input.aux-brick-red[type="button"].aux-3d, .aux-brick-red.aux-button.aux-3d { box-shadow: 0 6px #ae2f3c; }
-a.aux-brick-red.button.aux-3d:hover, button.aux-brick-red.aux-3d:hover, input.aux-brick-red[type="button"].aux-3d:hover, .aux-brick-red.aux-button.aux-3d:hover { box-shadow: 0 3px #ae2f3c; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.aux-khaki.button.aux-3d, button.aux-khaki.aux-3d, input.aux-khaki[type="button"].aux-3d, .aux-khaki.aux-button.aux-3d { box-shadow: 0 6px #eadc5f; }
-a.aux-khaki.button.aux-3d:hover, button.aux-khaki.aux-3d:hover, input.aux-khaki[type="button"].aux-3d:hover, .aux-khaki.aux-button.aux-3d:hover { box-shadow: 0 3px #eadc5f; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
-a.button.aux-3d:active, button.aux-3d:active, input[type="button"].aux-3d:active, .aux-button.aux-3d:active { box-shadow: none; -webkit-transform: translateY(6px); -ms-transform: translateY(6px); transform: translateY(6px); }
+input.aux-overlay[type="button"].aux-3d, .aux-overlay.aux-button.aux-3d { display: none; }
+input.aux-black[type="button"].aux-3d, .aux-black.aux-button.aux-3d { box-shadow: 0 6px #242424; }
+input.aux-black[type="button"].aux-3d:hover, .aux-black.aux-button.aux-3d:hover { box-shadow: 0 3px #242424; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-white[type="button"].aux-3d, .aux-white.aux-button.aux-3d { box-shadow: 0 6px #e6e6e6; }
+input.aux-white[type="button"].aux-3d:hover, .aux-white.aux-button.aux-3d:hover { box-shadow: 0 3px #e6e6e6; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-masala[type="button"].aux-3d, .aux-masala.aux-button.aux-3d { box-shadow: 0 6px #242424; }
+input.aux-masala[type="button"].aux-3d:hover, .aux-masala.aux-button.aux-3d:hover { box-shadow: 0 3px #242424; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-dark-gray[type="button"].aux-3d, .aux-dark-gray.aux-button.aux-3d { box-shadow: 0 6px #919191; }
+input.aux-dark-gray[type="button"].aux-3d:hover, .aux-dark-gray.aux-button.aux-3d:hover { box-shadow: 0 3px #919191; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-ball-blue[type="button"].aux-3d, .aux-ball-blue.aux-button.aux-3d { box-shadow: 0 6px #1589a1; }
+input.aux-ball-blue[type="button"].aux-3d:hover, .aux-ball-blue.aux-button.aux-3d:hover { box-shadow: 0 3px #1589a1; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-fountain-blue[type="button"].aux-3d, .aux-fountain-blue.aux-button.aux-3d { box-shadow: 0 6px #43919f; }
+input.aux-fountain-blue[type="button"].aux-3d:hover, .aux-fountain-blue.aux-button.aux-3d:hover { box-shadow: 0 3px #43919f; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-shamrock[type="button"].aux-3d, .aux-shamrock.aux-button.aux-3d { box-shadow: 0 6px #239f72; }
+input.aux-shamrock[type="button"].aux-3d:hover, .aux-shamrock.aux-button.aux-3d:hover { box-shadow: 0 3px #239f72; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-curios-blue[type="button"].aux-3d, .aux-curios-blue.aux-button.aux-3d { box-shadow: 0 6px #23679f; }
+input.aux-curios-blue[type="button"].aux-3d:hover, .aux-curios-blue.aux-button.aux-3d:hover { box-shadow: 0 3px #23679f; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-light-sea-green[type="button"].aux-3d, .aux-light-sea-green.aux-button.aux-3d { box-shadow: 0 6px #148f77; }
+input.aux-light-sea-green[type="button"].aux-3d:hover, .aux-light-sea-green.aux-button.aux-3d:hover { box-shadow: 0 3px #148f77; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-emerald[type="button"].aux-3d, .aux-emerald.aux-button.aux-3d { box-shadow: 0 6px #3c9958; }
+input.aux-emerald[type="button"].aux-3d:hover, .aux-emerald.aux-button.aux-3d:hover { box-shadow: 0 3px #3c9958; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-energy-yellow[type="button"].aux-3d, .aux-energy-yellow.aux-button.aux-3d { box-shadow: 0 6px #e9df29; }
+input.aux-energy-yellow[type="button"].aux-3d:hover, .aux-energy-yellow.aux-button.aux-3d:hover { box-shadow: 0 3px #e9df29; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-mikado-yellow[type="button"].aux-3d, .aux-mikado-yellow.aux-button.aux-3d { box-shadow: 0 6px #d5ac03; }
+input.aux-mikado-yellow[type="button"].aux-3d:hover, .aux-mikado-yellow.aux-button.aux-3d:hover { box-shadow: 0 3px #d5ac03; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-pink-salmon[type="button"].aux-3d, .aux-pink-salmon.aux-button.aux-3d { box-shadow: 0 6px #ff5e81; }
+input.aux-pink-salmon[type="button"].aux-3d:hover, .aux-pink-salmon.aux-button.aux-3d:hover { box-shadow: 0 3px #ff5e81; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-wisteria[type="button"].aux-3d, .aux-wisteria.aux-button.aux-3d { box-shadow: 0 6px #845095; }
+input.aux-wisteria[type="button"].aux-3d:hover, .aux-wisteria.aux-button.aux-3d:hover { box-shadow: 0 3px #845095; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-lilac[type="button"].aux-3d, .aux-lilac.aux-button.aux-3d { box-shadow: 0 6px #ba8bc0; }
+input.aux-lilac[type="button"].aux-3d:hover, .aux-lilac.aux-button.aux-3d:hover { box-shadow: 0 3px #ba8bc0; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-pale-sky[type="button"].aux-3d, .aux-pale-sky.aux-button.aux-3d { box-shadow: 0 6px #4a5a69; }
+input.aux-pale-sky[type="button"].aux-3d:hover, .aux-pale-sky.aux-button.aux-3d:hover { box-shadow: 0 3px #4a5a69; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-tower-gray[type="button"].aux-3d, .aux-tower-gray.aux-button.aux-3d { box-shadow: 0 6px #90a4ad; }
+input.aux-tower-gray[type="button"].aux-3d:hover, .aux-tower-gray.aux-button.aux-3d:hover { box-shadow: 0 3px #90a4ad; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-william[type="button"].aux-3d, .aux-william.aux-button.aux-3d { box-shadow: 0 6px #28424e; }
+input.aux-william[type="button"].aux-3d:hover, .aux-william.aux-button.aux-3d:hover { box-shadow: 0 3px #28424e; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-carmine-pink[type="button"].aux-3d, .aux-carmine-pink.aux-button.aux-3d { box-shadow: 0 6px #d62c1a; }
+input.aux-carmine-pink[type="button"].aux-3d:hover, .aux-carmine-pink.aux-button.aux-3d:hover { box-shadow: 0 3px #d62c1a; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-persimmon[type="button"].aux-3d, .aux-persimmon.aux-button.aux-3d { box-shadow: 0 6px #ff3d22; }
+input.aux-persimmon[type="button"].aux-3d:hover, .aux-persimmon.aux-button.aux-3d:hover { box-shadow: 0 3px #ff3d22; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-tan-hide[type="button"].aux-3d, .aux-tan-hide.aux-button.aux-3d { box-shadow: 0 6px #ff8222; }
+input.aux-tan-hide[type="button"].aux-3d:hover, .aux-tan-hide.aux-button.aux-3d:hover { box-shadow: 0 3px #ff8222; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-wild-watermelon[type="button"].aux-3d, .aux-wild-watermelon.aux-button.aux-3d { box-shadow: 0 6px #ff3b49; }
+input.aux-wild-watermelon[type="button"].aux-3d:hover, .aux-wild-watermelon.aux-button.aux-3d:hover { box-shadow: 0 3px #ff3b49; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-iceberg[type="button"].aux-3d, .aux-iceberg.aux-button.aux-3d { box-shadow: 0 6px #4c9bca; }
+input.aux-iceberg[type="button"].aux-3d:hover, .aux-iceberg.aux-button.aux-3d:hover { box-shadow: 0 3px #4c9bca; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-dark-lavender[type="button"].aux-3d, .aux-dark-lavender.aux-button.aux-3d { box-shadow: 0 6px #5b4671; }
+input.aux-dark-lavender[type="button"].aux-3d:hover, .aux-dark-lavender.aux-button.aux-3d:hover { box-shadow: 0 3px #5b4671; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-viking[type="button"].aux-3d, .aux-viking.aux-button.aux-3d { box-shadow: 0 6px #30cadf; }
+input.aux-viking[type="button"].aux-3d:hover, .aux-viking.aux-button.aux-3d:hover { box-shadow: 0 3px #30cadf; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-tiffany-blue[type="button"].aux-3d, .aux-tiffany-blue.aux-button.aux-3d { box-shadow: 0 6px #008282; }
+input.aux-tiffany-blue[type="button"].aux-3d:hover, .aux-tiffany-blue.aux-button.aux-3d:hover { box-shadow: 0 3px #008282; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-pastel-orange[type="button"].aux-3d, .aux-pastel-orange.aux-button.aux-3d { box-shadow: 0 6px #fba70f; }
+input.aux-pastel-orange[type="button"].aux-3d:hover, .aux-pastel-orange.aux-button.aux-3d:hover { box-shadow: 0 3px #fba70f; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-east-bay[type="button"].aux-3d, .aux-east-bay.aux-button.aux-3d { box-shadow: 0 6px #293f5e; }
+input.aux-east-bay[type="button"].aux-3d:hover, .aux-east-bay.aux-button.aux-3d:hover { box-shadow: 0 3px #293f5e; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-steel-blue[type="button"].aux-3d, .aux-steel-blue.aux-button.aux-3d { box-shadow: 0 6px #376c8b; }
+input.aux-steel-blue[type="button"].aux-3d:hover, .aux-steel-blue.aux-button.aux-3d:hover { box-shadow: 0 3px #376c8b; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-half-backed[type="button"].aux-3d, .aux-half-backed.aux-button.aux-3d { box-shadow: 0 6px #5fbdc3; }
+input.aux-half-backed[type="button"].aux-3d:hover, .aux-half-backed.aux-button.aux-3d:hover { box-shadow: 0 3px #5fbdc3; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-tapestry[type="button"].aux-3d, .aux-tapestry.aux-button.aux-3d { box-shadow: 0 6px #9d436b; }
+input.aux-tapestry[type="button"].aux-3d:hover, .aux-tapestry.aux-button.aux-3d:hover { box-shadow: 0 3px #9d436b; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-fire-engine-red[type="button"].aux-3d, .aux-fire-engine-red.aux-button.aux-3d { box-shadow: 0 6px #a2231c; }
+input.aux-fire-engine-red[type="button"].aux-3d:hover, .aux-fire-engine-red.aux-button.aux-3d:hover { box-shadow: 0 3px #a2231c; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-dark-orange[type="button"].aux-3d, .aux-dark-orange.aux-button.aux-3d { box-shadow: 0 6px #cc7000; }
+input.aux-dark-orange[type="button"].aux-3d:hover, .aux-dark-orange.aux-button.aux-3d:hover { box-shadow: 0 3px #cc7000; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-brick-red[type="button"].aux-3d, .aux-brick-red.aux-button.aux-3d { box-shadow: 0 6px #ae2f3c; }
+input.aux-brick-red[type="button"].aux-3d:hover, .aux-brick-red.aux-button.aux-3d:hover { box-shadow: 0 3px #ae2f3c; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input.aux-khaki[type="button"].aux-3d, .aux-khaki.aux-button.aux-3d { box-shadow: 0 6px #eadc5f; }
+input.aux-khaki[type="button"].aux-3d:hover, .aux-khaki.aux-button.aux-3d:hover { box-shadow: 0 3px #eadc5f; -webkit-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px); }
+input[type="button"].aux-3d:active, .aux-button.aux-3d:active { box-shadow: none; -webkit-transform: translateY(6px); -ms-transform: translateY(6px); transform: translateY(6px); }
 
-a.button, button, input[type="button"], .aux-button { font-weight: 600; display: inline-block; position: relative; line-height: 100%; margin-bottom: 1em; border: none; cursor: pointer; overflow: hidden; z-index: 1; -webkit-transition: all 450ms; transition: all 450ms; }
-a.button:focus, button:focus, input[type="button"]:focus, .aux-button:focus { outline: none; }
-a.button > *, button > *, input[type="button"] > *, .aux-button > * { position: relative; }
-a.button .aux-overlay, button .aux-overlay, input[type="button"] .aux-overlay, .aux-button .aux-overlay { position: absolute; width: 120%; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%) scale(0, 0); -ms-transform: translate(-50%, -50%) scale(0, 0); transform: translate(-50%, -50%) scale(0, 0); -webkit-transition: -webkit-transform 450ms cubic-bezier(0.75, 0.1, 0.25, 0.9); transition: transform 450ms cubic-bezier(0.75, 0.1, 0.25, 0.9); }
-a.button .aux-overlay::after, button .aux-overlay::after, input[type="button"] .aux-overlay::after, .aux-button .aux-overlay::after { position: relative; content: ''; border-radius: 50%; display: block; padding-top: 100%; }
-a.button.aux-round .aux-overlay, button.aux-round .aux-overlay, input[type="button"].aux-round .aux-overlay, .aux-button.aux-round .aux-overlay { width: 120%; }
-a.button:hover .aux-overlay, button:hover .aux-overlay, input[type="button"]:hover .aux-overlay, .aux-button:hover .aux-overlay { -webkit-transform: translate(-50%, -50%) scale(1, 1); -ms-transform: translate(-50%, -50%) scale(1, 1); transform: translate(-50%, -50%) scale(1, 1); }
-a.button.aux-fill, button.aux-fill, input[type="button"].aux-fill, .aux-button.aux-fill { -webkit-transition: background-color 450ms; transition: background-color 450ms; }
-a.button.aux-fill .aux-overlay, button.aux-fill .aux-overlay, input[type="button"].aux-fill .aux-overlay, .aux-button.aux-fill .aux-overlay { display: none; }
-a.button .aux-icon, a.button .aux-text, button .aux-icon, button .aux-text, input[type="button"] .aux-icon, input[type="button"] .aux-text, .aux-button .aux-icon, .aux-button .aux-text { display: inline-block; vertical-align: middle; -webkit-transition: -webkit-transform 450ms, opacity 450ms; transition: transform 450ms, opacity 450ms; }
-a.button.aux-icon-left .aux-icon, a.button.aux-icon-left-animate .aux-icon, button.aux-icon-left .aux-icon, button.aux-icon-left-animate .aux-icon, input[type="button"].aux-icon-left .aux-icon, input[type="button"].aux-icon-left-animate .aux-icon, .aux-button.aux-icon-left .aux-icon, .aux-button.aux-icon-left-animate .aux-icon { margin-right: 0.125em; }
-a.button.aux-icon-right .aux-icon, a.button.aux-icon-right-animate .aux-icon, button.aux-icon-right .aux-icon, button.aux-icon-right-animate .aux-icon, input[type="button"].aux-icon-right .aux-icon, input[type="button"].aux-icon-right-animate .aux-icon, .aux-button.aux-icon-right .aux-icon, .aux-button.aux-icon-right-animate .aux-icon { margin-left: 0.125em; }
-a.button.aux-icon-left-animate .aux-icon, button.aux-icon-left-animate .aux-icon, input[type="button"].aux-icon-left-animate .aux-icon, .aux-button.aux-icon-left-animate .aux-icon { margin-left: 0.125em; }
-a.button.aux-icon-left-animate .aux-icon, button.aux-icon-left-animate .aux-icon, input[type="button"].aux-icon-left-animate .aux-icon, .aux-button.aux-icon-left-animate .aux-icon { -webkit-transform: translateX(-400%); -ms-transform: translateX(-400%); transform: translateX(-400%); }
-a.button.aux-icon-left-animate .aux-text, button.aux-icon-left-animate .aux-text, input[type="button"].aux-icon-left-animate .aux-text, .aux-button.aux-icon-left-animate .aux-text { -webkit-transform: translateX(-1em); -ms-transform: translateX(-1em); transform: translateX(-1em); }
-a.button.aux-icon-left-animate:hover .aux-icon, a.button.aux-icon-left-animate:hover .aux-text, button.aux-icon-left-animate:hover .aux-icon, button.aux-icon-left-animate:hover .aux-text, input[type="button"].aux-icon-left-animate:hover .aux-icon, input[type="button"].aux-icon-left-animate:hover .aux-text, .aux-button.aux-icon-left-animate:hover .aux-icon, .aux-button.aux-icon-left-animate:hover .aux-text { -webkit-transform: translateX(0); -ms-transform: translateX(0); transform: translateX(0); }
-a.button.aux-icon-right-animate .aux-icon, button.aux-icon-right-animate .aux-icon, input[type="button"].aux-icon-right-animate .aux-icon, .aux-button.aux-icon-right-animate .aux-icon { -webkit-transform: translateX(400%); -ms-transform: translateX(400%); transform: translateX(400%); }
-a.button.aux-icon-right-animate .aux-text, button.aux-icon-right-animate .aux-text, input[type="button"].aux-icon-right-animate .aux-text, .aux-button.aux-icon-right-animate .aux-text { -webkit-transform: translateX(1em); -ms-transform: translateX(1em); transform: translateX(1em); }
-a.button.aux-icon-right-animate:hover .aux-icon, a.button.aux-icon-right-animate:hover .aux-text, button.aux-icon-right-animate:hover .aux-icon, button.aux-icon-right-animate:hover .aux-text, input[type="button"].aux-icon-right-animate:hover .aux-icon, input[type="button"].aux-icon-right-animate:hover .aux-text, .aux-button.aux-icon-right-animate:hover .aux-icon, .aux-button.aux-icon-right-animate:hover .aux-text { -webkit-transform: translateX(0px); -ms-transform: translateX(0px); transform: translateX(0px); }
-a.button.aux-icon-over .aux-icon, button.aux-icon-over .aux-icon, input[type="button"].aux-icon-over .aux-icon, .aux-button.aux-icon-over .aux-icon { position: absolute; left: 50%; top: 50%; opacity: 0; z-index: 2; -webkit-transform: translate(-200%, -50%); -ms-transform: translate(-200%, -50%); transform: translate(-200%, -50%); -webkit-transition: -webkit-transform 450ms, opacity 450ms; transition: transform 450ms, opacity 450ms; }
-a.button.aux-icon-over .aux-overlay, button.aux-icon-over .aux-overlay, input[type="button"].aux-icon-over .aux-overlay, .aux-button.aux-icon-over .aux-overlay { z-index: 1; }
-a.button.aux-icon-over:hover .aux-icon, button.aux-icon-over:hover .aux-icon, input[type="button"].aux-icon-over:hover .aux-icon, .aux-button.aux-icon-over:hover .aux-icon { -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%); opacity: 1; }
-.rtl a.button.aux-icon-left .aux-icon, .rtl a.button.aux-icon-left-animate .aux-icon, .rtl button.aux-icon-left .aux-icon, .rtl button.aux-icon-left-animate .aux-icon, .rtl input[type="button"].aux-icon-left .aux-icon, .rtl input[type="button"].aux-icon-left-animate .aux-icon, .rtl .aux-button.aux-icon-left .aux-icon, .rtl .aux-button.aux-icon-left-animate .aux-icon { margin-right: 0; margin-left: 0.125em; }
-.rtl a.button.aux-icon-right .aux-icon, .rtl a.button.aux-icon-right-animate .aux-icon, .rtl button.aux-icon-right .aux-icon, .rtl button.aux-icon-right-animate .aux-icon, .rtl input[type="button"].aux-icon-right .aux-icon, .rtl input[type="button"].aux-icon-right-animate .aux-icon, .rtl .aux-button.aux-icon-right .aux-icon, .rtl .aux-button.aux-icon-right-animate .aux-icon { margin-right: 0.125em; margin-left: 0; }
-.rtl a.button.aux-icon-left-animate .aux-icon, .rtl button.aux-icon-left-animate .aux-icon, .rtl input[type="button"].aux-icon-left-animate .aux-icon, .rtl .aux-button.aux-icon-left-animate .aux-icon { margin-right: 0.125em; margin-left: 0; }
-.rtl a.button.aux-icon-left-animate .aux-icon, .rtl button.aux-icon-left-animate .aux-icon, .rtl input[type="button"].aux-icon-left-animate .aux-icon, .rtl .aux-button.aux-icon-left-animate .aux-icon { -webkit-transform: translateX(400%); -ms-transform: translateX(400%); transform: translateX(400%); }
-.rtl a.button.aux-icon-left-animate .aux-text, .rtl button.aux-icon-left-animate .aux-text, .rtl input[type="button"].aux-icon-left-animate .aux-text, .rtl .aux-button.aux-icon-left-animate .aux-text { -webkit-transform: translateX(1em); -ms-transform: translateX(1em); transform: translateX(1em); }
-.rtl a.button.aux-icon-left-animate:hover .aux-icon, .rtl a.button.aux-icon-left-animate:hover .aux-text, .rtl button.aux-icon-left-animate:hover .aux-icon, .rtl button.aux-icon-left-animate:hover .aux-text, .rtl input[type="button"].aux-icon-left-animate:hover .aux-icon, .rtl input[type="button"].aux-icon-left-animate:hover .aux-text, .rtl .aux-button.aux-icon-left-animate:hover .aux-icon, .rtl .aux-button.aux-icon-left-animate:hover .aux-text { -webkit-transform: translateX(0); -ms-transform: translateX(0); transform: translateX(0); }
-.rtl a.button.aux-icon-right-animate .aux-icon, .rtl button.aux-icon-right-animate .aux-icon, .rtl input[type="button"].aux-icon-right-animate .aux-icon, .rtl .aux-button.aux-icon-right-animate .aux-icon { -webkit-transform: translateX(-400%); -ms-transform: translateX(-400%); transform: translateX(-400%); }
-.rtl a.button.aux-icon-right-animate .aux-text, .rtl button.aux-icon-right-animate .aux-text, .rtl input[type="button"].aux-icon-right-animate .aux-text, .rtl .aux-button.aux-icon-right-animate .aux-text { -webkit-transform: translateX(-1em); -ms-transform: translateX(-1em); transform: translateX(-1em); }
-.rtl a.button.aux-icon-right-animate:hover .aux-icon, .rtl a.button.aux-icon-right-animate:hover .aux-text, .rtl button.aux-icon-right-animate:hover .aux-icon, .rtl button.aux-icon-right-animate:hover .aux-text, .rtl input[type="button"].aux-icon-right-animate:hover .aux-icon, .rtl input[type="button"].aux-icon-right-animate:hover .aux-text, .rtl .aux-button.aux-icon-right-animate:hover .aux-icon, .rtl .aux-button.aux-icon-right-animate:hover .aux-text { -webkit-transform: translateX(0px); -ms-transform: translateX(0px); transform: translateX(0px); }
-.rtl a.button.aux-icon-over .aux-icon, .rtl button.aux-icon-over .aux-icon, .rtl input[type="button"].aux-icon-over .aux-icon, .rtl .aux-button.aux-icon-over .aux-icon { left: -50%; -webkit-transform: translate(200%, -50%); -ms-transform: translate(200%, -50%); transform: translate(200%, -50%); }
-.rtl a.button.aux-icon-over:hover .aux-icon, .rtl button.aux-icon-over:hover .aux-icon, .rtl input[type="button"].aux-icon-over:hover .aux-icon, .rtl .aux-button.aux-icon-over:hover .aux-icon { -webkit-transform: translate(50%, -50%); -ms-transform: translate(50%, -50%); transform: translate(50%, -50%); }
-a.button.aux-black, button.aux-black, input[type="button"].aux-black, .aux-button.aux-black { background-color: #3D3D3D; text-shadow: 0 2px 0 #292929; color: white; }
-a.button.aux-black .aux-overlay::after, button.aux-black .aux-overlay::after, input[type="button"].aux-black .aux-overlay::after, .aux-button.aux-black .aux-overlay::after { background-color: #292929; }
-a.button.aux-black.aux-fill:hover, button.aux-black.aux-fill:hover, input[type="button"].aux-black.aux-fill:hover, .aux-button.aux-black.aux-fill:hover { background-color: #292929 !important; }
-a.button.aux-white, button.aux-white, input[type="button"].aux-white, .aux-button.aux-white { background-color: #FFFFFF; text-shadow: 0 2px 0 #ebebeb; color: black; }
-a.button.aux-white .aux-overlay::after, button.aux-white .aux-overlay::after, input[type="button"].aux-white .aux-overlay::after, .aux-button.aux-white .aux-overlay::after { background-color: #ebebeb; }
-a.button.aux-white.aux-fill:hover, button.aux-white.aux-fill:hover, input[type="button"].aux-white.aux-fill:hover, .aux-button.aux-white.aux-fill:hover { background-color: #ebebeb !important; }
-a.button.aux-masala, button.aux-masala, input[type="button"].aux-masala, .aux-button.aux-masala { background-color: #3D3D3D; text-shadow: 0 2px 0 #292929; color: white; }
-a.button.aux-masala .aux-overlay::after, button.aux-masala .aux-overlay::after, input[type="button"].aux-masala .aux-overlay::after, .aux-button.aux-masala .aux-overlay::after { background-color: #292929; }
-a.button.aux-masala.aux-fill:hover, button.aux-masala.aux-fill:hover, input[type="button"].aux-masala.aux-fill:hover, .aux-button.aux-masala.aux-fill:hover { background-color: #292929 !important; }
-a.button.aux-dark-gray, button.aux-dark-gray, input[type="button"].aux-dark-gray, .aux-button.aux-dark-gray { background-color: #AAAAAA; text-shadow: 0 2px 0 #969696; color: white; }
-a.button.aux-dark-gray .aux-overlay::after, button.aux-dark-gray .aux-overlay::after, input[type="button"].aux-dark-gray .aux-overlay::after, .aux-button.aux-dark-gray .aux-overlay::after { background-color: #969696; }
-a.button.aux-dark-gray.aux-fill:hover, button.aux-dark-gray.aux-fill:hover, input[type="button"].aux-dark-gray.aux-fill:hover, .aux-button.aux-dark-gray.aux-fill:hover { background-color: #969696 !important; }
-a.button.aux-ball-blue, button.aux-ball-blue, input[type="button"].aux-ball-blue, .aux-button.aux-ball-blue { background-color: #1BB0CE; text-shadow: 0 2px 0 #1691aa; color: white; }
-a.button.aux-ball-blue .aux-overlay::after, button.aux-ball-blue .aux-overlay::after, input[type="button"].aux-ball-blue .aux-overlay::after, .aux-button.aux-ball-blue .aux-overlay::after { background-color: #1691aa; }
-a.button.aux-ball-blue.aux-fill:hover, button.aux-ball-blue.aux-fill:hover, input[type="button"].aux-ball-blue.aux-fill:hover, .aux-button.aux-ball-blue.aux-fill:hover { background-color: #1691aa !important; }
-a.button.aux-fountain-blue, button.aux-fountain-blue, input[type="button"].aux-fountain-blue, .aux-button.aux-fountain-blue { background-color: #5BACBA; text-shadow: 0 2px 0 #4698a6; color: white; }
-a.button.aux-fountain-blue .aux-overlay::after, button.aux-fountain-blue .aux-overlay::after, input[type="button"].aux-fountain-blue .aux-overlay::after, .aux-button.aux-fountain-blue .aux-overlay::after { background-color: #4698a6; }
-a.button.aux-fountain-blue.aux-fill:hover, button.aux-fountain-blue.aux-fill:hover, input[type="button"].aux-fountain-blue.aux-fill:hover, .aux-button.aux-fountain-blue.aux-fill:hover { background-color: #4698a6 !important; }
-a.button.aux-shamrock, button.aux-shamrock, input[type="button"].aux-shamrock, .aux-button.aux-shamrock { background-color: #2CC990; text-shadow: 0 2px 0 #25a878; color: white; }
-a.button.aux-shamrock .aux-overlay::after, button.aux-shamrock .aux-overlay::after, input[type="button"].aux-shamrock .aux-overlay::after, .aux-button.aux-shamrock .aux-overlay::after { background-color: #25a878; }
-a.button.aux-shamrock.aux-fill:hover, button.aux-shamrock.aux-fill:hover, input[type="button"].aux-shamrock.aux-fill:hover, .aux-button.aux-shamrock.aux-fill:hover { background-color: #25a878 !important; }
-a.button.aux-curios-blue, button.aux-curios-blue, input[type="button"].aux-curios-blue, .aux-button.aux-curios-blue { background-color: #2C82C9; text-shadow: 0 2px 0 #256ca8; color: white; }
-a.button.aux-curios-blue .aux-overlay::after, button.aux-curios-blue .aux-overlay::after, input[type="button"].aux-curios-blue .aux-overlay::after, .aux-button.aux-curios-blue .aux-overlay::after { background-color: #256ca8; }
-a.button.aux-curios-blue.aux-fill:hover, button.aux-curios-blue.aux-fill:hover, input[type="button"].aux-curios-blue.aux-fill:hover, .aux-button.aux-curios-blue.aux-fill:hover { background-color: #256ca8 !important; }
-a.button.aux-light-sea-green, button.aux-light-sea-green, input[type="button"].aux-light-sea-green, .aux-button.aux-light-sea-green { background-color: #1ABC9C; text-shadow: 0 2px 0 #15987e; color: white; }
-a.button.aux-light-sea-green .aux-overlay::after, button.aux-light-sea-green .aux-overlay::after, input[type="button"].aux-light-sea-green .aux-overlay::after, .aux-button.aux-light-sea-green .aux-overlay::after { background-color: #15987e; }
-a.button.aux-light-sea-green.aux-fill:hover, button.aux-light-sea-green.aux-fill:hover, input[type="button"].aux-light-sea-green.aux-fill:hover, .aux-button.aux-light-sea-green.aux-fill:hover { background-color: #15987e !important; }
-a.button.aux-emerald, button.aux-emerald, input[type="button"].aux-emerald, .aux-button.aux-emerald { background-color: #4EBA6F; text-shadow: 0 2px 0 #3fa15d; color: white; }
-a.button.aux-emerald .aux-overlay::after, button.aux-emerald .aux-overlay::after, input[type="button"].aux-emerald .aux-overlay::after, .aux-button.aux-emerald .aux-overlay::after { background-color: #3fa15d; }
-a.button.aux-emerald.aux-fill:hover, button.aux-emerald.aux-fill:hover, input[type="button"].aux-emerald.aux-fill:hover, .aux-button.aux-emerald.aux-fill:hover { background-color: #3fa15d !important; }
-a.button.aux-energy-yellow, button.aux-energy-yellow, input[type="button"].aux-energy-yellow, .aux-button.aux-energy-yellow { background-color: #EEE657; text-shadow: 0 2px 0 #eae032; color: white; }
-a.button.aux-energy-yellow .aux-overlay::after, button.aux-energy-yellow .aux-overlay::after, input[type="button"].aux-energy-yellow .aux-overlay::after, .aux-button.aux-energy-yellow .aux-overlay::after { background-color: #eae032; }
-a.button.aux-energy-yellow.aux-fill:hover, button.aux-energy-yellow.aux-fill:hover, input[type="button"].aux-energy-yellow.aux-fill:hover, .aux-button.aux-energy-yellow.aux-fill:hover { background-color: #eae032 !important; }
-a.button.aux-mikado-yellow, button.aux-mikado-yellow, input[type="button"].aux-mikado-yellow, .aux-button.aux-mikado-yellow { background-color: #FCCD0F; text-shadow: 0 2px 0 #dfb403; color: white; }
-a.button.aux-mikado-yellow .aux-overlay::after, button.aux-mikado-yellow .aux-overlay::after, input[type="button"].aux-mikado-yellow .aux-overlay::after, .aux-button.aux-mikado-yellow .aux-overlay::after { background-color: #dfb403; }
-a.button.aux-mikado-yellow.aux-fill:hover, button.aux-mikado-yellow.aux-fill:hover, input[type="button"].aux-mikado-yellow.aux-fill:hover, .aux-button.aux-mikado-yellow.aux-fill:hover { background-color: #dfb403 !important; }
-a.button.aux-pink-salmon, button.aux-pink-salmon, input[type="button"].aux-pink-salmon, .aux-button.aux-pink-salmon { background-color: #FF91A9; text-shadow: 0 2px 0 #ff6889; color: white; }
-a.button.aux-pink-salmon .aux-overlay::after, button.aux-pink-salmon .aux-overlay::after, input[type="button"].aux-pink-salmon .aux-overlay::after, .aux-button.aux-pink-salmon .aux-overlay::after { background-color: #ff6889; }
-a.button.aux-pink-salmon.aux-fill:hover, button.aux-pink-salmon.aux-fill:hover, input[type="button"].aux-pink-salmon.aux-fill:hover, .aux-button.aux-pink-salmon.aux-fill:hover { background-color: #ff6889 !important; }
-a.button.aux-wisteria, button.aux-wisteria, input[type="button"].aux-wisteria, .aux-button.aux-wisteria { background-color: #9E69AF; text-shadow: 0 2px 0 #8a539c; color: white; }
-a.button.aux-wisteria .aux-overlay::after, button.aux-wisteria .aux-overlay::after, input[type="button"].aux-wisteria .aux-overlay::after, .aux-button.aux-wisteria .aux-overlay::after { background-color: #8a539c; }
-a.button.aux-wisteria.aux-fill:hover, button.aux-wisteria.aux-fill:hover, input[type="button"].aux-wisteria.aux-fill:hover, .aux-button.aux-wisteria.aux-fill:hover { background-color: #8a539c !important; }
-a.button.aux-lilac, button.aux-lilac, input[type="button"].aux-lilac, .aux-button.aux-lilac { background-color: #CEACD2; text-shadow: 0 2px 0 #be92c4; color: white; }
-a.button.aux-lilac .aux-overlay::after, button.aux-lilac .aux-overlay::after, input[type="button"].aux-lilac .aux-overlay::after, .aux-button.aux-lilac .aux-overlay::after { background-color: #be92c4; }
-a.button.aux-lilac.aux-fill:hover, button.aux-lilac.aux-fill:hover, input[type="button"].aux-lilac.aux-fill:hover, .aux-button.aux-lilac.aux-fill:hover { background-color: #be92c4 !important; }
-a.button.aux-pale-sky, button.aux-pale-sky, input[type="button"].aux-pale-sky, .aux-button.aux-pale-sky { background-color: #5F7487; text-shadow: 0 2px 0 #4e5f6f; color: white; }
-a.button.aux-pale-sky .aux-overlay::after, button.aux-pale-sky .aux-overlay::after, input[type="button"].aux-pale-sky .aux-overlay::after, .aux-button.aux-pale-sky .aux-overlay::after { background-color: #4e5f6f; }
-a.button.aux-pale-sky.aux-fill:hover, button.aux-pale-sky.aux-fill:hover, input[type="button"].aux-pale-sky.aux-fill:hover, .aux-button.aux-pale-sky.aux-fill:hover { background-color: #4e5f6f !important; }
-a.button.aux-tower-gray, button.aux-tower-gray, input[type="button"].aux-tower-gray, .aux-button.aux-tower-gray { background-color: #ADBCC3; text-shadow: 0 2px 0 #95a9b2; color: white; }
-a.button.aux-tower-gray .aux-overlay::after, button.aux-tower-gray .aux-overlay::after, input[type="button"].aux-tower-gray .aux-overlay::after, .aux-button.aux-tower-gray .aux-overlay::after { background-color: #95a9b2; }
-a.button.aux-tower-gray.aux-fill:hover, button.aux-tower-gray.aux-fill:hover, input[type="button"].aux-tower-gray.aux-fill:hover, .aux-button.aux-tower-gray.aux-fill:hover { background-color: #95a9b2 !important; }
-a.button.aux-william, button.aux-william, input[type="button"].aux-william, .aux-button.aux-william { background-color: #3A5F6F; text-shadow: 0 2px 0 #2c4854; color: white; }
-a.button.aux-william .aux-overlay::after, button.aux-william .aux-overlay::after, input[type="button"].aux-william .aux-overlay::after, .aux-button.aux-william .aux-overlay::after { background-color: #2c4854; }
-a.button.aux-william.aux-fill:hover, button.aux-william.aux-fill:hover, input[type="button"].aux-william.aux-fill:hover, .aux-button.aux-william.aux-fill:hover { background-color: #2c4854 !important; }
-a.button.aux-carmine-pink, button.aux-carmine-pink, input[type="button"].aux-carmine-pink, .aux-button.aux-carmine-pink { background-color: #E74C3C; text-shadow: 0 2px 0 #df2e1b; color: white; }
-a.button.aux-carmine-pink .aux-overlay::after, button.aux-carmine-pink .aux-overlay::after, input[type="button"].aux-carmine-pink .aux-overlay::after, .aux-button.aux-carmine-pink .aux-overlay::after { background-color: #df2e1b; }
-a.button.aux-carmine-pink.aux-fill:hover, button.aux-carmine-pink.aux-fill:hover, input[type="button"].aux-carmine-pink.aux-fill:hover, .aux-button.aux-carmine-pink.aux-fill:hover { background-color: #df2e1b !important; }
-a.button.aux-persimmon, button.aux-persimmon, input[type="button"].aux-persimmon, .aux-button.aux-persimmon { background-color: #FF6A55; text-shadow: 0 2px 0 #ff462c; color: white; }
-a.button.aux-persimmon .aux-overlay::after, button.aux-persimmon .aux-overlay::after, input[type="button"].aux-persimmon .aux-overlay::after, .aux-button.aux-persimmon .aux-overlay::after { background-color: #ff462c; }
-a.button.aux-persimmon.aux-fill:hover, button.aux-persimmon.aux-fill:hover, input[type="button"].aux-persimmon.aux-fill:hover, .aux-button.aux-persimmon.aux-fill:hover { background-color: #ff462c !important; }
-a.button.aux-tan-hide, button.aux-tan-hide, input[type="button"].aux-tan-hide, .aux-button.aux-tan-hide { background-color: #FF9F55; text-shadow: 0 2px 0 #ff882c; color: white; }
-a.button.aux-tan-hide .aux-overlay::after, button.aux-tan-hide .aux-overlay::after, input[type="button"].aux-tan-hide .aux-overlay::after, .aux-button.aux-tan-hide .aux-overlay::after { background-color: #ff882c; }
-a.button.aux-tan-hide.aux-fill:hover, button.aux-tan-hide.aux-fill:hover, input[type="button"].aux-tan-hide.aux-fill:hover, .aux-button.aux-tan-hide.aux-fill:hover { background-color: #ff882c !important; }
-a.button.aux-wild-watermelon, button.aux-wild-watermelon, input[type="button"].aux-wild-watermelon, .aux-button.aux-wild-watermelon { background-color: #FF6E78; text-shadow: 0 2px 0 #ff4552; color: white; }
-a.button.aux-wild-watermelon .aux-overlay::after, button.aux-wild-watermelon .aux-overlay::after, input[type="button"].aux-wild-watermelon .aux-overlay::after, .aux-button.aux-wild-watermelon .aux-overlay::after { background-color: #ff4552; }
-a.button.aux-wild-watermelon.aux-fill:hover, button.aux-wild-watermelon.aux-fill:hover, input[type="button"].aux-wild-watermelon.aux-fill:hover, .aux-button.aux-wild-watermelon.aux-fill:hover { background-color: #ff4552 !important; }
-a.button.aux-iceberg, button.aux-iceberg, input[type="button"].aux-iceberg, .aux-button.aux-iceberg { background-color: #73B1D6; text-shadow: 0 2px 0 #539fcd; color: white; }
-a.button.aux-iceberg .aux-overlay::after, button.aux-iceberg .aux-overlay::after, input[type="button"].aux-iceberg .aux-overlay::after, .aux-button.aux-iceberg .aux-overlay::after { background-color: #539fcd; }
-a.button.aux-iceberg.aux-fill:hover, button.aux-iceberg.aux-fill:hover, input[type="button"].aux-iceberg.aux-fill:hover, .aux-button.aux-iceberg.aux-fill:hover { background-color: #539fcd !important; }
-a.button.aux-dark-lavender, button.aux-dark-lavender, input[type="button"].aux-dark-lavender, .aux-button.aux-dark-lavender { background-color: #745A90; text-shadow: 0 2px 0 #604a77; color: white; }
-a.button.aux-dark-lavender .aux-overlay::after, button.aux-dark-lavender .aux-overlay::after, input[type="button"].aux-dark-lavender .aux-overlay::after, .aux-button.aux-dark-lavender .aux-overlay::after { background-color: #604a77; }
-a.button.aux-dark-lavender.aux-fill:hover, button.aux-dark-lavender.aux-fill:hover, input[type="button"].aux-dark-lavender.aux-fill:hover, .aux-button.aux-dark-lavender.aux-fill:hover { background-color: #604a77 !important; }
-a.button.aux-viking, button.aux-viking, input[type="button"].aux-viking, .aux-button.aux-viking { background-color: #5CD5E6; text-shadow: 0 2px 0 #39cce1; color: white; }
-a.button.aux-viking .aux-overlay::after, button.aux-viking .aux-overlay::after, input[type="button"].aux-viking .aux-overlay::after, .aux-button.aux-viking .aux-overlay::after { background-color: #39cce1; }
-a.button.aux-viking.aux-fill:hover, button.aux-viking.aux-fill:hover, input[type="button"].aux-viking.aux-fill:hover, .aux-button.aux-viking.aux-fill:hover { background-color: #39cce1 !important; }
-a.button.aux-tiffany-blue, button.aux-tiffany-blue, input[type="button"].aux-tiffany-blue, .aux-button.aux-tiffany-blue { background-color: #00B5B5; text-shadow: 0 2px 0 #008c8c; color: white; }
-a.button.aux-tiffany-blue .aux-overlay::after, button.aux-tiffany-blue .aux-overlay::after, input[type="button"].aux-tiffany-blue .aux-overlay::after, .aux-button.aux-tiffany-blue .aux-overlay::after { background-color: #008c8c; }
-a.button.aux-tiffany-blue.aux-fill:hover, button.aux-tiffany-blue.aux-fill:hover, input[type="button"].aux-tiffany-blue.aux-fill:hover, .aux-button.aux-tiffany-blue.aux-fill:hover { background-color: #008c8c !important; }
-a.button.aux-pastel-orange, button.aux-pastel-orange, input[type="button"].aux-pastel-orange, .aux-button.aux-pastel-orange { background-color: #FCB941; text-shadow: 0 2px 0 #fbaa19; color: white; }
-a.button.aux-pastel-orange .aux-overlay::after, button.aux-pastel-orange .aux-overlay::after, input[type="button"].aux-pastel-orange .aux-overlay::after, .aux-button.aux-pastel-orange .aux-overlay::after { background-color: #fbaa19; }
-a.button.aux-pastel-orange.aux-fill:hover, button.aux-pastel-orange.aux-fill:hover, input[type="button"].aux-pastel-orange.aux-fill:hover, .aux-button.aux-pastel-orange.aux-fill:hover { background-color: #fbaa19 !important; }
-a.button.aux-east-bay, button.aux-east-bay, input[type="button"].aux-east-bay, .aux-button.aux-east-bay { background-color: #395781; text-shadow: 0 2px 0 #2c4465; color: white; }
-a.button.aux-east-bay .aux-overlay::after, button.aux-east-bay .aux-overlay::after, input[type="button"].aux-east-bay .aux-overlay::after, .aux-button.aux-east-bay .aux-overlay::after { background-color: #2c4465; }
-a.button.aux-east-bay.aux-fill:hover, button.aux-east-bay.aux-fill:hover, input[type="button"].aux-east-bay.aux-fill:hover, .aux-button.aux-east-bay.aux-fill:hover { background-color: #2c4465 !important; }
-a.button.aux-steel-blue, button.aux-steel-blue, input[type="button"].aux-steel-blue, .aux-button.aux-steel-blue { background-color: #4589B0; text-shadow: 0 2px 0 #3a7293; color: white; }
-a.button.aux-steel-blue .aux-overlay::after, button.aux-steel-blue .aux-overlay::after, input[type="button"].aux-steel-blue .aux-overlay::after, .aux-button.aux-steel-blue .aux-overlay::after { background-color: #3a7293; }
-a.button.aux-steel-blue.aux-fill:hover, button.aux-steel-blue.aux-fill:hover, input[type="button"].aux-steel-blue.aux-fill:hover, .aux-button.aux-steel-blue.aux-fill:hover { background-color: #3a7293 !important; }
-a.button.aux-half-backed, button.aux-half-backed, input[type="button"].aux-half-backed, .aux-button.aux-half-backed { background-color: #84CCD1; text-shadow: 0 2px 0 #66c0c6; color: white; }
-a.button.aux-half-backed .aux-overlay::after, button.aux-half-backed .aux-overlay::after, input[type="button"].aux-half-backed .aux-overlay::after, .aux-button.aux-half-backed .aux-overlay::after { background-color: #66c0c6; }
-a.button.aux-half-backed.aux-fill:hover, button.aux-half-backed.aux-fill:hover, input[type="button"].aux-half-backed.aux-fill:hover, .aux-button.aux-half-backed.aux-fill:hover { background-color: #66c0c6 !important; }
-a.button.aux-tapestry, button.aux-tapestry, input[type="button"].aux-tapestry, .aux-button.aux-tapestry { background-color: #B95A84; text-shadow: 0 2px 0 #a44670; color: white; }
-a.button.aux-tapestry .aux-overlay::after, button.aux-tapestry .aux-overlay::after, input[type="button"].aux-tapestry .aux-overlay::after, .aux-button.aux-tapestry .aux-overlay::after { background-color: #a44670; }
-a.button.aux-tapestry.aux-fill:hover, button.aux-tapestry.aux-fill:hover, input[type="button"].aux-tapestry.aux-fill:hover, .aux-button.aux-tapestry.aux-fill:hover { background-color: #a44670 !important; }
-a.button.aux-fire-engine-red, button.aux-fire-engine-red, input[type="button"].aux-fire-engine-red, .aux-button.aux-fire-engine-red { background-color: #CD2C24; text-shadow: 0 2px 0 #aa251e; color: white; }
-a.button.aux-fire-engine-red .aux-overlay::after, button.aux-fire-engine-red .aux-overlay::after, input[type="button"].aux-fire-engine-red .aux-overlay::after, .aux-button.aux-fire-engine-red .aux-overlay::after { background-color: #aa251e; }
-a.button.aux-fire-engine-red.aux-fill:hover, button.aux-fire-engine-red.aux-fill:hover, input[type="button"].aux-fire-engine-red.aux-fill:hover, .aux-button.aux-fire-engine-red.aux-fill:hover { background-color: #aa251e !important; }
-a.button.aux-dark-orange, button.aux-dark-orange, input[type="button"].aux-dark-orange, .aux-button.aux-dark-orange { background-color: #FF8C00; text-shadow: 0 2px 0 #d67600; color: white; }
-a.button.aux-dark-orange .aux-overlay::after, button.aux-dark-orange .aux-overlay::after, input[type="button"].aux-dark-orange .aux-overlay::after, .aux-button.aux-dark-orange .aux-overlay::after { background-color: #d67600; }
-a.button.aux-dark-orange.aux-fill:hover, button.aux-dark-orange.aux-fill:hover, input[type="button"].aux-dark-orange.aux-fill:hover, .aux-button.aux-dark-orange.aux-fill:hover { background-color: #d67600 !important; }
-a.button.aux-brick-red, button.aux-brick-red, input[type="button"].aux-brick-red, .aux-button.aux-brick-red { background-color: #CC4452; text-shadow: 0 2px 0 #b6323f; color: white; }
-a.button.aux-brick-red .aux-overlay::after, button.aux-brick-red .aux-overlay::after, input[type="button"].aux-brick-red .aux-overlay::after, .aux-button.aux-brick-red .aux-overlay::after { background-color: #b6323f; }
-a.button.aux-brick-red.aux-fill:hover, button.aux-brick-red.aux-fill:hover, input[type="button"].aux-brick-red.aux-fill:hover, .aux-button.aux-brick-red.aux-fill:hover { background-color: #b6323f !important; }
-a.button.aux-khaki, button.aux-khaki, input[type="button"].aux-khaki, .aux-button.aux-khaki { background-color: khaki; text-shadow: 0 2px 0 #ebde68; color: white; }
-a.button.aux-khaki .aux-overlay::after, button.aux-khaki .aux-overlay::after, input[type="button"].aux-khaki .aux-overlay::after, .aux-button.aux-khaki .aux-overlay::after { background-color: #ebde68; }
-a.button.aux-khaki.aux-fill:hover, button.aux-khaki.aux-fill:hover, input[type="button"].aux-khaki.aux-fill:hover, .aux-button.aux-khaki.aux-fill:hover { background-color: #ebde68 !important; }
-a.button.aux-dark-text, button.aux-dark-text, input[type="button"].aux-dark-text, .aux-button.aux-dark-text { color: black; }
-a.button.aux-uppercase, button.aux-uppercase, input[type="button"].aux-uppercase, .aux-button.aux-uppercase { text-transform: uppercase; }
-
-input[type="submit"], input[type="reset"] { font-weight: 600; display: inline-block; position: relative; line-height: 100%; margin-bottom: 1em; border: none; cursor: pointer; overflow: hidden; z-index: 1; -webkit-transition: all 450ms; transition: all 450ms; }
-input[type="submit"]:focus, input[type="reset"]:focus { outline: none; }
-input[type="submit"] > *, input[type="reset"] > * { position: relative; }
-input[type="submit"] .aux-overlay, input[type="reset"] .aux-overlay { position: absolute; width: 120%; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%) scale(0, 0); -ms-transform: translate(-50%, -50%) scale(0, 0); transform: translate(-50%, -50%) scale(0, 0); -webkit-transition: -webkit-transform 450ms cubic-bezier(0.75, 0.1, 0.25, 0.9); transition: transform 450ms cubic-bezier(0.75, 0.1, 0.25, 0.9); }
-input[type="submit"] .aux-overlay::after, input[type="reset"] .aux-overlay::after { position: relative; content: ''; border-radius: 50%; display: block; padding-top: 100%; }
-input[type="submit"].aux-round .aux-overlay, input[type="reset"].aux-round .aux-overlay { width: 120%; }
-input[type="submit"]:hover .aux-overlay, input[type="reset"]:hover .aux-overlay { -webkit-transform: translate(-50%, -50%) scale(1, 1); -ms-transform: translate(-50%, -50%) scale(1, 1); transform: translate(-50%, -50%) scale(1, 1); }
-input[type="submit"].aux-fill, input[type="reset"].aux-fill { -webkit-transition: background-color 450ms; transition: background-color 450ms; }
-input[type="submit"].aux-fill .aux-overlay, input[type="reset"].aux-fill .aux-overlay { display: none; }
+input[type="button"], .aux-button { font-weight: 600; display: inline-block; position: relative; line-height: 100%; margin-bottom: 1em; border: none; cursor: pointer; overflow: hidden; z-index: 1; -webkit-transition: all 450ms; transition: all 450ms; }
+input[type="button"]:focus, .aux-button:focus { outline: none; }
+input[type="button"] > *, .aux-button > * { position: relative; }
+input[type="button"] .aux-overlay, .aux-button .aux-overlay { position: absolute; width: 120%; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%) scale(0, 0); -ms-transform: translate(-50%, -50%) scale(0, 0); transform: translate(-50%, -50%) scale(0, 0); -webkit-transition: -webkit-transform 450ms cubic-bezier(0.75, 0.1, 0.25, 0.9); transition: transform 450ms cubic-bezier(0.75, 0.1, 0.25, 0.9); }
+input[type="button"] .aux-overlay::after, .aux-button .aux-overlay::after { position: relative; content: ''; border-radius: 50%; display: block; padding-top: 100%; }
+input[type="button"].aux-round .aux-overlay, .aux-button.aux-round .aux-overlay { width: 120%; }
+input[type="button"]:hover .aux-overlay, .aux-button:hover .aux-overlay { -webkit-transform: translate(-50%, -50%) scale(1, 1); -ms-transform: translate(-50%, -50%) scale(1, 1); transform: translate(-50%, -50%) scale(1, 1); }
+input[type="button"].aux-fill, .aux-button.aux-fill { -webkit-transition: background-color 450ms; transition: background-color 450ms; }
+input[type="button"].aux-fill .aux-overlay, .aux-button.aux-fill .aux-overlay { display: none; }
+input[type="button"] .aux-icon, input[type="button"] .aux-text, .aux-button .aux-icon, .aux-button .aux-text { display: inline-block; vertical-align: middle; -webkit-transition: -webkit-transform 450ms, opacity 450ms; transition: transform 450ms, opacity 450ms; }
+input[type="button"].aux-icon-left .aux-icon, input[type="button"].aux-icon-left-animate .aux-icon, .aux-button.aux-icon-left .aux-icon, .aux-button.aux-icon-left-animate .aux-icon { margin-right: 0.125em; }
+input[type="button"].aux-icon-right .aux-icon, input[type="button"].aux-icon-right-animate .aux-icon, .aux-button.aux-icon-right .aux-icon, .aux-button.aux-icon-right-animate .aux-icon { margin-left: 0.125em; }
+input[type="button"].aux-icon-left-animate .aux-icon, .aux-button.aux-icon-left-animate .aux-icon { margin-left: 0.125em; }
+input[type="button"].aux-icon-left-animate .aux-icon, .aux-button.aux-icon-left-animate .aux-icon { -webkit-transform: translateX(-400%); -ms-transform: translateX(-400%); transform: translateX(-400%); }
+input[type="button"].aux-icon-left-animate .aux-text, .aux-button.aux-icon-left-animate .aux-text { -webkit-transform: translateX(-1em); -ms-transform: translateX(-1em); transform: translateX(-1em); }
+input[type="button"].aux-icon-left-animate:hover .aux-icon, input[type="button"].aux-icon-left-animate:hover .aux-text, .aux-button.aux-icon-left-animate:hover .aux-icon, .aux-button.aux-icon-left-animate:hover .aux-text { -webkit-transform: translateX(0); -ms-transform: translateX(0); transform: translateX(0); }
+input[type="button"].aux-icon-right-animate .aux-icon, .aux-button.aux-icon-right-animate .aux-icon { -webkit-transform: translateX(400%); -ms-transform: translateX(400%); transform: translateX(400%); }
+input[type="button"].aux-icon-right-animate .aux-text, .aux-button.aux-icon-right-animate .aux-text { -webkit-transform: translateX(1em); -ms-transform: translateX(1em); transform: translateX(1em); }
+input[type="button"].aux-icon-right-animate:hover .aux-icon, input[type="button"].aux-icon-right-animate:hover .aux-text, .aux-button.aux-icon-right-animate:hover .aux-icon, .aux-button.aux-icon-right-animate:hover .aux-text { -webkit-transform: translateX(0px); -ms-transform: translateX(0px); transform: translateX(0px); }
+input[type="button"].aux-icon-over .aux-icon, .aux-button.aux-icon-over .aux-icon { position: absolute; left: 50%; top: 50%; opacity: 0; z-index: 2; -webkit-transform: translate(-200%, -50%); -ms-transform: translate(-200%, -50%); transform: translate(-200%, -50%); -webkit-transition: -webkit-transform 450ms, opacity 450ms; transition: transform 450ms, opacity 450ms; }
+input[type="button"].aux-icon-over .aux-overlay, .aux-button.aux-icon-over .aux-overlay { z-index: 1; }
+input[type="button"].aux-icon-over:hover .aux-icon, .aux-button.aux-icon-over:hover .aux-icon { -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%); opacity: 1; }
+.rtl input[type="button"].aux-icon-left .aux-icon, .rtl input[type="button"].aux-icon-left-animate .aux-icon, .rtl .aux-button.aux-icon-left .aux-icon, .rtl .aux-button.aux-icon-left-animate .aux-icon { margin-right: 0; margin-left: 0.125em; }
+.rtl input[type="button"].aux-icon-right .aux-icon, .rtl input[type="button"].aux-icon-right-animate .aux-icon, .rtl .aux-button.aux-icon-right .aux-icon, .rtl .aux-button.aux-icon-right-animate .aux-icon { margin-right: 0.125em; margin-left: 0; }
+.rtl input[type="button"].aux-icon-left-animate .aux-icon, .rtl .aux-button.aux-icon-left-animate .aux-icon { margin-right: 0.125em; margin-left: 0; }
+.rtl input[type="button"].aux-icon-left-animate .aux-icon, .rtl .aux-button.aux-icon-left-animate .aux-icon { -webkit-transform: translateX(400%); -ms-transform: translateX(400%); transform: translateX(400%); }
+.rtl input[type="button"].aux-icon-left-animate .aux-text, .rtl .aux-button.aux-icon-left-animate .aux-text { -webkit-transform: translateX(1em); -ms-transform: translateX(1em); transform: translateX(1em); }
+.rtl input[type="button"].aux-icon-left-animate:hover .aux-icon, .rtl input[type="button"].aux-icon-left-animate:hover .aux-text, .rtl .aux-button.aux-icon-left-animate:hover .aux-icon, .rtl .aux-button.aux-icon-left-animate:hover .aux-text { -webkit-transform: translateX(0); -ms-transform: translateX(0); transform: translateX(0); }
+.rtl input[type="button"].aux-icon-right-animate .aux-icon, .rtl .aux-button.aux-icon-right-animate .aux-icon { -webkit-transform: translateX(-400%); -ms-transform: translateX(-400%); transform: translateX(-400%); }
+.rtl input[type="button"].aux-icon-right-animate .aux-text, .rtl .aux-button.aux-icon-right-animate .aux-text { -webkit-transform: translateX(-1em); -ms-transform: translateX(-1em); transform: translateX(-1em); }
+.rtl input[type="button"].aux-icon-right-animate:hover .aux-icon, .rtl input[type="button"].aux-icon-right-animate:hover .aux-text, .rtl .aux-button.aux-icon-right-animate:hover .aux-icon, .rtl .aux-button.aux-icon-right-animate:hover .aux-text { -webkit-transform: translateX(0px); -ms-transform: translateX(0px); transform: translateX(0px); }
+.rtl input[type="button"].aux-icon-over .aux-icon, .rtl .aux-button.aux-icon-over .aux-icon { left: -50%; -webkit-transform: translate(200%, -50%); -ms-transform: translate(200%, -50%); transform: translate(200%, -50%); }
+.rtl input[type="button"].aux-icon-over:hover .aux-icon, .rtl .aux-button.aux-icon-over:hover .aux-icon { -webkit-transform: translate(50%, -50%); -ms-transform: translate(50%, -50%); transform: translate(50%, -50%); }
+input[type="button"].aux-black, .aux-button.aux-black { background-color: #3D3D3D; text-shadow: 0 2px 0 #292929; color: white; }
+input[type="button"].aux-black .aux-overlay::after, .aux-button.aux-black .aux-overlay::after { background-color: #292929; }
+input[type="button"].aux-black.aux-fill:hover, .aux-button.aux-black.aux-fill:hover { background-color: #292929 !important; }
+input[type="button"].aux-white, .aux-button.aux-white { background-color: #FFFFFF; text-shadow: 0 2px 0 #ebebeb; color: black; }
+input[type="button"].aux-white .aux-overlay::after, .aux-button.aux-white .aux-overlay::after { background-color: #ebebeb; }
+input[type="button"].aux-white.aux-fill:hover, .aux-button.aux-white.aux-fill:hover { background-color: #ebebeb !important; }
+input[type="button"].aux-masala, .aux-button.aux-masala { background-color: #3D3D3D; text-shadow: 0 2px 0 #292929; color: white; }
+input[type="button"].aux-masala .aux-overlay::after, .aux-button.aux-masala .aux-overlay::after { background-color: #292929; }
+input[type="button"].aux-masala.aux-fill:hover, .aux-button.aux-masala.aux-fill:hover { background-color: #292929 !important; }
+input[type="button"].aux-dark-gray, .aux-button.aux-dark-gray { background-color: #AAAAAA; text-shadow: 0 2px 0 #969696; color: white; }
+input[type="button"].aux-dark-gray .aux-overlay::after, .aux-button.aux-dark-gray .aux-overlay::after { background-color: #969696; }
+input[type="button"].aux-dark-gray.aux-fill:hover, .aux-button.aux-dark-gray.aux-fill:hover { background-color: #969696 !important; }
+input[type="button"].aux-ball-blue, .aux-button.aux-ball-blue { background-color: #1BB0CE; text-shadow: 0 2px 0 #1691aa; color: white; }
+input[type="button"].aux-ball-blue .aux-overlay::after, .aux-button.aux-ball-blue .aux-overlay::after { background-color: #1691aa; }
+input[type="button"].aux-ball-blue.aux-fill:hover, .aux-button.aux-ball-blue.aux-fill:hover { background-color: #1691aa !important; }
+input[type="button"].aux-fountain-blue, .aux-button.aux-fountain-blue { background-color: #5BACBA; text-shadow: 0 2px 0 #4698a6; color: white; }
+input[type="button"].aux-fountain-blue .aux-overlay::after, .aux-button.aux-fountain-blue .aux-overlay::after { background-color: #4698a6; }
+input[type="button"].aux-fountain-blue.aux-fill:hover, .aux-button.aux-fountain-blue.aux-fill:hover { background-color: #4698a6 !important; }
+input[type="button"].aux-shamrock, .aux-button.aux-shamrock { background-color: #2CC990; text-shadow: 0 2px 0 #25a878; color: white; }
+input[type="button"].aux-shamrock .aux-overlay::after, .aux-button.aux-shamrock .aux-overlay::after { background-color: #25a878; }
+input[type="button"].aux-shamrock.aux-fill:hover, .aux-button.aux-shamrock.aux-fill:hover { background-color: #25a878 !important; }
+input[type="button"].aux-curios-blue, .aux-button.aux-curios-blue { background-color: #2C82C9; text-shadow: 0 2px 0 #256ca8; color: white; }
+input[type="button"].aux-curios-blue .aux-overlay::after, .aux-button.aux-curios-blue .aux-overlay::after { background-color: #256ca8; }
+input[type="button"].aux-curios-blue.aux-fill:hover, .aux-button.aux-curios-blue.aux-fill:hover { background-color: #256ca8 !important; }
+input[type="button"].aux-light-sea-green, .aux-button.aux-light-sea-green { background-color: #1ABC9C; text-shadow: 0 2px 0 #15987e; color: white; }
+input[type="button"].aux-light-sea-green .aux-overlay::after, .aux-button.aux-light-sea-green .aux-overlay::after { background-color: #15987e; }
+input[type="button"].aux-light-sea-green.aux-fill:hover, .aux-button.aux-light-sea-green.aux-fill:hover { background-color: #15987e !important; }
+input[type="button"].aux-emerald, .aux-button.aux-emerald { background-color: #4EBA6F; text-shadow: 0 2px 0 #3fa15d; color: white; }
+input[type="button"].aux-emerald .aux-overlay::after, .aux-button.aux-emerald .aux-overlay::after { background-color: #3fa15d; }
+input[type="button"].aux-emerald.aux-fill:hover, .aux-button.aux-emerald.aux-fill:hover { background-color: #3fa15d !important; }
+input[type="button"].aux-energy-yellow, .aux-button.aux-energy-yellow { background-color: #EEE657; text-shadow: 0 2px 0 #eae032; color: white; }
+input[type="button"].aux-energy-yellow .aux-overlay::after, .aux-button.aux-energy-yellow .aux-overlay::after { background-color: #eae032; }
+input[type="button"].aux-energy-yellow.aux-fill:hover, .aux-button.aux-energy-yellow.aux-fill:hover { background-color: #eae032 !important; }
+input[type="button"].aux-mikado-yellow, .aux-button.aux-mikado-yellow { background-color: #FCCD0F; text-shadow: 0 2px 0 #dfb403; color: white; }
+input[type="button"].aux-mikado-yellow .aux-overlay::after, .aux-button.aux-mikado-yellow .aux-overlay::after { background-color: #dfb403; }
+input[type="button"].aux-mikado-yellow.aux-fill:hover, .aux-button.aux-mikado-yellow.aux-fill:hover { background-color: #dfb403 !important; }
+input[type="button"].aux-pink-salmon, .aux-button.aux-pink-salmon { background-color: #FF91A9; text-shadow: 0 2px 0 #ff6889; color: white; }
+input[type="button"].aux-pink-salmon .aux-overlay::after, .aux-button.aux-pink-salmon .aux-overlay::after { background-color: #ff6889; }
+input[type="button"].aux-pink-salmon.aux-fill:hover, .aux-button.aux-pink-salmon.aux-fill:hover { background-color: #ff6889 !important; }
+input[type="button"].aux-wisteria, .aux-button.aux-wisteria { background-color: #9E69AF; text-shadow: 0 2px 0 #8a539c; color: white; }
+input[type="button"].aux-wisteria .aux-overlay::after, .aux-button.aux-wisteria .aux-overlay::after { background-color: #8a539c; }
+input[type="button"].aux-wisteria.aux-fill:hover, .aux-button.aux-wisteria.aux-fill:hover { background-color: #8a539c !important; }
+input[type="button"].aux-lilac, .aux-button.aux-lilac { background-color: #CEACD2; text-shadow: 0 2px 0 #be92c4; color: white; }
+input[type="button"].aux-lilac .aux-overlay::after, .aux-button.aux-lilac .aux-overlay::after { background-color: #be92c4; }
+input[type="button"].aux-lilac.aux-fill:hover, .aux-button.aux-lilac.aux-fill:hover { background-color: #be92c4 !important; }
+input[type="button"].aux-pale-sky, .aux-button.aux-pale-sky { background-color: #5F7487; text-shadow: 0 2px 0 #4e5f6f; color: white; }
+input[type="button"].aux-pale-sky .aux-overlay::after, .aux-button.aux-pale-sky .aux-overlay::after { background-color: #4e5f6f; }
+input[type="button"].aux-pale-sky.aux-fill:hover, .aux-button.aux-pale-sky.aux-fill:hover { background-color: #4e5f6f !important; }
+input[type="button"].aux-tower-gray, .aux-button.aux-tower-gray { background-color: #ADBCC3; text-shadow: 0 2px 0 #95a9b2; color: white; }
+input[type="button"].aux-tower-gray .aux-overlay::after, .aux-button.aux-tower-gray .aux-overlay::after { background-color: #95a9b2; }
+input[type="button"].aux-tower-gray.aux-fill:hover, .aux-button.aux-tower-gray.aux-fill:hover { background-color: #95a9b2 !important; }
+input[type="button"].aux-william, .aux-button.aux-william { background-color: #3A5F6F; text-shadow: 0 2px 0 #2c4854; color: white; }
+input[type="button"].aux-william .aux-overlay::after, .aux-button.aux-william .aux-overlay::after { background-color: #2c4854; }
+input[type="button"].aux-william.aux-fill:hover, .aux-button.aux-william.aux-fill:hover { background-color: #2c4854 !important; }
+input[type="button"].aux-carmine-pink, .aux-button.aux-carmine-pink { background-color: #E74C3C; text-shadow: 0 2px 0 #df2e1b; color: white; }
+input[type="button"].aux-carmine-pink .aux-overlay::after, .aux-button.aux-carmine-pink .aux-overlay::after { background-color: #df2e1b; }
+input[type="button"].aux-carmine-pink.aux-fill:hover, .aux-button.aux-carmine-pink.aux-fill:hover { background-color: #df2e1b !important; }
+input[type="button"].aux-persimmon, .aux-button.aux-persimmon { background-color: #FF6A55; text-shadow: 0 2px 0 #ff462c; color: white; }
+input[type="button"].aux-persimmon .aux-overlay::after, .aux-button.aux-persimmon .aux-overlay::after { background-color: #ff462c; }
+input[type="button"].aux-persimmon.aux-fill:hover, .aux-button.aux-persimmon.aux-fill:hover { background-color: #ff462c !important; }
+input[type="button"].aux-tan-hide, .aux-button.aux-tan-hide { background-color: #FF9F55; text-shadow: 0 2px 0 #ff882c; color: white; }
+input[type="button"].aux-tan-hide .aux-overlay::after, .aux-button.aux-tan-hide .aux-overlay::after { background-color: #ff882c; }
+input[type="button"].aux-tan-hide.aux-fill:hover, .aux-button.aux-tan-hide.aux-fill:hover { background-color: #ff882c !important; }
+input[type="button"].aux-wild-watermelon, .aux-button.aux-wild-watermelon { background-color: #FF6E78; text-shadow: 0 2px 0 #ff4552; color: white; }
+input[type="button"].aux-wild-watermelon .aux-overlay::after, .aux-button.aux-wild-watermelon .aux-overlay::after { background-color: #ff4552; }
+input[type="button"].aux-wild-watermelon.aux-fill:hover, .aux-button.aux-wild-watermelon.aux-fill:hover { background-color: #ff4552 !important; }
+input[type="button"].aux-iceberg, .aux-button.aux-iceberg { background-color: #73B1D6; text-shadow: 0 2px 0 #539fcd; color: white; }
+input[type="button"].aux-iceberg .aux-overlay::after, .aux-button.aux-iceberg .aux-overlay::after { background-color: #539fcd; }
+input[type="button"].aux-iceberg.aux-fill:hover, .aux-button.aux-iceberg.aux-fill:hover { background-color: #539fcd !important; }
+input[type="button"].aux-dark-lavender, .aux-button.aux-dark-lavender { background-color: #745A90; text-shadow: 0 2px 0 #604a77; color: white; }
+input[type="button"].aux-dark-lavender .aux-overlay::after, .aux-button.aux-dark-lavender .aux-overlay::after { background-color: #604a77; }
+input[type="button"].aux-dark-lavender.aux-fill:hover, .aux-button.aux-dark-lavender.aux-fill:hover { background-color: #604a77 !important; }
+input[type="button"].aux-viking, .aux-button.aux-viking { background-color: #5CD5E6; text-shadow: 0 2px 0 #39cce1; color: white; }
+input[type="button"].aux-viking .aux-overlay::after, .aux-button.aux-viking .aux-overlay::after { background-color: #39cce1; }
+input[type="button"].aux-viking.aux-fill:hover, .aux-button.aux-viking.aux-fill:hover { background-color: #39cce1 !important; }
+input[type="button"].aux-tiffany-blue, .aux-button.aux-tiffany-blue { background-color: #00B5B5; text-shadow: 0 2px 0 #008c8c; color: white; }
+input[type="button"].aux-tiffany-blue .aux-overlay::after, .aux-button.aux-tiffany-blue .aux-overlay::after { background-color: #008c8c; }
+input[type="button"].aux-tiffany-blue.aux-fill:hover, .aux-button.aux-tiffany-blue.aux-fill:hover { background-color: #008c8c !important; }
+input[type="button"].aux-pastel-orange, .aux-button.aux-pastel-orange { background-color: #FCB941; text-shadow: 0 2px 0 #fbaa19; color: white; }
+input[type="button"].aux-pastel-orange .aux-overlay::after, .aux-button.aux-pastel-orange .aux-overlay::after { background-color: #fbaa19; }
+input[type="button"].aux-pastel-orange.aux-fill:hover, .aux-button.aux-pastel-orange.aux-fill:hover { background-color: #fbaa19 !important; }
+input[type="button"].aux-east-bay, .aux-button.aux-east-bay { background-color: #395781; text-shadow: 0 2px 0 #2c4465; color: white; }
+input[type="button"].aux-east-bay .aux-overlay::after, .aux-button.aux-east-bay .aux-overlay::after { background-color: #2c4465; }
+input[type="button"].aux-east-bay.aux-fill:hover, .aux-button.aux-east-bay.aux-fill:hover { background-color: #2c4465 !important; }
+input[type="button"].aux-steel-blue, .aux-button.aux-steel-blue { background-color: #4589B0; text-shadow: 0 2px 0 #3a7293; color: white; }
+input[type="button"].aux-steel-blue .aux-overlay::after, .aux-button.aux-steel-blue .aux-overlay::after { background-color: #3a7293; }
+input[type="button"].aux-steel-blue.aux-fill:hover, .aux-button.aux-steel-blue.aux-fill:hover { background-color: #3a7293 !important; }
+input[type="button"].aux-half-backed, .aux-button.aux-half-backed { background-color: #84CCD1; text-shadow: 0 2px 0 #66c0c6; color: white; }
+input[type="button"].aux-half-backed .aux-overlay::after, .aux-button.aux-half-backed .aux-overlay::after { background-color: #66c0c6; }
+input[type="button"].aux-half-backed.aux-fill:hover, .aux-button.aux-half-backed.aux-fill:hover { background-color: #66c0c6 !important; }
+input[type="button"].aux-tapestry, .aux-button.aux-tapestry { background-color: #B95A84; text-shadow: 0 2px 0 #a44670; color: white; }
+input[type="button"].aux-tapestry .aux-overlay::after, .aux-button.aux-tapestry .aux-overlay::after { background-color: #a44670; }
+input[type="button"].aux-tapestry.aux-fill:hover, .aux-button.aux-tapestry.aux-fill:hover { background-color: #a44670 !important; }
+input[type="button"].aux-fire-engine-red, .aux-button.aux-fire-engine-red { background-color: #CD2C24; text-shadow: 0 2px 0 #aa251e; color: white; }
+input[type="button"].aux-fire-engine-red .aux-overlay::after, .aux-button.aux-fire-engine-red .aux-overlay::after { background-color: #aa251e; }
+input[type="button"].aux-fire-engine-red.aux-fill:hover, .aux-button.aux-fire-engine-red.aux-fill:hover { background-color: #aa251e !important; }
+input[type="button"].aux-dark-orange, .aux-button.aux-dark-orange { background-color: #FF8C00; text-shadow: 0 2px 0 #d67600; color: white; }
+input[type="button"].aux-dark-orange .aux-overlay::after, .aux-button.aux-dark-orange .aux-overlay::after { background-color: #d67600; }
+input[type="button"].aux-dark-orange.aux-fill:hover, .aux-button.aux-dark-orange.aux-fill:hover { background-color: #d67600 !important; }
+input[type="button"].aux-brick-red, .aux-button.aux-brick-red { background-color: #CC4452; text-shadow: 0 2px 0 #b6323f; color: white; }
+input[type="button"].aux-brick-red .aux-overlay::after, .aux-button.aux-brick-red .aux-overlay::after { background-color: #b6323f; }
+input[type="button"].aux-brick-red.aux-fill:hover, .aux-button.aux-brick-red.aux-fill:hover { background-color: #b6323f !important; }
+input[type="button"].aux-khaki, .aux-button.aux-khaki { background-color: khaki; text-shadow: 0 2px 0 #ebde68; color: white; }
+input[type="button"].aux-khaki .aux-overlay::after, .aux-button.aux-khaki .aux-overlay::after { background-color: #ebde68; }
+input[type="button"].aux-khaki.aux-fill:hover, .aux-button.aux-khaki.aux-fill:hover { background-color: #ebde68 !important; }
+input[type="button"].aux-dark-text, .aux-button.aux-dark-text { color: black; }
+input[type="button"].aux-uppercase, .aux-button.aux-uppercase { text-transform: uppercase; }

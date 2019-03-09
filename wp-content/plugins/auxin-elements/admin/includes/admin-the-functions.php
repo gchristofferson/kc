@@ -146,3 +146,18 @@ function auxin_get_total_updates(){
     $last_update  = auxin_get_update_list();
     return isset( $last_update->total_updates ) ? $last_update->total_updates : 0;
 }
+
+/**
+ * Set The Default Category for post type
+ *
+ * @return integer
+ */
+function auxin_set_uncategorized_term ( $post_id, $post ) {
+    $taxonomies = get_object_taxonomies( $post->post_type );
+    foreach ( $taxonomies as $taxonomy ) {
+        $terms = wp_get_post_terms( $post_id, $taxonomy );
+        if ( empty( $terms ) ) {
+            wp_set_object_terms( $post_id, 'uncategorized', $taxonomy );
+        }
+    }
+}

@@ -4,7 +4,7 @@
  *
  * 
  * @package    Auxin
- * @author     averta (c) 2014-2018
+ * @author     averta (c) 2014-2019
  * @link       http://averta.net
  */
 class Auxin_CSS_Generator_Option_Manager{
@@ -28,7 +28,8 @@ class Auxin_CSS_Generator_Option_Manager{
             'responsive-dimensions' => new Auxin_CSS_Generator_Option_Dimensions(),
             'slider'                => new Auxin_CSS_Generator_Option_Slider(),
             'dimensions'            => new Auxin_CSS_Generator_Option_Dimensions(),
-            'typography'            => new Auxin_CSS_Generator_Option_Typography()
+            'typography'            => new Auxin_CSS_Generator_Option_Typography(),
+            'typography-hover'      => new Auxin_CSS_Generator_Option_Typography()
         ];
     }
 
@@ -76,8 +77,8 @@ class Auxin_CSS_Generator_Option_Manager{
         foreach( $parsed_data as $option_type => $option_info ) {
             if( isset( $this->generator_instances[ $option_type ] ) ){
                 $this->generator_instances[ $option_type ]->reset();
-
-                if( 'typography' === $option_type ){
+                
+                if( in_array( $option_type, [ 'typography', 'typography-hover' ] ) ){
                     $this->generator_instances[ $option_type ]->set_selector( $this->selector );
                 } else {
                     $this->generator_instances[ $option_type ]->set_placeholder( $this->selector );

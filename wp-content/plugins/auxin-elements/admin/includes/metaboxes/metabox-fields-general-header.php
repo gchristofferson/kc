@@ -40,7 +40,7 @@ function auxin_metabox_fields_general_header(){
 
         array(
             'title'       => __( 'Page Cover Image', 'auxin-elements' ),
-            'description' => __( 'Specifies a cover with animations for this page.', 'auxin-elements' ),
+            'description' => __( 'Specifies a image for page cover.', 'auxin-elements' ),
             'id'          => 'page_header_cover_image',
             'type'        => 'image',
             'dependency'  => array(
@@ -53,10 +53,10 @@ function auxin_metabox_fields_general_header(){
         ),
 
         array(
-            'title'       => __( 'Page Cover Title', 'auxin-elements' ),
-            'description' => __( 'Page cover title that animates on center of page', 'auxin-elements' ),
+            'title'       => __( 'Page Cover Text', 'auxin-elements' ),
+            'description' => __( 'Your custom text for add on the page cover', 'auxin-elements' ),
             'id'          => 'page_header_cover_title',
-            'type'        => 'textarea',
+            'type'        => 'editor',
             'dependency'  => array(
                 array(
                     'id'    => 'display_page_header_cover',
@@ -67,8 +67,8 @@ function auxin_metabox_fields_general_header(){
         ),
 
         array(
-            'title'       => __( 'Page Discover Text', 'auxin-elements' ),
-            'description' => __( 'Specifies text for discovering page.', 'auxin-elements' ),
+            'title'       => __( 'Page Cover Link Text', 'auxin-elements' ),
+            'description' => __( 'Specifies text for page cover link.', 'auxin-elements' ),
             'id'          => 'page_header_discover_text',
             'type'        => 'text',
             'dependency'  => array(

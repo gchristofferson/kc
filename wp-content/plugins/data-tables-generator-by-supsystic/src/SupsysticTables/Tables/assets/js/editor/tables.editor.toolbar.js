@@ -278,6 +278,11 @@ var g_stbCellBgColorTimeoutSet = false,
 				comments.removeCommentAtCell(selection.from.row, selection.from.col);
 			}
 		},
+		merge: function () {
+			var e = this.getEditor();
+			e.mergeCells.mergeOrUnmergeSelection(e.getSelectedRange());
+			e.render();
+		},
 		'word-wrap-default': function() {
 			this.replaceClass('', ['ww-v', 'ww-h']);
 			this.getEditor().render();
@@ -581,7 +586,7 @@ var g_stbCellBgColorTimeoutSet = false,
 				type = data.type,
 				link = '',
 				linkHtml = '',
-				classes = '',
+				classes = 'stbSkipLazy',	// our custom class to skip lazy loading of images by Jetpack
 				attrs = 'style="max-width: 100%; height: auto;"',
 				isEmbed = false;
 
@@ -589,7 +594,7 @@ var g_stbCellBgColorTimeoutSet = false,
 				if (attachment.sizes) {
 					if (attachment.sizes[props.size]) {
 						url = attachment.sizes[props.size].url;
-						classes += 'align' + props.align + ' size-' + props.size;
+						classes += ' align' + props.align + ' size-' + props.size;
 					}
 					if (attachment.sizes['full']) {
 						fullUrl = attachment.sizes['full'].url;

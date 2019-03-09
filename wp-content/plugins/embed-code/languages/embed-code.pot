@@ -1,4 +1,4 @@
-# Copyright (C) 2019 WPKube
+# Copyright (C) 2019 DesignBombs
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
@@ -55,9 +55,9 @@ msgid ""
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "WPKube"
+msgid "DesignBombs"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "https://www.wpkube.com/"
+msgid "https://www.designbombs.com/"
 msgstr ""

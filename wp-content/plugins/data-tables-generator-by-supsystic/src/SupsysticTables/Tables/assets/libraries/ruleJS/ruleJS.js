@@ -1494,7 +1494,7 @@ var ruleJS = (function (root) {
       }
 
     } catch (ex) {
-	  // Formulas errors!!!
+	  // Errors debugging
 	  //console.log(ex);
 	  var message = Exception.get(ex.message);
 

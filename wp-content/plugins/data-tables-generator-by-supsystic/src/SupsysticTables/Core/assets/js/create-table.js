@@ -57,7 +57,7 @@
 
 						app.request({ module: 'tables', action: 'create'}, { title: $input.val(), rows: $rows.val(), cols: $cols.val() })
 							.done(function (response) {
-								window.location.href = response.url + '&cols=' + $cols.val() + '&rows=' + $rows.val();
+								window.location.href = response.url + '&new=1&cols=' + $cols.val() + '&rows=' + $rows.val();
 							}).fail(function (message) {
 								$error.find('p').text(message);
 								$error.fadeIn();

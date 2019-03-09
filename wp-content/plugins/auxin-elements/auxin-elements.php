@@ -12,14 +12,14 @@
  * Plugin Name:       Phlox Core Elements
  * Plugin URI:        https://wordpress.org/plugins/auxin-elements/
  * Description:       Exclusive and comprehensive plugin that extends the functionality of Phlox theme by adding new Elements, widgets and options.
- * Version:           2.3.7
+ * Version:           2.3.10
  * Author:            averta
  * Author URI:        http://averta.net
  * Text Domain:       auxin-elements
  * License:           GPL2
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Domain Path:       /languages
- * Tested up to:      5.0.2
+ * Tested up to:      5.1.0
  */
 
 // If this file is called directly, abort.
@@ -80,7 +80,7 @@ if( is_admin() ||
             array(
                 'name'                 => __('Phlox Pro', 'auxin-elements'), // The theme name.
                 'id'                   => 'phlox-pro', // The theme id name.
-                'version'              => '5.1.4', // E.g. 1.0.0. If set, the active theme must be this version or higher.
+                'version'              => '5.1.8', // E.g. 1.0.0. If set, the active theme must be this version or higher.
                 'is_callable'          => '', // If set, this callable will be be checked for availability to determine if a theme is active.
                 'theme_requires_const' => 'AUXELS_REQUIRED_VERSION',
                 'file_required'        => array( get_template_directory() . '/auxin-content/init/dependency.php', get_template_directory() . '/auxin-content/init/constant.php' )
@@ -89,7 +89,7 @@ if( is_admin() ||
                 'name'                 => __('Phlox', 'auxin-elements'), // The theme name.
                 'id'                   => 'phlox', // The theme id name.
                 'update_link'          => 'themes.php?theme=phlox',
-                'version'              => '2.3.4', // E.g. 1.0.0. If set, the active theme must be this version or higher.
+                'version'              => '2.3.8', // E.g. 1.0.0. If set, the active theme must be this version or higher.
                 'is_callable'          => '', // If set, this callable will be be checked for availability to determine if a theme is active.
                 'theme_requires_const' => 'AUXELS_REQUIRED_VERSION',
                 'file_required'        => array( get_template_directory() . '/auxin-content/init/dependency.php', get_template_directory() . '/auxin-content/init/constant.php' )

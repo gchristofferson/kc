@@ -19318,10 +19318,27 @@ this.j$ = this.jStat = (function(Math, undefined) {
 		sum_range = sum_range || range;
 		range = Formula.FLATTEN(range);
 		sum_range = Formula.FLATTEN(sum_range);
+		criteria = criteria === null ? '' : criteria;
+
 		var result = 0;
 
-		if(range.length == sum_range.length) {
+		if(range && sum_range && range.length === sum_range.length && (criteria || criteria === '' || criteria === 0)) {
+			if(typeof criteria == 'string') {
+				// string
+				if(!criteria.match(/^[<>=]/g)) {
+					criteria = '==="'+ criteria.replace(/\'/g,"\\'").replace(/\"/g,'\\"')+ '"';
+				} else {
+					if(criteria[0] == '=' && criteria[1] != '=') {
+						criteria = criteria.replace(/^=/, '===');
+					}
+				}
+			} else {
+				// number
+				criteria = '==='+criteria;
+			}
 			for (var i = 0; i < range.length; i++) {
+				range[i] = range[i] === null ? '' : range[i];
+				range[i] = typeof range[i] == 'string' ? '"'+ range[i].replace(/\'/g,"\\'").replace(/\"/g,'\\"')+ '"' : range[i];
 				result += (eval(range[i] + criteria)) ? sum_range[i] : 0;
 			}
 		} else {

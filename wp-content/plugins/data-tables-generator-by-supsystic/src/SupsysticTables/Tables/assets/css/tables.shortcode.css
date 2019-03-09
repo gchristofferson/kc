@@ -125,6 +125,11 @@ table.supsystic-table .ww-v {
   margin-bottom: 10px;
 }
 
+.supsystic-tables-features.after_table div {
+	margin-top: 10px;
+	margin-bottom: 0;
+}
+
 table.supsystic-table.collapsed > tbody > tr > td:first-child:before,
 table.supsystic-table.collapsed > tbody > tr > th:first-child:before {
   background-color: #2B2B2B;

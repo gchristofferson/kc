@@ -4,7 +4,7 @@
  *
  * 
  * @package    Auxin
- * @author     averta (c) 2014-2018
+ * @author     averta (c) 2014-2019
  * @link       http://averta.net
  */
 class Auxin_CSS_Generator_Option_Base {
@@ -35,6 +35,15 @@ class Auxin_CSS_Generator_Option_Base {
     protected $placeholder = '';
 
     /**
+     * Stores the current stat of CSS while parsing the styles
+     *
+     * values: 'normal', 'hover', 'active'
+     *
+     * @var string
+     */
+    protected $current_stat = 'normal';
+
+    /**
      * Default configs
      *
      * @var array
@@ -57,18 +66,29 @@ class Auxin_CSS_Generator_Option_Base {
      *
      * @return void
      */
-    protected function stack_css( $css, $breakpoint = '', $css_id = '' ){
+    protected function stack_css( $css, $breakpoint = '', $css_id = '', $stat = '' ){
         if( empty( $breakpoint ) ){
             $breakpoint = $this->defaults['breakpoint'];
         }
-        if( ! isset( $this->styles_list[ $breakpoint ] ) ){
-            $this->styles_list[ $breakpoint ] = [];
+
+        if( empty( $stat ) ){
+            $stat = $this->current_stat;
+        }
+
+        if( ! isset( $this->styles_list[ $stat ] ) ){
+            $this->styles_list[ $stat ] = [
+                $this->defaults['breakpoint'] => []
+            ];
+        }
+
+        if( ! isset( $this->styles_list[ $stat ][ $breakpoint ] ) ){
+            $this->styles_list[ $stat ][ $breakpoint ] = [];
         }
 
         if( ! empty( $css_id ) ){
-            $this->styles_list[ $breakpoint ][ $css_id ] = $css;
+            $this->styles_list[ $stat ][ $breakpoint ][ $css_id ] = $css;
         } else {
-            $this->styles_list[ $breakpoint ][] = $css;
+            $this->styles_list[ $stat ][ $breakpoint ][] = $css;
         }
     }
 
@@ -95,6 +115,19 @@ class Auxin_CSS_Generator_Option_Base {
     }
 
     /**
+     * Sets the current stat of CSS while stacking styles
+     *
+     * values: 'normal', 'hover', 'active'
+     *
+     * @param void
+     */
+    public function set_current_stat( $stat ){
+        if( in_array( $stat, ['normal', 'hover', 'active'] ) ){
+            $this->current_stat = $stat;
+        }
+    }
+
+    /**
      * Walk through all groups (popovers) and collect styles
      *
      * @param  array $info  Controls data
@@ -115,19 +148,27 @@ class Auxin_CSS_Generator_Option_Base {
     protected function generate_css(){
         $result = array();
 
-        foreach( $this->styles_list as $breakpoint => $styles ) {
-            if( empty( $styles ) ){
-                continue;
-            }
-            // Join the list of styles for current breakpoint
-            $styles = implode(" ", $styles);
+        foreach( $this->styles_list as $stat => $breakpoints ) {
 
-            // If the selector is set, wrap the styles with selector
-            if( ! empty( $this->selector ) ){
-                $styles = $this->selector . '{ ' . $styles . ' } ';
+            foreach( $breakpoints as $breakpoint => $styles ) {
+                if( empty( $styles ) ){
+                    continue;
+                }
+                // Join the list of styles for current breakpoint
+                $styles = implode(" ", $styles);
+
+                // If the selector is set, wrap the styles with selector
+                if( ! empty( $this->selector ) ){
+                    if( $stat === 'normal' ){
+                        $styles = $this->selector . '{ ' . $styles . ' } ';
+                    } else {
+                        $styles = $this->selector . ':' . $stat . '{ ' . $styles . ' } ';
+                    }
+                }
+
+                $result[] = $breakpoint === $this->defaults['breakpoint'] ? $styles : "@media(max-width: {$breakpoint}px){ {$styles} } ";
             }
 
-            $result[] = $breakpoint === $this->defaults['breakpoint'] ? $styles : "@media(max-width: {$breakpoint}px){ {$styles} } ";
         }
 
         return implode("\n", $result);
@@ -142,9 +183,11 @@ class Auxin_CSS_Generator_Option_Base {
         $this->selector    = '';
         $this->placeholder = '';
         $this->styles_list = [
-            'desktop' => [],
-            '1024'    => [],
-            '768'     => []
+            'normal' => [
+                'desktop' => [],
+                '1024'    => [],
+                '768'     => []
+            ]
         ];
     }
 

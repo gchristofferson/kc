@@ -832,7 +832,7 @@ class CustomList extends Widget_Base {
                 'label'     => __( 'Hover Color', 'auxin-elements' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .aux-icon-list-item:hover aux-icon-list-icon' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .aux-icon-list-item:hover .aux-icon-list-icon' => 'color: {{VALUE}};',
                 )
             )
         );

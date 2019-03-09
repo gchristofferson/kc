@@ -1,8 +1,8 @@
-/*! Auxin WordPress Framework - v2.3.5 - 2018-12-27
+/*! Auxin WordPress Framework - v2.3.8 - 2019-02-24
  *  Scripts for initializing admin plugins 
 
  *  http://averta.net
- *  (c) 2014-2018 averta;
+ *  (c) 2014-2019 averta;
  */
 
 
@@ -811,14 +811,46 @@
         // Auxin Typography Controller
         // =====================================================================
 
-        function auxin_embed_controller_styles ( prefix, controlID, cssValue) {
-            var optionName = prefix + controlID.split('_control')[0],
-                styleTag = wp.customize.previewer.preview.iframe[0].contentDocument.getElementById(optionName);
+        function auxin_embed_controller_styles ( prefix, controlID, cssValue ) {
+            var optionName = prefix + controlID.split('_control')[0];
+            
+            if ( ! Object.hasOwnProperty.call( wp.customize.previewer, 'preview' ) ) {
+                return;
+            }
+
+            var styleTag = wp.customize.previewer.preview.iframe[0].contentDocument.getElementById(optionName);
+
+
 
             if ( cssValue ) {
                 styleTag.innerHTML = cssValue;
             } else {
                 styleTag.innerHTML = '';
+            }
+
+        }
+
+        function auxin_embed_fonts_url ( fontsList ) {
+            if ( fontsList.length ) {
+                
+                if ( ! Object.hasOwnProperty.call( wp.customize.previewer, 'preview' ) ) {
+                    return;
+                }
+
+                var iframeHead = wp.customize.previewer.preview.iframe[0].contentDocument.querySelector('head');
+
+
+                fontsList.forEach( function(font) {
+                    var fontLink = iframeHead.querySelector('link[href="' + font + '"]');
+                    if ( ! fontLink ) {
+                        var LinkTag = document.createElement( 'link' );
+                        LinkTag.rel = 'stylesheet';
+                        LinkTag.href = font;
+                        iframeHead.appendChild( LinkTag );    
+                    }
+                });
+            } else {
+                return;
             }
         }
 
@@ -832,14 +864,16 @@
                     var control = this,
                         input = this.container.eq(0).find('.aux-typo-controller-input')[0],
                         container = this.container.eq(0).find('.aux-typo-controller-container')[0]
-
+                        
                     OptionControls.inputAdapter( input, container, 
                         function( optionControl ){ // for onchange
-                            auxin_embed_controller_styles('auxin-customizer-css-', control.id, optionControl.generateCSS() );
+                            auxin_embed_controller_styles('auxin-customizer-css-', control.id, optionControl.toCSS() );
+                            auxin_embed_fonts_url( optionControl.getFonts() ) ;
                         },
                         function( optionControl ) { // for init
                             wp.customize.previewer.bind('ready', function(){
-                                auxin_embed_controller_styles('auxin-customizer-css-', control.id, optionControl.generateCSS() );
+                                auxin_embed_controller_styles('auxin-customizer-css-', control.id, optionControl.toCSS() );
+                                auxin_embed_fonts_url( optionControl.getFonts() ) ;
                             });
                         }
                     );
@@ -1592,11 +1626,32 @@
 
         // Activate the corresponding post format tab on post edit page
         // =====================================================================
+
+        function onWPDataChange() {
+            var format = wp.data.select( 'core/editor' ).getPostEdits().format || wp.data.select('core/editor').getCurrentPostAttribute('format');
+            if ( format !== lastFormat )  {
+                lastFormat = format;
+                if( typeof format === 'undefined' ){
+                    return;
+                }
+                $('.aux-format-tab').hide();
+                get_format_section( format ).show();
+            }
+        } 
+        // Fix gutenberg issue
+        if( typeof wp.blocks !== "undefined" ){
+            var lastFormat = '';
+            wp.data.subscribe( onWPDataChange );
+            onWPDataChange();
+        }
+
         var $format_select_buttons = $('#post-formats-select input[type="radio"]');
+
         function get_format_section( format ){
             format = format.replace('post-format-', '');
             return $('.axi-metabox-container .tabs .aux-tab-post-' + format );
         }
+    
         if( $format_select_buttons.length ){
 
             var $format_tabs = $('.aux-format-tab'),

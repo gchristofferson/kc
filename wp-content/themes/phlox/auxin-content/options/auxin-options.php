@@ -4,7 +4,7 @@
  *
  * 
  * @package    Auxin
- * @author     averta (c) 2014-2018
+ * @author     averta (c) 2014-2019
  * @link       http://averta.net
  */
 
@@ -259,6 +259,28 @@ function auxin_define_options_info( $fields_sections_list ){
     );
 
     $options[] = array(
+        'title'       => __( 'Hide Socials on Tablet', 'phlox' ),
+        'description' => __( 'Enable it to hide subfooter on tablet devices.', 'phlox' ),
+        'id'          => 'socials_hide_on_tablet',
+        'section'     => 'general-section-main-socials',
+        'default'     => '1',
+        'transport'   => 'postMessage',
+        'post_js'     => '$(".aux-socials-header").toggleClass( "aux-tablet-off", to );',
+        'type'        => 'switch'
+    );
+
+    $options[] = array(
+        'title'       => __( 'Hide Socials on Phone', 'phlox' ),
+        'description' => __( 'Enable it to hide subfooter on phone devices.', 'phlox' ),
+        'id'          => 'socials_hide_on_phone',
+        'section'     => 'general-section-main-socials',
+        'default'     => '1',
+        'transport'   => 'postMessage',
+        'post_js'     => '$(".aux-socials-header").toggleClass( "aux-phone-off", to );',
+        'type'        => 'switch'
+    );
+
+    $options[] = array(
         'title'       => __( 'Use Brand Color', 'phlox' ),
         'description' => __( 'Enable this option to apply brand color to each social icons.', 'phlox' ),
         'id'          => 'socials_brand_color',
@@ -279,6 +301,30 @@ function auxin_define_options_info( $fields_sections_list ){
         'transport'   => 'refresh',
         'post_js'     => '$(".aux-socials-header").toggleClass( "aux-brand-color", 1 == to );',
     );
+
+    $options[] = array(
+        'title'       => __( 'Icon Color', 'phlox' ),
+        'id'          => 'socials_brand_color_custom',
+        'description' => __( 'Specifies the color of social icons.', 'phlox' ),
+        'section'     => 'general-section-main-socials',
+        'type'        => 'color',
+        'dependency'  => array(
+            array(
+                'id'      => 'socials_brand_color',
+                'value'   => array('0'),
+                'operator'=> '=='
+            )
+        ),
+        'style_callback' => function( $value = null ){
+            if( ! $value ){
+                $value = esc_attr( auxin_get_option( 'socials_brand_color_custom' ) );
+            }
+            return empty( $value ) ? '' : ".aux-top-header .aux-social-list a { color:$value; }";
+        },
+        'transport' => 'postMessage',
+        'default'   => ''
+    );
+
     $options[] = array(
         'title'       => __( 'Facebook', 'phlox' ),
         'description' => __( 'Should start with <code>http://</code>', 'phlox' ),
@@ -1395,6 +1441,38 @@ function auxin_define_options_info( $fields_sections_list ){
         'default'   => 'aux-square'
     );
 
+    $options[] = array(
+        'title'          => __( 'Pagination Typography', 'phlox' ),
+        'id'             => 'archive_pagination_skin_typography',
+        'description'    => '',
+        'section'        => 'appearance-section-skin',
+        'default'        => '',
+        'type'           => 'group_typography',
+        'selectors'      => '.aux-pagination > .pagination',
+        'transport'      => 'postMessage',
+    );
+
+    $options[] = array(
+        'title'          => __( 'Pagination Active Number Typography', 'phlox' ),
+        'id'             => 'archive_pagination_skin_active_typography',
+        'description'    => '',
+        'section'        => 'appearance-section-skin',
+        'default'        => '',
+        'type'           => 'group_typography',
+        'selectors'      => '.aux-pagination > .pagination .active',
+        'transport'      => 'postMessage',
+    );
+
+    $options[] = array(
+        'title'          => __( 'Pagination Next/Prev Typography', 'phlox' ),
+        'id'             => 'archive_pagination_skin_next_prev_typography',
+        'description'    => '',
+        'section'        => 'appearance-section-skin',
+        'default'        => '',
+        'type'           => 'group_typography',
+        'selectors'      => '.aux-pagination > .pagination .next, .aux-pagination > .pagination .prev, .aux-pagination > .pagination .first , .aux-pagination > .pagination .last',
+        'transport'      => 'postMessage',
+    );
 
     // Sub section - Skin options --------------------------------------
 
@@ -1423,23 +1501,24 @@ function auxin_define_options_info( $fields_sections_list ){
         'title'       => __( 'Forms', 'phlox' ),
         'description' => __( 'Forms Appearance', 'phlox' )
     );
-    
+
     $options[] = array(
         'title'       => __( 'Which Input should be display', 'phlox' ),
         'description' => __( 'Specifies the inputs of comment forms.', 'phlox' ),
         'id'          => 'comment_forms_inputs',
         'section'     => 'appearance-section-forms',
         'choices'     => array(
-            'email' => __( 'Email', 'phlox' ),
-            'url'  => __( 'Website', 'phlox' ),
+            'email'   => __( 'Email', 'phlox' ),
+            'url'     => __( 'Website', 'phlox' ),
             'author'  => __( 'Name', 'phlox' ),
-            'cookies'   =>   __( 'Cookies', 'phlox' )
+            'cookies' => __( 'Cookies', 'phlox' )
         ),
         'type'        => 'select2-multiple',
         'dependency'  => array(),
         'transport'   => 'refresh',
         'default'     => array('email','author','url','cookies')
     );
+
 
     $options[] = array(
         'title'       => __( 'Comment Forms Skin', 'phlox' ),
@@ -1478,16 +1557,6 @@ function auxin_define_options_info( $fields_sections_list ){
         'id'             => 'comment_forms_label_typo',
         'section'        => 'appearance-section-forms',
         'default'        => '',
-        'dependency'  => array(
-            array(
-                 'id'      => 'comment_forms_skin',
-                 'value'   => 'classic',
-            ),
-            array(
-                'id'      => 'comment_forms_label',
-                'value'   => 1,
-           )
-        ),
         'type'           => 'group_typography',
         'selectors'      => '#commentform label',
         'transport'      => 'postMessage',
@@ -1551,6 +1620,63 @@ function auxin_define_options_info( $fields_sections_list ){
         'transport'      => 'postMessage',
     );
 
+    $options[] = array(
+        'title'          => __( 'Response Title Typography', 'phlox' ),
+        'description'    => '',
+        'id'             => 'comment_forms_response_title_typo',
+        'section'        => 'appearance-section-forms',
+        'default'        => '',
+        'type'           => 'group_typography',
+        'selectors'      => '.comments-title, .comment-reply-title',
+        'transport'      => 'postMessage',
+    );
+
+    $options[] = array(
+        'title'          => __( 'Form Button Typography', 'phlox' ),
+        'description'    => '',
+        'id'             => 'comment_forms_button_typo',
+        'section'        => 'appearance-section-forms',
+        'default'        => '',
+        'type'           => 'group_typography',
+        'selectors'      => '#commentform .form-submit input[type="submit"]',
+        'transport'      => 'postMessage',
+    );
+
+    $options[] = array(
+        'title'          => __( 'Comment Author Typography', 'phlox' ),
+        'description'    => '',
+        'id'             => 'comment_author_typo',
+        'section'        => 'appearance-section-forms',
+        'default'        => '',
+        'type'           => 'group_typography',
+        'selectors'      => '.aux-commentlist .comment-author .fn, .aux-commentlist .comment-author .fn a',
+        'transport'      => 'postMessage',
+    );
+
+    $options[] = array(
+        'title'          => __( 'Comment Info Typography', 'phlox' ),
+        'description'    => '',
+        'id'             => 'comment_info_typo',
+        'section'        => 'appearance-section-forms',
+        'default'        => '',
+        'type'           => 'group_typography',
+        'selectors'      => '.aux-commentlist .comment .comment-author time a',
+        'transport'      => 'postMessage',
+    );
+
+    $options[] = array(
+        'title'          => __( 'Comment Content Typography', 'phlox' ),
+        'description'    => '',
+        'id'             => 'comment_content_typo',
+        'section'        => 'appearance-section-forms',
+        'default'        => '',
+        'type'           => 'group_typography',
+        'selectors'      => '.aux-commentlist .comment .comment-body',
+        'transport'      => 'postMessage',
+    );
+
+
+
     // Sub section - Sidebars -------------------------------
 
     $sections[] = array(
@@ -1608,8 +1734,31 @@ function auxin_define_options_info( $fields_sections_list ){
         'icon'        => 'axicon-align-justify'
     );
 
+    $options[] = array(
+        'title'       => __( 'Override Header Template', 'phlox' ),
+        'description' => __( 'Enable it to replace header section with an Elementor template.', 'phlox' ),
+        'id'          => 'site_header_override_template',
+        'section'     => 'header-section-layout',
+        'type'        => 'switch',
+        'transport'   => 'postMessage',
+        'default'     => '0'
+    );
 
-
+    $options[] = array(
+        'title'       => __( 'Elementor Header Template', 'phlox' ),
+        'id'          => 'site_header_template',
+        'section'     => 'header-section-layout',
+        'type'        => 'select',
+        'default'     => ' ',
+        'dependency'  => array(
+            array(
+                 'id'      => 'site_header_override_template',
+                 'value'   => array('1')
+            )
+        ),
+        'transport'   => 'postMessage',
+        'choices'     => auxin_get_elementor_templates_list('header')
+    );
 
     // Sub section - Header layout -------------------------------
     $sections[] = array(
@@ -1913,7 +2062,7 @@ function auxin_define_options_info( $fields_sections_list ){
         );
 
         $options[] = array(
-            
+
             'title'       => __( 'Icon for Cart', 'phlox' ),
             'description' => '',
             'id'          => 'header_cart_icon',
@@ -2202,7 +2351,7 @@ function auxin_define_options_info( $fields_sections_list ){
             if( ! $value ){
                 $value = auxin_get_option( 'site_transparent_header_bgcolor' , 'rgba(255, 255, 255, 0)' );
             }
-            return $value ? ".site-header-section { background-color:$value; }" : '';
+            return $value ? "#site-header { background-color:$value; }" : '';
         },
         'type'      => 'color',
         'transport' => 'postMessage',
@@ -3254,7 +3403,7 @@ function auxin_define_options_info( $fields_sections_list ){
         ),
         'transport'      => 'postMessage',
         'selectors'   => array(
-            ".aux-top-header" => "background-color:{{VALUE}};"
+            "#top-header" => "background-color:{{VALUE}};"
         ),
         'default'   => '#FFFFFF',
         'type'      => 'color'
@@ -3381,7 +3530,7 @@ function auxin_define_options_info( $fields_sections_list ){
         'selectors'      => '.site-header-section .aux-submenu > .aux-menu-item > .aux-item-content > .aux-menu-label',
         'transport'      => 'postMessage',
     );
-    
+
     $options[] = array(
         'title'          => __( 'Menu Active Item', 'phlox' ),
         'description'    => '',
@@ -3606,6 +3755,16 @@ function auxin_define_options_info( $fields_sections_list ){
         'post_js'   => '$(".single-post .aux-primary .hentry").toggleClass( "aux-narrow-context", "narrow" == to );',
         'default'   => 'simple',
         'type'      => 'radio-image'
+    );
+
+    $options[] = array(
+        'title'         => __( 'Display Content Top Margin', 'phlox' ),
+        'description'   => __( 'Enable it to display a space between title and content. If you need to start your content from very top of the page, disable it.', 'phlox' ),
+        'id'            => 'post_show_content_top_margin',
+        'section'       => 'blog-section-single',
+        'transport'     => 'refresh',
+        'type'          => 'switch',
+        'default'       => '1'
     );
 
     $options[] = array(
@@ -6778,7 +6937,7 @@ function auxin_define_options_info( $fields_sections_list ){
         'default'     => ''
     );
 
-    // Sub section - Blog Archive Page Slider -------------------------------
+    // Sub section - Single Blog Typography -------------------------------
 
     $sections[] = array(
         'id'          => 'blog-section-single-typography',
@@ -6852,7 +7011,60 @@ function auxin_define_options_info( $fields_sections_list ){
         'selectors'      => '.single-post .hentry footer.entry-meta .entry-tax a',
         'transport'      => 'postMessage',
     );
-    
+
+    // Sub section - Single Blog Typography -------------------------------
+
+    $sections[] = array(
+        'id'          => 'blog-section-blog-appearence',
+        'parent'      => 'blog-section', // section parent's id
+        'title'       => __( 'Blog Page Appereance', 'phlox' ),
+        'description' => __( 'Blog Page Appereance', 'phlox' ),
+    );
+
+    $options[] = array(
+        'title'          => __( 'Post Title Typography', 'phlox' ),
+        'id'             => 'blog_page_title_typography',
+        'description'    => '',
+        'section'        => 'blog-section-blog-appearence',
+        'default'        => '',
+        'type'           => 'group_typography',
+        'selectors'      => '.blog .hentry .entry-title',
+        'transport'      => 'postMessage',
+    );
+
+    $options[] = array(
+        'title'          => __( 'Post info Typography', 'phlox' ),
+        'id'             => 'blog_page_info_typography',
+        'description'    => '',
+        'section'        => 'blog-section-blog-appearence',
+        'default'        => '',
+        'type'           => 'group_typography',
+        'selectors'      => '.blog .aux-archive .aux-primary .hentry .entry-info',
+        'transport'      => 'postMessage',
+    );
+
+    $options[] = array(
+        'title'          => __( 'Post Content Typography', 'phlox' ),
+        'id'             => 'blog_page_content_typography',
+        'description'    => '',
+        'section'        => 'blog-section-blog-appearence',
+        'default'        => '',
+        'type'           => 'group_typography',
+        'selectors'      => '.blog .hentry .entry-content',
+        'transport'      => 'postMessage',
+    );
+
+    $options[] = array(
+        'title'          => __( 'Button Typography', 'phlox' ),
+        'id'             => 'blog_page_button_typography',
+        'description'    => '',
+        'section'        => 'blog-section-blog-appearence',
+        'default'        => '',
+        'type'           => 'group_typography',
+        'selectors'      => '.blog .hentry .aux-read-more',
+        'transport'      => 'postMessage',
+    );
+
     /* ---------------------------------------------------------------------------------------------------
         Page Section
     --------------------------------------------------------------------------------------------------- */
@@ -8220,14 +8432,18 @@ function auxin_define_options_info( $fields_sections_list ){
     );
 
     $options[] = array(
-        'title'          => __( 'Breadcrumb Separator', 'phlox' ),
-        'id'             => 'page_title_breadcrumb_sep_typography',
-        'description'    => '',
-        'section'        => 'page-section-typography',
-        'default'        => '',
-        'type'           => 'group_typography',
-        'selectors'      => '.page-title-section .aux-breadcrumbs span:after',
-        'transport'      => 'postMessage',
+        'title'         => __( 'Breadcrumb Color', 'phlox' ),
+        'id'            => 'page_title_breadcrumb_sep_color',
+        'section'       => 'page-section-typography',
+        'transport'     => 'postMessage',
+        'style_callback' => function( $value = null ){
+            if( ! $value ){
+                $value = esc_attr( auxin_get_option( 'page_title_breadcrumb_sep_color' ) );
+            }
+            return $value ? ".page-title-section .aux-breadcrumbs span:after { color:$value; }" : '';
+        },
+        'type'          => 'color',
+        'default'       => ''
     );
 
     if( function_exists('WC') ){
@@ -8797,7 +9013,7 @@ function auxin_define_options_info( $fields_sections_list ){
         'default'   => '',
         'type'      => 'gradient'
     );
-    
+
     $options[] = array(
         'title'         => __( 'Sub Footer Background Image', 'phlox' ),
         'description'   => __( 'Specifies a background image for sub footer.', 'phlox' ),
@@ -8992,6 +9208,16 @@ function auxin_define_options_info( $fields_sections_list ){
     );
 
     $options[] = array(
+        'title'          => __( 'Padding', 'phlox' ),
+        'id'             => 'subfooter_appearance_padding',
+        'section'        => 'footer-section-subfooter-appearance',
+        'type'           => 'responsive_dimensions',
+        'selectors'      => '.aux-subfooter > .aux-wrapper > .aux-container',
+        'transport'      => 'postMessage',
+        'placeholder'    => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}'
+    );
+
+    $options[] = array(
         'title'          => __( 'Widget Title', 'phlox' ),
         'id'             => 'subfooter_widget_title_typography',
         'section'        => 'footer-section-subfooter-appearance',
@@ -9025,6 +9251,32 @@ function auxin_define_options_info( $fields_sections_list ){
         'parent'      => 'footer-section', // section parent's id
         'title'       => __( 'Footer', 'phlox' ),
         'description' => __( 'Footer Setting', 'phlox' )
+    );
+
+    $options[] = array(
+        'title'       => __( 'Override Footer Template', 'phlox' ),
+        'description' => __( 'Enable it to replace footer section with an Elementor template.', 'phlox' ),
+        'id'          => 'site_footer_override_template',
+        'section'     => 'footer-section-footer',
+        'type'        => 'switch',
+        'transport'   => 'postMessage',
+        'default'     => '0'
+    );
+
+    $options[] = array(
+        'title'       => __( 'Elementor Footer Template', 'phlox' ),
+        'id'          => 'site_footer_template',
+        'section'     => 'footer-section-footer',
+        'type'        => 'select',
+        'default'     => ' ',
+        'dependency'  => array(
+            array(
+                 'id'      => 'site_footer_override_template',
+                 'value'   => array('1')
+            )
+        ),
+        'transport'   => 'postMessage',
+        'choices'     => auxin_get_elementor_templates_list('footer')
     );
 
     $options[] = array(

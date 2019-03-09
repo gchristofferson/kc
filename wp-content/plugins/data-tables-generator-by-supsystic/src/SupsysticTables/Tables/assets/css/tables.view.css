@@ -193,12 +193,6 @@
   -moz-box-shadow: none;
   box-shadow: none;
 }
-.tables-view #settings .row-settings-tabs .row-settings-tab {
-	display: none;
-}
-.tables-view #settings .row-settings-tabs .row-settings-tab.active {
-	display: block;
-}
 .tables-view #settings input, .tables-view #settings select, .history-settings input, .history-settings select {
 	width: 100% !important;
 }
@@ -218,9 +212,22 @@
 	display: block;
 	padding: 10px;
 }
-.tables-view .title-place {
+.tables-view .row-settings-tab {
+	padding-bottom: 20px;
+}
+.tables-view .title-block {
 	line-height: 40px;
+	padding: 0 10px !important;
+}
+.tables-view .title-place {
+	line-height: 20px;
 	padding: 0 15px;
+}
+.tables-view .title-place h3 {
+	font-size: 16px;
+}
+.tables-view .title-block h3 {
+	margin: 0;
 }
 .setting-wrapper {
 	min-height: 30px;
@@ -439,4 +446,30 @@
 	padding-bottom:56.25%;
 	height:0;
 	overflow:hidden;
+}
+
+.stb-wraper-anchor-nav-links {
+    position: relative;
+    margin-bottom: 10px;
+    text-align: left;
+    z-index: 0;
+}
+.stb-wraper-anchor-nav-links .stb-anchor-nav-links {
+    text-decoration: none;
+    color: #777;
+    display: inline-block;
+    font-size: 14px;
+    padding: 0 5px 3px;
+    font-weight: 500;
+}
+.stb-wraper-anchor-nav-links .stb-anchor-nav-links:not(:last-child) {
+    border-right: 1px solid #aaa;
+}
+.stb-wraper-anchor-nav-links .stb-anchor-nav-links.active,
+.stb-wraper-anchor-nav-links .stb-anchor-nav-links:hover,
+.stb-wraper-option-links .stb-option-links.active,
+.stb-wraper-option-links .stb-option-links:hover,
+.stb-rename-category:hover {
+    color: #000;
+    text-decoration: underline;
 }

@@ -7,7 +7,7 @@ Tags: phlox, gallery, elementor, siteorigin, auxin, averta, auxin-elements, fram
 Requires PHP: 5.4
 Requires at least: 4.6
 Tested up to: 5.0.2
-Stable tag: 2.3.7
+Stable tag: 2.3.10
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -153,6 +153,9 @@ Bugs can be reported in our [support forums](http://support.averta.net/en/item/p
 
 
 == Changelog ==
+
+= Version 2.3.8 / 09.01.2019) =
+
 
 = Version 2.3.7 / 06.01.2019) =
 - [Fix]: New option for changing the border color of header section added to page options. 
@@ -384,5 +387,4 @@ Bugs can be reported in our [support forums](http://support.averta.net/en/item/p
 
 == Upgrade Notice ==
 
-= 2.3.7 =
-- [Fix]: New option for changing the border color of header section added to page options.
+= 2.3.8 =

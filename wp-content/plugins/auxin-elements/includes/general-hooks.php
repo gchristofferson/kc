@@ -588,6 +588,42 @@ function auxin_add_theme_options_in_plugin( $fields_sections_list ){
     );
 
     $fields_sections_list['fields'][] = array(
+        'title'       => __( 'Hide Button 1 on Tablet', THEME_DOMAIN ),
+        'description' => __( 'Enable it to hide header button 1 on tablet devices.', THEME_DOMAIN ),
+        'id'          => 'site_header_show_btn1_on_tablet',
+        'section'     => 'header-section-action-button1',
+        'dependency'  => array(
+            array(
+                 'id'      => 'site_header_show_btn1',
+                 'value'   => array('1'),
+                 'operator'=> ''
+            )
+        ),
+        'default'     => '1',
+        'transport'   => 'postMessage',
+        'post_js'     => '$(".aux-btn1-box").toggleClass( "aux-tablet-off", to );',
+        'type'        => 'switch'
+    );
+
+    $fields_sections_list['fields'][] = array(
+        'title'       => __( 'Hide Button 1 on Mobile', THEME_DOMAIN ),
+        'description' => __( 'Enable it to hide header button 1 on tablet devices.', THEME_DOMAIN ),
+        'id'          => 'site_header_show_btn1_on_phone',
+        'section'     => 'header-section-action-button1',
+        'dependency'  => array(
+            array(
+                 'id'      => 'site_header_show_btn1',
+                 'value'   => array('1'),
+                 'operator'=> ''
+            )
+        ),
+        'default'     => '1',
+        'transport'   => 'postMessage',
+        'post_js'     => '$(".aux-btn1-box").toggleClass( "aux-phone-off", to );',
+        'type'        => 'switch'
+    );
+
+    $fields_sections_list['fields'][] = array(
         'title'             => __('Button Label','auxin-elements' ),
         'description'       => __('Specifies the label of button.','auxin-elements' ),
         'section'           => 'header-section-action-button1',
@@ -871,6 +907,42 @@ function auxin_add_theme_options_in_plugin( $fields_sections_list ){
             'container_inclusive'   => true,
             'render_callback'       => function(){ echo auxin_get_header_button(2); }
         )
+    );
+
+    $fields_sections_list['fields'][] = array(
+        'title'       => __( 'Hide Button 2 on Tablet', THEME_DOMAIN ),
+        'description' => __( 'Enable it to hide header button 2 on tablet devices.', THEME_DOMAIN ),
+        'id'          => 'site_header_show_btn2_on_tablet',
+        'section'     => 'header-section-action-button2',
+        'dependency'  => array(
+            array(
+                 'id'      => 'site_header_show_btn2',
+                 'value'   => array('1'),
+                 'operator'=> ''
+            )
+        ),
+        'default'     => '1',
+        'transport'   => 'postMessage',
+        'post_js'     => '$(".aux-btn2-box").toggleClass( "aux-tablet-off", to );',
+        'type'        => 'switch'
+    );
+
+    $fields_sections_list['fields'][] = array(
+        'title'       => __( 'Hide Button 2 on Mobile', THEME_DOMAIN ),
+        'description' => __( 'Enable it to hide header button 2 on tablet devices.', THEME_DOMAIN ),
+        'id'          => 'site_header_show_btn2_on_phone',
+        'section'     => 'header-section-action-button2',
+        'dependency'  => array(
+            array(
+                 'id'      => 'site_header_show_btn2',
+                 'value'   => array('1'),
+                 'operator'=> ''
+            )
+        ),
+        'default'     => '1',
+        'transport'   => 'postMessage',
+        'post_js'     => '$(".aux-btn2-box").toggleClass( "aux-phone-off", to );',
+        'type'        => 'switch'
     );
 
     $fields_sections_list['fields'][] = array(
@@ -2214,11 +2286,25 @@ function auxels_add_blog_archive_custom_template_layouts( $result, $template_typ
     // get the length of content 
     $excerpt_len = esc_attr( auxin_get_option( 'blog_content_on_listing_length' ) );
 
+    // default value for showing info
+    $show_post_info = $show_post_date = $show_post_author = $show_post_categories = true;
+
     // Use taxonomy template option if is category or tag archive page
     if( is_category() || is_tag() ){
-        $post_loadmore_type = auxin_get_option( 'post_taxonomy_loadmore_type', '' );
-        $excerpt_len        = auxin_get_option( 'post_taxonomy_archive_on_listing_length', '' );
+        $post_loadmore_type   = auxin_get_option( 'post_taxonomy_loadmore_type', '' );
+        $excerpt_len          = auxin_get_option( 'post_taxonomy_archive_on_listing_length', '' );
+        $show_post_info       = auxin_get_option( 'display_post_taxonomy_info', true );
+        $show_post_date       = auxin_get_option( 'display_post_taxonomy_info_date', true );
+        $show_post_author     = auxin_get_option( 'display_post_taxonomy_info_author', true );
+        $show_post_categories = auxin_get_option( 'display_post_taxonomy_info_categories', true );
+    } elseif ( auxin_is_blog() ) {
+        $show_post_info       = auxin_get_option( 'display_post_info', true );
+        $show_post_date       = auxin_get_option( 'display_post_info_date', true );
+        $show_post_author     = auxin_get_option( 'display_post_info_author', true );
+        $show_post_categories = auxin_get_option( 'display_post_info_categories', true );
     }
+
+    $show_post_author = $show_post_author ? 'author' : 'readmore';
 
     // page number
     $paged    = max( 1, get_query_var('paged'), get_query_var('page') );
@@ -2238,8 +2324,10 @@ function auxels_add_blog_archive_custom_template_layouts( $result, $template_typ
             'show_media'                    => true,
             'show_excerpt'                  => true,
             'excerpt_len'                   => $excerpt_len,
-            'show_info'                     => esc_attr( auxin_get_option( 'display_post_info', 1 )  ),
-            'author_or_readmore'            => 'readmore',
+            'show_info'                     => esc_attr( $show_post_info ),
+            'show_date'                     => esc_attr( $show_post_date ),
+            'display_categories'            => esc_attr( $show_post_categories ),
+            'author_or_readmore'            => esc_attr( $show_post_author ),
             'content_layout'                => esc_attr( auxin_get_option( 'post_index_column_content_layout', 'full' ) ),
             'desktop_cnum'                  => esc_attr( auxin_get_option( 'post_index_column_number' ) ),
             'tablet_cnum'                   => esc_attr( auxin_get_option( 'post_index_column_number_tablet' ) ),
@@ -2268,8 +2356,10 @@ function auxels_add_blog_archive_custom_template_layouts( $result, $template_typ
             'show_excerpt'                  => true,
             'excerpt_len'                   => $excerpt_len,
             'display_title'                 => true,
-            'show_info'                     => esc_attr( auxin_get_option( 'display_post_info', 1 )  ),
-            'author_or_readmore'            => 'readmore',
+            'show_info'                     => esc_attr( $show_post_info ),
+            'show_date'                     => esc_attr( $show_post_date ),
+            'display_categories'            => esc_attr( $show_post_categories ),
+            'author_or_readmore'            => esc_attr( $show_post_author ),
             'tag'                           => '',
             'extra_classes'                 => '',
             'custom_el_id'                  => '',
@@ -2295,8 +2385,10 @@ function auxels_add_blog_archive_custom_template_layouts( $result, $template_typ
             'show_excerpt'                  => true,
             'excerpt_len'                   => $excerpt_len,
             'display_title'                 => true,
-            'show_info'                     => esc_attr( auxin_get_option( 'display_post_info', 1 )  ),
-            'author_or_readmore'            => 'readmore',
+            'show_info'                     => esc_attr( $show_post_info ),
+            'show_date'                     => esc_attr( $show_post_date ),
+            'display_categories'            => esc_attr( $show_post_categories ),
+            'author_or_readmore'            => esc_attr( $show_post_author ),
             'image_aspect_ratio'            =>  esc_attr( auxin_get_option( 'post_image_aspect_ratio' ) ),
             'tag'                           => '',
             'extra_classes'                 => '',
@@ -2323,8 +2415,10 @@ function auxels_add_blog_archive_custom_template_layouts( $result, $template_typ
             'show_excerpt'                  => true,
             'excerpt_len'                   => $excerpt_len,
             'display_title'                 => true,
-            'show_info'                     => esc_attr( auxin_get_option( 'display_post_info', 1 )  ),
-            'author_or_readmore'            => 'readmore',
+            'show_info'                     => esc_attr( $show_post_info ),
+            'show_date'                     => esc_attr( $show_post_date ),
+            'display_categories'            => esc_attr( $show_post_categories ),
+            'author_or_readmore'            => esc_attr( $show_post_author ),
             'image_aspect_ratio'            => esc_attr( auxin_get_option( 'post_image_aspect_ratio' ) ),
             'timeline_alignment'            => esc_attr( auxin_get_option( 'post_index_timeline_alignment', 'center' ) ),
             'tag'                           => '',
@@ -2346,16 +2440,16 @@ function auxels_add_blog_archive_custom_template_layouts( $result, $template_typ
             'show_media'                    => true,
             'show_excerpt'                  => true,
             'paged'                         => $paged,
-            'show_info'                     => esc_attr( auxin_get_option( 'display_post_info', 1 )  ),
             'post_info_position'            => esc_attr( auxin_get_option( 'post_info_position', 'after-title' ) ),
-            'show_date'                     => true,
-            'display_categories'            => esc_attr( auxin_get_option( 'display_post_info_categories', 1 ) ),
+            'show_info'                     => esc_attr( $show_post_info ),
+            'show_date'                     => esc_attr( $show_post_date ),
+            'display_categories'            => esc_attr( $show_post_categories ),
             'display_like'                  => esc_attr( auxin_get_option( 'show_blog_archive_like_button', 1 ) ),
             'loadmore_type'                 => esc_attr( $post_loadmore_type ),
             'content_layout'                => esc_attr( auxin_get_option( 'post_index_column_content_layout', 'full' ) ),
             'excerpt_len'                   => $excerpt_len,
             'display_title'                 => true,
-            'author_or_readmore'            => 'readmore',
+            'author_or_readmore'            => esc_attr( $show_post_author ),
             'image_aspect_ratio'            => esc_attr( auxin_get_option( 'post_image_aspect_ratio' ) ),
             'desktop_cnum'                  => esc_attr( auxin_get_option( 'post_index_column_number' ) ),
             'tablet_cnum'                   => esc_attr( auxin_get_option( 'post_index_column_number_tablet' ) ),
@@ -2764,3 +2858,65 @@ function auxin_disable_woocommerce_ajax_add_to_cart( $args ){
 }
 
 add_filter( 'woocommerce_loop_add_to_cart_args', 'auxin_disable_woocommerce_ajax_add_to_cart', 10 );
+
+
+/**
+ * Override inner body sections hooks for replace header&footer
+ *
+ * @return void
+ */
+function auxin_override_inner_body_sections(){
+    if( auxin_is_true( auxin_get_option( 'site_header_override_template', '0' ) ) ) {
+        remove_action( 'auxin_after_inner_body_open', 'auxin_the_top_header_section', 4 );
+        remove_action( 'auxin_after_inner_body_open', 'auxin_the_main_header_section', 4 );
+        add_action( 'auxin_after_inner_body_open', 'auxin_get_header_template', 4 );        
+    }
+    if( auxin_is_true( auxin_get_option( 'site_footer_override_template', '0' ) ) ) {
+        remove_action( 'auxin_before_the_footer', 'auxin_the_site_footer' );
+        add_action( 'auxin_before_the_footer', 'auxin_get_footer_template' );        
+    }
+}
+add_action( 'wp_loaded', 'auxin_override_inner_body_sections' );
+
+/**
+ * Add canvas on elementor single template
+ *
+ * @param string $single_template
+ * @return string
+ */
+function auxin_load_canvas_template( $single_template ) {
+    global $post;
+
+    if ( 'elementor_library' === $post->post_type && defined( 'ELEMENTOR_PATH' ) && defined( 'AUXIN_ELEMENTOR_TEMPLATE' ) ) {
+        $template_type = get_post_meta( $post->ID, '_elementor_template_type', true );
+        // Limit the template types
+        if( ! in_array( $template_type, array( 'header', 'footer' ) ) ){
+            return $single_template;
+        }
+        // Load elementor canvas template
+        $elementor_2_0_canvas = ELEMENTOR_PATH . '/modules/page-templates/templates/canvas.php';
+        if ( file_exists( $elementor_2_0_canvas ) ) {
+            return $elementor_2_0_canvas;
+        } else {
+            return ELEMENTOR_PATH . '/includes/page-templates/canvas.php';
+        }
+    }
+
+    return $single_template;
+}
+add_filter( 'single_template', 'auxin_load_canvas_template' );
+
+
+/*-----------------------------------------------------------------------------------*/
+/* override the canvas template of elementor plugin
+/*-----------------------------------------------------------------------------------*/
+
+function auxin_override_elementor_canvas_template( $template ){
+
+	if ( false !== strpos( $template, '/templates/canvas.php' ) ) {
+		$template = AUXELS_PUB_DIR . '/templates/elementor/canvas.php';
+    }
+
+	return $template;
+}
+add_filter( 'template_include', 'auxin_override_elementor_canvas_template', 12 );

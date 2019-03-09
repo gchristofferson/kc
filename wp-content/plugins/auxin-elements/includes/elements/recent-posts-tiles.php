@@ -461,14 +461,12 @@ function auxin_widget_recent_posts_tiles_callback( $atts, $shortcode_content = n
         'tile_style'                  => '',
         'display_title'               => true,
         'show_info'                   => true,
+        'show_date'                   => true,
+        'display_categories'          => true,
         'tile_style_pattern'          => 'default',
         'extra_classes'               => '',
         'extra_column_classes'        => '',
         'custom_el_id'                => '',
-
-        // 'preloadable'                 => false,
-        // 'preload_preview'             => true,
-        // 'preload_bgcolor'             => '',
 
         'template_part_file'          => 'theme-parts/entry/post-tile',
         'extra_template_path'         => '',
@@ -501,6 +499,17 @@ function auxin_widget_recent_posts_tiles_callback( $atts, $shortcode_content = n
     // --------------
 
     ob_start();
+    
+    $tax_args = array();
+    if( ! empty( $cat ) && $cat != " " && ( ! is_array( $cat ) || ! in_array( " ", $cat ) ) ) {
+        $tax_args = array(
+            array(
+                'taxonomy' => $taxonomy_name,
+                'field'    => 'term_id',
+                'terms'    => ! is_array( $cat ) ? explode( ",", $cat ) : $cat
+            )
+        );
+    }
 
     global $wp_query;
 
@@ -513,7 +522,7 @@ function auxin_widget_recent_posts_tiles_callback( $atts, $shortcode_content = n
             'order'                   => $order,
             'offset'                  => $offset,
             'paged'                   => $paged,
-            'cat'                     => $cat,
+            'tax_query'               => $tax_args,
             'post_status'             => 'publish',
             'posts_per_page'          => $num,
             'ignore_sticky_posts'     => 1,

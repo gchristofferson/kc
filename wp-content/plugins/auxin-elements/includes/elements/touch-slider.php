@@ -239,7 +239,7 @@ function auxin_touch_slider_callback( $atts, $shortcode_content = null ){
     echo $result['widget_header'];
     echo $result['widget_title'];
 
-    echo '<div class="master-carousel-slider aux-latest-posts-slider aux-no-js '.$skin.'" data-empty-height="'.$height.'" data-navigation="peritem" data-space="'.$space.'" data-auto-height="true" data-delay="'.$slideshow_delay.'" data-loop="'.$loop.'" data-autoplay="'.$slideshow.'">';
+    echo '<div class="master-carousel-slider aux-latest-posts-slider aux-no-js '.$skin.'" data-empty-height="'.$height.'" data-navigation="peritem" data-space="'.$space.'" data-auto-height="true" data-delay="'.$slideshow_delay.'" data-loop="'.$loop.'" data-autoplay="' . auxin_is_true( $slideshow ) . '">';
 
     // widget custom output -----------------------
 

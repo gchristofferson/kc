@@ -226,13 +226,17 @@ function  auxin_get_staff_master_array( $master_array )  {
                         'label'     => __('Top', 'auxin-elements'),
                         'image'     => AUXIN_URL . 'images/visual-select/column-icon-top.svg'
                     ),
-                    'left'          => array(
-                        'label'     => __('Left', 'auxin-elements'),
-                        'image'     => AUXIN_URL . 'images/visual-select/column-icon-left.svg'
-                    ),
                     'right'         => array(
                         'label'     => __('Right', 'auxin-elements'),
                         'image'     => AUXIN_URL . 'images/visual-select/column-icon-right.svg'
+                    ),
+                    'bottom'         => array(
+                        'label'     => __('Bottom', 'auxin-elements'),
+                        'image'     => AUXIN_URL . 'images/visual-select/column-icon-bottom.svg'
+                    ),
+                    'left'          => array(
+                        'label'     => __('Left', 'auxin-elements'),
+                        'image'     => AUXIN_URL . 'images/visual-select/column-icon-left.svg'
                     )
                 ),
                 'holder'            => '',

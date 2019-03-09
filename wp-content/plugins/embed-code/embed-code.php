@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: Embed Code
+ * Plugin Name: Embed Code - Insert Header & Footer code
  * Description: The easiest way to embed code in the head or footer of your site, globally or on a per-page/post basis.
- * Version:     2.0.1
- * Author:      WPKube
- * Author URI:  https://www.wpkube.com/
+ * Version:     2.0.2
+ * Author:      DesignBombs
+ * Author URI:  https://www.designbombs.com/
  * License:     GPL2+
  * Text Domain: embed-code
  */
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'EC_VERSION', '2.0.1' );
+define( 'EC_VERSION', '2.0.2' );
 define( 'EC_FILE',    __FILE__ );
 define( 'EC_PATH',    plugin_dir_path( EC_FILE ) );
 define( 'EC_URL',     plugin_dir_url( EC_FILE ) );

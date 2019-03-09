@@ -4,7 +4,7 @@
  *
  * 
  * @package    Auxin
- * @author     averta (c) 2014-2018
+ * @author     averta (c) 2014-2019
  * @link       http://averta.net
 */
 
@@ -156,33 +156,58 @@ add_action( 'customize_render_control', 'auxin_customizer_device_options' );
 /*-----------------------------------------------------------------------------------*/
 function auxin_admin_theme_lite_notices( $notice_list ){
 
-    $notice_list[ 'rate_phlox_free' ] = new Auxin_Notices([
+    $notice_list[ 'rate_phlox_free' ] = new Auxin_Notices(array(
         'id'        => 'rate_phlox_free',
         'title'     => 'Hi! Thank you so much for using Phlox theme.',
         'desc'      => 'Could you please do us a HUGE favor? If you could take 2 min of your time, we would be really thankful if you could give Phlox theme a 5-star rating on WordPress. By spreading the love, we can push Phlox forward and create even greater free stuff in the future!',
         'skin'      => 'default', // 'success', 'info', 'error'
         'has_close' => false,
         'initial_snooze' => DAY_IN_SECONDS * 2,
-        'image'     =>[
+        'image'     => array(
             'width' => '105',
             'src'   => esc_url( AUXIN_URL ) . 'css/images/welcome/rating.svg'
-        ],
-        'buttons'   => [
-            [
+        ),
+        'buttons'   => array(
+            array(
                 'label'      => __('Sure, I like Phlox', 'phlox'),
                 'link'       => 'https://wordpress.org/support/theme/phlox/reviews/?filter=5#new-post'
-            ],
-            [
+            ),
+            array(
                 'label'      => __('Maybe Later', 'phlox'),
                 'type'       => 'skip',
                 'expiration' => DAY_IN_SECONDS * 3
-            ],
-            [
+            ),
+            array(
                 'label'      => __('I Already Did :)', 'phlox'),
                 'type'       => 'skip'
-            ]
-        ]
-    ]);
+            )
+        )
+    ));
+
+    if( version_compare( PHP_VERSION, '5.6.0', '<=' ) ){
+        $notice_list[ 'php_phlox_requirement' ] = new Auxin_Notices( array(
+            'id'        => 'php_phlox_requirement',
+            'title'     => __( 'Please update your PHP version' ),
+            'desc'      => sprintf( __( 'This theme is perfectly optimized for latest version of PHP. Your current PHP version is %s, we highly recommend you to upgrade PHP to version 7.0 or higher.' ), '<strong>' . PHP_VERSION . '</strong>' ),
+            'skin'      => 'error', // 'success', 'info', 'error'
+            'has_close' => false,
+            // 'image'     =>[
+            //     'width' => '105',
+            //     'src'   => esc_url( AUXIN_URL ) . 'css/images/welcome/rating.svg'
+            // ]
+            'buttons'   => array(
+                array(
+                    'label'      => __('Remind me later', 'phlox'),
+                    'type'       => 'skip',
+                    'expiration' => DAY_IN_SECONDS * 3
+                ),
+                array(
+                    'label'      => __('Dismiss notice', 'phlox'),
+                    'type'       => 'skip'
+                )
+            )
+        ));
+    }
 
 
     return $notice_list;

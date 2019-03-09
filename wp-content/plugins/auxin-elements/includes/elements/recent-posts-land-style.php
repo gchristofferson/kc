@@ -496,6 +496,17 @@ function auxin_widget_recent_posts_land_style_callback( $atts, $shortcode_conten
 
     ob_start();
 
+    $tax_args = array();
+    if( ! empty( $cat ) && $cat != " " && ( ! is_array( $cat ) || ! in_array( " ", $cat ) ) ) {
+        $tax_args = array(
+            array(
+                'taxonomy' => $taxonomy_name,
+                'field'    => 'term_id',
+                'terms'    => ! is_array( $cat ) ? explode( ",", $cat ) : $cat
+            )
+        );
+    }
+
     global $wp_query;
 
     if( ! $use_wp_query ){
@@ -507,7 +518,7 @@ function auxin_widget_recent_posts_land_style_callback( $atts, $shortcode_conten
             'order'                   => $order,
             'offset'                  => $offset,
             'paged'                   => $paged,
-            'cat'                     => $cat,
+            'tax_query'               => $tax_args,
             'post_status'             => 'publish',
             'posts_per_page'          => $num,
             'ignore_sticky_posts'     => 1,
@@ -573,7 +584,7 @@ function auxin_widget_recent_posts_land_style_callback( $atts, $shortcode_conten
                     'upscale_image'   => true,
                     'preloadable'     => $preloadable,
                     'preload_preview' => $preload_preview,
-                    'preload_bgcolor' => $preload_bgcolor,                      
+                    'preload_bgcolor' => $preload_bgcolor,
                     'image_sizes'     => 'auto',
                     'srcset_sizes'    => 'auto'
                 )

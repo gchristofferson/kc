@@ -130,7 +130,8 @@ class SupsysticTables_Tables_Controller extends SupsysticTables_Core_BaseControl
                 'table'             => $table,
                 'attributes'        => array(
                     'cols' => $request->query->get('cols', 5),
-                    'rows' => $request->query->get('rows', 5)
+                    'rows' => $request->query->get('rows', 5),
+                    'new' => $request->query->get('new', 0)
                 ),
                 'translations'      => $languages->getTranslations(),
                 'settings'          => $settings,

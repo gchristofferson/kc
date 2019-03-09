@@ -289,7 +289,7 @@ function auxin_aq_resize( $url, $width = null, $height = null, $crop = null, $qu
     /* WPML Fix */
     if ( function_exists('icl_object_id') ) {
         $current_language= apply_filters( 'wpml_current_language', NULL );
-        $url = apply_filters( 'wpml_permalink', $url, $current_language );
+        $url = apply_filters( 'wpml_permalink', $url, $current_language, true );
     }
     /* WPML Fix */
 

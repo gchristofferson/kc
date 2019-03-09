@@ -408,7 +408,7 @@ class SupsysticTables_Tables_Model_Tables extends SupsysticTables_Core_BaseModel
      * Returns needed table rows
      * @return array
      */
-    public function getNeededRows($id, &$settings, $isSSP, $attributes = false, $all = false)
+    public function getNeededRows($id, &$settings, $isSSP, $attributes = false, $export = false)
     {
         $source = ($this->environment->isPro() && isset($settings['source']) ? $settings['source'] : '');
         if (isset($source['database']) && $source['database'] == 'on' && isset($source['dbTable'])){
@@ -420,12 +420,12 @@ class SupsysticTables_Tables_Model_Tables extends SupsysticTables_Core_BaseModel
 			$table = $this->getWooSettings($id);
 			$tableSettings = unserialize($table);
 			if(!empty($tableSettings['woocommerce']['enable']) && $tableSettings['woocommerce']['enable'] === 'on'){
-				if($this->environment->getModule('woocommerce')->getController()->getRows($id, $settings)){
-					return $this->environment->getModule('woocommerce')->getController()->getRows($id, $settings) ;
+                if($this->environment->getModule('woocommerce')->getController()){
+					return $this->environment->getModule('woocommerce')->getController()->getRows($id, $settings, false, false, false, $export) ;
 				}
 			}
 		}
-        if (!$all && $isSSP) {
+        if ($isSSP) {
             $cntHead = 1;
             $footers = array();
 			if (isset($settings['elements']['head']) && $settings['elements']['head'] == 'on' &&

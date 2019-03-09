@@ -4,7 +4,7 @@
  *
  * 
  * @package    Auxin
- * @author     averta (c) 2014-2018
+ * @author     averta (c) 2014-2019
  * @link       http://averta.net
 */
 
@@ -92,8 +92,13 @@ function auxin_metabox_fields_post_sidebar_layout(){
             'title'         => __('Display Content Top Margin', 'phlox'),
             'description'   => __('Whether you want to display a space between title and content or not. If you need to start your content from very top of the page, disable it.', 'phlox'),
             'id'            => 'show_content_top_margin',
-            'type'          => 'switch',
-            'default'       => '1'
+            'type'          => 'select',
+            'default'       => 'default',
+            'choices'       => array(
+                'default' => __( 'Theme Default', 'phlox' ),
+                'yes'     => __( 'Yes', 'phlox' ),
+                'no'      => __( 'No', 'phlox' ),
+            ),
         )
     );
 

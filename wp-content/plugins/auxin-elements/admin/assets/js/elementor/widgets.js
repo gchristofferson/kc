@@ -20,8 +20,8 @@
             elementorFrontend.hooks.addAction( 'frontend/element_ready/aux_tabs.default', $.fn.AuxinLiveTabsInit );
     
     
-            elementorFrontend.hooks.addAction( 'frontend/element_ready/aux_video.default', function( $scope ){ $scope.find('video').mediaelementplayer(); } );
-            elementorFrontend.hooks.addAction( 'frontend/element_ready/aux_audio.default', function( $scope ){ $scope.find('audio').mediaelementplayer(); } );
+            elementorFrontend.hooks.addAction( 'frontend/element_ready/aux_video.default', function( $scope ){ window.wp.mediaelement.initialize() } );
+            elementorFrontend.hooks.addAction( 'frontend/element_ready/aux_audio.default', function( $scope ){ window.wp.mediaelement.initialize() } );
     
     
             elementorFrontend.hooks.addAction( 'frontend/element_ready/aux_recent_portfolios_grid.default',
@@ -43,9 +43,24 @@
             elementorFrontend.hooks.addAction( 'frontend/element_ready/aux_recent_news_grid.default',
                 function( $scope ){ $.fn.AuxinCarouselInit( $('body') ); }
             );
+
+            elementorFrontend.hooks.addAction( 'frontend/element_ready/aux_shopping_cart.default',
+                function( $scope ){ 
+                    $.fn.AuxinDropdownEffectInit( $('body') ); 
+                    $.fn.AuxinCartCanvasInit( $('body') ); 
+                }
+            );
     
+            elementorFrontend.hooks.addAction( 'frontend/element_ready/aux_image.default', function($scope) {
+               $.fn.AuxinDynamicDropshadowInit($scope);
+               $.fn.AuxinTiltElementInit($scope);
+            });
+
             elementorFrontend.hooks.addAction( 'frontend/element_ready/global', 
-                function( $scope ) { $.fn.AuxinPageCoverAnimationInit( $scope );}
+                function( $scope ) { 
+                    $.fn.AuxinPageCoverAnimationInit( $scope );
+                    $.fn.AuxinToggleListInit( $scope );
+                }
             
             );
             

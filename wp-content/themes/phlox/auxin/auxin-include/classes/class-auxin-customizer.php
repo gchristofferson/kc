@@ -4,7 +4,7 @@
  *
  * 
  * @package    Auxin
- * @author     averta (c) 2014-2018
+ * @author     averta (c) 2014-2019
  * @link       http://averta.net
 */
 
@@ -441,7 +441,7 @@ class Auxin_Customizer{
             'dependency'      => $field['dependency'],
             'default'         => $field['default'],
             'selectors'       => $field['selectors'],
-            'css_property'    => $field['css_property'],
+            'css_placeholder' => $field['placeholder'],
             'active_callback' => '',
             'devices'         => $field['devices'],
             'device'          => 'desktop',

@@ -4,7 +4,7 @@
  *
  * 
  * @package    Auxin
- * @author     averta (c) 2014-2018
+ * @author     averta (c) 2014-2019
  * @link       http://averta.net
  */
  ?>
@@ -95,7 +95,7 @@ $comments_args = array(
         'author'   => '<input type="text"  name="author" id="author" placeholder="'. $author_label . '" value="'. esc_attr( $comment_author). '" size="22" '. ( $req ? "aria-required='true' required" : "" ) .' />',
         'email'    => '<input type="email" name="email"  id="email"  placeholder="'. $email_label . '" value="'. esc_attr( $comment_author_email). '" ' . ( $req ? "aria-required='true' required" : "" ) .' />',
         'url'      => '<input type="url"   name="url"    id="url"    placeholder="'. $url_label . '" value="'. esc_url( $comment_author_url). '" size="22" />',
-        'cookies'  => '<div class="aux-form-cookies-consent comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"' . $consent . ' />' .
+        'cookies'  => '<div class="aux-form-cookies-consent comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" class="aux-checkbox" type="checkbox" value="yes"' . $consent . ' />' .
                      '<label for="wp-comment-cookies-consent">' . __( 'Save my name, email, and website in this browser for the next time I comment.', 'phlox' ) . '</label></div>'
     )
 );

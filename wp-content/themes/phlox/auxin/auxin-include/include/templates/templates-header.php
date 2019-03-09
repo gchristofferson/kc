@@ -4,7 +4,7 @@
  *
  * 
  * @package    Auxin
- * @author     averta (c) 2014-2018
+ * @author     averta (c) 2014-2019
  * @link       http://averta.net
  */
 
@@ -781,6 +781,12 @@ function auxin_get_header_layout( $layout = '' ){
         $action_on = auxin_get_option('header_cart_dropdown_action_on');
     }
 
+    $button1_breakpoints  = auxin_get_option ( 'site_header_show_btn1_on_tablet', '1') ? 'aux-tablet-off ': '';
+    $button1_breakpoints .= auxin_get_option ( 'site_header_show_btn1_on_phone', '1') ? 'aux-phone-off ' : '';
+
+    $button2_breakpoints  = auxin_get_option ( 'site_header_show_btn2_on_tablet', '1') ? 'aux-tablet-off ': '';
+    $button2_breakpoints .= auxin_get_option ( 'site_header_show_btn2_on_phone', '1') ? 'aux-phone-off ' : '';
+
     $menu = 'default' !== auxin_get_post_meta( $post, 'page_header_menu' ) ? auxin_get_post_meta( $post, 'page_header_menu' ) : null;
 
     switch ( $layout ) {
@@ -793,20 +799,23 @@ function auxin_get_header_layout( $layout = '' ){
                 <div class="aux-header-elements">
 
                     <!-- logo -->
-                    <div id="logo" class="aux-logo-header aux-end aux-fill aux-tablet-center aux-phone-center">
+                    <div id="logo" class="aux-logo-header aux-end aux-fill aux-tablet-center aux-phone-left">
                         <?php echo $logo_markup; ?>
                     </div>
+                    <?php if ( 'none' !== $menu ) { ?>                    
                     <!-- burger -->
                     <div id="nav-burger" class="aux-burger-box aux-start aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>">
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
+                    <?php } ?>
 
-                    <div class="aux-btns-box aux-btn1-box aux-start aux-middle aux-tablet-off aux-phone-off">
+                    <div class="aux-btns-box aux-btn1-box aux-start aux-middle <?php echo esc_attr( $button1_breakpoints );?>">
                         <?php if( function_exists( 'auxin_get_header_button' ) ){ echo auxin_get_header_button( 1 ); } ?>
                     </div>
-                    <div class="aux-btns-box aux-btn2-box aux-start aux-middle aux-tablet-off aux-phone-off">
+                    <div class="aux-btns-box aux-btn2-box aux-start aux-middle <?php echo esc_attr( $button2_breakpoints );?>">
                         <?php if( function_exists( 'auxin_get_header_button' ) ){ echo auxin_get_header_button( 2 ); } ?>
                     </div>
+                    <?php if ( 'none' !== $menu ) { ?>
                     <!-- menu -->
                     <div class="aux-menu-box aux-phone-off aux-auto-locate aux-start <?php echo $submenu_below ? 'aux-middle aux-tabel-center-middle' : 'aux-fill aux-tablet-center'; ?>" data-tablet=".aux-header .secondary-bar-2">
                     <?php
@@ -819,6 +828,7 @@ function auxin_get_header_layout( $layout = '' ){
                         ));
                     ?>
                     </div>
+                    <?php } ?>
                     <?php if ( auxin_is_true( $add_search ) ) { ?>
                     <!-- search -->
                     <div class="aux-search-box aux-desktop-on aux-start aux-middle">
@@ -829,7 +839,7 @@ function auxin_get_header_layout( $layout = '' ){
                         if( auxin_is_true( $add_cart ) ) {
                             auxin_wc_add_to_cart(
                                 array(
-                                    'css_class'     => 'aux-cart-box aux-start aux-middle ' . $device_classes,
+                                    'css_class'     => 'aux-cart-box aux-start aux-fill ' . $device_classes,
                                     'dropdown_skin' => $dropdown_skin,
                                     'action_on'     => $action_on,
                                     'icon'          => $cart_icon
@@ -868,11 +878,13 @@ function auxin_get_header_layout( $layout = '' ){
                         <?php echo $logo_markup; ?>
                     </div>
 
+                    <?php if ( 'none' !== $menu ) { ?>                    
                     <!-- burger -->
                     <div id="nav-burger" class="aux-burger-box aux-end aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" >
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
-
+                    <?php } ?>
+                    
                     <?php if ( auxin_is_true( $add_search ) ) { ?>
                      <!-- search -->
                     <div class="aux-search-box aux-desktop-on aux-end aux-middle">
@@ -883,7 +895,7 @@ function auxin_get_header_layout( $layout = '' ){
                         if( auxin_is_true( $add_cart ) ) {
                             auxin_wc_add_to_cart(
                                 array(
-                                    'css_class' => 'aux-cart-box aux-end aux-middle ' . $device_classes,
+                                    'css_class' => 'aux-cart-box aux-end aux-fill ' . $device_classes,
                                     'dropdown_skin' => $dropdown_skin,
                                     'action_on'     => $action_on,
                                     'icon'          => $cart_icon
@@ -900,6 +912,7 @@ function auxin_get_header_layout( $layout = '' ){
                             ));
                         }
                     ?>
+                    <?php if ( 'none' !== $menu ) { ?>
                     <div class="aux-menu-box aux-off aux-auto-locate aux-end aux-fill aux-tablet-center" >
                     <?php
                         /* The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.*/
@@ -911,7 +924,7 @@ function auxin_get_header_layout( $layout = '' ){
                         ));
                     ?>
                     </div>
-
+                    <?php } ?>                    
                 </div>
 
                 <!-- toggle menu bar: this element will be filled in tablet and mobile size -->
@@ -929,14 +942,15 @@ function auxin_get_header_layout( $layout = '' ){
                 <div class="aux-header-elements">
 
                     <!-- logo -->
-                    <div id="logo" class="aux-logo-header aux-end aux-fill aux-tablet-center aux-phone-center">
+                    <div id="logo" class="aux-logo-header aux-end aux-fill aux-tablet-center aux-phone-left">
                         <?php echo $logo_markup; ?>
                     </div>
+                    <?php if ( 'none' !== $menu ) { ?>
                     <!-- burger -->
                     <div id="nav-burger" class="aux-burger-box aux-start aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>">
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
-
+                    <?php } ?>                    
                     <?php if ( auxin_is_true( $add_search ) ) { ?>
                     <!-- search -->
                     <div class="aux-search-box aux-desktop-on aux-start aux-middle">
@@ -947,7 +961,7 @@ function auxin_get_header_layout( $layout = '' ){
                         if( auxin_is_true( $add_cart ) ) {
                             auxin_wc_add_to_cart(
                                 array(
-                                    'css_class' => 'aux-cart-box aux-start aux-middle ' . $device_classes,
+                                    'css_class' => 'aux-cart-box aux-start aux-fill ' . $device_classes,
                                     'dropdown_skin' => $dropdown_skin,
                                     'action_on'     => $action_on,
                                     'icon'          => $cart_icon
@@ -964,7 +978,7 @@ function auxin_get_header_layout( $layout = '' ){
                             ));
                         }
                     ?>
-
+                    <?php if ( 'none' !== $menu ) { ?>
                     <div class="aux-menu-box aux-off aux-auto-locate aux-start aux-fill aux-tablet-center" >
                     <?php
                         /* The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.*/
@@ -976,7 +990,7 @@ function auxin_get_header_layout( $layout = '' ){
                         ));
                     ?>
                     </div>
-
+                    <?php } ?>                    
                 </div>
 
                 <!-- toggle menu bar: this element will be filled in tablet and mobile size -->
@@ -997,10 +1011,13 @@ function auxin_get_header_layout( $layout = '' ){
                     <div id="logo" class="aux-logo-header aux-fill aux-center aux-phone-center">
                         <?php echo $logo_markup; ?>
                     </div>
+                    <?php if ( 'none' !== $menu ) { ?>                    
                     <!-- burger -->
                     <div id="nav-burger" class="aux-burger-box aux-start aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>">
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
+                    <?php } ?>
+
                     <?php if ( auxin_is_true( $add_search ) ) { ?>
                      <!-- search -->
                     <div class="aux-search-box aux-desktop-on aux-end aux-middle">
@@ -1011,7 +1028,7 @@ function auxin_get_header_layout( $layout = '' ){
                         if( auxin_is_true( $add_cart ) ) {
                             auxin_wc_add_to_cart(
                                 array(
-                                    'css_class' => 'aux-cart-box aux-start aux-middle ' . $device_classes,
+                                    'css_class' => 'aux-cart-box aux-start aux-fill ' . $device_classes,
                                     'dropdown_skin' => $dropdown_skin,
                                     'action_on'     => $action_on,
                                     'icon'          => $cart_icon
@@ -1031,6 +1048,7 @@ function auxin_get_header_layout( $layout = '' ){
                 </div>
 
                 <div class="bottom-bar secondary-bar aux-phone-off aux-float-wrapper">
+                    <?php if ( 'none' !== $menu ) { ?>                    
                     <!-- menu -->
                     <div class="aux-menu-box <?php echo $submenu_below ? 'aux-middle aux-center-middle' : 'aux-fill aux-center'; ?>">
 <?php
@@ -1038,6 +1056,7 @@ function auxin_get_header_layout( $layout = '' ){
     wp_nav_menu( array( 'menu' => $menu, 'container_id' => 'master-menu-main-header', 'theme_location' => 'header-primary' ) );
 ?>
                     </div>
+                    <?php } ?>
                 </div>
 
                 <!-- toggle menu bar: this element will be filled in tablet and mobile size -->
@@ -1057,18 +1076,20 @@ function auxin_get_header_layout( $layout = '' ){
                     <div id="logo" class="aux-logo-header aux-center aux-fill">
                         <?php echo $logo_markup; ?>
                     </div>
+
+                    <?php if ( 'none' !== $menu ) { ?>                 
                     <!-- burger -->
                     <div id="nav-burger" class="aux-burger-box aux-end aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>">
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
                     <!-- menu -->
                     <div class="aux-menu-box aux-phone-off aux-auto-locate aux-center-middle aux-phone-center-middle aux-fill aux-tablet-center" data-tablet=".aux-header .secondary-bar-2">
-<?php
-    /* The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.*/
-    wp_nav_menu( array( 'menu' => $menu, 'container_id' => 'master-menu-main-header', 'theme_location' => 'header-primary' ) );
-?>
+                    <?php
+                        /* The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.*/
+                        wp_nav_menu( array( 'menu' => $menu, 'container_id' => 'master-menu-main-header', 'theme_location' => 'header-primary' ) );
+                    ?>
                     </div>
-
+                    <?php } ?>                    
                 </div>
                 <!-- secondary bar: this element will be filled in tablet size -->
                 <div class="bottom-bar secondary-bar secondary-bar-2  aux-tablet-on aux-float-wrapper"></div>
@@ -1087,17 +1108,19 @@ function auxin_get_header_layout( $layout = '' ){
                 <div class="aux-header-elements">
 
                     <!-- logo -->
-                    <div id="logo" class="aux-logo-header aux-start aux-fill aux-tablet-center aux-phone-center">
+                    <div id="logo" class="aux-logo-header aux-start aux-fill aux-tablet-center aux-phone-left">
                         <?php echo $logo_markup; ?>
                     </div>
+                    <?php if ( 'none' !== $menu ) { ?>
                     <!-- burger -->
                     <div id="nav-burger" class="aux-burger-box aux-start aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" data-target-menu="overlay" >
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
-                    <div class="aux-btns-box aux-btn1-box aux-end aux-middle aux-tablet-off aux-phone-off">
+                    <?php } ?>
+                    <div class="aux-btns-box aux-btn1-box aux-end aux-middle <?php echo esc_attr( $button1_breakpoints );?>">
                         <?php if( function_exists( 'auxin_get_header_button' ) ){ echo auxin_get_header_button( 1 ); } ?>
                     </div>
-                    <div class="aux-btns-box aux-btn2-box aux-end aux-middle aux-tablet-off aux-phone-off">
+                    <div class="aux-btns-box aux-btn2-box aux-end aux-middle <?php echo esc_attr( $button2_breakpoints );?>">
                         <?php if( function_exists( 'auxin_get_header_button' ) ){ echo auxin_get_header_button( 2 ); } ?>
                     </div>
                     <?php if ( auxin_is_true( $add_search ) ) { ?>
@@ -1110,7 +1133,7 @@ function auxin_get_header_layout( $layout = '' ){
                         if( auxin_is_true( $add_cart ) ) {
                             auxin_wc_add_to_cart(
                                 array(
-                                    'css_class' => 'aux-cart-box aux-end aux-middle ' . $device_classes,
+                                    'css_class' => 'aux-cart-box aux-end aux-fill ' . $device_classes,
                                     'dropdown_skin' => $dropdown_skin,
                                     'action_on'     => $action_on,
                                     'icon'          => $cart_icon
@@ -1127,6 +1150,7 @@ function auxin_get_header_layout( $layout = '' ){
                             ));
                         }
                     ?>
+                    <?php if ( 'none' !== $menu ) { ?>
                     <!-- menu -->
                     <div class="aux-menu-box aux-phone-off aux-auto-locate aux-end <?php echo $submenu_below ? 'aux-middle aux-tablet-center-middle' : 'aux-fill aux-tablet-center'; ?>" data-tablet=".aux-header .secondary-bar">
                     <?php
@@ -1134,7 +1158,7 @@ function auxin_get_header_layout( $layout = '' ){
                         wp_nav_menu( array( 'menu' => $menu, 'container_id' => 'master-menu-main-header', 'theme_location' => 'header-primary' ) );
                     ?>
                     </div>
-
+                    <?php } ?>
                 </div>
                 <!-- secondary bar: this element will be filled in tablet size -->
                 <div class="bottom-bar secondary-bar aux-tablet-on aux-float-wrapper"></div>
@@ -1157,10 +1181,12 @@ function auxin_get_header_layout( $layout = '' ){
                     <div id="logo" class="aux-logo-header aux-start aux-fill">
                         <?php echo $logo_markup; ?>
                     </div>
+                    <?php if ( 'none' !== $menu ) { ?>
                     <!-- burger -->
                     <div id="nav-burger" class="aux-burger-box aux-end aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" data-target-menu="overlay" >
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
+                    <?php } ?>
                     <?php if ( auxin_is_true( $add_search ) ) { ?>
                     <!-- search -->
                     <div class="aux-search-box aux-phone-off aux-end aux-middle">
@@ -1171,7 +1197,7 @@ function auxin_get_header_layout( $layout = '' ){
                         if( auxin_is_true( $add_cart ) ) {
                             auxin_wc_add_to_cart(
                                 array(
-                                    'css_class' => 'aux-cart-box aux-end aux-middle ' . $device_classes,
+                                    'css_class' => 'aux-cart-box aux-end aux-fill ' . $device_classes,
                                     'dropdown_skin' => $dropdown_skin,
                                     'action_on'     => $action_on,
                                     'icon'          => $cart_icon
@@ -1191,6 +1217,7 @@ function auxin_get_header_layout( $layout = '' ){
                 </div>
                 <!-- secondary bar: this element will be filled in tablet size -->
                 <div class="bottom-bar secondary-bar aux-float-wrapper aux-sticky-off aux-phone-off">
+                    <?php if ( 'none' !== $menu ) { ?>
                     <!-- menu -->
                     <div class="aux-menu-box aux-phone-off aux-auto-locate aux-start <?php echo $submenu_below ? 'aux-middle' : 'aux-fill'; ?>" data-sticky-move="#logo" data-sticky-move-method="after">
                     <?php
@@ -1198,6 +1225,7 @@ function auxin_get_header_layout( $layout = '' ){
                         wp_nav_menu( array( 'menu' => $menu, 'container_id' => 'master-menu-main-header', 'theme_location' => 'header-primary' ) );
                     ?>
                     </div>
+                    <?php } ?>
                 </div>
 
                 <!-- toggle menu bar: this element will be filled in tablet and mobile size -->
@@ -1243,13 +1271,15 @@ function auxin_get_header_layout( $layout = '' ){
                     <!-- menu -->
                     <div class="aux-menu-box aux-phone-off aux-auto-locate aux-tablet-center'; ?>" data-tablet=".aux-header .secondary-bar-2">
                     <?php
-                        /* The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.*/
-                        wp_nav_menu( array(
-                            'menu' => $menu,
-                            'container_id'   => 'master-menu-main-header',
-                            'theme_location' => 'header-primary',
-                            'direction'      => 'vertical'
-                        ));
+                        if ( 'none' !== $menu ) {
+                            /* The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.*/
+                            wp_nav_menu( array(
+                                'menu' => $menu,
+                                'container_id'   => 'master-menu-main-header',
+                                'theme_location' => 'header-primary',
+                                'direction'      => 'vertical'
+                            ));
+                        }
                         if( auxin_is_true( $add_cart ) ) {
                             auxin_wc_add_to_cart(
                                 array(
@@ -1309,10 +1339,10 @@ function auxin_get_header_layout( $layout = '' ){
                         <div class="aux-header-elements">
 
                             <!-- logo -->
-                            <div id="logo" class="aux-logo-header aux-start aux-fill aux-tablet-center aux-phone-center">
+                            <div id="logo" class="aux-logo-header aux-start aux-fill aux-tablet-center aux-phone-left">
                                 <?php echo $logo_markup; ?>
                             </div>
-
+                            <?php if ( 'none' !== $menu ) { ?>
                             <!-- burger -->
                             <div id="nav-burger" class="aux-burger-box aux-end aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>">
                                 <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
@@ -1324,14 +1354,14 @@ function auxin_get_header_layout( $layout = '' ){
                                     wp_nav_menu( array( 'menu' => $menu, 'container_id' => 'master-menu-main-header', 'theme_location' => 'header-primary' ) );
                                 ?>
                             </div>
-
+                            <?php } ?>
                             <!-- button 1 -->
-                            <div class="aux-btns-box aux-btn1-box aux-end aux-middle aux-tablet-off aux-phone-off">
+                            <div class="aux-btns-box aux-btn1-box aux-end aux-middle <?php echo esc_attr( $button1_breakpoints );?>">
                                 <?php if( function_exists( 'auxin_get_header_button' ) ){ echo auxin_get_header_button( 1 ); } ?>
                             </div>
 
                             <!-- button 2 -->
-                            <div class="aux-btns-box aux-btn2-box aux-end aux-middle aux-tablet-off aux-phone-off">
+                            <div class="aux-btns-box aux-btn2-box aux-end aux-middle <?php echo esc_attr( $button2_breakpoints );?>">
                                 <?php if( function_exists( 'auxin_get_header_button' ) ){ echo auxin_get_header_button( 2 ); } ?>
                             </div>
 
@@ -1340,7 +1370,7 @@ function auxin_get_header_layout( $layout = '' ){
                                 if( auxin_is_true( $add_cart ) ) {
                                     auxin_wc_add_to_cart(
                                         array(
-                                            'css_class' => 'aux-cart-box aux-end aux-middle ' . $device_classes,
+                                            'css_class' => 'aux-cart-box aux-end aux-fill ' . $device_classes,
                                             'dropdown_skin' => $dropdown_skin,
                                             'action_on'     => $action_on,
                                             'icon'          => $cart_icon
@@ -1416,11 +1446,12 @@ function auxin_get_header_layout( $layout = '' ){
                     <div id="logo" class="aux-logo-header aux-start aux-fill aux-tablet-left aux-phone-left">
                         <?php echo $logo_markup; ?>
                     </div>
-
+                    <?php if ( 'none' !== $menu ) { ?>
                     <!-- burger -->
                     <div id="nav-burger" class="aux-burger-box aux-end aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" >
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
+                    <?php } ?>
                     <?php if ( auxin_is_true( $add_search ) ) { ?>
                      <!-- search -->
                     <div class="aux-search-box aux-desktop-on aux-end aux-middle">
@@ -1431,7 +1462,7 @@ function auxin_get_header_layout( $layout = '' ){
                         if( auxin_is_true( $add_cart ) ) {
                             auxin_wc_add_to_cart(
                                 array(
-                                    'css_class' => 'aux-cart-box aux-end aux-middle ' . $device_classes,
+                                    'css_class' => 'aux-cart-box aux-end aux-fill ' . $device_classes,
                                     'dropdown_skin' => $dropdown_skin,
                                     'action_on'     => $action_on,
                                     'icon'          => $cart_icon
@@ -1454,6 +1485,7 @@ function auxin_get_header_layout( $layout = '' ){
                             echo do_shortcode( stripslashes( $message ) );
                         ?>
                     </span>
+                    <?php if ( 'none' !== $menu ) { ?>
                     <div class="aux-menu-box aux-off aux-auto-locate aux-end aux-fill aux-tablet-center" >
                     <?php
                         /* The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.*/
@@ -1465,6 +1497,7 @@ function auxin_get_header_layout( $layout = '' ){
                         ));
                     ?>
                     </div>
+                    <?php } ?>
 
                 </div>
 
@@ -1483,18 +1516,20 @@ function auxin_get_header_layout( $layout = '' ){
                 <div class="aux-header-elements">
 
                     <!-- logo -->
-                    <div id="logo" class="aux-logo-header aux-start aux-fill aux-tablet-center aux-phone-center">
+                    <div id="logo" class="aux-logo-header aux-start aux-fill aux-tablet-center aux-phone-left">
                         <?php echo $logo_markup; ?>
                     </div>
+                    <?php if ( 'none' !== $menu ) { ?>
                     <!-- burger -->
                     <div id="nav-burger" class="aux-burger-box aux-end aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" data-target-menu="overlay" >
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
+                    <?php } ?>
                     <?php
                         if( auxin_is_true( $add_cart ) ) {
                             auxin_wc_add_to_cart(
                                 array(
-                                    'css_class'     => 'aux-cart-box aux-end aux-middle ' . $device_classes,
+                                    'css_class'     => 'aux-cart-box aux-end aux-fill ' . $device_classes,
                                     'dropdown_skin' => $dropdown_skin,
                                     'action_on'     => $action_on,
                                     'icon'          => $cart_icon
@@ -1508,10 +1543,10 @@ function auxin_get_header_layout( $layout = '' ){
                         <?php echo auxin_get_search_box( array( 'has_form' => false, 'has_toggle_icon' => true, 'toggle_icon_class' => 'aux-overlay-search' ) );?>
                     </div>
                     <?php } ?>
-                    <div class="aux-btns-box aux-btn1-box aux-end aux-middle aux-tablet-off aux-phone-off">
+                    <div class="aux-btns-box aux-btn1-box aux-end aux-middle <?php echo esc_attr( $button1_breakpoints );?>">
                         <?php if( function_exists( 'auxin_get_header_button' ) ){ echo auxin_get_header_button( 1 ); } ?>
                     </div>
-                    <div class="aux-btns-box aux-btn2-box aux-end aux-middle aux-tablet-off aux-phone-off">
+                    <div class="aux-btns-box aux-btn2-box aux-end aux-middle <?php echo esc_attr( $button2_breakpoints );?>">
                         <?php if( function_exists( 'auxin_get_header_button' ) ){ echo auxin_get_header_button( 2 ); } ?>
                     </div>
                     <?php
@@ -1523,6 +1558,7 @@ function auxin_get_header_layout( $layout = '' ){
                             ));
                         }
                     ?>
+                    <?php if ( 'none' !== $menu ) { ?>
                     <!-- menu -->
                     <div class="aux-menu-box aux-phone-off aux-auto-locate aux-end <?php echo $submenu_below ? 'aux-middle aux-tablet-center-middle' : 'aux-fill aux-tablet-center'; ?>" data-tablet=".aux-header .secondary-bar">
                     <?php
@@ -1530,7 +1566,7 @@ function auxin_get_header_layout( $layout = '' ){
                         wp_nav_menu( array( 'menu' => $menu, 'container_id' => 'master-menu-main-header', 'theme_location' => 'header-primary' ) );
                     ?>
                     </div>
-
+                    <?php } ?>
                 </div>
                 <!-- secondary bar: this element will be filled in tablet size -->
                 <div class="bottom-bar secondary-bar aux-tablet-on aux-float-wrapper"></div>

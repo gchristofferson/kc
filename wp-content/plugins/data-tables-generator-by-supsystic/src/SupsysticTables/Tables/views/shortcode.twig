@@ -284,9 +284,12 @@
                 style="width: {{ tableWidth }};"
             {% endif %}
 
-			{% if table.woo_settings is defined and table.woo_settings.woocommerce.multiple_add_cart =='on' %}
-				data-multiple-add-cart="{{ table.woo_settings.woocommerce.multiple_add_cart }}"
+			{% if table.woo_settings is defined and table.woo_settings.woocommerce.enable == 'on' %}
+				data-woocommerce-table="on"
 			{% endif %}
+            {% if table.woo_settings is defined and table.woo_settings.woocommerce.multiple_add_cart =='on' %}
+                data-multiple-add-cart="{{ table.woo_settings.woocommerce.multiple_add_cart }}"
+            {% endif %}
             >
 
     {% block caption %}
@@ -367,7 +370,7 @@
                         {% endif %}
                         {% if head %}
                             {{ m.cell(cell, headRowNumber, cellIndex, 'th', _context) }}
-                            {% if cols[cellIndex] == 'Z' %}
+                            {% if cols[cellIter] == 'Z' %}
                                 {% set countIter = countIter + 1 %}
                                 {% set cellIter = -1 %}  {# set 0 because next step is cellIter = cellIter + 1 #}
                             {% endif %}
@@ -428,7 +431,7 @@
                             {% set cellIndex = cell.col %}
                         {% endif %}
                         {{ m.cell(cell, rowNumber, cellIndex, 'td', _context) }}
-                        {% if cols[cellIndex] == 'Z' %}
+                        {% if cols[cellIter] == 'Z' %}
                             {% set countIter = countIter + 1 %}
                             {% set cellIter = -1 %}  {# set 0 because next step is cellIter = cellIter + 1 #}
                         {% endif %}
@@ -468,7 +471,7 @@
                                 {% set addFooterAutoIndex = false %}
                             {% endif %}
                             {{ m.cell(cell, footRowNumber, cellIndex, 'th', _context) }}
-                            {% if cols[cellIndex] == 'Z' %}
+                            {% if cols[cellIter] == 'Z' %}
                                 {% set countIter = countIter + 1 %}
                                 {% set cellIter = -1 %}  {# set 0 because next step is cellIter = cellIter + 1 #}
                             {% endif %}

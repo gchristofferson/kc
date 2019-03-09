@@ -445,7 +445,7 @@ function auxin_widget_image_callback( $atts, $shortcode_content = null ){
     }
 
     if ( auxin_is_true( $tilt ) ) {
-        $frame_classes .= ' aux-tilt-item';
+        $frame_classes .= ' aux-tilt-box';
     }
 
     if ( auxin_is_true( $colorized_shadow ) && empty( $attach_id_hover ) ) {

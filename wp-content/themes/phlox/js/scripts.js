@@ -1,7 +1,7 @@
-/*! Auxin WordPress Framework - v2.3.5 (2018-12-27)
+/*! Auxin WordPress Framework - v2.3.8 (2019-02-24)
  *  Scripts for initializing plugins 
  *  http://averta.net
- *  (c) 2014-2018 averta;
+ *  (c) 2014-2019 averta;
  */
 
 
@@ -100,12 +100,17 @@ function auxin_get_contrast( color ){
         /* ------------------------------------------------------------------------------ */
         // animated goto
         if ( $.fn.scrollTo ) {
-            $('a[href^="\#"]:not([href="\#"])').click( function(e) {
+            $('a[href^="\#"]:not([href="\#"]):not([href^="\#elementor-"])').click( function(e) {
                 e.preventDefault();
                 var $this = $(this);
                 if ( $this.closest('.woocommerce-tabs').length ) { return; }
                 e.stopPropagation();
                 $window.scrollTo( $( $this.attr( 'href' ) ).offset().top - headerStickyHeight, $this.hasClass( 'aux-jump' )  ? 0 : 1500,  {easing:'easeInOutQuart'});
+
+                if ( $this.closest('.aux-fs-popup .aux-fs-menu').length )  {
+                    $('#nav-burger').trigger('click');
+                }
+
             });
         }
 
@@ -261,6 +266,13 @@ for ( var i = 0 ; UlikeHeart.length > i; i++){
 
         $scope.find('.aux-lightbox-gallery').photoSwipe({
                 target: '.aux-lightbox-btn',
+                bgOpacity: 0.97,
+                shareEl: true
+            }
+        );
+
+        $scope.find('.aux-lightbox-video').photoSwipe({
+                target: '.aux-open-video',
                 bgOpacity: 0.97,
                 shareEl: true
             }
@@ -621,7 +633,8 @@ for ( var i = 0 ; UlikeHeart.length > i; i++){
     // Toggle-able List
     $.fn.AuxinToggleListInit = function( $scope ){
         $scope = $scope || $(this);
-
+        
+        if ( ! $scope.find('.aux-togglable').length ) { return; }
         // togglable lists
         $scope.find('.aux-togglable').AuxinToggleSelected();
     }
@@ -922,7 +935,7 @@ for ( var i = 0 ; UlikeHeart.length > i; i++){
 
             transitionTarget.addEventListener( 'transitionend', pageShowAnimationDone );
 
-            $( 'a:not([href^="\#"]):not([href=""])' ).AuxinAnimateAndRedirect( {
+            $( 'a:not([href^="\#"]):not([href=""]), .elementor-template-canvas' ).AuxinAnimateAndRedirect( {
                 scrollFixTarget      : '#inner-body',
                 delay       : animationConfig.hideDelay,
                 //  disableOn   : '.aux-lightbox-frame, ul.tabs, .aux-gallery .aux-pagination',
@@ -1118,7 +1131,7 @@ for ( var i = 0 ; UlikeHeart.length > i; i++){
 
         $(function(){
             // general sticky init
-            $scope.find('.aux-sticky-side > .entry-side').AuxinStickyPosition();
+            $scope.find('.aux-sticky-side > .entry-side, .aux-sticky-piece').AuxinStickyPosition();
         });
 
         // float layout init
@@ -1258,7 +1271,7 @@ for ( var i = 0 ; UlikeHeart.length > i; i++){
     $.fn.AuxinDropdownEffectInit = function( $scope ){
         $scope = $scope || $(this);
 
-        $scope.find('.aux-top-header .aux-cart-wrapper, .site-header-section .aux-cart-wrapper').each(function() {
+        $scope.find('.aux-top-header .aux-cart-wrapper, .site-header-section .aux-cart-wrapper, .aux-cart-element').each(function() {
             $(this).AuxinDropdownEffect();
         });
     };

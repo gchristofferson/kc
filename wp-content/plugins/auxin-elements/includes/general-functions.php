@@ -222,6 +222,7 @@ if( ! function_exists( 'auxin_parse_query_args' ) ){
             'post_status'             => 'publish',
             'posts_per_page'          => -1,
             'ignore_sticky_posts'     => 1,
+            'tax_query'               => array(),
 
             'posts__in'               => '', // display only these post IDs. array or string comma separated
             'posts__not_in'           => '', // exclude these post IDs from result. array or string comma separated
@@ -229,6 +230,7 @@ if( ! function_exists( 'auxin_parse_query_args' ) ){
             'include_posts__in'       => '', // include these post IDs in result too. array or string comma separated
             'exclude_without_media'   => 0,  // exclude the posts without featured image
             'exclude_post_formats_in' => '', // exclude the post with these post formats
+            'include_post_formats_in' => '', // include the post with these post formats
         );
 
         // parse and merge the passed args
@@ -247,15 +249,27 @@ if( ! function_exists( 'auxin_parse_query_args' ) ){
             }
 
             // exclude the redundant taxonomies (post-format)
-            $parsed_args['tax_query'] = array(
-                array(
+            $parsed_args['tax_query'][] = array(
                     'taxonomy' => 'post_format',
                     'field'    => 'slug',
                     'terms'    => $post_format_terms,
                     'operator' => 'NOT IN'
-                )
             );
 
+        } else if( ! empty( $parsed_args['include_post_formats_in'] ) ) {
+            // generate post-format terms (i.e post-format-aside)
+            $post_format_terms = array();
+            foreach ( $parsed_args['include_post_formats_in'] as $_post_format ) {
+                $post_format_terms[] = 'post-format-' . $_post_format;
+            }
+
+            // exclude the redundant taxonomies (post-format)
+            $parsed_args['tax_query'][] = array(
+                    'taxonomy' => 'post_format',
+                    'field'    => 'slug',
+                    'terms'    => $post_format_terms,
+                    'operator' => 'IN'
+            );
         }
 
         // Exclude posts without featured image ------------------------------------
@@ -337,6 +351,7 @@ if( ! function_exists( 'auxin_parse_query_args' ) ){
         unset( $parsed_args['include_posts__in'] );
         unset( $parsed_args['exclude_without_media'] );
         unset( $parsed_args['exclude_post_formats_in'] );
+        unset( $parsed_args['include_post_formats_in'] );
 
         return $parsed_args;
     }
@@ -1464,6 +1479,14 @@ function auxin_get_widget_scafold( $atts, $default_atts, $shortcode_content = ''
 
         $ajax_args = $result['parsed_atts'];
 
+        if( isset( $ajax_args['use_wp_query'] ) && $ajax_args['use_wp_query'] ){
+            $queried_object = get_queried_object();
+            if( $queried_object instanceof WP_Term ){
+                $ajax_args['cat'] = $queried_object->term_id;
+                $ajax_args['taxonomy_name'] = $queried_object->taxonomy;
+            }
+        }
+
         // remove redundant ajax args
         unset( $ajax_args['base'] );
         unset( $ajax_args['base_class'] );
@@ -2065,7 +2088,13 @@ function auxin_cover() {
         ?>
         <div class="aux-page-cover-wrapper">
             <?php echo $image ;?>
-            <?php _e( $cover_title, 'auxin-elements' ); ?>
+            <?php 
+            if ( ! empty ( $cover_title ) ) { ?>
+                <div class="aux-page-cover-content">
+                    <?php _e( $cover_title, 'auxin-elements' );?>
+                </div>
+            <?php }
+            ?>
             <div class="aux-page-cover-footer">
                 <div class="aux-page-cover-footer-text">
                     <a href="#" title="<?php echo $discover_text ?>"><?php echo $discover_text ?></a>
@@ -2131,4 +2160,55 @@ function auxin_is_activated(){
         return $token_status;
     }
     return false;
+}
+
+/**
+ * Get recent comments query
+ *
+ * @param array $args
+ * @return array
+ */
+function auxin_get_comments( $args = array() ){
+    // The Query
+    $comments_query = new WP_Comment_Query;
+    $comments = $comments_query->query( $args );
+    return $comments;
+}
+
+/**
+ * Return elementor header template
+ *
+ * @return void
+ */
+function auxin_get_header_template(){
+    $get_template_id = auxin_get_option( 'site_header_template', ' ' );
+    if( $get_template_id !== ' ' && get_post_status( $get_template_id ) ){
+?>
+    <header id="site-header" class="site-header-section" itemscope="itemscope" itemtype="https://schema.org/WPHeader">
+        <div class="aux-wrapper">
+            <div class="aux-header aux-header-elements-wrapper">
+            <?php echo Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $get_template_id ); ?>
+            </div><!-- end of header-elements -->
+        </div><!-- end of wrapper -->
+    </header><!-- end header -->
+<?php
+    }
+}
+
+/**
+ * Return elementor footer template
+ *
+ * @return void
+ */
+function auxin_get_footer_template(){
+    $get_template_id = auxin_get_option( 'site_footer_template', ' ' );
+    if( $get_template_id !== ' ' && get_post_status( $get_template_id ) ){
+?>
+    <footer id="sitefooter" itemtype="https://schema.org/WPFooter" itemscope="itemscope" role="contentinfo">
+        <div class="aux-wrapper">
+        <?php echo Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $get_template_id ); ?>
+        </div><!-- end of wrapper -->
+    </footer><!-- end footer -->
+<?php
+    }
 }

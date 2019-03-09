@@ -455,6 +455,7 @@ function auxin_widget_recent_posts_timeline_callback( $atts, $shortcode_content 
         'image_aspect_ratio'          => 0.75,
         'display_title'               => true,
         'show_info'                   => true,
+        'show_date'                   => true,
         'author_or_readmore'          => 'readmore',
         'timeline_alignment'          => 'center',
         'display_like'                => true,
@@ -512,6 +513,17 @@ function auxin_widget_recent_posts_timeline_callback( $atts, $shortcode_content 
 
     ob_start();
 
+    $tax_args = array();
+    if( ! empty( $cat ) && $cat != " " && ( ! is_array( $cat ) || ! in_array( " ", $cat ) ) ) {
+        $tax_args = array(
+            array(
+                'taxonomy' => $taxonomy_name,
+                'field'    => 'term_id',
+                'terms'    => ! is_array( $cat ) ? explode( ",", $cat ) : $cat
+            )
+        );
+    }
+
     global $wp_query;
 
     if( ! $use_wp_query ){
@@ -523,7 +535,7 @@ function auxin_widget_recent_posts_timeline_callback( $atts, $shortcode_content 
             'order'                   => $order,
             'offset'                  => $offset,
             'paged'                   => $paged,
-            'cat'                     => $cat,
+            'tax_query'               => $tax_args,
             'post__not_in'            => array_filter( explode( ',', $exclude ) ),
             'post__in'                => array_filter( explode( ',', $include ) ),
             'post_status'             => 'publish',

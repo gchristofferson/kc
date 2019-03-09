@@ -4,7 +4,7 @@
  *
  * 
  * @package    Auxin
- * @author     averta (c) 2014-2018
+ * @author     averta (c) 2014-2019
  * @link       http://averta.net
 */
 
@@ -18,7 +18,7 @@ class Auxin_Customize_Control extends WP_Customize_Control {
     protected $dependency = array();
     public $devices;
     public $device;
-    public $css_property;
+    public $css_placeholder;
 
 
     public function __construct( $manager, $id, $args = array() ) {
@@ -501,8 +501,10 @@ class Auxin_Customize_Select2_Multiple_Control extends Auxin_Customize_Control {
 
             <select class="aux-orig-select2 aux-admin-select2 aux-select2-multiple" multiple="multiple" <?php $this->link(); ?>>
                 <?php
-                foreach ( $this->choices as $value => $label )
-                    echo '<option value="' . esc_attr( $value ) . '"' . selected( $this->value(), $value, false ) . '>' .esc_html( $label ) . '</option>';
+                foreach ( $this->choices as $value => $label ) {
+                    $selected = in_array( $value, $this->value() ) ? 'selected' : '';
+                    echo '<option value="' . esc_attr( $value ) . '"' . $selected . '>' .esc_html( $label ) . '</option>';
+                }
                 ?>
             </select>
         </label>
@@ -521,7 +523,7 @@ class Auxin_Customize_Select2_Post_Types_Control extends Auxin_Customize_Control
      * @access public
      * @var string
      */
-    public $type = 'auxin_select2_multiple';
+    public $type = 'auxin_select2_multiple_post_types';
 
 
 
@@ -1061,11 +1063,9 @@ class Auxin_Customize_Typography_Template_Part_Control extends Auxin_Customize_C
      */
     public function render_content() {
     ?>
-
     <div id="aux-typo-controller-template" class="aux-control aux-controller-template"  data-remove-defaults="true" data-selector="inherit">
         <label for=""><?php _e( 'Family', 'phlox' );?></label>
-        <div class="aux-control" data-type="font" data-name="font-family"
-            data-default="none| ">
+        <div class="aux-control" data-type="font" data-name="font-family" data-default="none| " data-target="#customize-preview iframe">
             <div class="aux-loading">LOADING...</div>
         </div>
 
@@ -1073,14 +1073,14 @@ class Auxin_Customize_Typography_Template_Part_Control extends Auxin_Customize_C
             <input type="text"/>
         </div>
 
-        <div class="aux-control" data-type="responsive" data-name="font-size">
+        <div class="aux-control" data-type="responsive" data-name="font-size-resp">
             <label class="aux-control-resp-label" for=""><?php _e( 'Size', 'phlox' );?></label>
             <ul class="aux-devices" data-default="desktop">
                 <li class="aux-option-item" data-value="desktop" data-device="desktop"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-desktop.svg' ); ?>"></li>
                 <li class="aux-option-item" data-value="1024" data-device="tablet"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-tablet.svg' ); ?>"></li>
-                <li class="aux-option-item" data-value="767" data-device="mobile"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-mobile.svg' ); ?>"></li>
+                <li class="aux-option-item" data-value="768" data-device="mobile"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-mobile.svg' ); ?>"></li>
             </ul>
-            <div class="aux-control aux-control-has-unit" data-type="slider" data-default="">
+            <div class="aux-control aux-control-has-unit" data-type="slider" data-default="" data-name="font-size"> 
                 <ul class="aux-units" data-default="px">
                     <li class="aux-option-item" data-value="px">PX</li>
                     <li class="aux-option-item" data-value="em">EM</li>
@@ -1142,14 +1142,14 @@ class Auxin_Customize_Typography_Template_Part_Control extends Auxin_Customize_C
             </select>
         </div>
 
-        <div class="aux-control" data-type="responsive" data-name="line-height">
+        <div class="aux-control" data-type="responsive" data-name="line-height-resp">
             <label class="aux-control-resp-label" for=""><?php _e( 'Line Height', 'phlox' );?></label>
             <ul class="aux-devices" data-default="desktop">
                 <li class="aux-option-item" data-value="desktop" data-device="desktop"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-desktop.svg' ); ?>"></li>
                 <li class="aux-option-item" data-value="1024" data-device="tablet"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-tablet.svg' ); ?>"></li>
-                <li class="aux-option-item" data-value="767" data-device="mobile"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-mobile.svg' ); ?>"></li>
+                <li class="aux-option-item" data-value="768" data-device="mobile"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-mobile.svg' ); ?>"></li>
             </ul>
-            <div class="aux-control aux-control-has-unit" data-type="slider" data-default="">
+            <div class="aux-control aux-control-has-unit" data-type="slider" data-default="" data-name="line-height">
                 <ul class="aux-units" data-default="px">
                     <li class="aux-option-item" data-value="px">PX</li>
                     <li class="aux-option-item" data-value="em">EM</li>
@@ -1159,14 +1159,14 @@ class Auxin_Customize_Typography_Template_Part_Control extends Auxin_Customize_C
             </div>
         </div>
 
-        <div class="aux-control" data-type="responsive" data-name="letter-spacing">
+        <div class="aux-control" data-type="responsive" data-name="letter-spacing-resp">
             <label class="aux-control-resp-label" for=""><?php _e( 'Letter Spacing', 'phlox' );?></label>
             <ul class="aux-devices" data-default="desktop">
                 <li class="aux-option-item" data-value="desktop" data-device="desktop"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-desktop.svg' ); ?>"></li>
                 <li class="aux-option-item" data-value="1024" data-device="tablet"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-tablet.svg' ); ?>"></li>
-                <li class="aux-option-item" data-value="767" data-device="mobile"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-mobile.svg' ); ?>"></li>
+                <li class="aux-option-item" data-value="768" data-device="mobile"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-mobile.svg' ); ?>"></li>
             </ul>
-            <div class="aux-control aux-control-has-unit" data-type="slider" data-default="">
+            <div class="aux-control aux-control-has-unit" data-type="slider" data-default="" data-name="letter-spacing"> 
                 <ul class="aux-units" data-default="px">
                     <li class="aux-option-item" data-value="px">PX</li>
                     <li class="aux-option-item" data-value="em">EM</li>
@@ -1225,12 +1225,17 @@ class Auxin_Customize_Typography_Controller extends Auxin_Customize_Control {
      */
     public function render_content() {?>
         <div class="aux-typo-controller aux-controller-wrapper">
-            <span class="aux-controller-label"><?php echo esc_html( $this->label ); ?></span>
-            <div class="aux-control aux-typo-controller-container aux-controller-btn-wrapper" data-type="container" data-selector="<?php echo esc_attr( $this->setting->selectors ) ;?>">
-                <button class="aux-reset"><i class="auxicon-reload-1"></i></button>
-                <div class="aux-control" data-type="popover" data-template="aux-typo-controller-template"
-                    data-name="typography" data-container=".wp-full-overlay-sidebar-content">
-                    <button class="aux-controller-btn"><span class="dashicons dashicons-edit"></span></button>
+            <div class="aux-control aux-typo-controller-container aux-controller-btn-wrapper aux-container-has-hover" data-type="container" data-selector="<?php echo esc_attr( $this->setting->selectors ) ;?>">
+                <div class="aux-control" data-type="hover" data-name="typography-hover">
+                    <ul class="aux-states" data-default="normal">
+                        <li class="aux-option-item" data-value="normal">Normal</li>
+                        <li class="aux-option-item" data-value="hover">Hover</li>
+                    </ul>
+                    <span class="aux-controller-label"><?php echo esc_html( $this->label ); ?></span>
+                    <div class="aux-control" data-type="popover" data-template="aux-typo-controller-template" data-name="typography" data-container=".wp-full-overlay-sidebar-content">
+                        <button class="aux-controller-btn"><span class="dashicons dashicons-edit"></span></button>
+                    </div>
+                <button class="aux-reset"><i class="auxicon-reload"></i></button>
                 </div>
             </div>
             <input type="text" class="aux-controller-input aux-typo-controller-input" data-is-json="true" value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); ?> />
@@ -1293,7 +1298,7 @@ class Auxin_Customize_Responsive_Slider_Controller extends Auxin_Customize_Contr
                     <ul class="aux-devices" data-default="desktop">
                         <li class="aux-option-item" data-value="desktop" data-device="desktop"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-desktop.svg' ); ?>"></li>
                         <li class="aux-option-item" data-value="1024" data-device="tablet"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-tablet.svg' ); ?>"></li>
-                        <li class="aux-option-item" data-value="767" data-device="mobile"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-mobile.svg' ); ?>"></li>
+                        <li class="aux-option-item" data-value="768" data-device="mobile"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-mobile.svg' ); ?>"></li>
                     </ul>
                     <div class="aux-control aux-control-has-unit" data-type="slider" data-default="">
                         <ul class="aux-units" data-default="px">
@@ -1355,20 +1360,20 @@ class Auxin_Customize_Responsive_Dimensions_Controller extends Auxin_Customize_C
      * Don't render the control content from PHP, as it's rendered via JS on load.f
      */
     public function render_content() {
-
+        $style_template = !empty($this->css_placeholder ) ? 'data-style-template="' . esc_attr($this->css_placeholder) . '"' : '';
         ?>
 
         <div class="aux-dimension-controller aux-controller-wrapper">
 
             <div class="aux-control aux-controller-container aux-dimension-controller-container" data-type="container" data-selector="<?php echo esc_attr($this->setting->selectors) ;?>">
-                <div class="aux-control" data-type="responsive" data-name="<?php echo esc_attr($this->css_property) ;?>">
+                <div class="aux-control" data-type="responsive" data-name="responsive_dimensions">
                     <label class="aux-control-resp-label" for=""><?php echo esc_html( $this->label ); ?></label>
                     <ul class="aux-devices" data-default="desktop">
                         <li class="aux-option-item" data-value="desktop" data-device="desktop"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-desktop.svg' ); ?>"></li>
                         <li class="aux-option-item" data-value="1024" data-device="tablet"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-tablet.svg' ); ?>"></li>
-                        <li class="aux-option-item" data-value="767" data-device="mobile"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-mobile.svg' ); ?>"></li>
+                        <li class="aux-option-item" data-value="768" data-device="mobile"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-mobile.svg' ); ?>"></li>
                     </ul>
-                    <div class="aux-control aux-control-has-unit" data-type="dimension" data-default="">
+                    <div class="aux-control aux-control-has-unit" data-type="dimension" data-default="" <?php echo $style_template ;?>>
                         <ul class="aux-units" data-default="px">
                             <li class="aux-option-item" data-value="px">PX</li>
                             <li class="aux-option-item" data-value="em">EM</li>

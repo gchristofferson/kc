@@ -795,6 +795,7 @@ function auxin_widget_recent_posts_callback( $atts, $shortcode_content = null ){
         'exclude_without_media'       => 0,
         'exclude_custom_post_formats' => 0,
         'exclude_quote_link'          => 0,
+        'include_post_formats_in'     => array(), // the list od post formats to exclude
         'exclude_post_formats_in'     => array(), // the list od post formats to exclude
 
         'size'                        => '',
@@ -808,7 +809,9 @@ function auxin_widget_recent_posts_callback( $atts, $shortcode_content = null ){
         'show_excerpt'                => true,
         'show_content'                => true,
         'show_info'                   => true,
+        'show_format_icon'            => false,
         'show_date'                   => true,
+        'ignore_formats'              => false,
         'post_info_position'          => 'after-title',
         'author_or_readmore'          => 'readmore', // readmore, author, none
         'image_aspect_ratio'          => 0.75,
@@ -887,6 +890,17 @@ function auxin_widget_recent_posts_callback( $atts, $shortcode_content = null ){
 
     ob_start();
 
+    $tax_args = array();
+    if( ! empty( $cat ) && $cat != " " && ( ! is_array( $cat ) || ! in_array( " ", $cat ) ) ) {
+        $tax_args = array(
+            array(
+                'taxonomy' => $taxonomy_name,
+                'field'    => 'term_id',
+                'terms'    => ! is_array( $cat ) ? explode( ",", $cat ) : $cat
+            )
+        );
+    }
+
     if( $custom_wp_query ){
         $wp_query = $custom_wp_query;
 
@@ -899,7 +913,7 @@ function auxin_widget_recent_posts_callback( $atts, $shortcode_content = null ){
             'order'                   => $order,
             'offset'                  => $offset,
             'paged'                   => $paged,
-            'cat'                     => $cat,
+            'tax_query'               => $tax_args,
             'post_status'             => 'publish',
             'posts_per_page'          => $num,
             'ignore_sticky_posts'     => 1,
@@ -909,7 +923,8 @@ function auxin_widget_recent_posts_callback( $atts, $shortcode_content = null ){
             'posts__in'               => $only_posts__in, // only posts in this list
 
             'exclude_without_media'   => $exclude_without_media,
-            'exclude_post_formats_in' => $exclude_post_formats_in
+            'exclude_post_formats_in' => $exclude_post_formats_in,
+            'include_post_formats_in' => $include_post_formats_in
         );
 
         // ---------------------------------------------------------------------
@@ -922,9 +937,9 @@ function auxin_widget_recent_posts_callback( $atts, $shortcode_content = null ){
         // pass the args through the auxin query parser
         $wp_query = new WP_Query( auxin_parse_query_args( $args ) );
     } else {
-
         global $wp_query;
     }
+
 
     // widget header ------------------------------
     echo $result['widget_header'];
@@ -994,6 +1009,8 @@ function auxin_widget_recent_posts_callback( $atts, $shortcode_content = null ){
         $column_class  .= ' aux-grid-carousel-modern-layout';
     }
 
+    $ignore_formats =  auxin_is_true( $ignore_formats ) ? array( '*' ) : array();
+
     // Specifies whether the columns have footer meta or not
     $column_class  .= ! $show_author_footer && ! $show_readmore ? ' aux-no-meta' : '';
     $column_class  .= ' aux-ajax-view  ' . $extra_column_classes;
@@ -1031,7 +1048,8 @@ function auxin_widget_recent_posts_callback( $atts, $shortcode_content = null ){
                     'preload_preview'    => $preload_preview,
                     'preload_bgcolor'    => $preload_bgcolor,
                     'image_sizes'        => 'auto',
-                    'srcset_sizes'       => 'auto'
+                    'srcset_sizes'       => 'auto',
+                    'ignore_formats'     => $ignore_formats
                 ),
                 $content_width
             );

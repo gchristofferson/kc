@@ -4,11 +4,11 @@
  *
  * 
  * @package    Auxin
- * @author     averta (c) 2014-2018
+ * @author     averta (c) 2014-2019
  * @link       http://averta.net
  */
 
-if( ! function_exists('auxin_famous_colors') ) {
+if( ! function_exists('auxin_get_famous_colors_list') ) {
 
     function auxin_get_famous_colors_list(){
         return apply_filters( 'auxin_famous_colors_list', array(
@@ -158,4 +158,29 @@ if( ! function_exists('auxin_famous_colors') ) {
 
     }
 
+}
+
+
+if( ! function_exists('auxin_get_elementor_templates_list') ) {
+    function auxin_get_elementor_templates_list( $document_type = 'all' ){
+        $args = array(
+            'posts_per_page'   => -1,
+            'post_type'        => 'elementor_library',
+            'post_status'      => 'publish'
+        );
+
+        if( $document_type !== 'all' ){
+            $args['meta_key']   = '_elementor_template_type';
+            $args['meta_value'] = $document_type;
+        }
+
+        $posts_array  = get_posts( $args );
+        $output_array = array( ' ' => __( 'Select a template', 'phlox' ) );
+        
+        foreach ( $posts_array as $key => $value ) {
+            $output_array[ $value->ID ] =  $value->post_title;
+        }
+        
+        return $output_array;
+    }
 }

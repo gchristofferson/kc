@@ -1571,7 +1571,7 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
             <div class="aux-setup-demo-content aux-content-col aux-install-demos-waiting hide">
                 <img src="<?php echo esc_url( AUXELS_ADMIN_URL . '/assets/images/welcome/importing-cloud.svg' ); ?>" />
                 <h2><?php esc_html_e( 'Importing Demo Content is in Progress...' ); ?></h2>
-                <p class="aux-step-description"><?php esc_html_e( 'This process may take 20 to 30 minutes to complete, please do not close or refresh this page.', 'auxin-elements' ); ?></p>
+                <p class="aux-step-description"><?php esc_html_e( 'This process may take 5 to 10 minutes to complete, please do not close or refresh this page.', 'auxin-elements' ); ?></p>
             </div>
 			<div class="aux-setup-demo-actions">
 				<div class="aux-return-back">

@@ -89,6 +89,12 @@ There is a setting to try and disable hard coded lightboxes, but this is not a s
 
 == Changelog ==
 
+= 2.6.4 =
+* IMPORTANT : Please update to address a security vulnerability.
+* Fix : Security vulnerability
+* Fix : Included font-display for improved pagespeed score
+* Update : Freemius SDK 2.2.4
+
 = 2.6.3 =
 * Added support for loading FooGallery galleries within a FooBox
 * Fixed layout bugs with certain notched iPhones

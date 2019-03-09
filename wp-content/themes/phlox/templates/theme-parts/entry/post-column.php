@@ -75,11 +75,23 @@
                                     </span>
                                     <?php } ?>
                                     <?php edit_post_link(__("Edit", 'phlox'), '<i> | </i>', ''); ?>
+                                    <?php if( 'video' === $post_format && ( isset( $show_format_icon ) && auxin_is_true( $show_format_icon ) )  ) { ?>
+                                    <span class="entry-post-format aux-lightbox-video">
+                                        <?php
+                                            $get_video_url = get_post_meta( $post->ID, '_format_video_embed', true );
+                                            if( ! empty( $get_video_url ) ){
+                                                echo sprintf( '<a href="%s" class="aux-open-video aux-post-format-icon" data-type="video"><i class="auxicon-play-1" aria-hidden="true"></i></a>', $get_video_url);
+                                            } else {
+                                                echo '<span class="aux-post-format-icon"><i class="auxicon-play-1" aria-hidden="true"></i></span>';
+                                            }
+                                        ?>
+                                    </span>
+                                    <?php } ?>
                                 </div>
                             <?php }
                             // print entry-header after entry-info if post info position was set to 'before-title'
                             echo 'before-title' == $post_info_position ? $entry_header : '';
-                            
+
                             ob_start();?>
                             <?php if( $show_readmore || $show_author_footer ) {?>
                                 <footer class="entry-meta aux-<?php echo isset( $meta_info_position ) ? esc_attr( $meta_info_position ) : 'after-content'; ?>">
@@ -103,7 +115,7 @@
                                     <div class="comments-iconic">
                                         <?php
                                             if( auxin_is_true(  $display_like ) ){
-                                                if(function_exists('wp_ulike')) wp_ulike( 'get', array( 'style' => 'wpulike-heart', 'button_type' => 'image', 'wrapper_class' => 'aux-wpulike' ) );
+                                                if(function_exists('wp_ulike')) wp_ulike( 'get', array( 'style' => 'wpulike-heart', 'button_type' => 'image', 'wrapper_class' => 'aux-wpulike  aux-wpulike-widget' ) );
                                             }
 
                                             if( isset( $display_comments ) && auxin_is_true(  $display_comments ) ){
@@ -118,11 +130,11 @@
                                     <?php
                                     } elseif( auxin_is_true( $display_like ) && (function_exists('wp_ulike') ) ){ ?>
                                     <div class="comments-iconic">
-                                        <?php wp_ulike( 'get' , array( 'style' => 'wpulike-heart', 'button_type' => 'image', 'wrapper_class' => 'aux-wpulike' ) ); ?>
+                                        <?php wp_ulike( 'get' , array( 'style' => 'wpulike-heart', 'button_type' => 'image', 'wrapper_class' => 'aux-wpulike aux-wpulike-widget' ) ); ?>
                                     </div>
                                     <?php } ?>
                                 </footer>
-                            <?php } 
+                            <?php }
                             $entry_meta = ob_get_clean();
 
                             if( isset( $meta_info_position ) && 'before-content' == $meta_info_position ){
@@ -146,12 +158,12 @@
                                     }
                                     ?>
                                 </div>
-                            <?php } 
+                            <?php }
                             if( ! isset( $meta_info_position ) || 'after-content' == $meta_info_position ){
                                 echo $entry_meta;
-                            }                            
+                            }
                             ?>
-                            
+
                             </div>
 
                         </article>

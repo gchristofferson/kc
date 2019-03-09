@@ -4,7 +4,7 @@
  *
  * 
  * @package    Auxin
- * @author     averta (c) 2014-2018
+ * @author     averta (c) 2014-2019
  * @link       http://averta.net
 */
 
@@ -1247,7 +1247,7 @@ function auxin_modern_comment_form( $comment_form, $params ){
 
     extract( $params );
 
-    if ( $use_label ) {
+    if ( $use_label ||  'classic' != $skin ) {
         $comment_form['fields']['author'] = '<label for = "author">' . $author_label . '</label>' . $comment_form['fields']['author'];
         $comment_form['fields']['email']  = '<label for = "email">' . $email_label . '</label>' . $comment_form['fields']['email'];
         $comment_form['fields']['url']    = '<label for = "url">' . $url_label . '</label>' . $comment_form['fields']['url'];

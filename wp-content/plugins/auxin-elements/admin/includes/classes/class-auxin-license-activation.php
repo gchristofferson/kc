@@ -15,14 +15,17 @@ class Auxin_License_Activation {
 	 * @var      object
 	 */
 	protected static $instance  = null;
-	protected $api              = 'http://support.averta.net/en/api/?branch=envato&group=items&cat=verify-purchase';
-    protected $option_prefix = THEME_ID . '_';
+	
+	protected $api           = 'http://support.averta.net/en/api/?branch=envato&group=items&cat=verify-purchase';
+    protected $option_prefix = 'auxin_';
     protected $usermail      = '';
     protected $purchase_code = '';
     protected $action        = 'activate';
 
 
-	function __construct(){}
+	function __construct(){
+		$this->option_prefix = THEME_ID . '_';
+	}
 
 	/**
 	 * Return an instance of this class.

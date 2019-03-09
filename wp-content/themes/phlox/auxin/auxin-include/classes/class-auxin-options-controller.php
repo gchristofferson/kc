@@ -4,7 +4,7 @@
  *
  * 
  * @package    Auxin
- * @author     averta (c) 2014-2018
+ * @author     averta (c) 2014-2019
  * @link       http://averta.net
 */
 
@@ -204,7 +204,7 @@ class Auxin_Options_Controller {
             'style_callback'       => '',
             'selectors'            => '',
             'sanitize_callback'    => '',
-            'css_property'         => '',
+            'placeholder'          => '',
             'sanitize_js_callback' => '',
             'devices'              => array(),
             'device'               => 'desktop',

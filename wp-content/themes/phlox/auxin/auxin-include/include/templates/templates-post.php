@@ -4,7 +4,7 @@
  *
  * 
  * @package    Auxin
- * @author     averta (c) 2014-2018
+ * @author     averta (c) 2014-2019
  * @link       http://averta.net
  */
 
@@ -1138,6 +1138,9 @@ function auxin_parse_top_header_layout( $args ){
             break;
     }
 
+    $args['social']['tablet'] = auxin_is_true( auxin_get_option('socials_hide_on_tablet', '1') ) ;
+    $args['social']['phone']  = auxin_is_true( auxin_get_option('socials_hide_on_phone', '1') ) ;
+
     return $args;
 }
 add_filter( 'auxin_top_header_args', 'auxin_parse_top_header_layout' );
@@ -1215,6 +1218,9 @@ function auxin_get_top_header_markup( $args = '' ){
     $args = wp_parse_args( $args, $defaults );
 
     $args = apply_filters( 'auxin_top_header_args', $args );
+
+    // $args['socials']['tablet'] = auxin_is_true( auxin_get_option('socials_hide_on_tablet', '1') ) ? true : false;
+    // $args['socials']['phone'] = auxin_is_true( auxin_get_option('socials_hide_on_phone', '1') ) ? true : false;
 
     // do not show top header if passed false
     if( ! $args ){
@@ -1877,7 +1883,7 @@ function auxin_wc_add_to_cart( $args = array() ){
         //Get skin template
         $skin   = auxin_get_option('product_cart_dropdown_skin');
         //Get cart contents count number
-        $count  = $woocommerce->cart->cart_contents_count;
+        $count  = is_object( $woocommerce->cart ) ? $woocommerce->cart->cart_contents_count : 0;
 
         $icon   = auxin_get_option( 'product_cart_icon', 'auxicon-shopping-cart-1-1' );
 
@@ -1955,7 +1961,7 @@ function auxin_wc_add_to_cart( $args = array() ){
                     </div>
                 <?php } else { ?>
                     <div class="aux-card-dropdown aux-phone-off <?php echo esc_attr( $args['dropdown_class'] ); ?>">
-                        <div class="aux-card-box">
+                        <div class="aux-card-box aux-empty-cart">
                             <?php esc_attr_e( 'Your cart is currently empty.', 'phlox' ) ?>
                         </div>
                     </div>

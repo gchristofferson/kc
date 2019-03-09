@@ -23,11 +23,13 @@
 
                                 <?php if( auxin_is_true(  $show_info ) ) { ?>
                                 <div class="entry-info">
+                                    <?php if( auxin_is_true( $show_date ) ) { ?>
                                     <div class="entry-date">
                                         <a href="<?php the_permalink(); ?>">
                                             <time datetime="<?php echo esc_attr( get_the_date( DATE_W3C ) ); ?>" title="<?php echo esc_attr( get_the_date( DATE_W3C ) ); ?>" ><?php echo get_the_date(); ?></time>
                                         </a>
                                     </div>
+                                    <?php } if ( auxin_is_true(  $display_categories ) ) { ?>
                                     <span class="entry-tax">
                                         <?php // the_category(' '); we can use this template tag, but customizable way is needed! ?>
                                         <?php $tax_name = empty( $tax_name ) ? 'category' : $tax_name;
@@ -38,7 +40,7 @@
                                               }
                                         ?>
                                     </span>
-                                    <?php edit_post_link( esc_html__("Edit", 'phlox'), '<i> | </i>', ''); ?>
+                                    <?php } edit_post_link( esc_html__("Edit", 'phlox'), '<i> | </i>', ''); ?>
                                 </div>
                                 <?php } ?>
 

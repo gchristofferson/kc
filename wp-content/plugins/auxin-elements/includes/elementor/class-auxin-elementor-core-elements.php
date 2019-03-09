@@ -53,7 +53,7 @@ final class Elements {
      *
      * @var string Minimum PHP version required to run the plugin.
      */
-    const MINIMUM_PHP_VERSION = '5.6.0';
+    const MINIMUM_PHP_VERSION = '5.4.0';
 
     /**
      * Default elementor dir path
@@ -184,6 +184,10 @@ final class Elements {
 
         // Register Admin Scripts
         add_action( 'elementor/editor/before_enqueue_scripts'  , array( $this, 'editor_scripts' ) );
+
+        // Register Custom Schemes
+        add_action( 'auxin_admin_loaded'                       , array( $this, 'register_schemes' ) );
+
     }
 
     /**
@@ -226,6 +230,11 @@ final class Elements {
             '70' => array(
                 'file'  => $this->dir_path . '/widgets/recent-products.php',
                 'class' => 'Elements\RecentProducts'
+            ),
+
+            '80' => array(
+                'file'  => $this->dir_path . '/widgets/recent-comments.php',
+                'class' => 'Elements\RecentComments'
             ),
 
             /*  General Elements
@@ -313,6 +322,15 @@ final class Elements {
             '270' => array(
                 'file'  => $this->dir_path . '/widgets/mailchimp.php',
                 'class' => 'Elements\MailChimp'
+            ),
+
+            '410' => array(
+                'file'  => $this->dir_path . '/widgets/theme-elements/shopping-cart.php',
+                'class' => 'Elements\Theme_Elements\Shopping_Cart'
+            ),
+            '420' => array(
+                'file'  => $this->dir_path . '/widgets/theme-elements/current-time.php',
+                'class' => 'Elements\Theme_Elements\Current_Time'
             )
 
             /*
@@ -368,6 +386,18 @@ final class Elements {
             array(
                 'file'  => $this->dir_path . '/modules/column.php',
                 'class' => 'Modules\Column'
+            ),
+            array(
+                'file'  => $this->dir_path . '/modules/documents/header.php',
+                'class' => 'Modules\Documents\Header'
+            ),         
+            array(
+                'file'  => $this->dir_path . '/modules/documents/footer.php',
+                'class' => 'Modules\Documents\Footer'
+            ),         
+            array(
+                'file'  => $this->dir_path . '/modules/templates-types-manager.php',
+                'class' => 'Modules\Templates_Types_Manager'
             )
         );
 
@@ -479,6 +509,7 @@ final class Elements {
     public function widget_styles() {
         // Add auxin custom styles
         wp_enqueue_style( 'auxin-elementor-widgets' , AUXELS_ADMIN_URL . '/assets/css/elementor-widgets.css' );
+        wp_enqueue_style( 'wp-mediaelement' );
     }
 
     /**
@@ -497,6 +528,7 @@ final class Elements {
             $dependencies[] = 'masterslider-core';
         }
         wp_enqueue_script( 'auxin-elementor-widgets' , AUXELS_ADMIN_URL . '/assets/js/elementor/widgets.js' , $dependencies, AUXELS_VERSION, TRUE );
+        wp_enqueue_script('wp-mediaelement');
     }
 
     /**
@@ -562,6 +594,46 @@ final class Elements {
         );
 
         printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message );
+    }
+
+    /**
+     * Register Default Schemes
+     *
+     * Change The Default Schemes of Elementor. for now just typography
+     *
+     * @since 1.0.0
+     *
+     * @access public
+     */
+    public function register_schemes() {
+
+        // Elementor Default Typo Schemes on first run
+        if( ! get_theme_mod( 'elementor_page_typography_scheme' ) ){
+            $theme_typo_scheme = array(
+                '1' => array(
+                    'font-family' => '',
+                    'font-weight' => ''
+                ),
+                '2' => array(
+                    'font-family' => '',
+                    'font-weight' => ''
+                ),
+                '3' => array(
+                    'font-family' => '',
+                    'font-weight' => ''
+                ),
+                '4' => array(
+                    'font-family' => '',
+                    'font-weight' => ''
+                )
+            );
+    
+            $schemes_manager = new \Elementor\Schemes_Manager();
+            $scheme_obj = $schemes_manager->get_scheme('typography');
+            $scheme_obj->save_scheme($theme_typo_scheme);
+            set_theme_mod( 'elementor_page_typography_scheme', 1 );
+        }
+
     }
 
 }

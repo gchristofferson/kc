@@ -4,7 +4,7 @@
  *
  * 
  * @package    Auxin
- * @author     averta (c) 2014-2018
+ * @author     averta (c) 2014-2019
  * @link       http://averta.net
 */
 
@@ -506,7 +506,8 @@ function auxin_get_page_sidebar_pos( $page_id ){
     } elseif( is_single() ){
 
         if( 'default' == $layout = auxin_get_post_meta( $post, 'page_layout', 'default' ) ){
-            $layout = auxin_get_option( $post->post_type.'_single_sidebar_position', 'right-sidebar');
+            $default_layout = in_array( $post->post_type, array('elementor_library') ) ? 'no-sidebar' : 'right-sidebar';
+            $layout = auxin_get_option( $post->post_type.'_single_sidebar_position', $default_layout );
         }
 
         if ( class_exists('bbPress') ) {
@@ -1268,6 +1269,8 @@ function auxin_the_post_thumbnail( $post_id = null, $width = null , $height = nu
                 $preload_ratio = null === $image_aspect_ratio ? null : 40 / $image_aspect_ratio;
                 $attr['src'] = auxin_get_the_resized_attachment_src( $attachment_id, 40 , $preload_ratio, $crop, 100, false );
                 $attr['class'] .= ' aux-has-preview'; // the class name to add style and transition to the preview image
+            } else {
+                $attr['class'] .= ' aux-blank';
             }
 
             if( ! empty( $preload_bgcolor ) ){
@@ -2184,6 +2187,41 @@ function auxin_get_last_post_id( $args ){
 
 
 /**
+ * Retrieves post IDs from a WP Query
+ *
+ * @param  array     $args WP_Query args
+ * @return array|bool        List of Post IDs or false on failure
+ */
+function auxin_query_ids( $args ){
+    $post_ids = array();
+
+    // WP_Query arguments
+    $defaults = array(
+        'post_type'              => 'post',
+        'post_status'            => 'published',
+        'posts_per_page'         => '-1'
+    );
+
+    wp_parse_args( $args, $defaults );
+
+    // The Query
+    $the_query = new WP_Query( $args );
+
+    if ( $the_query->have_posts() ) {
+        while ( $the_query->have_posts() ) {
+            $the_query->the_post();
+            $post_ids[] = $the_query->post->ID;
+        }
+    }
+
+    // Restore original Post Data
+    wp_reset_postdata();
+
+    return $post_ids;
+}
+
+
+/**
  * Retrieves the last post URL from a post type
  *
  * @param  array     $args WP_Query args
@@ -2526,7 +2564,10 @@ function auxin_registered_nav_menus() {
 
     $terms = get_terms( 'nav_menu' );
 
-    $menus = array( 'default' => __( 'Theme Default', 'phlox' ) );
+    $menus = array( 
+        'default' => __( 'Theme Default' , 'phlox' ),
+        'none'    => __( '- No Menu -', 'phlox' )
+    );
 
     foreach ( $terms as $menu ) {
         $menus[$menu->term_id] = $menu->name;
@@ -2600,10 +2641,13 @@ function auxin_filter_output( $args, $type, $align, $classname = null, $sort_arg
         }
 
         $lists_output  = '<ul>';
-        $lists_output .= '<li data-filter="all"><a href="#"><span data-select="' . __('All', 'phlox') . '">' . __('All', 'phlox') . '</span></a></li>';
+        
+        if ( sizeof( $terms ) > 1 ) {
+            $lists_output .= '<li data-filter="all" data-category-id="all"><a href="#"><span data-select="' . __('All', 'phlox') . '">' . __('All', 'phlox') . '</span></a></li>';
+        }
 
         foreach ( $terms as $term ) {
-            $lists_output .='<li data-filter="'.$term->slug.'"><a href="#"><span data-select="'.$term->name.'">'.$term->name.'</span></a></li>';
+            $lists_output .='<li data-filter="'.$term->slug.'" data-category-id="'.$term->term_id.'" ><a href="#"><span data-select="'.$term->name.'">'.$term->name.'</span></a></li>';
         }
 
         $lists_output .= '</ul>';

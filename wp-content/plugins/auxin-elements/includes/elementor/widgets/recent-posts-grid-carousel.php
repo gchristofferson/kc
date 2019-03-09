@@ -349,6 +349,23 @@ class RecentPostsGridCarousel extends Widget_Base {
         );
 
         $this->add_control(
+            'ignore_formats',
+            array(
+                'label'        => __('Ignore post formats media','auxin-elements' ),
+                'label_block'  => true,
+                'type'         => Controls_Manager::SWITCHER,
+                'label_on'     => __( 'On', 'auxin-elements' ),
+                'label_off'    => __( 'Off', 'auxin-elements' ),
+                'return_value' => 'yes',
+                'default'      => 'no',
+                'label_block'  => true,
+                'condition'    => array(
+                    'show_media' => 'yes'
+                )                
+            )
+        );
+
+        $this->add_control(
             'preloadable',
             array(
                 'label'        => __('Preload image','auxin-elements' ),
@@ -413,6 +430,18 @@ class RecentPostsGridCarousel extends Widget_Base {
                 'default'      => 'yes'
             )
         );
+
+        $this->add_control(
+            'show_format_icon',
+            array(
+                'label'        => __('Display format icon','auxin-elements' ),
+                'type'         => Controls_Manager::SWITCHER,
+                'label_on'     => __( 'On', 'auxin-elements' ),
+                'label_off'    => __( 'Off', 'auxin-elements' ),
+                'return_value' => 'yes',
+                'default'      => 'no'
+            )
+        );        
 
         $this->add_control(
             'post_info_position',
@@ -533,6 +562,7 @@ class RecentPostsGridCarousel extends Widget_Base {
                 'options'     => array(
                     'readmore' => __('Read More', 'auxin-elements'),
                     'author'   => __('Author Name', 'auxin-elements'),
+                    'none'     => __('None', 'auxin-elements')
                 ),
                 'label_block' => true
             )
@@ -603,7 +633,7 @@ class RecentPostsGridCarousel extends Widget_Base {
         $this->add_control(
             'exclude_custom_post_formats',
             array(
-                'label'        => __('Exclude custom post formats','auxin-elements' ),
+                'label'        => __('Exclude all custom post formats','auxin-elements' ),
                 'type'         => Controls_Manager::SWITCHER,
                 'label_on'     => __( 'On', 'auxin-elements' ),
                 'label_off'    => __( 'Off', 'auxin-elements' ),
@@ -611,6 +641,27 @@ class RecentPostsGridCarousel extends Widget_Base {
                 'default'      => 'no',
             )
         );
+
+        $this->add_control(
+            'include_post_formats_in',
+            array(
+                'label'       => __('Include custom post formats', 'auxin-elements'),
+                'type'        => Controls_Manager::SELECT2,
+                'multiple'    => true,
+                'options'     => array( 
+                    'aside'    => __('Aside', 'auxin-elements'), 
+                    'gallery'  => __('Gallery', 'auxin-elements'), 
+                    'image'    => __('Image', 'auxin-elements'), 
+                    'link'     => __('Link', 'auxin-elements'), 
+                    'quote'    => __('Quote', 'auxin-elements'), 
+                    'video'    => __('Video', 'auxin-elements'), 
+                    'audio'    => __('Audio', 'auxin-elements') 
+                ),
+                'condition'    => array(
+                    'exclude_custom_post_formats!' => 'yes',
+                )                
+            )
+        );        
 
         $this->add_control(
             'exclude_quote_link',
@@ -626,6 +677,7 @@ class RecentPostsGridCarousel extends Widget_Base {
                 )
             )
         );
+        
 
         $this->add_control(
             'order_by',
@@ -1313,11 +1365,13 @@ class RecentPostsGridCarousel extends Widget_Base {
     $args     = array(
         // Display section
         'show_media'                  => $settings['show_media'],
+        'ignore_formats'              => $settings['ignore_formats'],
         'preloadable'                 => $settings['preloadable'],
         'preload_preview'             => $settings['preload_preview'],
         'preload_bgcolor'             => $settings['preload_bgcolor'],
         'display_title'               => $settings['display_title'],
         'show_info'                   => $settings['show_info'],
+        'show_format_icon'            => $settings['show_format_icon'],
         'post_info_position'          => $settings['post_info_position'],
         'meta_info_position'          => $settings['meta_info_position'],
         'display_comments'            => $settings['display_comments'],
@@ -1350,6 +1404,7 @@ class RecentPostsGridCarousel extends Widget_Base {
         'num'                         => $settings['num'],
         'exclude_without_media'       => $settings['exclude_without_media'],
         'exclude_custom_post_formats' => $settings['exclude_custom_post_formats'],
+        'include_post_formats_in'     => $settings['include_post_formats_in'],
         'exclude_quote_link'          => $settings['exclude_quote_link'],
         'order_by'                    => $settings['order_by'],
         'order'                       => $settings['order'],

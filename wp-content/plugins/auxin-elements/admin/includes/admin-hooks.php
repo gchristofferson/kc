@@ -511,7 +511,7 @@ function auxin_add_2_rightnow_bottom() {
         '</span>';
     }
 
-    $link = 'http://support.averta.net/en/e-item/'. THEME_ID .'-wordpress-theme/?utm_source=wp-dashboard-widget&utm_medium=phlox-free&utm_content=wp-glance-widget&utm_term=documentation&utm_campaign=docs';
+    $link = 'https://docs.phlox.pro/?utm_source=wp-dashboard-widget&utm_medium=phlox-free&utm_content=wp-glance-widget&utm_term=documentation&utm_campaign=docs';
     echo '<a class="aux-dashboard-widget-footer-link" href="'.$link.'" target="_blank">Help<span class="screen-reader-text">(opens in a new window)</span><span aria-hidden="true" class="dashicons dashicons-external"></span></a>';
 
     echo '</div>';
@@ -672,6 +672,7 @@ function auxels_after_media_setting_updated(){
     $image_sizes = array('thumbnail', 'medium', 'medium_large', 'large');
     $same_ratio = true;
     $ratio = '';
+    $thumb_crop = auxin_is_true( get_option('thumbnail_crop') );
 
     foreach ( $image_sizes as $image_size ) {
         $width = get_option( $image_size. '_size_w' );
@@ -684,6 +685,9 @@ function auxels_after_media_setting_updated(){
             $ratio = $width / $height;
         }
 
+        if ( $thumb_crop ) {
+            update_option( $image_size . '_crop', '1' );
+        }
     }
 
     if( $same_ratio && $ratio ){
@@ -759,7 +763,7 @@ function auxin_notice_manager(){
                     [
                         'label'      => __('Remind Me Later', 'auxin-elements'),
                         'type'       => 'skip',
-                        'expiration' => DAY_IN_SECONDS * 2
+                        'expiration' => DAY_IN_SECONDS * 5
                     ]
                 ]
             ]);
@@ -870,3 +874,57 @@ function auxin_admin_welcome_add_license_popup(){
 <?php
 }
 add_action( 'auxin_admin_welcome_after_header', 'auxin_admin_welcome_add_license_popup' );
+
+/**
+ * Modify plugins upgrade list for regex checkup
+ *
+ * @return void
+ */
+function auxin_add_bundle_plugins_to_upgrade_list(){
+    return '(auxin|phlox|bdthemes-element-pack|masterslider|js_composer|Ultimate_VC_Addons|waspthemes-yellow-pencil|revslider|LayerSlider|go_pricing|convertplug)';
+}
+add_filter( 'auxin_averta_plugins_regex', 'auxin_add_bundle_plugins_to_upgrade_list' );
+
+
+
+/**
+ * Create Default Category when the plugins update or activated if doesnt exist
+ *
+ * @return void
+ */
+add_action('auxin_plugin_updated', function( $flush_required, $plugin_slug, $plugin_version, $plugin_basename ){
+
+    $post_types = array (
+        'portfolio' => array(
+            'taxonoimes' =>  array('portfolio-cat') // portfolio-tag, portfolio-filter
+        ),
+        'news' => array(
+            'taxonoimes' =>  array('news-category') // news-tag
+        ),
+    );
+    
+    $post_type = str_replace('auxin-', '' , $plugin_slug );
+
+    if ( ! isset( $post_types[$post_type]['taxonoimes'] ) ) {
+        return;
+    }
+    
+    $taxonomies = $post_types[$post_type]['taxonoimes'];
+
+
+    foreach ( $taxonomies as $taxonomy ) {
+        $default_term = term_exists( 'uncategorized', $taxonomy );
+
+        if ( !$default_term ) {
+            wp_insert_term(
+                __( 'Uncategorized', 'auxin-elements' ),   // the term 
+                $taxonomy, // the taxonomy
+                array(
+                    'slug'  => 'uncategorized',
+                )
+            );
+        }
+
+    }
+    
+},10, 4);

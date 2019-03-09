@@ -58,6 +58,7 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
         $dispatcher->on('after_tables_loaded', array($this, 'onAfterLoaded'));
 		$this->renderTableHistorySection();
 
+		add_filter('jetpack_lazy_images_blacklisted_classes', array($this, 'excludeFromLazyLoad'), 999, 1);
     }
 
 	public function getDataTablesInPosts() {
@@ -824,6 +825,13 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 						->setCachingAllowed(true)
 						->setVersion('1.3.0')
 				);
+				$ui->add(
+					$ui->createScript('supsystic-tables-slimscroll-js')
+						->setHookName($hookName)
+						->setModuleSource($this, 'libraries/slimscroll.min.js')
+						->setCachingAllowed(true)
+						->setVersion('1.3.8')
+				);
 
 				$ui->add(
 					$ui->createScript('supsystic-tables-tables-model')
@@ -1403,7 +1411,12 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 
 	public function additionalCloningActions($clonedTable, $newTableId) {
 		return $clonedTable;
-}
+	}
+
+	public function excludeFromLazyLoad($classes) {
+		array_push($classes, 'stbSkipLazy');
+		return $classes;
+	}
 }
 
 require_once('Model/widget.php');

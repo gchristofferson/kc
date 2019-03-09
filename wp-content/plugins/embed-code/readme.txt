@@ -1,8 +1,8 @@
-=== Embed Code ===
-Contributors:      WPKube
+=== Embed Code - Insert Header & Footer Code ===
+Contributors:      DesignBombs
 Tags:              embed code, header code, footer code, tracking code, embed javascript
 Requires at least: 4.7.0
-Tested up to:      5.0
+Tested up to:      5.1
 Requires PHP:      5.4
 Stable tag:        trunk
 
@@ -10,7 +10,7 @@ The easiest way to embed code in the head or footer of your site, globally or on
 
 == Description ==
 
-Embed Code makes embedding global or page/post-specific header and footer code super easy. It can be used to add almost anything, including:
+Easily insert or embed header and footer code in WordPress. Embed Code makes embedding global or page/post-specific header and footer code super easy. It can be used to add almost anything, including:
 
 * Google Analytics tracking code
 * Site verification snippets
@@ -22,6 +22,10 @@ Embed Code makes embedding global or page/post-specific header and footer code s
 * Live chat integration
 
 It even supports embedding code on custom post types!
+
+**What's Next?**
+
+This plugin is maintained by folks over at [DesignBombs.com](http://designbombs.com). If you are looking to start a new website, checkout their guide on [how to create a website](https://www.designbombs.com/how-to-make-a-website/). They also have in-depth guides on other topics like how to [choose the best WordPress hosting](https://www.designbombs.com/best-wordpress-hosting), [how to start a blog](https://www.designbombs.com/how-to-start-a-blog/), and [WordPress security](https://www.designbombs.com/wordpress-security/).</p>
 
 == Screenshots ==
 
@@ -36,6 +40,9 @@ It even supports embedding code on custom post types!
 - **Manual FTP Upload**: Upload the plugin folder to `/wp-content/plugins/`. Navigate to *Plugins* in the WordPress admin and activate.
 
 == Changelog ==
+
+= 2.0.2 =
+Minor changes
 
 = 2.0.1 =
 * Minor changes

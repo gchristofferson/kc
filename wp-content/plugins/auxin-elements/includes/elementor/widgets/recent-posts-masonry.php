@@ -929,6 +929,8 @@ class RecentPostsMasonry extends Widget_Base {
 
         $this->end_controls_tab();
 
+        $this->end_controls_tabs();
+
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             array(

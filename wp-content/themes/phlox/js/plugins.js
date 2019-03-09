@@ -1,4 +1,4 @@
-/*! Auxin WordPress Framework - v2.3.5 - 2018-12-27
+/*! Auxin WordPress Framework - v2.3.8 - 2019-02-24
  *  All required plugins 
  *  http://averta.net
  */
@@ -16383,84 +16383,82 @@ window.averta = {};
  * ================== js/src/plugins/auxin-jquery.photoswipe.js =================== 
  **/ 
 
-;(function ( $, window, document, undefined ) {
+(function($, window, document, undefined) {
     "use strict";
 
     /* ------------------------------------------------------------------------------ */
     // insert photoswipe markup to the page
 
-    if ( !window.photoswipe_l10n ) {
+    if (!window.photoswipe_l10n) {
         window.photoswipe_l10n = {};
     }
 
-    var $pswp = $('<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">'+
-
-        '<div class="pswp__bg"></div>'+
-
-        '<div class="pswp__scroll-wrap">'+
-
-            '<div class="pswp__container">'+
-                '<div class="pswp__item"></div>'+
-                '<div class="pswp__item"></div>'+
-                '<div class="pswp__item"></div>'+
-            '</div>'+
-
-            '<div class="pswp__ui pswp__ui--hidden">'+
-
-                '<div class="pswp__top-bar">'+
-
-                    '<div class="pswp__counter"></div>'+
-
-                    '<button class="pswp__button pswp__button--close" title="' + ( photoswipe_l10n.close || 'Close (Esc)' ) + '"></button>'+
-
-                    '<button class="pswp__button pswp__button--share" title="' + ( photoswipe_l10n.share || 'Share' ) + '"></button>'+
-
-                    '<button class="pswp__button pswp__button--fs" title="' + ( photoswipe_l10n.fullscreen || 'Toggle fullscreen' ) + '"></button>'+
-
-                    '<button class="pswp__button pswp__button--zoom" title="' + ( photoswipe_l10n.zoom || 'Zoom in/out' ) + '"></button>'+
-
-                    '<div class="pswp__preloader">'+
-                        '<div class="pswp__preloader__icn">'+
-                          '<div class="pswp__preloader__cut">'+
-                            '<div class="pswp__preloader__donut"></div>'+
-                          '</div>'+
-                        '</div>'+
-                    '</div>'+
-                '</div>'+
-
-                '<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">'+
-                    '<div class="pswp__share-tooltip"></div> '+
-                '</div>'+
-
-                '<button class="pswp__button pswp__button--arrow--left" title="' + ( photoswipe_l10n.previous || 'Previous (arrow left)' ) + '">'+
-                '</button>'+
-
-                '<button class="pswp__button pswp__button--arrow--right" title="' + ( photoswipe_l10n.next || 'Next (arrow right)' ) + '">'+
-                '</button>'+
-
-                '<div class="pswp__caption">'+
-                    '<div class="pswp__caption__center"></div>'+
-                '</div>'+
-
-            '</div>'+
-
-        '</div>'+
-
-    '</div>').appendTo('body');
+    var $pswp = $(
+        '<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">' +
+            '<div class="pswp__bg"></div>' +
+            '<div class="pswp__scroll-wrap">' +
+            '<div class="pswp__container">' +
+            '<div class="pswp__item"></div>' +
+            '<div class="pswp__item"></div>' +
+            '<div class="pswp__item"></div>' +
+            "</div>" +
+            '<div class="pswp__ui pswp__ui--hidden">' +
+            '<div class="pswp__top-bar">' +
+            '<div class="pswp__counter"></div>' +
+            '<button class="pswp__button pswp__button--close" title="' +
+            (photoswipe_l10n.close || "Close (Esc)") +
+            '"></button>' +
+            '<button class="pswp__button pswp__button--share" title="' +
+            (photoswipe_l10n.share || "Share") +
+            '"></button>' +
+            '<button class="pswp__button pswp__button--fs" title="' +
+            (photoswipe_l10n.fullscreen || "Toggle fullscreen") +
+            '"></button>' +
+            '<button class="pswp__button pswp__button--zoom" title="' +
+            (photoswipe_l10n.zoom || "Zoom in/out") +
+            '"></button>' +
+            '<div class="pswp__preloader">' +
+            '<div class="pswp__preloader__icn">' +
+            '<div class="pswp__preloader__cut">' +
+            '<div class="pswp__preloader__donut"></div>' +
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            '<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">' +
+            '<div class="pswp__share-tooltip"></div> ' +
+            "</div>" +
+            '<button class="pswp__button pswp__button--arrow--left" title="' +
+            (photoswipe_l10n.previous || "Previous (arrow left)") +
+            '">' +
+            "</button>" +
+            '<button class="pswp__button pswp__button--arrow--right" title="' +
+            (photoswipe_l10n.next || "Next (arrow right)") +
+            '">' +
+            "</button>" +
+            '<div class="pswp__caption">' +
+            '<div class="pswp__caption__center"></div>' +
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            "</div>"
+    ).appendTo("body");
 
     /* ------------------------------------------------------------------------------ */
 
     var defaults = {
-        target          : 'a',
-        ui              : PhotoSwipeUI_Default,
-        titleMap        : false,
-        thumbnailMap    : false,
-        showHideOpacity : true,
-        getThumbBoundsFn: false
-    }, _uid = 1;
+            target: "a",
+            ui: PhotoSwipeUI_Default,
+            titleMap: false,
+            thumbnailMap: false,
+            autoplay: 0,
+            showHideOpacity: true,
+            getThumbBoundsFn: false
+        },
+        _uid = 1;
 
-    function JQPhotoSwipe ( element, options ) {
-        this.settings = $.extend( {}, defaults, options );
+    function JQPhotoSwipe(element, options) {
+        this.settings = $.extend({}, defaults, options);
         this._defaults = defaults;
         this.slides = [];
         this.UID = _uid++;
@@ -16469,126 +16467,188 @@ window.averta = {};
         this.init();
     }
 
-    $.extend( JQPhotoSwipe.prototype, {
-        init: function () {
-            this.$element.find( this.settings.target ).each( this._registerSlide.bind(this) );
+    $.extend(JQPhotoSwipe.prototype, {
+        init: function() {
+            this.$element
+                .find(this.settings.target)
+                .each(this._registerSlide.bind(this));
 
             // Parse URL and open gallery if it contains #&pid=3&gid=1
             var hashData = this._photoswipeParseHash();
-            if ( hashData.pid && hashData.gid ) {
+            if (hashData.pid && hashData.gid) {
                 // disable animation
                 var animDuration = this.settings.showAnimationDuration;
                 this.settings.showAnimationDuration = 0;
 
-                this._openPhotoSwipe( hashData.pid, true );
+                this._openPhotoSwipe(hashData.pid, true);
 
                 this.settings.showAnimationDuration = animDuration;
             }
         },
 
-
         getSlides: function() {
             return this.slides;
         },
 
-
-        _registerSlide: function( index, item ) {
-
+        _registerSlide: function(index, item) {
             var $item = $(item),
                 slide = {
-                    src   : $item.is('a') ? $item.attr( 'href' ) : ( $item.data( 'original-src' ) || $item.attr( 'src' ) ),
-                    w     : $item.data( 'original-width'  ),
-                    h     : $item.data( 'original-height' ),
-                    item  : item
+                    src: $item.is("a")
+                        ? $item.attr("href")
+                        : $item.data("original-src") || $item.attr("src"),
+                    w: $item.data("original-width"),
+                    h: $item.data("original-height"),
+                    item: item
                 };
 
+            if ($item.data("type") == "video" && $item.is("a")) {
+                slide = {
+                    html: this._getVideoHtml($item.attr("href"))
+                };
+            }
+
             // title
-            if ( this.settings.titleMap ) {
-                slide.title = this.settings.titleMap( $item, index, this );
+            if (this.settings.titleMap) {
+                slide.title = this.settings.titleMap($item, index, this);
             } else {
-                slide.title = $item.data( 'caption' ) || $item.attr( 'title' ) || $item.attr( 'alt' );
+                slide.title =
+                    $item.data("caption") ||
+                    $item.attr("title") ||
+                    $item.attr("alt");
             }
 
             // thumbnail
-            if ( this.settings.thumbnailMap ) {
-                var thumb = this.settings.thumbnailMap( $item, index, this );
+            if (this.settings.thumbnailMap) {
+                var thumb = this.settings.thumbnailMap($item, index, this);
                 slide.el = thumb.element;
                 slide.msrc = thumb.src;
-
-            } else if ( $item.is( 'img' ) ) {
+            } else if ($item.is("img")) {
                 slide.el = item;
-                slide.msrc = $item.attr( 'src' );
-
+                slide.msrc = $item.attr("src");
             } else {
-                var img = $item.find( 'img' );
-                if ( img.length ) {
+                var img = $item.find("img");
+                if (img.length) {
                     slide.el = img[0];
-                    slide.msrc = img.attr( 'src' );
+                    slide.msrc = img.attr("src");
                 }
             }
 
-            $item.data( 'index', index );
-            $item.on( 'click.photoswipe', this._onItemClick.bind(this) );
-            this.slides.push( slide );
+            $item.data("index", index);
+            $item.on("click.photoswipe", this._onItemClick.bind(this));
+            this.slides.push(slide);
         },
 
-        _onItemClick: function( e ) {
+        // get clean html video data
+        _getVideoHtml: function(url) {
+            var videoEmbedLink = url;
+
+            if (url.match(/(youtube.com)/)) {
+                var split_c = "v=";
+                var split_n = 1;
+            }
+
+            if (url.match(/(youtu.be)/) || url.match(/(vimeo.com\/)+[0-9]/)) {
+                var split_c = "/";
+                var split_n = 3;
+            }
+
+            if (url.match(/(vimeo.com\/)+[a-zA-Z]/)) {
+                var split_c = "/";
+                var split_n = 5;
+            }
+
+            var getYouTubeVideoID = url.split(split_c)[split_n];
+
+            var cleanVideoID = getYouTubeVideoID.replace(/(&)+(.*)/, "");
+
+            if (url.match(/(youtu.be)/) || url.match(/(youtube.com)/)) {
+                videoEmbedLink =
+                    "//www.youtube.com/embed/" +
+                    cleanVideoID +
+                    "?autoplay=" +
+                    this.settings.autoplay +
+                    "";
+            }
+            if (
+                url.match(/(vimeo.com\/)+[0-9]/) ||
+                url.match(/(vimeo.com\/)+[a-zA-Z]/)
+            ) {
+                videoEmbedLink =
+                    "//player.vimeo.com/video/" +
+                    cleanVideoID +
+                    "?autoplay=" +
+                    this.settings.autoplay +
+                    "";
+            }
+
+            return (
+                '<div class="video-wrapper"><iframe class="pswp__video" src="' +
+                videoEmbedLink +
+                '" width="960" height="640" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>'
+            );
+        },
+
+        _onItemClick: function(e) {
             e.preventDefault();
-            this._openPhotoSwipe( $(e.currentTarget).data( 'index' ) )
+            this._openPhotoSwipe($(e.currentTarget).data("index"));
         },
 
-        _thumbnailBounds: function( index ) {
+        _thumbnailBounds: function(index) {
             var thumbnail = this.slides[index].el,
-                pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
+                pageYScroll =
+                    window.pageYOffset || document.documentElement.scrollTop;
 
-            if ( thumbnail ) {
+            if (thumbnail) {
                 var rect = thumbnail.getBoundingClientRect();
-                return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
+                return {
+                    x: rect.left,
+                    y: rect.top + pageYScroll,
+                    w: rect.width
+                };
             } else {
                 return null;
             }
         },
 
         // parse picture index and gallery index from URL (#&pid=1&gid=2)
-        _photoswipeParseHash : function() {
+        _photoswipeParseHash: function() {
             var hash = window.location.hash.substring(1),
-            params = {};
+                params = {};
 
-            if(hash.length < 5) {
+            if (hash.length < 5) {
                 return params;
             }
 
-            var vars = hash.split('&');
+            var vars = hash.split("&");
             for (var i = 0; i < vars.length; i++) {
-                if(!vars[i]) {
+                if (!vars[i]) {
                     continue;
                 }
-                var pair = vars[i].split('=');
-                if(pair.length < 2) {
+                var pair = vars[i].split("=");
+                if (pair.length < 2) {
                     continue;
                 }
                 params[pair[0]] = pair[1];
             }
 
-            if(params.gid) {
+            if (params.gid) {
                 params.gid = parseInt(params.gid, 10);
             }
 
             return params;
         },
 
-        _openPhotoSwipe: function( index, fromURL ) {
+        _openPhotoSwipe: function(index, fromURL) {
             var gallery,
                 options = this.settings;
 
-            $.extend( options, {
+            $.extend(options, {
                 galleryUID: this.UID,
-                getThumbBoundsFn: this._thumbnailBounds.bind( this )
-
+                getThumbBoundsFn: this._thumbnailBounds.bind(this)
             });
 
             // PhotoSwipe opened from URL
-            if ( fromURL ) {
+            if (fromURL) {
                 // in URL indexes start from 1
                 options.index = parseInt(index, 10) - 1;
             } else {
@@ -16596,15 +16656,45 @@ window.averta = {};
             }
 
             // exit if index not found
-            if ( isNaN( options.index ) ) {
+            if (isNaN(options.index)) {
                 return;
             }
 
             // Pass data to PhotoSwipe and initialize it
-            gallery = new PhotoSwipe( $pswp[0], options.ui, this.slides, options);
+            gallery = new PhotoSwipe(
+                $pswp[0],
+                options.ui,
+                this.slides,
+                options
+            );
             gallery.init();
-        }
+            this._photoswipeListen(gallery);
+        },
 
+        _photoswipeListen: function(gallery) {
+            gallery.listen("beforeChange", function() {
+                var $allItems = $(this.container).find(".pswp__video");
+                // Remove active class from all items
+                $allItems.removeClass("active");
+                // Add active class too current open item
+                $(this.currItem.container)
+                    .find(".pswp__video")
+                    .addClass("active");
+                // Check all items
+                $allItems.each(function() {
+                    if (!$(this).hasClass("active")) {
+                        $(this).attr("src", $(this).attr("src"));
+                    }
+                });
+            });
+            gallery.listen("close", function() {
+                $(this.currItem.container)
+                    .find(".pswp__video")
+                    .each(function() {
+                        $(this).attr("src", "about:blank");
+                    });
+            });
+        }
     });
 
     // $.fn.photoSwipe = function ( options ) {
@@ -16615,39 +16705,46 @@ window.averta = {};
     //     });
     // };
 
-    $.fn.photoSwipe = function ( options ) {
+    $.fn.photoSwipe = function(options) {
         var args = arguments,
-            plugin = 'averta_photoswipe';
+            plugin = "averta_photoswipe";
 
-        if (options === undefined || typeof options === 'object') {
-            return this.each(function () {
-
+        if (options === undefined || typeof options === "object") {
+            return this.each(function() {
                 if (!$.data(this, plugin)) {
-                    $.data(this, plugin, new JQPhotoSwipe( this, options ));
+                    $.data(this, plugin, new JQPhotoSwipe(this, options));
                 }
             });
-        } else if (typeof options === 'string' && options[0] !== '_' && options !== 'init') {
-
+        } else if (
+            typeof options === "string" &&
+            options[0] !== "_" &&
+            options !== "init"
+        ) {
             var returns;
 
-            this.each(function () {
+            this.each(function() {
                 var instance = $.data(this, plugin);
 
-                if (instance instanceof JQPhotoSwipe && typeof instance[options] === 'function') {
-                    returns = instance[options].apply( instance, Array.prototype.slice.call( args, 1 ) );
+                if (
+                    instance instanceof JQPhotoSwipe &&
+                    typeof instance[options] === "function"
+                ) {
+                    returns = instance[options].apply(
+                        instance,
+                        Array.prototype.slice.call(args, 1)
+                    );
                 }
 
                 // Allow instances to be destroyed via the 'destroy' method
-                if (options === 'destroy') {
-                  $.data(this, plugin, null);
+                if (options === "destroy") {
+                    $.data(this, plugin, null);
                 }
             });
 
             return returns !== undefined ? returns : this;
         }
     };
-
-})( jQuery, window, document );
+})(jQuery, window, document);
 
 
 /*! 
@@ -16900,17 +16997,19 @@ window.averta = {};
             placeholder     : 'aux-sticky-placeholder',
             schemePrefix    : 'aux-header-',
             stickyMargin    : 0,        // specifies the space between element and top of the page to trigger sticky position
+            disablePoint    : 0,        // responsive disable point
             checkBoundaries : false,    // check element boundaries while scrolling to prevent overlapping
             boundryTarget   : '',       // boundry target selector
             rearrange       : true,     // check for rearrangement of elements in the block on sticky
             useTransform    : false     // whether to use transform instead of fixed position or not.
         },
         attributesMap = {
-            'sticky-margin'    : 'stickyMargin',
-            'rearrange'        : 'rearrange',
-            'boundaries'       : 'checkBoundaries',
-            'boundry-target'   : 'boundryTarget',
-            'use-transform'    : 'useTransform'
+            'sticky-margin' : 'stickyMargin',
+            'sticky-off'    : 'disablePoint',
+            'rearrange'     : 'rearrange',
+            'boundaries'    : 'checkBoundaries',
+            'boundry-target': 'boundryTarget',
+            'use-transform' : 'useTransform'
         };
 
     // The actual plugin constructor
@@ -16922,6 +17021,7 @@ window.averta = {};
         this._name = pluginName;
         this._scheme = this.$element.data("color-scheme") || false;
         this._stickyScheme = this.$element.data("sticky-scheme") || false;
+        this._stickyDisableFlag = false;
 
         // read attributes
         for ( var attrName in attributesMap ) {
@@ -16948,10 +17048,29 @@ window.averta = {};
             this._wpadminbarHeight = $('#wpadminbar').outerHeight() || 0;
         },
 
+        _disable: function(){
+            if ( this.settings.useTransform ) {
+                this.element.style[_jcsspfx + 'Transform'] = '';
+            } else {
+                this.element.style.top = '';
+            }
+            this._stickyDisableFlag = true;
+            this.$containerPlaceHolder.css( 'display', 'none' );
+            // trigger proper event
+            this.$element.trigger( 'unsticky' );
+        },
+
         _update: function() {
             var wst = $window.scrollTop(),
                 etp = this.$containerPlaceHolder.offset().top - this.settings.stickyMargin - this._wpadminbarHeight;
-            
+
+            if ( this.settings.disablePoint >= window.innerWidth ) {
+                this._disable();
+                return;
+            } else if( this._stickyDisableFlag ) {
+                this.$containerPlaceHolder.css( 'display', 'initial' );
+            }
+
             if ( wst > etp && !this.stickyEnabled ) {
                 this.$element.addClass( this.settings.className );
                 this.stickyEnabled = true;
@@ -16962,7 +17081,7 @@ window.averta = {};
                     }
                     if( this._stickyScheme ){
                         this.$element.addClass( this.settings.schemePrefix + this._stickyScheme );
-                    }                
+                    }
                 }
 
                 if ( !this.settings.useTransform ) {
@@ -16995,7 +17114,7 @@ window.averta = {};
                     }
                     if( this._stickyScheme ){
                         this.$element.removeClass( this.settings.schemePrefix + this._stickyScheme );
-                    }                    
+                    }
                 }
 
                 if ( this.settings.rearrange ) {
@@ -17031,10 +17150,10 @@ window.averta = {};
             wst  = wst || $window.scrollTop();
             calc = calc || 0;
 
-            this.$boundryTarget = $( this.settings.boundryTarget ) || this.$element.parent().eq(0);
+            this.$boundryTarget = this.settings.boundryTarget.length ? $( this.settings.boundryTarget ) : this.$element.parent().eq(0);
             var boundryTargetOffTop = this.$boundryTarget.offset().top - this._wpadminbarHeight;
             var diff = boundryTargetOffTop + this.$boundryTarget.outerHeight(true) - ( etp + this.$element.outerHeight(true));
-            
+
             if ( calc >= 0 && calc <= diff ) {
                 this.element.style[_jcsspfx + 'Transform'] = 'translateY(' + ( calc ) + 'px)';
             } else if  ( calc >  diff ){
@@ -19154,7 +19273,7 @@ window.averta = {};
             checkLinkTarget     : true,                                      // Check the anchor target attribute and only work on _self
             checkTargetEvents   : true,                                      // Don't work if the target has other click events
             skipRelativeLinks   : true,                                      // Skips those are relatively linked
-            noAnimate           : '.aux-no-page-animate, .aux-lightbox-btn, [data-elementor-open-lightbox="yes"]', // Targets by this class don't animate the page
+            noAnimate           : '.aux-no-page-animate, .aux-lightbox-btn, [data-elementor-open-lightbox="yes"], [bdt-lightbox] a', // Targets by this class don't animate the page
             animateIn           : 'aux-show-page',                           // The animation class name of page
             animateOut          : 'aux-hide-page',                           // Hide animation class name of page
             beforeAnimateOut    : 'aux-before-hide-page',                    // It adds this class name before starting the hide animation
@@ -19373,7 +19492,7 @@ window.averta = {};
          */
         update: function() {
             this._boxHeight    = this.$element.height();
-            this._spaceFromTop = this.$element.offset().top - document.documentElement.scrollTop;
+            this._spaceFromTop = this.$element[0].getBoundingClientRect().top;
             this._spaceFromBot = window.innerHeight - this._boxHeight - this._spaceFromTop;
             this._spaceFromMid = window.innerHeight / 2 - this._boxHeight / 2 - this._spaceFromTop;
             for( var i = 0; i !== this._targetsNum; i++ ) {

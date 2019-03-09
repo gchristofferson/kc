@@ -3,15 +3,15 @@ Contributors: averta, averta_support
 Tags: one-column, two-columns, three-columns, left-sidebar, right-sidebar, grid-layout, custom-menu, custom-colors, editor-style, featured-images, featured-image-header, footer-widgets, full-width-template, post-formats, sticky-post, theme-options, translation-ready, blog, e-commerce, portfolio, threaded-comments, translation-ready
 Requires PHP: 5.4
 Requires at least: 4.6
-Tested up to: 5.0.2
-Stable tag: 2.3.5
+Tested up to: 5.1.0
+Stable tag: 2.3.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Build an elegant and stylish business and portfolio website for Free!
 
 == Description ==
-Phlox is a modern, lightweight and customizable theme perfect for almost any type of website including, blog, portfolio, business, agency, news & magazine, food & restaurant, travel, and photography as well as WooCommerce storefront. What makes the Phlox unbeatable is being fast, truly responsive, translation ready, RTL layout, built with SEO in mind, professional portfolio features, 30 exclusive widgets and elements, 19 demo sites for one-click import, WooCommerce Ready, WPML ready, 100% GDPR compliance, reliable with regular updates, and also integrated with Elementor, Visual Composer and SiteOrigin page builders. Phlox is architect from scratch by the team behind the famous "Master Slider" project, so relax and be assured that you are supported by a good company. Phlox is the only theme that you have ever need to use and look no further. Start exploring the demos: http://demo.phlox.pro/default/
+Phlox is a modern, lightweight and customizable theme perfect for almost any type of website including, blog, portfolio, business, agency, news & magazine, food & restaurant, travel, and photography as well as WooCommerce storefront. What makes the Phlox unbeatable is being fast, truly responsive, translation ready, RTL layout, built with SEO in mind, professional portfolio features, 30 exclusive widgets and elements, 19 demo sites for one-click import, WooCommerce Ready, WPML ready, 100% GDPR compliance, reliable with regular updates, and also integrated with Elementor, Visual Composer and SiteOrigin page builders. Phlox is architect from scratch by the team behind the famous "Master Slider" project, so relax and be assured that you are supported by a good company. Phlox is the only theme that you have ever need to use and look no further. Start exploring the demos: http://phlox.pro/
 
 
 == Installation ==
@@ -93,8 +93,25 @@ Phlox bundles the following third-party resources:
 
 == Changelog ==
 
+= 2.3.8 =
+- [Fix]: Fixing some backward compatibility with PHP 5.3.0 which caused fatal error.
+- [Fix]: Fix an issue on table and modern style of gird post widget.
+- [Fix]: Fixing an issue with ovarlapping content background on header background.
+- [Fix]: Fixing an issue with reposnive options of buttons in header.
+- [Improvement]: Improvement in like buttons.
+- [Improvement]: Improvement in shopping cart functionality.
+- [New]: New typography options for pagination skins.
+- [Fix]: Fixing the missing post formats on gutenberg.
+- [New]: New header/footer options for customizer.
+- [Fix]: Fixing an issue with parallax effect on Safari.
 
-= 2.3.4 =
+
+= 2.3.7 =
+- [Fix]: A style conflict with Gutenburg buttons fixed.
+- [Improvement]: Adding an indicator in admin bar if maintenance mode is enabled.
+
+
+= 2.3.5 =
 - [New]: Introducing more reliable and consistent automatic updater tool.
 - [New]: New typography options added.
 - [New]: New loading preview options for responsive attachment added.

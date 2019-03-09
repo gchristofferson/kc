@@ -4,7 +4,7 @@
  *
  * 
  * @package    Auxin
- * @author     averta (c) 2014-2018
+ * @author     averta (c) 2014-2019
  * @link       http://averta.net
  */
 
@@ -91,6 +91,13 @@ function auxin_theme_register_recommended_plugins() {
         array(
             'name'       => __('Contact Form 7', 'phlox'),
             'slug'       => 'contact-form-7',
+            'required'   => false,
+            'categories' => array('recommended')
+        ),
+
+        array(
+            'name'       => __('Dokan - WooCommerce Multivendor Marketplace ', 'phlox'),
+            'slug'       => 'dokan-lite',
             'required'   => false,
             'categories' => array('recommended')
         ),
@@ -298,8 +305,7 @@ function auxin_welcome_page_display_section_dashboard(){
     $support_link .= (defined('THEME_PRO') && THEME_PRO) ? '51166' : '34922';
     $support_link .= '&utm_source=phlox-welcome&utm_medium=phlox-free&utm_content=submit-ticket&utm_term=support';
 
-    $doc_link   = 'http://support.averta.net/en/e-item/';
-    $doc_link  .= (defined('THEME_PRO') && THEME_PRO) ? 'phlox-pro-wordpress-theme/' : 'phlox-wordpress-theme/';
+    $doc_link   = 'https://docs.phlox.pro/';
     $doc_link  .= '?utm_source=phlox-welcome&utm_medium=phlox-free&utm_content=dashboard-doc&utm_term=documentation';
     ?>
     <section class="aux-col-wrap aux-info-blocks-row">
@@ -436,8 +442,7 @@ function auxin_welcome_page_display_section_tutorials(){
     $support_link .= (defined('THEME_PRO') && THEME_PRO) ? 'phlox-pro/' : 'phlox/';
     $support_link .= '?utm_source=phlox-welcome&utm_medium=phlox-free&utm_content=tuts-forum&utm_term=support';
 
-    $doc_link   = 'http://support.averta.net/en/e-item/';
-    $doc_link  .= (defined('THEME_PRO') && THEME_PRO) ? 'phlox-pro-wordpress-theme/' : 'phlox-wordpress-theme/';
+    $doc_link   = 'https://docs.phlox.pro/';
     $doc_link  .= '?utm_source=phlox-welcome&utm_medium=phlox-free&utm_content=tuts-doc&utm_term=documentation';
     ?>
     <div class="feature-section aux-welcome-page-tutorials">
@@ -450,12 +455,12 @@ function auxin_welcome_page_display_section_tutorials(){
             <a class="aux-tutts-info-doc-wrap" href="<?php echo esc_url( $doc_link ); ?>" target="_blank">
                 <img width="69" class="tuts-icon" src="<?php echo esc_url( AUXIN_URL ) . 'css/images/welcome/documentation.svg'; ?>">
                 <h3 class="aux-content-title"><?php _e('Documentation', 'phlox' ); ?></h3>
-                <span class="aux-text-link"><?php _e('Checkout', 'phlox' ); ?></span>
+                <span class="aux-text-link"><?php _e('Check out', 'phlox' ); ?></span>
             </a>
             <a class="aux-tutts-info-support-wrap" href="<?php echo esc_url( $support_link ); ?>" target="_blank">
                 <img width="75" class="tuts-icon" src="<?php echo esc_url( AUXIN_URL ) . 'css/images/welcome/support.svg'; ?>">
                 <h3 class="aux-content-title"><?php _e('Support Center', 'phlox' ); ?></h3>
-                <span class="aux-text-link"><?php _e('Checkout', 'phlox' ); ?></span>
+                <span class="aux-text-link"><?php _e('Check out', 'phlox' ); ?></span>
             </a>
         </div>
     </div>

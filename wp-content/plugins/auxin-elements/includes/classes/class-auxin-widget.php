@@ -493,6 +493,11 @@ class Auxin_Widget extends WP_Widget {
         $new_instance = wp_parse_args( (array) $new_instance );
         foreach ( $this->fields as $field ) {
             $id = $field["id"];
+
+            if( ! isset( $new_instance[ $id ] ) ) {
+                continue;
+            }
+            
             if( $field["type"] == "aux_switch" ) {
                 $instance[ $id ] = !empty($new_instance[$id ] ) ?  1 : 0;
             }
@@ -500,10 +505,11 @@ class Auxin_Widget extends WP_Widget {
                 $instance[ $id ] = esc_sql( $new_instance[ $id ] );
 
             } else {
-                $instance[ $id ] = strip_tags( $new_instance[ $id ] );
+                $instance[ $id ] = is_array( $new_instance[ $id ] ) ? $new_instance[ $id ] : strip_tags( $new_instance[ $id ] );
             }
 
         }
+
         return $instance;
     }
 

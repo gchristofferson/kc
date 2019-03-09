@@ -48,29 +48,93 @@ var g_stbCopyPasteColsCount = [];
 				case '#row-tab-preview':
 					tablesModel.saveTable('#table-preview');
 					break;
+				case '#row-tab-css':
+					cssEditor.resize();
+					break;
 				default:
 					break;
 			}
 		});
 
 		// Initialize Sub Tabs
-		var $settingsSubTabsContent = $('.row-settings-tab'),
-			$settingsSubTabs = $('.subsubsub.tabs-settings-wrapper .button'),
-			$settingsCurrentTab = $settingsSubTabs.filter('.current').attr('href');
-
-		$settingsSubTabsContent.filter($settingsCurrentTab).addClass('active');
-
-		$settingsSubTabs.on('click', function (e) {
-			e.preventDefault();
-
-			var $this = $(this),
-				$curTab = $this.attr('href');
-
-			$settingsSubTabsContent.removeClass('active');
-			$settingsSubTabs.filter('.current').removeClass('current');
-			$this.addClass('current');
-			$settingsSubTabsContent.filter($curTab).addClass('active');
+		var linksOyPositions = [],
+			offsetTop2 = Math.floor($("#stb-anl-main").offset().top);
+		linksOyPositions.push({
+			'id': '#stb-anl-main',
+			'offset': 0,
 		});
+		linksOyPositions.push({
+			'id': '#stb-anl-features',
+			'offset': Math.abs(Math.floor($("#stb-anl-features").offset().top) - offsetTop2 - 40),
+		});
+		linksOyPositions.push({
+			'id': '#stb-anl-appearance',
+			'offset': Math.abs(Math.floor($("#stb-anl-appearance").offset().top) - offsetTop2 - 40),
+		});
+		linksOyPositions.push({
+			'id': '#stb-anl-language',
+			'offset': Math.abs(Math.floor($("#stb-anl-language").offset().top) - offsetTop2 - 40),
+		});
+		linksOyPositions.push({
+			'id': '#stb-anl-source',
+			'offset': Math.abs(Math.floor($("#stb-anl-source").offset().top) - offsetTop2 - 40),
+		});
+		
+
+		$('.settings-wrap').slimScroll({'height': g_stbWindowHeight+'px'}).off('slimscrolling')
+			.on('slimscrolling', null, { 'oy': linksOyPositions }, function(e, pos){
+				if(e && e.data && e.data.oy) {
+					var ind1 = 0,
+						$activeItem = $('.stb-anchor-nav-links.active'),
+						isFind = false;
+					while(ind1 < (e.data.oy.length - 1) && !isFind) {
+						if(e.data.oy[ind1].offset <= pos && e.data.oy[ind1+1].offset > pos) {
+							isFind = ind1;
+							ind1 = e.data.oy.length;
+						}
+						ind1++;
+					}
+					// if current position at last anchor
+					if(isFind == false && ind1 == 4) {
+						isFind = ind1;
+					}
+					//check curr active item
+					var activeId = $activeItem.attr('href');
+					if(e.data.oy[isFind] && activeId != e.data.oy[isFind].id) {
+						if($activeItem.length) {
+							// remove active class
+							$activeItem.removeClass('active');
+						}
+						// add active class
+						$('.stb-anchor-nav-links[href="' + e.data.oy[isFind].id + '"]').addClass('active');
+					}
+				}
+			});
+		$('.stb-anchor-nav-links').on('click', function(e1, funcParams) {
+			e1.preventDefault();
+			var $settingsWrap = $('.settings-wrap')
+			,	urlLink = $(this).attr('href')
+			,	$linkItem = $(urlLink)
+			,	$topItem = $("#stb-anl-main");
+			if($linkItem.length) {
+				var offsetLink = $linkItem.offset().top
+				,	offsetTop = $topItem.offset().top
+				,	offsetAbs = Math.abs(offsetLink -offsetTop);
+				// if need to set start position
+				if(funcParams && funcParams.offsetScTop) {
+					offsetAbs = funcParams.offsetScTop;
+				}
+				if(!isNaN(offsetAbs)) {
+					$settingsWrap.slimScroll({ scrollTo: offsetAbs + 'px' });
+				}
+			}
+		});
+
+		// init anchor link
+		setTimeout(function() {
+			var slScrollTopPos = parseInt($('#slimScrollStartPos').val());
+			$('.stb-anchor-nav-links[href="#stb-anl-main"]').trigger('click', {'offsetScTop':slScrollTopPos});
+		}, 200);
 
 		// Fix of conflict with handsontable library - it triggers error if user makes click on link without href attribute
 		$('select[multiple="multiple"]').on('change', function() {
