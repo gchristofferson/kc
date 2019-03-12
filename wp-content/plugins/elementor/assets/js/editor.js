@@ -1,4 +1,4 @@
-/*! elementor - v2.5.3 - 06-03-2019 */
+/*! elementor - v2.5.5 - 11-03-2019 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -654,15 +654,9 @@ BaseElementView = BaseContainer.extend({
 	},
 
 	attributes: function attributes() {
-		var type = this.model.get('elType');
-
-		if ('widget' === type) {
-			type = this.model.get('widgetType');
-		}
-
 		return {
 			'data-id': this.getID(),
-			'data-element_type': type
+			'data-element_type': this.model.get('elType')
 		};
 	},
 
@@ -5314,7 +5308,7 @@ var App = Marionette.Application.extend({
 		var elementConfig = elementorCommon.helpers.cloneObject(this.config.elements[elType]);
 
 		if ('section' === elType && model.get('isInner')) {
-			elementConfig.title = elementor.translate('inner_section');
+			elementConfig.title = this.translate('inner_section');
 		}
 
 		return elementConfig;
@@ -5814,8 +5808,8 @@ var App = Marionette.Application.extend({
 				at: 'center center'
 			},
 			strings: {
-				confirm: elementor.translate('learn_more'),
-				cancel: elementor.translate('go_back')
+				confirm: this.translate('learn_more'),
+				cancel: this.translate('go_back')
 			},
 			onConfirm: null,
 			onCancel: function onCancel() {
@@ -5830,6 +5824,41 @@ var App = Marionette.Application.extend({
 		options = jQuery.extend(true, defaultOptions, options);
 
 		elementorCommon.dialogsManager.createWidget('confirm', options).show();
+	},
+
+	showFlexBoxAttentionDialog: function showFlexBoxAttentionDialog() {
+		var _this2 = this;
+
+		var introduction = new elementorModules.editor.utils.Introduction({
+			introductionKey: 'flexbox',
+			dialogType: 'confirm',
+			dialogOptions: {
+				id: 'elementor-flexbox-attention-dialog',
+				headerMessage: this.translate('flexbox_attention_header'),
+				message: this.translate('flexbox_attention_message'),
+				position: {
+					my: 'center center',
+					at: 'center center'
+				},
+				strings: {
+					confirm: this.translate('learn_more'),
+					cancel: this.translate('got_it')
+				},
+				hide: {
+					onButtonClick: false
+				},
+				onCancel: function onCancel() {
+					introduction.setViewed();
+
+					introduction.getDialog().hide();
+				},
+				onConfirm: function onConfirm() {
+					return open(_this2.config.help_flexbox_bc_url, '_blank');
+				}
+			}
+		});
+
+		introduction.show();
 	},
 
 	checkPageStatus: function checkPageStatus() {
@@ -5960,7 +5989,7 @@ var App = Marionette.Application.extend({
 	},
 
 	requestWidgetsConfig: function requestWidgetsConfig() {
-		var _this2 = this;
+		var _this3 = this;
 
 		var excludeWidgets = {};
 
@@ -5976,14 +6005,14 @@ var App = Marionette.Application.extend({
 			},
 			success: function success(data) {
 				jQuery.each(data, function (widgetName, controlsConfig) {
-					var widgetConfig = _this2.config.widgets[widgetName];
+					var widgetConfig = _this3.config.widgets[widgetName];
 
 					widgetConfig.controls = controlsConfig.controls;
 					widgetConfig.tabs_controls = controlsConfig.tabs_controls;
 				});
 
-				if (_this2.loaded) {
-					_this2.schemes.printSchemesStyle();
+				if (_this3.loaded) {
+					_this3.schemes.printSchemesStyle();
 				}
 
 				elementorCommon.elements.$body.addClass('elementor-controls-ready');
@@ -6115,6 +6144,12 @@ var App = Marionette.Application.extend({
 
 		this.openLibraryOnStart();
 
+		var isOldPageVersion = this.config.document.version && this.helpers.compareVersions(this.config.document.version, '2.5.0', '<');
+
+		if (!this.config.user.introduction.flexbox && isOldPageVersion) {
+			this.showFlexBoxAttentionDialog();
+		}
+
 		this.previewLoadedOnce = true;
 	},
 
@@ -6200,10 +6235,12 @@ var App = Marionette.Application.extend({
 });
 
 window.elementor = new App();
+
 if (-1 === location.href.search('ELEMENTOR_TESTS=1')) {
-	window.elementor.start();
+	elementor.start();
 }
-module.exports = window.elementor;
+
+module.exports = elementor;
 
 /***/ }),
 /* 47 */
@@ -7875,7 +7912,7 @@ helpers = {
 			    valueB = versionBParts[i] || 0;
 
 			if (valueA !== valueB) {
-				return this.conditions.compare(valueA, valueB, operator);
+				return elementor.conditions.compare(valueA, valueB, operator);
 			}
 		}
 	}
@@ -14167,15 +14204,31 @@ ControlSliderItemView = ControlBaseUnitsItemView.extend({
 
 		delete unitRange.step;
 
+		var tooltips = void 0;
+
+		var self = this;
+
+		if (isMultiple) {
+			tooltips = [];
+
+			sizes.forEach(function () {
+				return tooltips.push({
+					to: function to(value) {
+						return value + self.getControlValue('unit');
+					}
+				});
+			});
+		}
+
 		var sliderInstance = noUiSlider.create(this.ui.slider[0], {
 			start: sizes,
 			range: unitRange,
 			step: step,
-			tooltips: isMultiple,
+			tooltips: tooltips,
 			connect: isMultiple,
 			format: {
 				to: function to(value) {
-					return value;
+					return Math.round(value * 1000) / 1000;
 				},
 				from: function from(value) {
 					return +value;
@@ -14904,12 +14957,12 @@ WidgetView = BaseElementView.extend({
 		var editModel = self.getEditModel(),
 		    skinType = editModel.getSetting('_skin') || 'default';
 
-		self.$el.attr('data-element_type', editModel.get('widgetType') + '.' + skinType).removeClass('elementor-widget-empty').children('.elementor-widget-empty-icon').remove();
+		self.$el.attr('data-widget_type', editModel.get('widgetType') + '.' + skinType).removeClass('elementor-widget-empty').children('.elementor-widget-empty-icon').remove();
 
 		// TODO: Find better way to detect if all images are loaded
 		self.$el.imagesLoaded().always(function () {
 			setTimeout(function () {
-				if (1 > self.$el.height()) {
+				if (1 > self.$el.children('.elementor-widget-container').outerHeight()) {
 					self.handleEmptyWidget();
 				}
 			}, 200);
