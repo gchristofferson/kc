@@ -1043,7 +1043,7 @@ function auxin_define_options_info( $fields_sections_list ){
         'type'        => 'color',
         'dependency'  => array(),
         'selectors'   => array(
-            ".aux-top-header, .aux-sticky-footer .page-title-section, .aux-sticky-footer #main, .site-header-section, #inner-body" => "background-color:{{VALUE}};"
+            ".aux-top-header, .aux-sticky-footer .page-title-section, .aux-sticky-footer #main, #inner-body" => "background-color:{{VALUE}};"
         ),
         'transport'   => 'postMessage',
         'default'     => ''
@@ -2351,7 +2351,7 @@ function auxin_define_options_info( $fields_sections_list ){
             if( ! $value ){
                 $value = auxin_get_option( 'site_transparent_header_bgcolor' , 'rgba(255, 255, 255, 0)' );
             }
-            return $value ? "#site-header { background-color:$value; }" : '';
+            return $value ? ".site-header-section { background-color:$value; }" : '';
         },
         'type'      => 'color',
         'transport' => 'postMessage',
@@ -3624,7 +3624,7 @@ function auxin_define_options_info( $fields_sections_list ){
         'parent'        => 'blog-section', // section parent's id
         'title'         => __( 'Single Post', 'phlox' ),
         'description'   => __( 'Preview a blog post', 'phlox' ),
-        'preview_link'  => auxin_get_last_post_permalink( array( 'post_type' => 'post' ) )
+        // 'preview_link'  => auxin_get_last_post_permalink( array( 'post_type' => 'post' ) )
     );
 
     $options[] = array(
@@ -4081,7 +4081,7 @@ function auxin_define_options_info( $fields_sections_list ){
         'parent'       => 'blog-section', // section parent's id
         'title'        => __( 'Single Post Title', 'phlox' ),
         'description'  => __( 'Preview Single Post', 'phlox' ),
-        'preview_link' => auxin_get_last_post_permalink( array( 'post_type' => 'post' ) )
+        // 'preview_link' => auxin_get_last_post_permalink( array( 'post_type' => 'post' ) )
     );
 
     $options[] = array(
@@ -5273,7 +5273,7 @@ function auxin_define_options_info( $fields_sections_list ){
         'parent'      => 'blog-section', // section parent's id
         'title'       => __( 'Blog Page', 'phlox' ),
         'description' => __( 'Preview Blog Archive', 'phlox' ),
-        'preview_link'=> get_post_type_archive_link('post')
+        // 'preview_link'=> get_post_type_archive_link('post')
     );
 
     $blog_index_template_types = array(
@@ -5598,6 +5598,111 @@ function auxin_define_options_info( $fields_sections_list ){
             }
         ),
         'default'     => '1'
+    );
+
+    $options[] = array(
+        'title'       => __( 'Display Comment', 'phlox' ),
+        'description' => '',
+        'id'          => 'display_post_info_comments',
+        'section'     => 'blog-section-archive',
+        'dependency'  => array(
+                 array(
+                    'id'      => 'display_post_info',
+                    'value'   => array('1'),
+                    'operator'=> '=='
+                 ),
+                 array(
+                    'id'      => 'post_index_template_type',
+                    'value'   => array('1', '2', '3', '4'),
+                    'operator'=> '=='
+                )
+        ),
+        'type'        => 'switch',
+        'transport'   => 'postMessage',
+        'default'     => '1'
+    );
+
+    $options[] = array(
+        'title'       => __( 'Display Comment', 'phlox' ),
+        'description' => '',
+        'id'          => 'display_post_comments_number',
+        'section'     => 'blog-section-archive',
+        'dependency'  => array(
+                 array(
+                    'id'      => 'post_index_template_type',
+                    'value'   => array('5', '6', '7', '8'),
+                    'operator'=> '=='
+                )
+        ),
+        'type'        => 'switch',
+        'transport'   => 'postMessage',
+        'default'     => '1'
+    );
+
+    $options[] = array(
+        'title'       => __( 'Display author or read more', 'phlox' ),
+        'description' => __('Specifies whether to show author or read more on each post.', 'phlox'),
+        'id'          => 'blog_display_author_readmore',
+        'section'     => 'blog-section-archive',
+        'dependency'  => array(
+            array(
+               'id'      => 'post_index_template_type',
+               'value'   => array('5', '6', '7', '8'),
+               'operator'=> '=='
+           )
+        ),
+        'transport'   => 'postMessage',
+        'choices'     => array(
+            'readmore' => __( 'Read More', 'phlox' ),
+            'author'   => __( 'Author'  , 'phlox' ),
+            'none'     => __( 'None'  , 'phlox' )
+        ),
+        'default'     => 'readmore',
+        'type'        => 'select'
+    );
+
+    $options[] = array(
+        'title'       => __( 'Display Author in Header', 'phlox' ),
+        'description' => '',
+        'id'          => 'blog_display_author_header',
+        'section'     => 'blog-section-archive',
+        'dependency'  => array(
+                 array(
+                    'id'      => 'post_index_template_type',
+                    'value'   => array('5', '6', '7', '8'),
+                    'operator'=> '=='
+                 ),
+                 array(
+                    'id'      => 'blog_display_author_readmore',
+                    'value'   => array('author'),
+                    'operator'=> '=='
+                )
+        ),
+        'type'        => 'switch',
+        'transport'   => 'postMessage',
+        'default'     => '1'
+    );
+
+    $options[] = array(
+        'title'       => __( 'Display Author in Footer', 'phlox' ),
+        'description' => '',
+        'id'          => 'blog_display_author_footer',
+        'section'     => 'blog-section-archive',
+        'dependency'  => array(
+                 array(
+                    'id'      => 'post_index_template_type',
+                    'value'   => array('5', '6', '7', '8'),
+                    'operator'=> '=='
+                 ),
+                 array(
+                    'id'      => 'blog_display_author_readmore',
+                    'value'   => array('author'),
+                    'operator'=> '=='
+                )
+        ),
+        'type'        => 'switch',
+        'transport'   => 'postMessage',
+        'default'     => '0'
     );
 
     $options[] = array(
@@ -5938,10 +6043,10 @@ function auxin_define_options_info( $fields_sections_list ){
         'dependency'  => array(
                 array(
                      'id'      => 'post_index_template_type',
-                     'value'   => array('default', '1', '2', '3', '4'),
-                     'operator'=> '=='
+                     'value'   => array('9'),
+                     'operator'=> '!='
                 )
-            ),
+        ),
         'transport'   => 'postMessage',
         'partial'     => array(
             'selector'              => '.aux-home .content',
@@ -5952,7 +6057,8 @@ function auxin_define_options_info( $fields_sections_list ){
         ),
         'choices'     => array(
             'full'    => __( 'Full text', 'phlox' ),
-            'excerpt' => __( 'Summary'  , 'phlox' )
+            'excerpt' => __( 'Summary'  , 'phlox' ),
+            'none'    => __( 'None'  , 'phlox' )
         ),
         'default'     => 'full',
         'type'        => 'select'
@@ -5968,7 +6074,12 @@ function auxin_define_options_info( $fields_sections_list ){
                  'id'      => 'blog_content_on_listing',
                  'value'   => array('excerpt'),
                  'operator'=> ''
-            )
+            ),
+            array(
+                'id'      => 'post_index_template_type',
+                'value'   => array('9'),
+                'operator'=> '!='
+           )
         ),
         'transport'   => 'postMessage',
         'partial'     => array(
@@ -5990,7 +6101,7 @@ function auxin_define_options_info( $fields_sections_list ){
         'parent'      => 'blog-section', // section parent's id
         'title'       => __( 'Blog Slider', 'phlox' ),
         'description' => __( 'Preview Blog Archive', 'phlox' ),
-        'preview_link'=> get_post_type_archive_link('post')
+        // 'preview_link'=> get_post_type_archive_link('post')
     );
 
     $options[] = array(
@@ -6765,6 +6876,13 @@ function auxin_define_options_info( $fields_sections_list ){
         'section'     => 'blog-section-taxonomy',
         'dependency'  => array(),
         'transport'   => 'postMessage',
+        'dependency'  => array(
+            array(
+                 'id'      => 'post_taxonomy_archive_template_type',
+                 'value'   => array('9'),
+                 'operator'=> '!='
+            )
+         ),
         'partial'     => array(
             'selector'              => '.archive .aux-archive .content',
             'container_inclusive'   => false,
@@ -6774,7 +6892,8 @@ function auxin_define_options_info( $fields_sections_list ){
         ),
         'choices'     => array(
             'full'    => __( 'Full text', 'phlox' ),
-            'excerpt' => __( 'Summary'  , 'phlox' )
+            'excerpt' => __( 'Summary'  , 'phlox' ),
+            'none'    => __( 'None'  , 'phlox' )
         ),
         'default'     => 'full',
         'type'        => 'select'
@@ -6790,7 +6909,12 @@ function auxin_define_options_info( $fields_sections_list ){
                  'id'      => 'post_taxonomy_archive_content_on_listing',
                  'value'   => array('excerpt'),
                  'operator'=> ''
-            )
+            ),
+            array(
+                'id'      => 'post_taxonomy_archive_template_type',
+                'value'   => array('9'),
+                'operator'=> '!='
+           )
         ),
         'transport'   => 'postMessage',
         'partial'     => array(
@@ -6872,7 +6996,7 @@ function auxin_define_options_info( $fields_sections_list ){
     );
 
     $options[] = array(
-        'title'         => __( 'Display post caregories', 'phlox' ),
+        'title'         => __( 'Display post categories', 'phlox' ),
         'description'   => __( 'Enable it to show the post categories.', 'phlox' ),
         'id'            => 'display_post_taxonomy_info_categories',
         'section'       => 'blog-section-taxonomy',
@@ -6890,9 +7014,114 @@ function auxin_define_options_info( $fields_sections_list ){
                  'id'      => 'display_post_taxonomy_info',
                  'value'   => array('1'),
                  'operator'=> ''
-            )
+            ),
         ),
         'default'       => '1'
+    );
+
+    $options[] = array(
+        'title'       => __( 'Display Comment', 'phlox' ),
+        'description' => '',
+        'id'          => 'display_post_taxonomy_info_comments',
+        'section'     => 'blog-section-taxonomy',
+        'dependency'  => array(
+                 array(
+                    'id'      => 'display_post_taxonomy_info',
+                    'value'   => array('1'),
+                    'operator'=> '=='
+                 ),
+                 array(
+                    'id'      => 'post_taxonomy_archive_template_type',
+                    'value'   => array('1', '2', '3', '4'),
+                    'operator'=> '=='
+                )
+        ),
+        'type'        => 'switch',
+        'transport'   => 'postMessage',
+        'default'     => '1'
+    );
+
+    $options[] = array(
+        'title'       => __( 'Display Comment', 'phlox' ),
+        'description' => '',
+        'id'          => 'display_post_taxonomy_widget_comments',
+        'section'     => 'blog-section-taxonomy',
+        'dependency'  => array(
+                 array(
+                    'id'      => 'post_taxonomy_archive_template_type',
+                    'value'   => array('5', '6', '7', '8'),
+                    'operator'=> '=='
+                )
+        ),
+        'type'        => 'switch',
+        'transport'   => 'postMessage',
+        'default'     => '1'
+    );
+
+    $options[] = array(
+        'title'       => __( 'Display author or read more', 'phlox' ),
+        'description' => __('Specifies whether to show author or read more on each post.', 'phlox'),
+        'id'          => 'display_post_taxonomy_author_readmore',
+        'section'     => 'blog-section-taxonomy',
+        'dependency'  => array(
+            array(
+               'id'      => 'post_taxonomy_archive_template_type',
+               'value'   => array('5', '6', '7', '8'),
+               'operator'=> '=='
+           )
+        ),
+        'transport'   => 'postMessage',
+        'choices'     => array(
+            'readmore' => __( 'Read More', 'phlox' ),
+            'author'   => __( 'Author'  , 'phlox' ),
+            'none'     => __( 'None'  , 'phlox' )
+        ),
+        'default'     => 'readmore',
+        'type'        => 'select'
+    );
+
+    $options[] = array(
+        'title'       => __( 'Display Author in Header', 'phlox' ),
+        'description' => '',
+        'id'          => 'display_post_taxonomy_author_header',
+        'section'     => 'blog-section-taxonomy',
+        'dependency'  => array(
+                 array(
+                    'id'      => 'post_taxonomy_archive_template_type',
+                    'value'   => array('5', '6', '7', '8'),
+                    'operator'=> '=='
+                 ),
+                 array(
+                    'id'      => 'display_post_taxonomy_author_readmore',
+                    'value'   => array('author'),
+                    'operator'=> '=='
+                )
+        ),
+        'type'        => 'switch',
+        'transport'   => 'postMessage',
+        'default'     => '1'
+    );
+
+    $options[] = array(
+        'title'       => __( 'Display Author in Footer', 'phlox' ),
+        'description' => '',
+        'id'          => 'display_post_taxonomy_author_footer',
+        'section'     => 'blog-section-taxonomy',
+        'dependency'  => array(
+                 array(
+                    'id'      => 'post_taxonomy_archive_template_type',
+                    'value'   => array('5', '6', '7', '8'),
+                    'operator'=> '=='
+                 ),
+                 array(
+                    'id'      => 'display_post_taxonomy_author_readmore',
+                    'value'   => array('author'),
+                    'operator'=> '=='
+                )
+        ),
+        'type'        => 'switch',
+        'transport'   => 'postMessage',
+        'default'     => '0'
     );
 
     $options[] = array(
@@ -7044,6 +7273,17 @@ function auxin_define_options_info( $fields_sections_list ){
     );
 
     $options[] = array(
+        'title'          => __( 'Post info Terms Typography', 'phlox' ),
+        'id'             => 'blog_page_info_terms_typography',
+        'description'    => '',
+        'section'        => 'blog-section-blog-appearence',
+        'default'        => '',
+        'type'           => 'group_typography',
+        'selectors'      => '.blog .aux-archive .aux-primary .hentry .entry-info a',
+        'transport'      => 'postMessage',
+    );
+
+    $options[] = array(
         'title'          => __( 'Post Content Typography', 'phlox' ),
         'id'             => 'blog_page_content_typography',
         'description'    => '',
@@ -7093,7 +7333,7 @@ function auxin_define_options_info( $fields_sections_list ){
         'parent'        => 'page-section', // section parent's id
         'title'         => __( 'Page Layout', 'phlox' ),
         'description'   => __( 'Preview a page', 'phlox' ),
-        'preview_link'  => auxin_get_last_post_permalink( array( 'post_type' => 'page' ) )
+        // 'preview_link'  => auxin_get_last_post_permalink( array( 'post_type' => 'page' ) )
     );
 
 
@@ -7228,7 +7468,7 @@ function auxin_define_options_info( $fields_sections_list ){
         'parent'       => 'page-section', // section parent's id
         'title'        => __( 'Page Title', 'phlox' ),
         'description'  => __( 'Preview a page', 'phlox' ),
-        'preview_link' => auxin_get_last_post_permalink( array( 'post_type' => 'page' ) )
+        // 'preview_link' => auxin_get_last_post_permalink( array( 'post_type' => 'page' ) )
     );
 
     $options[] = array(
@@ -8573,7 +8813,7 @@ function auxin_define_options_info( $fields_sections_list ){
         'parent'       => 'product-section', // section parent's id
         'title'        => __( 'Shop Page', 'phlox' ),
         'description'  => __( 'Preview Shop Page', 'phlox'),
-        'preview_link' => auxin_get_post_type_archive_shortlink('product')
+        // 'preview_link' => auxin_get_post_type_archive_shortlink('product')
     );
 
     $options[] = array(

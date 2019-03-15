@@ -1824,7 +1824,7 @@ function auxin_get_footer_components_markup( $args = '' ){
             case 'menu':
                 $locations = auxin_get_theme_mod('nav_menu_locations');
 
-                if( $locations['footer'] ){
+                if( ! empty( $locations['footer'] ) ){
                     wp_nav_menu(
                         array(
                             'container_id'    => 'menu-footer-nav',

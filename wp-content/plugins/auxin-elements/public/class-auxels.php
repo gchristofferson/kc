@@ -245,26 +245,26 @@ class AUXELS {
   }
 
 
-    /**
-     * Fired for each blog when the plugin is activated.
-     *
-     * @since    1.0.0
-     */
-    private static function single_activate() {
-        add_action( 'after_setup_theme', array( 'AUXELS', 'flush' ) );
+  /**
+   * Fired for each blog when the plugin is activated.
+   *
+   * @since    1.0.0
+   */
+  private static function single_activate() {
+      add_action( 'after_setup_theme', array( 'AUXELS', 'flush' ) );
 
-        do_action( 'auxels_activated', get_current_blog_id() );
-    }
+      do_action( 'auxels_activated', get_current_blog_id() );
+  }
 
 
-    /**
-     * Fired for each blog when the plugin is deactivated.
-     *
-     * @since    1.0.0
-     */
-    private static function single_deactivate() {
-        do_action( 'auxels_deactivated' );
-    }
+  /**
+   * Fired for each blog when the plugin is deactivated.
+   *
+   * @since    1.0.0
+   */
+  private static function single_deactivate() {
+      do_action( 'auxels_deactivated' );
+  }
 
 
   /**

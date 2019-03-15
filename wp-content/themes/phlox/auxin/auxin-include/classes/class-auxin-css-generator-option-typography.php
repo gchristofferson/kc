@@ -126,8 +126,7 @@ class Auxin_CSS_Generator_Option_Typography extends Auxin_CSS_Generator_Option_B
 
             if( is_array( $propValue ) && $prop !== 'font-family' ){
                 $this->walk_breakpoints( $propValue, $prop );
-            } elseif( ! empty( $propValue ) ) {
-                $css = $this->get_sanitized_rule_string( $prop, $propValue );
+            } elseif( ! empty( $propValue ) && $css = $this->get_sanitized_rule_string( $prop, $propValue ) ) {
                 $this->stack_css( $css, $this->defaults['breakpoint'], $prop );
             }
         }
@@ -159,6 +158,9 @@ class Auxin_CSS_Generator_Option_Typography extends Auxin_CSS_Generator_Option_B
         if( $prop == "font-family" ){
             $value = isset( $value['value'] ) ? $value['value'] : $value;
             $face  = strtok( $value, ':');
+            if( 'none' === $face ){
+                return '';
+            }
             Auxin_Fonts::get_instance()->load_font( $face, $value );
             return $prop . ":'" . $face . "';";
         }

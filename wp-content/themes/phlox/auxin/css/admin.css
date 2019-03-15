@@ -1691,8 +1691,12 @@ body.wp-admin #wpwrap #qm { margin-left: 160px !important; }
 .auxin-wizard-panel .aux-update-items .aux-success .aux-indicator { background-image: url(images/welcome/check.svg) !important; }
 .auxin-wizard-panel .aux-update-items .column-status .spinner { display: none !important; }
 
-.aux-is-activated { color: #00BA26; font-size: 14px; font-weight: 400; line-height: 19px; margin: 0 15px; }
+.aux-welcome-desc-meta { margin: 0 8px 0 0; }
+
+.aux-is-activated { color: #00BA26; font-size: 14px; font-weight: 400; line-height: 19px; }
 .aux-is-activated::before { content: ""; background-image: url(images/welcome/check.svg); background-repeat: no-repeat; width: 13px; height: 13px; display: inline-block; vertical-align: baseline; }
+
+.aux-welcome-desc-meta-link { font-size: 14px; font-weight: 400; line-height: 19px; }
 
 .auxin-wizard-panel .aux-updates-step .aux-content-title { font-size: 28px; font-weight: 500; margin-bottom: 3px; line-height: 37px; }
 .auxin-wizard-panel .aux-updates-step p { line-height: 21px; margin-bottom: 30px; }

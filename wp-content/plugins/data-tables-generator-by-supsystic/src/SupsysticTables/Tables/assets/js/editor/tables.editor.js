@@ -1,6 +1,7 @@
 var g_stbWindowHeight = 0;
 var g_stbPagination = false;
 var g_stbRowsPerPage = 1;
+var g_stbIsDataEdited = {'settings': false, 'source': false, 'history': false, 'woocommerce': false, 'data': false};
 (function ($, app, undefined) {
 	$(document).ready(function() {
 		g_stbWindowHeight = $(window).width() > 810 ? $(window).height() * 0.7 : $(window).height();	// 810px is mobile responsive width
@@ -25,7 +26,11 @@ var g_stbRowsPerPage = 1;
 				fixedRowsTop: 0,
 				fixedColumnsLeft: 0,
 				comments: true,
-				contextMenu: true,
+				contextMenu: {
+					callback: function (key, selection, clickEvent) {
+						g_stbIsDataEdited['data'] = true;
+					}
+				},
 				formulas: true,
 				/*fillHandle: {
 					autoInsertRow: false		// Disable adding of new row during drag-down cell via right bottom corner
@@ -161,6 +166,7 @@ var g_stbRowsPerPage = 1;
 			if(isForced) $(editor.table).find('a').attr('target', "_blank");
 		});
 		editor.addHook('beforeChange', function (changes, source) {
+			g_stbIsDataEdited['data'] = true;
 			$.each(changes, function (index, changeSet) {
 				var row = changeSet[0],
 					col = changeSet[1],

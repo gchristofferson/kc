@@ -116,29 +116,15 @@
                             </span>
                         </li>
                         <li>
-                            {% set settingClass = '' %}
-                            {% set editorClass = '' %}
-                            {% if attributes is defined and attributes.new == '1' %}
-                                {% set editorClass = 'current ' %}
-                            {% else %}
-                                {% set settingClass = 'current ' %}
-                            {% endif %}
-
-                            <a href="#row-tab-settings" class="{{ settingClass }}button">
+                            <a href="#row-tab-settings" class="button">
                                 <i class="fa fa-fw fa-wrench"></i>
                                 {{ environment.translate('Settings') }}
                             </a>
                         </li>
                         <li>
-                            <a href="#row-tab-editor" class="{{ editorClass }}button">
+                            <a href="#row-tab-editor" class="current button">
                                 <i class="fa fa-fw fa-th"></i>
                                 {{ environment.translate('Editor') }}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#row-tab-preview" class="button">
-                                <i class="fa fa-fw fa-eye"></i>
-                                {{ environment.translate('Preview') }}
                             </a>
                         </li>
                         <li>
@@ -154,202 +140,193 @@
             </div>
 
             <div class="row row-tab" id="row-tab-settings">
-
+            <section class="settings-section">
                 <div class="stb-wraper-anchor-nav-links">
                     <a href="#stb-anl-main" class="stb-anchor-nav-links">{{ translate('Main')}}</a>
                     <a href="#stb-anl-features" class="stb-anchor-nav-links">{{ translate('Features')}}</a>
                     <a href="#stb-anl-appearance" class="stb-anchor-nav-links">{{ translate('Appearance')}}</a>
-                    <a href="#stb-anl-language" class="stb-anchor-nav-links">{{ translate('Language and Text')}}</a>
-                    <a href="#stb-anl-source" class="stb-anchor-nav-links">{{ translate('Source')}}</a>
+                    <a href="#stb-anl-text" class="stb-anchor-nav-links">{{ translate('Text')}}</a>
                 </div>
                 <div class="settings-wrap">
                     <form id="settings">
-                        <section class="row-settings-tabs">
-                        <section class="row row-settings-tab" id="stb-anl-main">
-                            <div class="title-block col-xs-12">
-                                <h3>{{ environment.translate('Main Settings') }}</h3>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <div class="title-place">
+                        <section class="settings-blocks">
+                            <section class="row-settings-block" id="stb-anl-main">
+                                <div class="settings-block-title">
+                                    <h3><i class="fa fa-fw fa-tachometer"></i> {{ environment.translate('Main Settings') }}</h3>
+                                </div>
+                                <div class="setting-title">
                                     <h3>{{ environment.translate('Table Elements') }}</h3>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="table-elements-caption">
                                             {{ environment.translate('Caption') }}
                                             {{ tooltip.icon('Check here if you want to show the name of the table above the table', 'top', true) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="elements[caption]"
                                                 {{ checkbox.checked(table.settings.elements.caption) }}
                                             id="table-elements-caption"/>
-                                        <!-- /#table-elements-caption -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="table-elements-description">
                                             {{ environment.translate('Description') }}
                                             {{ tooltip.icon('You can add short description to the table between title and table', 'top', true) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="elements[description]"
                                                 {{ checkbox.checked(table.settings.elements.description) }}
-                                            id="table-elements-description"
+                                            data-preview-not-redraw="1" id="table-elements-description"
                                             data-target-toggle=".table-elements-description-options"/>
                                         <!-- /#table-elements-caption -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row table-elements-description-options"
+                                <div class="setting-wrapper table-elements-description-options setting-suboption"
                                     {% if table.settings.elements.description is not defined %}
                                         style="display:none"
                                     {% endif %}
                                 >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="descriptionText">
                                             {{ environment.translate('Description Text') }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <textarea id="descriptionText">{{ table.settings.elements.descriptionText | default('') }}</textarea>
                                         <input type="hidden" name="elements[descriptionText]" value="{{ table.settings.elements.descriptionText | default('') }}" />
-                                        <!-- /#table-elements-caption -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="table-elements-signature">
                                             {{ environment.translate('Signature') }}
                                             {{ tooltip.icon('You can add signature under table footer', 'top', true) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="elements[signature]"
                                                 {{ checkbox.checked(table.settings.elements.signature) }}
-                                               id="table-elements-signature"
+                                               data-preview-not-redraw="1" id="table-elements-signature"
                                                data-target-toggle=".table-elements-signature-options"/>
-                                        <!-- /#table-elements-caption -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row table-elements-signature-options"
+                                <div class="setting-wrapper table-elements-signature-options setting-suboption"
                                         {% if table.settings.elements.signature is not defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="signatureText">
                                             {{ environment.translate('Signature Text') }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <textarea id="signatureText">{{ table.settings.elements.signatureText | default('') }}</textarea>
                                         <input type="hidden" name="elements[signatureText]" value="{{ table.settings.elements.signatureText | default('') }}" />
-                                        <!-- /#table-elements-caption -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="table-elements-head">
                                             {{ environment.translate('Header') }}
                                             {{ tooltip.icon('<img src="http://supsystic.com/_assets/tables/tooltip/Header.jpg"/>', 'top', true) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="elements[head]"
                                                 {{ checkbox.checked(table.settings.elements.head) }}
                                             id="table-elements-head"
                                             data-target-toggle=".table-elements-head-options"/>
-                                        <!-- /#table-elements-head -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row table-elements-head-options"
+                                <div class="setting-wrapper table-elements-head-options setting-suboption"
                                     {% if table.settings.elements.head is not defined %}
                                         style="display:none"
                                     {% endif %}
                                 >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="headerRowsCount">
                                             {{ environment.translate('Count of Header Rows') }}
                                             {{ tooltip.icon(environment.translate('Count of table rows, which will be moved to header.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <input name="headerRowsCount" id="headerRowsCount" type="text" value="{{ table.settings.headerRowsCount | default(1) }}">
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="table-elements-foot">
                                             {{ environment.translate('Footer') }}
                                             {{ tooltip.icon('<img src="http://supsystic.com/_assets/tables/tooltip/footer.jpg"/>', 'top', true) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="elements[foot]"
                                                 {{ checkbox.checked(table.settings.elements.foot) }}
                                             id="table-elements-foot"
                                             data-target-toggle=".table-elements-foot-options"/>
-                                        <!-- /#table-elements-foot -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row table-elements-foot-options"
+                                <div class="setting-wrapper table-elements-foot-options setting-suboption"
                                         {% if table.settings.elements.foot is not defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="customFooter">
                                             {{ environment.translate('Custom Footer') }}
                                             {{ tooltip.icon(environment.translate('If checked - footer will be created from the last table rows. Otherwise - footer will be created from header rows.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="customFooter"
                                                 {{ checkbox.checked(table.settings.customFooter) }}
                                                id="customFooter"
                                                data-target-toggle=".custom-footer-options"/>
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row custom-footer-options"
+                                <div class="setting-wrapper custom-footer-options setting-suboption"
                                         {% if table.settings.elements.foot is not defined or table.settings.customFooter is not defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="footerRowsCount">
                                             {{ environment.translate('Count of Footer Rows') }}
                                             {{ tooltip.icon(environment.translate('Count of table rows, which will be moved to footer.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <input name="footerRowsCount" id="footerRowsCount" type="text" value="{{ table.settings.footerRowsCount | default(1) }}">
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="features-fixed-header">
                                             {{ environment.translate('Fixed Header') }}
                                             {{ tooltip.icon(environment.translate('Allows to fix the table\'s header during table scrolling. Important! Header option must be enabled for using this feature. Also you need to set Fixed Table Height to create a vertical scroll for your table. To see the work of this feature you should not use such Responsive Modes such as Standard and Automatic columns hiding.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="fixedHeader"
                                                 {{ checkbox.checked(table.settings.fixedHeader) }}
                                             id="features-fixed-header"
                                             class="features-fixed-header-footer"/>
-                                        <!-- /#features-fixed-header -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="features-fixed-footer">
                                             {{ environment.translate('Fixed Footer') }}
                                             {{ tooltip.icon(environment.translate('Allows to fix the table\'s footer during table scrolling. Important! Footer option must be enabled for using this feature. Also you need to set Fixed Table Height to create a vertical scroll at the table. To see the work of this feature you should not use such Responsive Modes as Standard and Automatic columns hiding.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="fixedFooter"
                                                 {{ checkbox.checked(table.settings.fixedFooter) }}
                                             id="features-fixed-footer"
@@ -357,74 +334,73 @@
                                         <!-- /#features-fixed-footer -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row features-fixed-height"
+                                <div class="setting-wrapper features-fixed-height setting-suboption"
                                     {% if table.settings.fixedHeader is not defined and table.settings.fixedFooter is not defined %}
                                         style="display:none"
                                     {% endif %}
                                 >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="fixedHeight">
                                             {{ environment.translate('Fixed Table Height') }}
                                             {{ tooltip.icon(environment.translate('Fixed table height in px. This value must be less than the original table height to create a vertical scroll, otherwise you will not see that the fixed header / footer exists.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <input name="fixedHeight" id="fixedHeight" type="text" value="{{ table.settings.fixedHeight | default(400) }}">
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="features-fixed-columns">
                                             {{ environment.translate('Fixed Columns') }}
                                             {{ tooltip.icon(environment.translate('Allows to fix columns during table scrolling. Important! The fixing of columns suggests that the table will have a horisontal scroll type of responsive mode, otherwise you will not see that the fixed columns exist. So this feature is a kind of responsive mode on its own and will not work with such Responsive Modes as Standard and Automatic columns hiding.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="fixedColumns"
                                                 {{ checkbox.checked(table.settings.fixedColumns) }}
                                             id="features-fixed-columns"
                                             data-target-toggle=".fixed-columns-options"/>
-                                        <!-- /#features-fixed-columns -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row fixed-columns-options"
+                                <div class="setting-wrapper fixed-columns-options setting-options"
                                     {% if table.settings.fixedColumns is not defined %}
                                         style="display:none"
                                     {% endif %}
                                 >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="fixedLeftColumnsCount">
                                             {{ environment.translate('Left Columns Count') }}
                                             {{ tooltip.icon(environment.translate('Number of column to fix by left side of the table.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <input name="fixedLeftColumnsCount" id="fixedLeftColumnsCount" type="text" value="{{ table.settings.fixedLeftColumnsCount | default(1) }}">
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row fixed-columns-options"
+                                <div class="setting-wrapper fixed-columns-options setting-options"
                                     {% if table.settings.fixedColumns is not defined %}
                                         style="display:none"
                                     {% endif %}
                                 >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="fixedRightColumnsCount">
                                             {{ environment.translate('Right Columns Count') }}
                                             {{ tooltip.icon(environment.translate('Number of column to fix by right side of the table.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <input name="fixedRightColumnsCount" id="fixedRightColumnsCount" type="text" value="{{ table.settings.fixedRightColumnsCount | default(0) }}">
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="autoIndex">
                                             {{ environment.translate('Auto Index') }}
                                             {{ tooltip.icon('Add index (row number) to table.', 'top', true) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <select name="autoIndex" id="autoIndex">
                                             {% for value, title in {'off': 'No index', 'first': 'Use first column', 'new':'Create new column'} %}
                                                 <option value="{{ value }}"
@@ -437,68 +413,66 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <div class="title-place">
+                                <div class="setting-title">
                                     <h3>{{ environment.translate('Options') }}</h3>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="disable-table-cache">
                                             {{ environment.translate('Disable Table Cache') }}
                                             {{ tooltip.icon(environment.translate("This feature is necessary for those cases, when table contains the shortcodes. By checking the box, you can make sure that they will be rendered correctly and won't be influenced by cache.")) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
-                                        <input type="checkbox" name="disableCache" id="disable-table-cache" {{ checkbox.checked(table.settings.disableCache) }} />
+                                    <div class="setting-check">
+                                        <input type="checkbox" name="disableCache" id="disable-table-cache" data-preview-not-redraw="1" {{ checkbox.checked(table.settings.disableCache) }} />
                                     </div>
                                 </div>
-                                <div class="title-place">
+                                <div class="setting-title">
                                     <h3>{{ environment.translate('Data Formats') }}</h3>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="editor-use-comma-as-delimiter">
                                             {{ environment.translate('Use Comma as Delimiter') }}
                                             {{ tooltip.icon(environment.translate('Use comma as delimiter of integer and fractional parts of number for editable fields on frontend')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="useCommaAsDelimiter"
                                                 {{ checkbox.checked(table.settings.useCommaAsDelimiter) }}
                                                id="editor-use-comma-as-delimiter" />
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="editor-use-number-format">
                                             {{ environment.translate('Number Formatting') }}
                                             {{ tooltip.icon(environment.translate('Set format of all numbers in the table')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="useNumberFormat"
                                                 {{ checkbox.checked(table.settings.useNumberFormat) }}
                                             id="editor-use-number-format" />
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row use-number-format-options"
+                                <div class="setting-wrapper use-number-format-options setting-suboption"
                                     {% if table.settings.useNumberFormat is not defined %}
                                         style="display:none"
                                     {% endif %}
                                 >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="editor-set-number-format">
                                             {{ environment.translate('Number') }}
                                             {{ tooltip.icon(environment.translate('Set output format for numbers e.g. 1,000.00, 1.00')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <input name="numberFormat" id="editor-set-number-format" type="text" value="{{ table.settings.numberFormat | default('1,000.00') }}">
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="editor-set-currency-format">
                                             {{ environment.translate('Currency') }}
                                             {{ tooltip.icon(environment.translate('Set output format for currencies. Supports only 1 currency for 1 table. Besides here you can establish needed divider between integer and fractional parts and quantity of zeros at fractional part. For example:<br />
@@ -506,12 +480,12 @@
                                             € 1.00')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
-                                        <input name="currencyFormat" id="editor-set-currency-format" type="text" value="{{ table.settings.currencyFormat | default('$1,000.00') }}">
+                                    <div class="setting-input">
+                                        <input name="currencyFormat" id="editor-set-currency-format" type="text" data-need-data-save='1' value="{{ table.settings.currencyFormat | default('$1,000.00') }}">
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="editor-set-percent-format">
                                             {{ environment.translate('Percent') }}
                                             {{ tooltip.icon(environment.translate('Set output format for percent numbers. For example:<br />
@@ -519,12 +493,12 @@
                                             10%')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
-                                        <input name="percentFormat" id="editor-set-percent-format" type="text" value="{{ table.settings.percentFormat | default('10.00%') }}">
+                                    <div class="setting-input">
+                                        <input name="percentFormat" id="editor-set-percent-format" type="text" data-need-data-save='1' value="{{ table.settings.percentFormat | default('10.00%') }}">
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="editor-set-date-format">
                                             {{ environment.translate('Date') }}
                                             {{ tooltip.icon(environment.translate('Set output format for date. For example:<br />
@@ -532,12 +506,12 @@
                                             DD.MM.YY - 25.12.91')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
-                                        <input name="dateFormat" id="editor-set-date-format" type="text" value="{{ table.settings.dateFormat | default('DD.MM.YYYY') }}">
+                                    <div class="setting-input">
+                                        <input name="dateFormat" id="editor-set-date-format" type="text" data-need-data-save='1' value="{{ table.settings.dateFormat | default('DD.MM.YYYY') }}">
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="editor-set-time-duration-format">
                                             {{ environment.translate('Time / Duration') }}
                                             {{ tooltip.icon(environment.translate('Set output format for time and duration. For example:<br />
@@ -549,34 +523,31 @@
                                              hh:mm:ss - 36:40:12')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
-                                        <input name="timeDurationFormat" id="editor-set-time-duration-format" type="text" value="{{ table.settings.timeDurationFormat | default('HH:mm') }}">
+                                    <div class="setting-input">
+                                        <input name="timeDurationFormat" id="editor-set-time-duration-format" type="text" data-need-data-save='1' value="{{ table.settings.timeDurationFormat | default('HH:mm') }}">
                                     </div>
                                 </div>
-                            </div>
-                            <!-- /.form-table -->
                         </section>
-                        <section class="row row-settings-tab" id="stb-anl-features">
-                            <div class="title-block col-xs-12">
-                                <h3>{{ environment.translate('Features') }}</h3>
+                        <section class="row-settings-block" id="stb-anl-features">
+                            <div class="settings-block-title">
+                                <h3><i class="fa fa-fw fa-cogs"></i> {{ environment.translate('Features') }}</h3>
                             </div>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="title-place">
+                                <div class="setting-title">
                                     <h3>{{ environment.translate('General') }}</h3>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="features-responsive-mode">
                                             {{ environment.translate('Responsive Mode') }}
                                             {{ tooltip.icon(
                                             environment.translate('Standard Responsive mode - in this mode if table content doesn\'t fit all columns become under each other with one cell per row') ~ '<br>' ~ '<br>' ~
                                             environment.translate('Automatic column hiding - in this mode table columns will collapse from right to left if content does not fit to parent container width') ~ '<br>' ~ '<br>' ~
-                                            environment.translate('Horizontal scroll - in this mode scroll bar will be added if table overflows parent container width') ~ '<br>' ~
-                                            environment.translate('Disable Responsivity - default table fluid layout') ~ '<br>'
+                                            environment.translate('Horizontal scroll - in this mode scroll bar will be added if table overflows parent container width') ~ '<br>' ~ '<br>' ~
+                                            environment.translate('Disable Responsivity - default table fluid layout <a href="https://supsystic.com/example/data-table-responsive-modes/" target="_blank">Read more.</a>') ~ '<br>'
                                             ) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <select name="responsiveMode" id="features-responsive-mode">
                                             {% for value, name in {
                                             '0': environment.translate('Standard Responsive mode'),
@@ -595,44 +566,43 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="features-info">
                                             {{ environment.translate('Table Information') }}
                                             {{ tooltip.icon(environment.translate('Table information display field. %s') | format('<img src="http://supsystic.com/_assets/tables/tooltip/info.jpg"/>') | raw, 'top', true) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="features[info]" {{ checkbox.checked(table.settings.features.info) }} id="features-info"/>
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="features-ordering">
                                             {{ environment.translate('Sorting') }}
                                             {{ tooltip.icon('<p style="width:227px; padding:5px margin:0">To allow dynamic sorting with arrows you must enable Header option.</p><img src="http://supsystic.com/_assets/tables/tooltip/Ordrering.jpg"/>', 'top', true) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="features[ordering]"
                                                 {{ checkbox.checked(table.settings.features.ordering) }}
                                                id="features-ordering"
                                                data-target-toggle=".sorting-options"/>
-                                        <!-- /#features-ordering -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row sorting-options"
+                                <div class="setting-wrapper sorting-options setting-suboption"
                                         {% if table.settings.features.ordering is not defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="features-sorting-order">
                                             {{ environment.translate('Sorting Order') }}
                                             {{ tooltip.icon(environment.translate('Set sort order by default')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <select name="sortingOrder" id="features-sorting-order">
                                             <option value="asc">{{ environment.translate('Ascending') }}</option>
                                             <option value="desc"
@@ -643,65 +613,64 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row sorting-options"
+                                <div class="setting-wrapper sorting-options setting-suboption"
                                         {% if table.settings.features.ordering is not defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="sorting-order-column">
                                             {{ environment.translate('Sorting Column') }}
                                             {{ tooltip.icon(environment.translate('Number of column to apply sort order. Set no value to disable table sorting by default.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <input name="sortingOrderColumn" id="sorting-order-column" type="text" value="{{ table.settings.sortingOrderColumn | default(1) }}">
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="features-pagination">
                                             {{ environment.translate('Pagination') }}
                                             {{ tooltip.icon('<img src="http://supsystic.com/_assets/tables/tooltip/Pagination.jpg"/>', 'top', true) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input data-toggle="collapse" type="checkbox" name="features[paging]"
                                                 {{ checkbox.checked(table.settings.features.paging) }}
                                                id="features-pagination"
                                                data-target-toggle=".pagination-options"/>
-                                        <!-- /#features-pagination -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row pagination-options"
+                                <div class="setting-wrapper pagination-options setting-suboption"
                                         {% if table.settings.features.paging is not defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="pagination-length">
                                             {{ environment.translate('Pagination List Content') }}
                                             {{ tooltip.icon('Here you can set the number of rows to display on one Pagination page. Establish several numbers separated by comma to let users choose it personally. First number will be displayed by default. Since that the number of Pagination Pages will be recounted also.', 'top', true) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <input type="text"
                                                name="paginationMenuLength"
                                                value="{{ table.settings.paginationMenuLength | default('50,100,All') }}"
                                                id="pagination-length" />
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row pagination-options"
+                                <div class="setting-wrapper pagination-options setting-suboption"
                                         {% if table.settings.features.paging is not defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="pagination-size">
                                             {{ environment.translate('Pagination Size') }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <select name="paginationSize" id="pagination-size" >
                                             {% for value, name in {
                                             'pagination-large': environment.translate('Large'),
@@ -719,68 +688,85 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row pagination-options"
+                                <div class="setting-wrapper pagination-options setting-suboption"
                                         {% if table.settings.features.paging is not defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
+                                        <label for="scroll-top-by-pagination">
+                                            {{ environment.translate('Scroll top by pagination') }}
+                                            {{ tooltip.icon(environment.translate('Scroll to table top for pagination change.')) }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-check">
+                                        <input type="checkbox" name="scrollTopByPagination" id="scroll-top-by-pagination"
+                                                {{ checkbox.checked(table.settings.scrollTopByPagination) }}
+                                                >
+                                    </div>
+                                </div>
+                                <div class="setting-wrapper pagination-options setting-suboption"
+                                        {% if table.settings.features.paging is not defined %}
+                                            style="display:none"
+                                        {% endif %}
+                                        >
+                                    <div class="setting-label">
                                         <label for="pagination-server-processing">
                                             {{ environment.translate('Server-side Processing') }}
                                             {{ tooltip.icon(environment.translate('This option is recommended for a large tables that cannot be processed in conventional way. The table will be sequentially loaded by ajax on a per page basis, all filtering, ordering and search clauses is server-side implemented too.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
-                                        <input type="checkbox" name="serverSideProcessing" id="server-side-processing"
+                                    <div class="setting-check">
+                                        <input type="checkbox" name="serverSideProcessing" id="server-side-processing" data-need-settings-save='1'
                                                 {{ checkbox.checked(table.settings.serverSideProcessing) }}
                                                 >
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="features-searching">
                                             {{ environment.translate('Searching') }}
                                             {{ tooltip.icon('<img src="http://supsystic.com/_assets/tables/tooltip/Searching.jpg"/>', 'top', true) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="features[searching]"
                                                 {{ checkbox.checked(table.settings.features.searching) }}
                                                id="features-searching"
                                                data-target-toggle=".searching-options"/>
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row searching-options"
+                                <div class="setting-wrapper searching-options setting-suboption"
                                         {% if table.settings.features.searching is not defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="features-search-by-column">
                                             {{ environment.translate('Search by Columns') }}
                                             {{ tooltip.icon(environment.translate('Add search by table columns. Use a semicolon as separator for select any of the values.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="searching[columnSearch]" id="features-search-by-column"
                                                 {{ checkbox.checked(table.settings.searching.columnSearch) }}
                                                 >
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row searching-options"
+                                <div class="setting-wrapper searching-options setting-suboption"
                                         {% if table.settings.features.searching is not defined
                                             or (table.settings.features.searching is defined and table.settings.searching.columnSearch is not defined)
                                         %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="features-search-by-column-position">
                                             {{ environment.translate('Location of Search Fields') }}
                                             {{ tooltip.icon(environment.translate('Here you can choose where the column search fields will be: at the top or bottom of the table.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <select name="searching[columnSearchPosition]" id="features-search-by-column-position" >
                                             {% for value, name in {
                                             'bottom': environment.translate('Bottom'),
@@ -797,185 +783,183 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row searching-options"
+                                <div class="setting-wrapper searching-options setting-suboption"
                                         {% if table.settings.features.searching is not defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="features-search-by-hidden-fields">
                                             {{ environment.translate('Search by Hidden Fields') }}
                                             {{ tooltip.icon(environment.translate('Lets make search by fields, marked as hidden (see appropriate button on editor toolbar)')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="searching[searchByHiddenField]" id="features-search-by-hidden-fields"
                                                 {{ checkbox.checked(table.settings.searching.searchByHiddenField) }}
                                                 >
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row searching-options"
+                                <div class="setting-wrapper searching-options setting-suboption"
                                         {% if table.settings.features.searching is not defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="features-searching-result-only">
                                             {{ environment.translate('Show Only Search Results') }}
                                             {{ tooltip.icon(environment.translate('Hide table by default and show only if search has a result.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="searching[resultOnly]" id="features-searching-result-only"
                                                 {{ checkbox.checked(table.settings.searching.resultOnly) }}
                                                 >
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row searching-options"
+                                <div class="setting-wrapper searching-options setting-suboption"
                                         {% if table.settings.features.searching is not defined
                                             or (table.settings.features.searching is defined and table.settings.searching.resultOnly is not defined)
                                         %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
-
+                                    <div class="setting-label">
                                         <label for="features-searching-show-table">
                                             {{ environment.translate('Show Empty Table') }}
                                             {{ tooltip.icon(environment.translate('Table will not be hidden by default , but will be empty.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="searching[showTable]" id="features-searching-show-table"
                                                 {{ checkbox.checked(table.settings.searching.showTable) }}
                                                 >
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row searching-options"
+                                <div class="setting-wrapper searching-options setting-suboption"
                                         {% if table.settings.features.searching is not defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="features-searching-strict-matching">
                                             {{ environment.translate('Strict Matching') }}
                                             {{ tooltip.icon(environment.translate('Display only entries with matching characters in the beginning of words')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="searching[strictMatching]" id="features-searching-strict-matching"
                                                 {{ checkbox.checked(table.settings.searching.strictMatching) }}
                                                 >
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row searching-options"
+                                <div class="setting-wrapper searching-options setting-suboption"
                                         {% if table.settings.features.searching is not defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="features-searching-strict-min-chars">
                                             {{ environment.translate('Minimum Count of Characters') }}
                                             {{ tooltip.icon(environment.translate('Set minimum count of characters to start search in Search field. Set 0 to make search in any case.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <input type="text" name="searching[minChars]" id="features-searching-strict-min-chars"
                                                value="{{ table.settings.searching.minChars|default('0') }}" />
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="features-disallow-indexing">
                                             {{ environment.translate('Disallow Indexing') }}
                                             {{ tooltip.icon(environment.translate('Disable indexing table for search bots')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="disallowIndexing" id="features-disallow-indexing"
                                                 {{ checkbox.checked(table.settings.disallowIndexing) }} />
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="enable-after-table-loaded-script">
                                             {{ environment.translate('Execute JS Script After Table Load') }}
                                             {{ tooltip.icon(environment.translate('Allows to execute custom javascript code after table is loaded.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="features[enable_after_table_loaded_script]"
                                                id="enable-after-table-loaded-script"
                                                data-target-toggle=".after-table-loaded-script-options"
                                                 {{ checkbox.checked(table.settings.features.enable_after_table_loaded_script) }} />
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row after-table-loaded-script-options"
+                                <div class="setting-wrapper after-table-loaded-script-options setting-suboption"
                                         {% if table.settings.features.enable_after_table_loaded_script is not defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="after-table-loaded-script-text">
                                             {{ environment.translate('JS Script Text') }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
-                                        <textarea id="after-table-loaded-script-text" placeholder="{{ environment.translate('Paste script code here')}}" style="margin-top: 10px;">{{ table.settings.features.after_table_loaded_script | default('') }}</textarea>
+                                    <div class="setting-input">
+                                        <textarea id="after-table-loaded-script-text" placeholder="{{ environment.translate('Paste script code here')}}">{{ table.settings.features.after_table_loaded_script | default('') }}</textarea>
                                         <input type="hidden" name="features[after_table_loaded_script]" value="{{ table.settings.features.after_table_loaded_script | default('') }}" />
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="title-place">
+
+                                <div class="setting-title">
                                     <h3>{{ environment.translate('Frontend Fields') }}</h3>
                                 </div>
                                 {% if environment.isPro() == false %}
-                                    <div class="setting-wrapper row">
-                                        <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-wrapper">
+                                        <div class="setting-label">
                                             <label for="save-editable-fields-unavailable">
                                                 {{ environment.translate('Save Frontend Fields') }}
                                                 {{ tooltip.icon(environment.translate('Save table data entered through frontend fields. Refer to the first two buttons on the second row of the editor toolbar:<br />Add editable field<br />Add dropdown list')) }}
                                                 <a target="_blank" class="supsystic-pro-feature" href="{{ build_pro_url({ 'utm_medium': 'editable_fields_feature' }) }}">{{ environment.translate('PRO option') }}</a>
                                             </label>
                                         </div>
-                                        <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                        <div class="setting-check">
                                             <input type="checkbox" disabled="disabled" id="save-editable-fields-unavailable"/>
                                         </div>
                                     </div>
-                                    <div class="setting-wrapper row">
-                                        <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-wrapper">
+                                        <div class="setting-label">
                                             <label for="mark-last-edited-cell-unavailable">
                                                 {{ environment.translate('Mark Last Edited Cell') }}
                                                 {{ tooltip.icon(environment.translate('Adds a symbol ✓ to last edited cell.')) }}
                                                 <a target="_blank" class="supsystic-pro-feature" href="{{ build_pro_url({ 'utm_medium': 'mark_last_edited_cell' }) }}">{{ environment.translate('PRO option') }}</a>
                                             </label>
                                         </div>
-                                        <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                        <div class="setting-check">
                                             <input type="checkbox" disabled="disabled" id="mark-last-edited-cell-unavailable"/>
                                         </div>
                                     </div>
-                                    <div class="setting-wrapper row">
-                                        <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-wrapper">
+                                        <div class="setting-label">
                                             <label for="editable-fields-logged-in-unavailable">
                                                 {{ environment.translate('Use for Logged In Users Only') }}
                                                 {{ tooltip.icon(environment.translate('Allows to <a href="%s" target="_blank">use frontend fields only for logged in users</a>. See the next buttons on the editor toolbar:<br />Add editable field<br />Add dropdown list') | format('//supsystic.com/documentation/editable-fields-logged-users/')) }}
                                                <a target="_blank" class="supsystic-pro-feature" href="{{ build_pro_url({ 'utm_medium': 'editable_fields_for_logged_in_only' }) }}">{{ environment.translate('PRO option') }}</a>
                                             </label>
                                         </div>
-                                        <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                        <div class="setting-check">
                                             <input type="checkbox" disabled="disabled" id="editable-fields-logged-in-unavailable"/>
                                         </div>
                                     </div>
-                                    <div class="setting-wrapper row editable-fields-logged-in-options">
-                                        <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-wrapper editable-fields-logged-in-options">
+                                        <div class="setting-label">
                                             <label for="editable-fields-roles-unavailable">
                                                 {{ environment.translate('Use for Current Roles Only') }}
                                                 {{ tooltip.icon(environment.translate('Allows to use frontend fields only for users with selected roles. If there are no chosen roles - all logged in users will have ability to use the frontend fields.')) }}
                                                 <a target="_blank" class="supsystic-pro-feature" href="{{ build_pro_url({ 'utm_medium': 'editable_fields_for_current_roles' }) }}">{{ environment.translate('PRO option') }}</a>
                                             </label>
                                         </div>
-                                        <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                        <div class="setting-input">
                                             <select name="useEditableFieldsForCurRoles[]" disabled="disabled" id="editable-fields-roles-unavailable" data-placeholder="{{ environment.translate('Select roles')}}">
                                                 <option>{{ environment.translate('Select roles')}}</option>
                                             </select>
@@ -983,100 +967,96 @@
                                     </div>
                                     {% endif %}
                                     {% if environment.isPro() == false %}
-                                        <div class="title-place">
+                                        <div class="setting-title">
                                             <h3>{{ environment.translate('Export / Import') }}</h3>
                                         </div>
-                                        <div class="setting-wrapper row">
-                                            <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                        <div class="setting-wrapper">
+                                            <div class="setting-label">
                                                 <label for="features-export-unavailable">
                                                     {{ environment.translate('Frontend Export') }}
                                                     {{ tooltip.icon(environment.translate('Allows to export table in pdf, csv, xls formats from the front-end. Choose needed formats')) }}
                                                     <a target="_blank" class="supsystic-pro-feature" href="{{ build_pro_url({ 'utm_medium': 'export_feature' }) }}">{{ environment.translate('PRO option') }}</a>
                                                 </label>
                                             </div>
-                                            <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                            <div class="setting-input">
                                                 <select name="features[export][]" disabled="disabled" id="features-export-unavailable" data-placeholder="{{ environment.translate('Select Some Options')}}">
                                                     <option>{{ environment.translate('Select Some Options')}}</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="setting-wrapper row">
-                                            <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                        <div class="setting-wrapper">
+                                            <div class="setting-label">
                                                 <label for="features-export-pdf-paper-size-unavailable">
                                                     {{ environment.translate('PDF Paper Size') }}
                                                     {{ tooltip.icon(environment.translate('Choose the paper size for PDF pages')) }}
                                                 </label>
                                                 <a target="_blank" class="supsystic-pro-feature" href="{{ build_pro_url({ 'utm_medium': 'export_feature_pdf_paper_size' }) }}">{{ environment.translate('PRO option') }}</a>
                                             </div>
-                                            <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                            <div class="setting-input">
                                                 <select name="pdfPaperSize" disabled="disabled" id="features-export-pdf-paper-size-unavailable" data-placeholder="{{ environment.translate('Automatic')}}">
                                                     <option>{{ environment.translate('Automatic')}}</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="setting-wrapper row">
-                                            <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                        <div class="setting-wrapper">
+                                            <div class="setting-label">
                                                 <label for="features-export-pdf-orientation-unavailable">
                                                     {{ environment.translate('PDF Page Orientation') }}
                                                     {{ tooltip.icon(environment.translate('Choose the orientation for PDF pages')) }}
                                                 </label>
                                                 <a target="_blank" class="supsystic-pro-feature" href="{{ build_pro_url({ 'utm_medium': 'export_feature_pdf_orientation' }) }}">{{ environment.translate('PRO option') }}</a>
                                             </div>
-                                            <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                            <div class="setting-input">
                                                 <select name="pdfOrientation" disabled="disabled" id="features-export-pdf-orientation-unavailable" data-placeholder="{{ environment.translate('Portrait')}}">
                                                     <option>{{ environment.translate('Portrait')}}</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="setting-wrapper row">
-                                            <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                        <div class="setting-wrapper">
+                                            <div class="setting-label">
                                                 <label for="features-export-pdf-export-fonts-unavailable">
                                                     {{ environment.translate('Export Fonts to PDF') }}
                                                     {{ tooltip.icon(environment.translate('Allows export to PDF file the fonts, which were set for table content via editor toolbar. Important! Custom fonts might not contain some specific characters (greek, cyrillic etc.), so after importing of fonts your PDF file might lost part of content.')) }}
                                                 </label>
                                                 <a target="_blank" class="supsystic-pro-feature" href="{{ build_pro_url({ 'utm_medium': 'export_feature_pdf_export_fonts' }) }}">{{ environment.translate('PRO option') }}</a>
                                             </div>
-                                            <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                            <div class="setting-check">
                                                 <input type="checkbox" name="pdfExportFonts" disabled="disabled" id="features-export-pdf-export-fonts-unavailable" />
                                             </div>
                                         </div>
-                                        <div class="setting-wrapper row">
-                                            <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                        <div class="setting-wrapper">
+                                            <div class="setting-label">
                                                 <label for="features-export-select-logo-unavailable">
                                                     {{ environment.translate('Export Logo') }}
                                                     {{ tooltip.icon(environment.translate('Automticaly appends selected logo for output pdf or printing')) }}
                                                 </label>
                                                 <a target="_blank" class="supsystic-pro-feature" href="{{ build_pro_url({ 'utm_medium': 'export_feature_select_logo' }) }}">{{ environment.translate('PRO option') }}</a>
                                             </div>
-                                            <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                            <div class="setting-input">
                                                 <button class="button" disabled="disabled" id="features-export-select-logo-unavailable">{{ environment.translate('Select Logo') }}</button>
                                             </div>
                                         </div>
-                                        <div class="setting-wrapper row">
-                                            <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                        <div class="setting-wrapper">
+                                            <div class="setting-label">
                                                 <label for="google-tables-automatically-update-unavailable">
                                                     {{ environment.translate('Autoimport from Google Sheet') }}
                                                     {{ tooltip.icon(environment.translate('If checked - table data on frontend will be overloaded from selected Google Sheet. <a href="%s" tagget="_blank">Read more</a> about how organize Auto Import form Google Sheets') | format('//supsystic.com/documentation/synchronization-table-google-sheet/')) }}
                                                 </label>
                                                 <a target="_blank" class="supsystic-pro-feature" href="{{ build_pro_url({ 'utm_medium': 'google_tables_automatically_update' }) }}">{{ environment.translate('PRO option') }}</a>
                                             </div>
-                                            <div class="setting-item col-md-6 col-sm-6 col-xs-12">
-                                                <input type="checkbox" disabled="disabled" name="features[google_tables_automatically_update]" id="google-tables-automatically-update-unavailable" />
+                                            <div class="setting-check">
+                                                <input type="checkbox" disabled="disabled" name="features[google_tables_automatically_update]" data-preview-not-redraw='1' id="google-tables-automatically-update-unavailable" />
                                             </div>
                                         </div>
                                 {% endif %}
                                 {{ environment.getDispatcher().dispatch('tables-view-features', [table]) }}
-                                <!-- /.form-table -->
-                            </div>
                         </section>
-                        <section class="row row-settings-tab" id="stb-anl-appearance">
-                            <div class="title-block col-xs-12">
-                                <h3>{{ environment.translate('Appearance') }}</h3>
+                        <section class="row-settings-block" id="stb-anl-appearance">
+                            <div class="settings-block-title">
+                                <h3><i class="fa fa-fw fa-picture-o"></i> {{ environment.translate('Appearance') }}</h3>
                             </div>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="title-place">&nbsp;</div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="features-auto-width">
                                             {{ environment.translate('Auto Table Width') }}
                                             {{ tooltip.icon(environment.translate('If checked - width of table columns will be calculated automatically for table width 100%.<br /><br />
@@ -1086,7 +1066,7 @@
                                                 option to "auto" and check "Compact Table" option.')) }}
 										</label>
 									</div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="features[auto_width]"
                                                 {{ checkbox.checked(table.settings.features.auto_width) }}
                                                id="features-auto-width"
@@ -1094,23 +1074,25 @@
                                         <!-- /#features-auto-width -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row auto-width-options"
+                                <div class="setting-wrapper auto-width-options setting-suboption"
                                         {% if table.settings.features.auto_width is defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="fixed-table-width">
                                             {{ environment.translate('Fixed Table Width') }}
                                             {{ tooltip.icon(environment.translate('Set fixed table width in px or %. Choose &quot;disable&quot; to make table width adjust by table content.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item sub-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <input type="text" name="tableWidth" value="{{ table.settings.tableWidth | default('100') }}" id="fixed-table-width"
                                                 {% if table.settings.tableWidthType == 'auto' %}
                                                     style="display:none"
                                                 {% endif %}/>
                                         {% set tableWidthTypeDefault = '%' %}
+                                    </div>
+                                    <div class="setting-input">
                                         <label for="fixed-table-width-type-percent" class="sub-label">
                                             <input type="radio" name="tableWidthType" id="fixed-table-width-type-percent" value="%" {{ checkbox.radio_checked(table.settings.tableWidthType|default(tableWidthTypeDefault), '%') }} />
                                             <span>%</span>
@@ -1125,23 +1107,25 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row auto-width-options"
+                                <div class="setting-wrapper auto-width-options setting-suboption"
                                         {% if table.settings.features.auto_width is defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="fixed-table-width-mobile">
                                             {{ environment.translate('Fixed Table Width (mobile)') }}
                                             {{ tooltip.icon(environment.translate('Set fixed table width in px or %. Choose &quot;disable&quot; to make table width adjust by table content.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item sub-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <input type="text" name="tableWidthMobile" value="{{ table.settings.tableWidthMobile | default('100') }}" id="fixed-table-width-mobile"
                                                 {% if table.settings.tableWidthMobileType == 'auto' %}
                                                     style="display:none"
                                                 {% endif %}/>
                                         {% set tableWidthMobileTypeDefault = '%' %}
+                                    </div>
+                                    <div class="setting-input">
                                         <label for="fixed-table-width-mobile-type-percent" class="sub-label">
                                             <input type="radio" name="tableWidthMobileType" id="fixed-table-width-mobile-type-percent" value="%" {{ checkbox.radio_checked(table.settings.tableWidthMobileType|default(tableWidthMobileTypeDefault), '%') }} />
                                             <span>%</span>
@@ -1156,69 +1140,67 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
-                                        <label for="styling-compact">
-                                            {{ environment.translate('Compact Table') }}
-                                            {{ tooltip.icon(environment.translate('Decrease the amount of whitespace in the table.')) }}
-                                        </label>
-                                    </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
-                                        <input type="checkbox"
-                                               name="styling[compact]"
-                                                {{ checkbox.checked(attribute(table.settings.styling, 'compact')) }}
-                                               id="styling-compact"/>
-                                        <!-- /#styling-compact -->
-                                    </div>
-                                </div>
-                                <div class="setting-wrapper row auto-width-options"
+                                <div class="setting-wrapper auto-width-options setting-suboption"
                                         {% if table.settings.features.auto_width is defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="table-alignment-on-page">
                                             {{ environment.translate('Align by First Table') }}
                                             {{ tooltip.icon(environment.translate('If checked - this table will be resized by first supsystic table on page. Important! This option makes sense only if table is not on responsive mode or responsive mode is disabled. Also if the first table has different count of columns or different settings, their sizes may not be equal.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item sub-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="alignByFirstTable"
                                                {{ checkbox.checked(table.settings.alignByFirstTable) }}
                                                id="table-alignment-on-page"/>
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
+                                        <label for="styling-compact">
+                                            {{ environment.translate('Compact Table') }}
+                                            {{ tooltip.icon(environment.translate('Decrease the amount of whitespace in the table.')) }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-check">
+                                        <input type="checkbox"
+                                               name="styling[compact]"
+                                                {{ checkbox.checked(attribute(table.settings.styling, 'compact')) }}
+                                               id="styling-compact"/>
+                                    </div>
+                                </div>
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="styling-nowrap">
                                             {{ environment.translate('Disable Wrapping') }}
                                             {{ tooltip.icon(environment.translate('Disable wrapping of content in the table, so every word in the cells will be in one single line.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox"
                                                name="styling[nowrap]"
                                                 {{ checkbox.checked(attribute(table.settings.styling, 'nowrap')) }}
                                                id="styling-nowrap"/>
-                                        <!-- /#styling-nowrap -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="paragraphMode">
                                             {{ environment.translate('Paragraph Mode') }}
                                             {{ tooltip.icon(environment.translate('This mode allows you to separate the content into paragraphs. To move to a new line in the cell - please press CTRL + Enter.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox"
                                                name="styling[paragraphMode]"
                                                 {{ checkbox.checked(attribute(table.settings.styling, 'paragraphMode')) }}
                                                id="paragraphMode"/>
                                     </div>
                                 </div>
-								<div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+								<div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="lightboxImg">
                                             {{ environment.translate('Lightbox') }}
                                             {{ tooltip.icon(environment.translate('Add Lightbox fo images . <a href="https://supsystic.com/documentation/lightbox-with-full-size-images/">https://supsystic.com/documentation/lightbox-with-full-size-images/</a>')) }}
@@ -1227,7 +1209,7 @@
 											{% endif %}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
 										{% if environment.isPro() == false %}
 											<input type="checkbox" disabled="disabled" id="save-editable-fields-unavailable"/>
 										{% else %}
@@ -1238,31 +1220,28 @@
 										{% endif %}
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="lightboxImg">
                                             {{ environment.translate('Merge cells align') }}
                                             {{ tooltip.icon(environment.translate('Align columns which have include merge cells to left (in responcive mode)')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox"
                                                name="styling[ColWithMergeCellsAlign]"
                                                 {{ checkbox.checked(attribute(table.settings.styling, 'ColWithMergeCellsAlign')) }}
                                                id="ColWithMergeCellsAlign"/>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="title-place">&nbsp;</div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="styling-border">
                                             {{ environment.translate('Borders') }}
                                             {{ tooltip.icon(environment.translate('Cell - adds border around all four sides of each cell, Row - adds border only over and under each row. (i.e. only for the rows).')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <select name="styling[border]"
                                                 id="styling-border">
                                             {% for option in [
@@ -1273,75 +1252,70 @@
                                                 <option value="{{ option.value }}" {% if table.settings.styling.border == option.value %}selected="selected"{% endif %}>{{ option.name }}</option>
                                             {% endfor %}
                                         </select>
-                                        <!-- /#styling-border -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="styling-stripe">
                                             {{ environment.translate('Row Striping') }}
                                             {{ tooltip.icon(environment.translate('Add automatic highlight for table odd rows')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox"
                                                name="styling[stripe]"
                                                 {{ checkbox.checked(attribute(table.settings.styling, 'stripe')) }}
                                                id="styling-stripe"/>
-                                        <!-- /#styling-stripe -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="styling-hover">
                                             {{ environment.translate('Highlighting by Mousehover') }}
                                             {{ tooltip.icon(environment.translate('Row highlighting by mouse hover.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox" name="styling[hover]"
                                                 {{ checkbox.checked(attribute(table.settings.styling, 'hover')) }}
                                                id="styling-hover"/>
-                                        <!-- /#styling-hover -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="styling-order-column">
                                             {{ environment.translate('Highlight the Order Column') }}
                                             {{ tooltip.icon(environment.translate('If checked - the current sorted column will be highlighted')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox"
                                             name="styling[order-column]"
                                             {{ checkbox.checked(attribute(table.settings.styling, 'order-column')) }}
                                             id="styling-order-column"/>
-                                        <!-- /#styling-order-column -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="hide-table-loader">
                                             {{ environment.translate('Hide Table Loader') }}
                                             {{ tooltip.icon(environment.translate('Enable / disable table loader icon before table will be completely loaded.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-check">
                                         <input type="checkbox"
                                                name="tableLoader[disable]"
                                                 {{ checkbox.checked(table.settings.tableLoader.disable) }}
                                                id="hide-table-loader"
                                                data-target-toggle=".hide-table-loader-options" />
-                                        <!-- /#styling-order-column -->
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row hide-table-loader-options"
+                                <div class="setting-wrapper hide-table-loader-options setting-suboption"
                                         {% if table.settings.tableLoader.disable is defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="table-loaedr-icon">
                                             {{ environment.translate('Table Loader Icon') }}
                                             {{ tooltip.icon(environment.translate('Choose icon for loader')) }}
@@ -1350,7 +1324,7 @@
                                         {% set tblLoaderIconItems = table.settings.tableLoader.iconItems | default('0') %}
                                         {% set tblLoaderColor = table.settings.tableLoader.color | default('#000000') %}
                                     </div>
-                                    <div class="setting-item sub-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <button class="button selectTableLoaderIcon" id="table-loaedr-icon">{{ environment.translate('Choose Icon') }}</button>
                                         <input type="hidden" name="tableLoader[iconName]" value="{{ tblLoaderIconName }}" />
                                         <input type="hidden" name="tableLoader[iconItems]" value="{{ tblLoaderIconItems }}" />
@@ -1368,33 +1342,399 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="setting-wrapper row hide-table-loader-options"
+                                <div class="setting-wrapper hide-table-loader-options setting-suboption"
                                         {% if table.settings.tableLoader.disable is defined %}
                                             style="display:none"
                                         {% endif %}
                                         >
-                                    <div class="setting-item setting-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-label">
                                         <label for="tableLoaderColorContainer">
                                             {{ environment.translate('Table Loader Color') }}
                                             {{ tooltip.icon(environment.translate('Choose color for loader')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item sub-options col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <div id="tableLoaderColorContainer" class="colorPickerShell">
                                             <div class="tableLoaderColorArea colorPickerArea" style="background-color: {{ tblLoaderColor }};"></div>
                                             <input type="hidden" name="tableLoader[color]" value="{{ tblLoaderColor }}" />
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- /.col-md-4 col-sm-6 col-xs-12 -->
+                                <div class="setting-title">
+                                    <h3>{{ environment.translate('Table Styling') }}</h3>
+                                </div>
+                                {% if table.settings.styles.useCustomStyles is defined and table.settings.styles.useCustomStyles == 'on' %}
+                                    {% set hiddenOption = false %}
+                                {% else %}
+                                    {% set hiddenOption = true %}
+                                {% endif %}
+                                {% set customCss = table.settings.styles.customCss | default('') %}
+                                {% set externalBorderColor = table.settings.styles.externalBorderColor | default('') %}
+                                {% set headerBorderColor = table.settings.styles.headerBorderColor | default('') %}
+                                {% set rowBorderColor = table.settings.styles.rowBorderColor | default('') %}
+                                {% set columnBorderColor = table.settings.styles.columnBorderColor | default('') %}
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
+                                        <label for="use-custom-styles">
+                                            {{ environment.translate('Use custom styles') }}
+                                            {{ tooltip.icon(environment.translate('Choose your custom table styles below. Any settings you leave blank will default to your theme styles.')) }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-check">
+                                        <input type="checkbox" data-preview-not-redraw="1"
+                                               name="styles[useCustomStyles]"
+                                                {{ checkbox.checked(attribute(table.settings.styles, 'useCustomStyles')) }}
+                                               id="use-custom-styles"/>
+                                        <input type="hidden" name="styles[customCss]" value="{{ customCss }}" />
+                                    </div>
+                                </div>
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-label">
+                                        <label>
+                                            {{ environment.translate('Borders external') }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-input">
+                                        <div class="color-settings-wrapper">
+                                            <div class="color-picker-wrapper">
+                                                <div class="color-picker-preview" style="background-color: {{ externalBorderColor }};"></div>
+                                            </div>
+                                            <input type="text" class="color-input" data-preview-not-redraw="1" name="styles[externalBorderColor]" value="{{ externalBorderColor }}" />
+                                            <label class="inner-label">width</label>
+                                            <input type="text" class="input-small" data-preview-not-redraw="1" name="styles[externalBorderWidth]" value="{{ table.settings.styles.externalBorderWidth | default('') }}" />
+                                            <label class="right-label">px</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-label">
+                                        <label>
+                                            {{ environment.translate('Borders header') }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-input">
+                                        <div class="color-settings-wrapper">
+                                            <div class="color-picker-wrapper">
+                                                <div class="color-picker-preview" style="background-color: {{ headerBorderColor }};"></div>
+                                            </div>
+                                            <input type="text" class="color-input" data-preview-not-redraw="1" name="styles[headerBorderColor]" value="{{ headerBorderColor }}" />
+                                            <label class="inner-label">width</label>
+                                            <input type="text" class="input-small" data-preview-not-redraw="1" name="styles[headerBorderWidth]" value="{{ table.settings.styles.headerBorderWidth | default('') }}" />
+                                            <label class="right-label">px</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-label">
+                                        <label>
+                                            {{ environment.translate('Borders rows') }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-input">
+                                        <div class="color-settings-wrapper">
+                                            <div class="color-picker-wrapper">
+                                                <div class="color-picker-preview" style="background-color: {{ rowBorderColor }};"></div>
+                                            </div>
+                                            <input type="text" class="color-input" data-preview-not-redraw="1" name="styles[rowBorderColor]" value="{{ rowBorderColor }}" />
+                                            <label class="inner-label">width</label>
+                                            <input type="text" class="input-small" data-preview-not-redraw="1" name="styles[rowBorderWidth]" value="{{ table.settings.styles.rowBorderWidth | default('') }}" />
+                                            <label class="right-label">px</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-label">
+                                        <label>
+                                            {{ environment.translate('Borders columns') }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-input">
+                                        <div class="color-settings-wrapper">
+                                            <div class="color-picker-wrapper">
+                                                <div class="color-picker-preview" style="background-color: {{ columnBorderColor }};"></div>
+                                            </div>
+                                            <input type="text" class="color-input" data-preview-not-redraw="1" name="styles[columnBorderColor]" value="{{ columnBorderColor }}" />
+                                            <label class="inner-label">width</label>
+                                            <input type="text" class="input-small" data-preview-not-redraw="1" name="styles[columnBorderWidth]" value="{{ table.settings.styles.columnBorderWidth | default('') }}" />
+                                            <label class="right-label">px</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% set headerBackgroundColor = table.settings.styles.headerBackgroundColor | default('') %}
+                                {% set headerFontColor = table.settings.styles.headerFontColor | default('') %}
+                                
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-label">
+                                        <label>
+                                            {{ environment.translate('Header background') }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-input">
+                                        <div class="color-settings-wrapper">
+                                            <div class="color-picker-wrapper">
+                                                <div class="color-picker-preview" style="background-color: {{ headerBackgroundColor }};"></div>
+                                            </div>
+                                            <input type="text" class="color-input" data-preview-not-redraw="1" name="styles[headerBackgroundColor]" value="{{ headerBackgroundColor }}" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-label">
+                                        <label>
+                                            {{ environment.translate('Header font') }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-input">
+                                        <select data-preview-not-redraw="1" name="styles[headerFontFamily]" data-value="{{ table.settings.styles.headerFontFamily | default('default') }}">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-input">
+                                        <div class="color-settings-wrapper">
+                                            <div class="color-picker-wrapper">
+                                                <div class="color-picker-preview" style="background-color: {{ headerFontColor }};"></div>
+                                            </div>
+                                            <input type="text" class="color-input" data-preview-not-redraw="1" name="styles[headerFontColor]" value="{{ headerFontColor }}" />
+                                            <label class="inner-label">size</label>
+                                            <input type="text" class="input-small" data-preview-not-redraw="1" name="styles[headerFontSize]" value="{{ table.settings.styles.headerFontSize | default('') }}" />
+                                            <label class="right-label">px</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                {% set cellBackgroundColor = table.settings.styles.cellBackgroundColor | default('') %}
+                                {% set cellFontColor = table.settings.styles.cellFontColor | default('') %}
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-label">
+                                        <label>
+                                            {{ environment.translate('Cell background') }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-input">
+                                        <div class="color-settings-wrapper">
+                                            <div class="color-picker-wrapper">
+                                                <div class="color-picker-preview" style="background-color: {{ cellBackgroundColor }};"></div>
+                                            </div>
+                                            <input type="text" class="color-input" data-preview-not-redraw="1" name="styles[cellBackgroundColor]" value="{{ cellBackgroundColor }}" />
+                                        </div>
+                                    </div>
+                                 </div>
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-label">
+                                        <label>
+                                            {{ environment.translate('Cell font') }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-input">
+                                        <select data-preview-not-redraw="1" name="styles[cellFontFamily]" data-value="{{ table.settings.styles.cellFontFamily | default('default') }}">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-input">
+                                        <div class="color-settings-wrapper">
+                                            <div class="color-picker-wrapper">
+                                                <div class="color-picker-preview" style="background-color: {{ cellFontColor }};"></div>
+                                            </div>
+                                            <input type="text" class="color-input" data-preview-not-redraw="1" name="styles[cellFontColor]" value="{{ cellFontColor }}" />
+                                            <label class="inner-label">size</label>
+                                            <input type="text" class="input-small" data-preview-not-redraw="1" name="styles[cellFontSize]" value="{{ table.settings.styles.cellFontSize | default('') }}" />
+                                            <label class="right-label">px</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% set searchBackgroundColor = table.settings.styles.searchBackgroundColor | default('') %}
+                                {% set searchFontColor = table.settings.styles.searchFontColor | default('') %}
+                                {% set searchBorderColor = table.settings.styles.searchBorderColor | default('') %}
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-label">
+                                        <label>
+                                            {{ environment.translate('Search Bar Colors') }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-input">
+                                        <div class="color-settings-wrapper">
+                                            <div class="color-picker-wrapper">
+                                                <div class="color-picker-preview" style="background-color: {{ searchBackgroundColor }};"></div>
+                                            </div>
+                                            <input type="text" class="color-input" data-preview-not-redraw="1" name="styles[searchBackgroundColor]" value="{{ searchBackgroundColor }}" />
+                                            <label class="right-label">{{ environment.translate('background')}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-input">
+                                        <div class="color-settings-wrapper">
+                                            <div class="color-picker-wrapper">
+                                                <div class="color-picker-preview" style="background-color: {{ searchFontColor }};"></div>
+                                            </div>
+                                            <input type="text" class="color-input" data-preview-not-redraw="1" name="styles[searchFontColor]" value="{{ searchFontColor }}" />
+                                            <label class="right-label">{{ environment.translate('font')}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-input">
+                                        <div class="color-settings-wrapper">
+                                            <div class="color-picker-wrapper">
+                                                <div class="color-picker-preview" style="background-color: {{ searchBorderColor }};"></div>
+                                            </div>
+                                            <input type="text" class="color-input" data-preview-not-redraw="1" name="styles[searchBorderColor]" value="{{ searchBorderColor }}" />
+                                            <label class="right-label">{{ environment.translate('border')}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-label">
+                                        <label for="use-fixed-layout">
+                                            {{ environment.translate('Fixed Layout') }}
+                                            {{ tooltip.icon(environment.translate('Set all columns of the same width.')) }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-check">
+                                        <input type="checkbox" data-preview-not-redraw="1"
+                                               name="styles[fixedLayout]"
+                                                {{ checkbox.checked(attribute(table.settings.styles, 'fixedLayout')) }}
+                                               id="use-fixed-layout"/>
+                                    </div>
+                                </div>
+                                {% set verticalAlignment = table.settings.styles.verticalAlignment | default('') %}
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-label">
+                                        <label for="use-custom-styles">
+                                            {{ environment.translate('Vertical alignment') }}
+                                            {{ tooltip.icon(environment.translate('Set vertical alignment of table cell contents.')) }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-input">  
+                                        <select name="styles[verticalAlignment]" data-preview-not-redraw="1">
+                                            {% for option in [
+                                            { 'name': environment.translate('None'), 'value': '' },
+                                            { 'name': environment.translate('Top'), 'value': 'top' },
+                                            { 'name': environment.translate('Middle'), 'value': 'middle' },
+                                            { 'name': environment.translate('Bottom'), 'value': 'bottom' }
+                                            ] %}
+                                                <option value="{{ option.value }}" {% if verticalAlignment == option.value %}selected="selected"{% endif %}>{{ option.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                {% set horizontalAlignment = table.settings.styles.horizontalAlignment | default('') %}
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-label">
+                                        <label for="use-custom-styles">
+                                            {{ environment.translate('Horizontal alignment') }}
+                                            {{ tooltip.icon(environment.translate('Set horizontal alignment of table cell contents.')) }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-input">  
+                                        <select name="styles[horizontalAlignment]" data-preview-not-redraw="1">
+                                            {% for option in [
+                                            { 'name': environment.translate('None'), 'value': '' },
+                                            { 'name': environment.translate('Left'), 'value': 'left' },
+                                            { 'name': environment.translate('Center'), 'value': 'center' },
+                                            { 'name': environment.translate('Right'), 'value': 'right' }
+                                            ] %}
+                                                <option value="{{ option.value }}" {% if horizontalAlignment == option.value %}selected="selected"{% endif %}>{{ option.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                {% set paginationPosition = table.settings.styles.paginationPosition | default('') %}
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-label">
+                                        <label for="use-custom-styles">
+                                            {{ environment.translate('Pagination Position') }}
+                                            {{ tooltip.icon(environment.translate('Set horizontal pagination buttons position.')) }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-input">  
+                                        <select name="styles[paginationPosition]" data-preview-not-redraw="1">
+                                            {% for option in [
+                                            { 'name': environment.translate('None'), 'value': '' },
+                                            { 'name': environment.translate('Left'), 'value': 'left' },
+                                            { 'name': environment.translate('Center'), 'value': 'center' },
+                                            { 'name': environment.translate('Right'), 'value': 'right' }
+                                            ] %}
+                                                <option value="{{ option.value }}" {% if paginationPosition == option.value %}selected="selected"{% endif %}>{{ option.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="setting-wrapper table-styles-options setting-suboption"
+                                    {% if hiddenOption %}
+                                        style="display:none"
+                                    {% endif %}>
+                                    <div class="setting-label">
+                                        <label for="show-sort-hover">
+                                            {{ environment.translate('Show sorting icon on mouse over') }}
+                                        </label>
+                                    </div>
+                                    <div class="setting-check">
+                                        <input type="checkbox" data-preview-not-redraw="1"
+                                               name="styles[showSortHover]"
+                                                {{ checkbox.checked(attribute(table.settings.styles, 'showSortHover')) }}
+                                               id="show-sort-hover"/>
+                                    </div>
+                                </div>
                         </section>
-                        <section class="row row-settings-tab" id="stb-anl-language">
-                            <div class="title-block col-xs-12">
-                                <h3>{{ environment.translate('Language and Text') }}</h3>
+                        <section class="row-settings-block" id="stb-anl-text">
+                            <div class="settings-block-title">
+                                <h3><i class="fa fa-fw fa-language"></i> {{ environment.translate('Language and Text') }}</h3>
                             </div>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="title-place">
+                                <div class="setting-title">
                                     <h3>{{ environment.translate('Overwrite Table Text') }}</h3>
                                 </div>
                                 {% set language_override = {
@@ -1436,8 +1776,8 @@
                                 },
                                 } %}
                                 {% for key, data in language_override %}
-                                    <div class="setting-wrapper row">
-                                        <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-wrapper">
+                                        <div class="setting-label">
                                             <label for="language-{{ key }}">
                                                 {{ data.label }}
                                                 {% if data.info is not empty %}
@@ -1445,24 +1785,22 @@
                                                 {% endif %}
                                             </label>
                                         </div>
-                                        <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                        <div class="setting-input">
                                             <input id="language-{{ key }}" type="text" name="language[{{ key }}]" value="{{ attribute(table.settings.language, key) }}" placeholder="{{ data.default }}">
                                         </div>
                                     </div>
                                 {% endfor %}
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="title-place">
+                                <div class="setting-title">
                                     <h3>{{ environment.translate('Language') }}</h3>
                                 </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="setting-wrapper">
+                                    <div class="setting-label">
                                         <label for="language-file">
                                             {{ environment.translate('Table Language') }}
                                             {{ tooltip.icon(environment.translate('Allows to choose language for the table\'s labels (pagination, search ets.). The dafault language is English.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="setting-input">
                                         <select name="language[file]" id="language-file">
                                             {% for supportedLanguage in translations %}
                                                 <option value="{{ supportedLanguage }}" {% if table.settings.language.file == supportedLanguage %}selected="selected"{% endif %}>
@@ -1476,40 +1814,28 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                        </section>
-                        <section class="row row-settings-tab" id="stb-anl-source">
-                            <div class="title-block col-xs-12">
-                                <h3>{{ environment.translate('Source') }}</h3>
-                            </div>
-                            {% if environment.isPro() == false %}
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="title-place">
-                                    <h3>{{ environment.translate('Database') }}</h3>
-                                </div>
-                                <div class="setting-wrapper row">
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
-                                        <label for="table-source-database-unavailable">
-                                            {% set urlTables = environment.getModule('tables').getLocationUrl()  %}
-                                            {{ environment.translate('Data from Database') }}
-                                            {{ tooltip.icon('Database Source Pro feature allows you display table and its fields data from any table of WP database or External databases on the front-end. <a target="_blank" href="https://supsystic.com/documentation/database-source/"></br>Read more</a>' | raw, 'top', true)}}
-                                        </label>
-                                        <a target="_blank" class="supsystic-pro-feature" href="{{ build_pro_url({ 'utm_medium': 'table-source-database' }) }}">{{ environment.translate('PRO option') }}</a></br>
-                                    </div>
-                                    <div class="setting-item col-md-6 col-sm-6 col-xs-12">
-                                        <input type="checkbox" disabled="disabled" name="source[database]" id="table-source-database-unavailable" />
-                                    </div>
-                                    <div class="setting-item col-md-12 col-sm-12 col-xs-12">
-                                        <a target="_blank" href="{{build_pro_url({ 'utm_medium': notify })}}"><img style="max-width:800px" src="{{ environment.getModule('tables').getLocationUrl() }}/assets/img/database.gif"/></a>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endif %}
-                            {{ environment.getDispatcher().dispatch('tables-view-source', [table]) }}
                         </section>
                     </section>
                     </form>
                 </div>
+                </section>
+                <section class="preview-section">
+                    <div class="row preview-styling">
+                        <div class="stb-wraper-anchor-nav-links">
+                            <a href="#stb-style-desktop" class="stb-anchor-nav-links active">{{ translate('Desktop')}}</a>
+                            <a href="#stb-style-tablet" class="stb-anchor-nav-links">{{ translate('Tablet')}}</a>
+                            <a href="#stb-style-mobile" class="stb-anchor-nav-links">{{ translate('Mobile')}}</a>
+                        </div>
+                    </div>
+                    <div id="preview-container">
+                        <style type="text/css" id="stb-preview-css"></style>
+                        <div id="table-preview"></div>
+                        <p class="description">
+                            <i class="fa fa-fw fa-exclamation-circle"></i>
+                            {{ environment.translate('Note that the table may look a little different depending on your theme style.') }}
+                        </p>
+                    </div>
+                </section>
             </div>
 
             <div class="row row-tab" id="row-tab-editor">
@@ -1829,15 +2155,6 @@
                 ></div>
                 <!-- /#tableEditor -->
             </div>
-
-            <div class="row row-tab" id="row-tab-preview">
-                <p class="description">
-                    <i class="fa fa-fw fa-exclamation-circle"></i>
-                    {{ environment.translate('Note that the table may look a little different depending on your theme style.') }}
-                </p>
-                <div id="table-preview"></div>
-            </div>
-
             <div class="row row-tab" id="row-tab-css">
 
 

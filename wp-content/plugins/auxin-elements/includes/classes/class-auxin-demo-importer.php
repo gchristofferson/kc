@@ -39,11 +39,9 @@ class Auxin_Demo_Importer {
 
 
     function __construct() {
-
         add_action( 'wp_ajax_auxin_demo_data'       , array( $this, 'import') );
         add_action( 'wp_ajax_auxin_templates_data'  , array( $this, 'templates') );
         add_action( 'wp_ajax_import_step'           , array( $this, 'import_step') );
-
     }
 
     public function templates(){
@@ -62,13 +60,13 @@ class Auxin_Demo_Importer {
         $template_status = isset( $_POST['status'] ) ? $_POST['status'] : 'import';
         $sanitize_key    = sanitize_key( 'aux-template-' . $template_type . $template_ID );
 
-        if( $template_status === 'copy' && false !== ( $data = get_transient( $sanitize_key ) ) ) {
+        if( $template_status === 'copy' && false !== ( $data = auxin_get_transient( $sanitize_key ) ) ) {
             wp_send_json_success( array( 'status' => 'copy', 'result' => json_decode( $data , true ), 'label' => esc_html__( 'Import content', 'auxin-elements' ) ) );
         }
 
         ob_start();
 
-        if( ( $template_status === 'create_my_template' || $template_status === 'create_new_page' ) && false !== ( $data = get_transient( $sanitize_key ) ) ){
+        if( ( $template_status === 'create_my_template' || $template_status === 'create_new_page' ) && false !== ( $data = auxin_get_transient( $sanitize_key ) ) ){
             $post_type = $template_status === 'create_my_template' ? 'elementor_library' : 'page';
             $args = array(
               'post_title'    => wp_strip_all_tags( $template_title ),
@@ -85,7 +83,7 @@ class Auxin_Demo_Importer {
                 if( ! empty( $page_template ) ){
                     update_post_meta( $post_id, '_wp_page_template', $page_template );
                 }
-                
+
                 if( $post_type === 'elementor_library' ) {
                     update_post_meta( $post_id, '_elementor_template_type', $template_type );
                 }
@@ -119,7 +117,7 @@ class Auxin_Demo_Importer {
 
         if( $data ) {
             // Set transient for 48h
-            set_transient( $sanitize_key, $data, 48 * HOUR_IN_SECONDS );
+            auxin_set_transient( $sanitize_key, $data, 48 * HOUR_IN_SECONDS );
         ?>
             <div class="clearfix">
                 <img src="<?php echo esc_url( AUXELS_ADMIN_URL . '/assets/images/welcome/success.svg' ); ?>" />
@@ -196,9 +194,9 @@ class Auxin_Demo_Importer {
         // Put demo ID in a variable
         $demo_ID = $_POST['ID'];
 
-        $data = $this->parse( 'http://api.phlox.pro/demos/get/' . $demo_ID );
+        $data = json_decode( $this->parse( 'http://demo.phlox.pro/api/v2/data/' . $demo_ID, 'insert', 'post' ), true );
 
-        if ( $data ) {
+        if ( $data['success'] ) {
 
             $get_options = $_POST['options'];
             foreach ( $get_options as $key => $value ) {
@@ -214,7 +212,7 @@ class Auxin_Demo_Importer {
             wp_send_json_success();
         }
 
-        wp_send_json_error(  array( 'message' => __( 'Oops! Something went wrong.', 'auxin-elements' ) ) );
+        wp_send_json_error(  array( 'message' => $data['data'] ) );
 
     }
 
@@ -239,10 +237,10 @@ class Auxin_Demo_Importer {
                 || ( 'custom' === $options['import'] && ( isset( $options['media'] ) && 'on' === $options['media'] ) ) ) {
                     // change to current node
                     $index++;
-                    if( is_array( $data['media'] ) && $posts_number = count( $data['media'] ) ){
+                    if( is_array( $data['attachments'] ) && $posts_number = count( $data['attachments'] ) ){
 
                         if( $index == 1 ){
-                            $requests = $this->prepare_download( $data['media'] );
+                            $requests = $this->prepare_download( $data['attachments'] );
                         } else {
                             $requests = get_option( 'auxin_demo_media_requests' );
                         }
@@ -262,7 +260,7 @@ class Auxin_Demo_Importer {
             case 'media':
                 if ( 'complete' === $options['import']
                 || ( 'custom' === $options['import'] && ( isset( $options['media'] ) && 'on' === $options['media'] ) ) ) {
-                    return $this->import_media( $data['media'] );
+                    return $this->import_media( $data['attachments'] );
                 }
 
             case 'content':
@@ -271,9 +269,9 @@ class Auxin_Demo_Importer {
 
                     // change to current node
                     $index++;
-                    if( is_array( $data['content'] ) && $posts_number = count( $data['content'] ) ){
+                    if( is_array( $data['contents'] ) && $posts_number = count( $data['contents'] ) ){
                         if( $index <= $posts_number ){
-                            $this->import_posts( array_slice( $data['content'], $index - 1, 1 ) );
+                            $this->import_posts( array_slice( $data['contents'], $index - 1, 1 ) );
                             if( $index < $posts_number ){
                                 wp_send_json_success( array( 'message' => __( 'Importing Contents', 'auxin-elements' ). ' '. $index . '/' . $posts_number, 'next' => 'content', 'index' => $index ) );
                             }
@@ -286,7 +284,7 @@ class Auxin_Demo_Importer {
             case 'auxin_options':
                 if ( 'complete' === $options['import']
                 || ( 'custom' === $options['import'] && ( isset( $options['options'] ) && 'on' === $options['options'] ) ) ) {
-                    return $this->import_options( $data['auxin_options'], $data['site_options'], $data['theme_mods'], $data['plugin_options'] );
+                    return $this->import_options( $data['options'] );
                 }
 
             case 'menus':
@@ -309,18 +307,15 @@ class Auxin_Demo_Importer {
             case 'widgets':
                 if ( 'complete' === $options['import']
                 || ( 'custom' === $options['import'] && ( isset( $options['widgets'] ) && 'on' === $options['widgets'] ) ) ) {
-                    return $this->import_widgets( $data['widgets'], $data['widgets_data'] );
+                    return $this->import_widgets( $data['widgets'] );
                 }
 
             case 'masterslider':
                 if ( 'complete' === $options['import']
                 || ( 'custom' === $options['import'] && ( isset( $options['masterslider'] ) && 'on' === $options['masterslider'] ) )
-                && isset( $data['masterslider']['sliders'] ) ) {
-                    return $this->import_sliders( $data['masterslider']['sliders'] );
+                && isset( $data['sliders'] ) ) {
+                    return $this->import_sliders( $data['sliders'] );
                 }
-
-            case 'stylesheet':
-                return $this->import_stylesheet( $data['custom_stylesheet'] );
 
             case 'prepare':
                 return $this->prepare_site();
@@ -334,18 +329,48 @@ class Auxin_Demo_Importer {
      *
      * @return  String
      */
-    public function parse( $url, $action = 'insert' ) {
+    public function parse( $url, $action = 'insert', $method = 'get' ) {
 
         //Get JSON
-        $request    = wp_remote_get( $url,
-            array(
-                'timeout'     => 30,
-                'user-agent'  => 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0'
-            )
-        );
+        if( $method === 'get '){
+            $request    = wp_remote_get( $url,
+                array(
+                    'timeout'     => 30,
+                    'user-agent'  => 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0'
+                )
+            );
+        } else {
+            $getLicense = get_option( THEME_ID . '_license' );
+            $getToken   = 'Bearer ' . base64_encode( $getLicense['token'] );
+            $request    = wp_remote_post(
+                $url,
+                array(
+                    'body'    => array(
+                        'audit_token'   => base64_encode( auxin_get_site_key() ),
+                        'item_slug'     => THEME_ID,
+                        'item_version'  => THEME_VERSION,
+                        'authorization' => $getToken
+                    ),
+                    'headers' => array(
+                        'Authorization' => $getToken
+                    ),
+                    'timeout' => 25
+                )
+            );
+        }
+
+
         //If the remote request fails, wp_remote_get() will return a WP_Error
         if( is_wp_error( $request ) || ! current_user_can( 'import' ) ){
-            wp_send_json_error( array( 'message' => __( 'Remote Request Fails', 'auxin-elements' ) ) );
+
+            // Increase the CURL timeout if required
+            if( ! empty( $requst['errors']['http_request_failed'][0] ) ){
+	        	if( false !== strpos( $requst['errors']['http_request_failed'][0], 'cURL error 28') ){
+	            	set_theme_mod('increasing_curl_timeout_is_required', 15);
+	            }
+            }
+
+            wp_send_json_error( array( 'message' => $request->get_error_message() ) );
         }
 
         //proceed to retrieving the data
@@ -357,7 +382,7 @@ class Auxin_Demo_Importer {
 
         if( $action === 'insert' ){
             // Create local json from remote url
-            return $this->insert_file( $url, $body, 'demo.json' );
+            return $this->insert_file( $url, $body, 'demo.json', 'json' );
         }
 
         return $body;
@@ -375,22 +400,17 @@ class Auxin_Demo_Importer {
      *
      * @return  String
      */
-    public function import_options( array $auxin_options, array $site_options, array $theme_mods, array $plugin_options ) {
-
+    public function import_options( array $options ) {
         $auxin_custom_images   = $this->get_options_by_type( 'image' );
-        $auxin_exclude_options = array( 'auxin_google_map_api_key' );
+        extract( $options );
 
-        foreach ( $auxin_options as $auxin_key => $auxin_value ) {
+        foreach ( $theme_options as $auxin_key => $auxin_value ) {
             if ( in_array( $auxin_key, $auxin_custom_images ) && ! empty( $auxin_value ) ) {
                 // This line is for changing the old attachment ID with new one.
                 $auxin_value    = $this->get_attachment_id( 'auxin_import_id', $auxin_value );
             }
-            if( in_array( $auxin_key, $auxin_exclude_options ) ){
-                // Exclude this items
-                continue;
-            }
             // Update exclusive auxin options
-            auxin_update_option( $auxin_key , $auxin_value);
+            auxin_update_option( $auxin_key , maybe_unserialize( $auxin_value ) );
         }
 
         foreach ( $site_options as $site_key => $site_value ) {
@@ -398,10 +418,7 @@ class Auxin_Demo_Importer {
             if ( empty( $site_value ) ) continue;
             // Else change some values :)
             if( $site_key === 'page_on_front' || $site_key === 'page_for_posts' ) {
-                // Retrieves page object given its title.
-                $page           = get_page_by_title( $site_value );
-                // Set $site_value to page ID
-                $site_value     = is_object( $page ) ? $page->ID : NULL;
+                $site_value = $this->get_meta_post_id( 'auxin_import_post', $site_value );
             }
             // Finally update options :)
             update_option( $site_key, $site_value );
@@ -414,14 +431,43 @@ class Auxin_Demo_Importer {
                 $theme_mods_value = $this->get_attachment_id( 'auxin_import_id', $theme_mods_value );
             }
             // Update theme mods
-            set_theme_mod( $theme_mods_key , $theme_mods_value );
+            set_theme_mod( $theme_mods_key , maybe_unserialize( $theme_mods_value ) );
         }
 
-        foreach ( $plugin_options as $plugin => $options ) {
+        foreach ( $plugins_options as $plugin => $options ) {
+            if( empty( $options ) ){
+                continue;
+            }
             foreach ( $options as $option => $value) {
-                update_option( $option, $value );
+                if( strpos( $option, 'page_id' ) !== false ) {
+                    $value = $this->get_meta_post_id( 'auxin_import_post', $value );
+                }
+                update_option( $option, maybe_unserialize( $value ) );
             }
         }
+
+        // @deprecated A temporary fix for an issue with elementor typography scheme
+        $elementor_typo_scheme = [
+            '1' => [
+                'font-family' => 'Arial',
+                'font-weight' => ''
+            ],
+            '2' => [
+                'font-family' => 'Arial',
+                'font-weight' => ''
+            ],
+            '3' => [
+                'font-family' => 'Tahoma',
+                'font-weight' => ''
+            ],
+            '4' => [
+                'font-family' => 'Tahoma',
+                'font-weight' => ''
+            ]
+        ];
+        update_option( 'elementor_scheme_typography', $elementor_typo_scheme );
+
+        set_theme_mod( 'elementor_page_typography_scheme', 0 );
 
         // Stores css content in custom css file
         auxin_save_custom_css();
@@ -429,7 +475,6 @@ class Auxin_Demo_Importer {
         auxin_save_custom_js();
 
         wp_send_json_success( array( 'step' => 'options', 'next' => 'menus', 'message' => __( 'Importing Menus', 'auxin-elements' ) ) );
-
     }
 
     /**
@@ -440,15 +485,17 @@ class Auxin_Demo_Importer {
      *
      * @return  String
      */
-    public function import_widgets( array $widgets, array $widgets_data ) {
+    public function import_widgets( array $widgets ) {
 
         if ( ! function_exists( 'wp_get_sidebars_widgets' ) ) {
             require_once ABSPATH . WPINC . '/widgets.php';
         }
 
+        extract( $widgets );
+
         $default_widgets = array();
 
-        $widgets_data_str = wp_json_encode($widgets_data);
+        $widgets_data_str = wp_json_encode($options);
 
         preg_match_all( '/\s*"nav_menu"\s*:\s*(\d*)\s*/', $widgets_data_str, $matchs, PREG_SET_ORDER );
 
@@ -469,18 +516,18 @@ class Auxin_Demo_Importer {
             }
         }
 
-        $widgets_data = json_decode( $widgets_data_str, true );
+        $options = json_decode( $widgets_data_str, true );
 
 
         // Import widgets
-        foreach (  $widgets as $key => $value ) {
+        foreach (  $sidebars as $key => $value ) {
             $default_widgets[$key]  = $value;
         }
         // Replace new widgets with old ones.
         wp_set_sidebars_widgets( $default_widgets );
 
         // Import widgets data
-        foreach ( $widgets_data as $data_key => $data_values ) {
+        foreach ( $options as $data_key => $data_values ) {
 
             foreach ( $data_values as $counter => $options ) {
                 // This line is for changing the old attachment ID with new one.
@@ -562,7 +609,7 @@ class Auxin_Demo_Importer {
                         switch ( $meta_key ) {
                             case '_menu_item_object_id':
                                 // Create a flag transient
-                                set_transient( 'auxin_menu_item_old_parent_id_' . $meta_value, $item_id, 3600 );
+                                auxin_set_transient( 'auxin_menu_item_old_parent_id_' . $meta_value, $item_id, 3600 );
                                 // Change exporter's object ID value
                                 switch ( $item_value['menu-item-type'] ) {
                                     case 'post_type':
@@ -574,7 +621,7 @@ class Auxin_Demo_Importer {
 
                             case '_menu_item_menu_item_parent':
                                 if( (int) $meta_value != 0 ) {
-                                    $meta_value     = get_transient( 'auxin_menu_item_old_parent_id_' . $meta_value );
+                                    $meta_value     = auxin_get_transient( 'auxin_menu_item_old_parent_id_' . $meta_value );
                                 }
                                 break;
                             case '_menu_item_url':
@@ -640,25 +687,26 @@ class Auxin_Demo_Importer {
                 continue;
             }
 
-            $content    = $this->shortcode_process( base64_decode( $post['post_content'] ) );
-            $author_id  = get_current_user_id();
+            $content = base64_decode( $post['post_content'] );
 
             // Update the custom_css post for a given theme.
             if( $post['post_type'] == 'custom_css' ) {
-                wp_update_custom_css_post( $content );
+                if( ! isset( $post['post_meta']['auxin_import_post'] ) ){
+                    wp_update_custom_css_post( $content );
+                }
                 continue;
             }
 
             $post_id = wp_insert_post(
                 array(
                     'post_title'        => sanitize_text_field( $post['post_title'] ),
-                    'post_content'      => $content,
+                    'post_content'      => $this->shortcode_process( $content ),
                     'post_excerpt'      => $post['post_excerpt'],
                     'post_date'         => $post['post_date'],
                     'post_password'     => $post['post_password'],
                     'post_parent'       => $post['post_parent'],
                     'post_type'         => $post['post_type'],
-                    'post_author'       => $author_id,
+                    'post_author'       => get_current_user_id(),
                     'post_status'       => 'publish',
                 )
             );
@@ -674,7 +722,7 @@ class Auxin_Demo_Importer {
                             // Get post_format key value
                             $term = array_keys( $term );
                             // Set post format (Video, Audio, Gallery, ...)
-                            set_post_format( $post_id , $term[0] );
+                            set_post_format( $post_id , preg_replace( '/post-format-/', '', $term[0] ) );
 
                         } else {
 
@@ -703,12 +751,11 @@ class Auxin_Demo_Importer {
                                         $tax,
                                         array()
                                     );
-
                                     if ( is_wp_error( $term ) ) {
                                         continue;
                                     }
 
-                                    set_transient( 'auxin_category_new_id_of' . $value, $term['term_id'], 3600 );
+                                    auxin_set_transient( 'auxin_category_new_id_of' . $value, $term['term_id'], 3600 );
 
                                     $add_these_terms[]  = intval($term['term_id']);
                                 }
@@ -789,7 +836,7 @@ class Auxin_Demo_Importer {
                         $comment_old_ID                         = $comment_values['comment_ID'];
 
                         if ( $comment_values['comment_parent'] != 0 ) {
-                            $comment_values['comment_parent']   = get_transient( 'auxin_comment_new_comment_id_' . $comment_values['comment_parent'] );
+                            $comment_values['comment_parent']   = auxin_get_transient( 'auxin_comment_new_comment_id_' . $comment_values['comment_parent'] );
                         }
 
                         unset( $comment_values['comment_ID'] );
@@ -797,7 +844,7 @@ class Auxin_Demo_Importer {
                         if ( is_wp_error( $comment_ID ) ) {
                             continue;
                         } else {
-                            set_transient( 'auxin_comment_new_comment_id_' . $comment_old_ID, $comment_ID, 3600 );
+                            auxin_set_transient( 'auxin_comment_new_comment_id_' . $comment_old_ID, $comment_ID, 3600 );
                         }
                     }
                 }
@@ -885,26 +932,6 @@ class Auxin_Demo_Importer {
         wp_send_json_success( array( 'step' => 'media', 'next' => 'content', 'message' => __( 'Importing Contents', 'auxin-elements' ) ) );
     }
 
-
-    /**
-     * Import custom stylesheet file
-     *
-     * @param   array $args
-     *
-     * @return  String
-     */
-    public function import_stylesheet( $file_url ) {
-
-        if( empty( $file_url ) ){
-            auxin_update_option( 'special_css_file_enabled', 0 );
-        } elseif ( $basename = $this->insert_file( $file_url ) ) {
-            auxin_update_option( 'special_css_file_enabled', 1 );
-            auxin_update_option( 'special_css_file_name', $basename );
-        }
-
-        wp_send_json_success( array( 'step' => 'stylesheet', 'next' => 'prepare', 'message' => __( 'Preparing Site ...', 'auxin-elements' ) ) );
-    }
-
     /**
      * Import master slider
      *
@@ -934,7 +961,7 @@ class Auxin_Demo_Importer {
 
         }
 
-        wp_send_json_success( array( 'step' => 'masterslider', 'next' => 'stylesheet', 'message' => __( 'Importing Stylesheets', 'auxin-elements' ) ) );
+        wp_send_json_success( array( 'step' => 'masterslider', 'next' => 'prepare', 'message' => __( 'Preparing Site ...', 'auxin-elements' ) ) );
 
     }
 
@@ -949,7 +976,7 @@ class Auxin_Demo_Importer {
         // Remove local demo file
         wp_delete_file( $this->get_theme_dir() . '/demo.json' );
         // Send final success message
-        wp_send_json_success( array( 'step' => 'stylesheet', 'next' => 'final', 'message' => __( 'All steps are successful', 'auxin-elements' ) ) );
+        wp_send_json_success( array( 'step' => 'prepare_site', 'next' => 'final', 'message' => __( 'All steps are successful', 'auxin-elements' ) ) );
     }
 
     // Custom Functionalities
@@ -1248,7 +1275,7 @@ class Auxin_Demo_Importer {
      *
      * @return  String|Boolean
      */
-    public function insert_file( $url, $content = '', $basename = '' ) {
+    public function insert_file( $url, $content = '', $basename = '', $output = 'path' ) {
 
         if ( ! isset( $url ) ) {
             return false;
@@ -1258,7 +1285,7 @@ class Auxin_Demo_Importer {
         $get_contents = empty( $content ) ? @file_get_contents( $url ) : $content;
 
         if( $get_contents && auxin_put_contents_dir( $get_contents, $basename ) ) {
-            return pathinfo( $url, PATHINFO_FILENAME );
+            return $output !== 'path' ? $get_contents : pathinfo( $url, PATHINFO_FILENAME );
         } else {
             return false;
         }
@@ -1273,7 +1300,8 @@ class Auxin_Demo_Importer {
     public function get_demo_data(){
         // Get & return json data from local server
         if( false !== ( $data = @file_get_contents( $this->get_theme_dir() . '/demo.json' ) ) ) {
-            return json_decode( $data, true );
+            $data = json_decode( $data, true );
+            return  $data['data'];
         }
 
         return false;
@@ -1433,61 +1461,60 @@ class Auxin_Demo_Importer {
         $attach_keys = array( 'image', 'img', 'photo', 'poster', 'media', 'src' );
 
         foreach ( $attach_keys as $attach_key ) {
-            preg_match_all('/\s*"\b\w*'.$attach_key.'\w*\"\s*:\s*(.+?)\s*\}/', $meta, $images, PREG_SET_ORDER );
-            if( ! empty( $images ) ){
-                $matches = array_merge( $matches, $images );
+            preg_match_all('/\s*"\b\w*'.$attach_key.'\w*\"\s*:\{.*?\}/', $meta, $image );
+            if( isset( $image ) && ! empty( $image ) ){
+                $matches = array_merge( $matches, $image );
             }
         }
 
-        preg_match_all('/\{\s*"wp_gallery"\s*:\s*(.+?)\s*\}\]/', $meta, $wp_gallery, PREG_SET_ORDER );
-        if ( isset( $wp_gallery[0][0] ) ) {
-            preg_match_all( '/\{\"id":.*?\}/' , $wp_gallery[0][0], $gallery );
-            $matches[] = $gallery[0];
+        preg_match_all('/"wp_gallery":(\[.*?\])/', $meta, $wp_gallery, PREG_SET_ORDER );
+        if ( !empty( $wp_gallery ) ) {
+            foreach ( $wp_gallery as $gallery_key => $gallery_val ) {
+                preg_match_all( '/\{\"id":.*?\}/' , $gallery_val[0], $gallery );
+                $matches = !empty( $gallery ) ? array_merge( $matches, $gallery ) : $matches;
+            }
         }
 
-        foreach ( $matches as $image ) {
+        // remove empties
+        $matches = array_filter( $matches );
 
-            if( ! isset( $image[0] ) ) {
-                continue;
+        foreach ( $matches as $images ) {
+            foreach ( $images as $image ) {
+                preg_match('/\"id":(\d*)/', $image, $image_id );
+
+                if( ! isset( $image_id[1] ) || empty( $image_id[1] ) ) {
+                    continue;
+                }
+                $image_id = strval($image_id[1]);
+
+                preg_match('/\"url":\"(.*?)\"/', $image, $image_url );
+                if( ! isset( $image_url[1] ) || empty( $image_url[1] ) ) {
+                    continue;
+                }
+                $image_url = $image_url[1];
+
+                $new_image_id = $new_image_url = '';
+
+                if( $action === 'upload' && class_exists( '\Elementor\TemplateLibrary\Classes\Import_Images' ) ){
+                    $import_images  = new \Elementor\TemplateLibrary\Classes\Import_Images();
+                    $new_attachment = $import_images->import( array(
+                        'id'  => stripslashes( $image_id ),
+                        'url' => stripslashes( $image_url )
+                    ) );
+                    $new_image_id  = isset( $new_attachment['id'] ) ? $new_attachment['id'] : $image_id;
+                    $new_image_url = isset( $new_attachment['url'] ) ? $new_attachment['url'] : $image_url;
+
+                } else {
+                    $new_image_id  = $this->get_attachment_id( 'auxin_import_id', $image_id );
+                    $new_image_url = wp_get_attachment_url( $new_image_id );
+                }
+
+                if( ! empty( $new_image_id ) && ! empty( $new_image_url ) ){
+                    $new_image = str_replace( '"id":'. $image_id, '"id":'. $new_image_id, $image );
+                    $new_image = str_replace( '"url":"'. $image_url, '"url":"'. str_replace( '/', '\/', $new_image_url), $new_image );
+                    $meta = str_replace( $image , $new_image, $meta );
+                }
             }
-
-            $image = $image[0]; // We don't need subpattern matches
-
-            preg_match('/\"id":(\d*)/', $image, $image_id );
-
-            if( ! isset( $image_id[1] ) || empty( $image_id[1] ) ) {
-                continue;
-            }
-            $image_id = strval($image_id[1]);
-
-            preg_match('/\"url":\"(.*?)\"/', $image, $image_url );
-            if( ! isset( $image_url[1] ) || empty( $image_url[1] ) ) {
-                continue;
-            }
-            $image_url = $image_url[1];
-
-            $new_image_id = $new_image_url = '';
-
-            if( $action === 'upload' && class_exists( '\Elementor\TemplateLibrary\Classes\Import_Images' ) ){
-                $import_images  = new \Elementor\TemplateLibrary\Classes\Import_Images();
-                $new_attachment = $import_images->import( array(
-                    'id'  => stripslashes( $image_id ),
-                    'url' => stripslashes( $image_url )
-                ) );
-                $new_image_id  = isset( $new_attachment['id'] ) ? $new_attachment['id'] : $image_id;
-                $new_image_url = isset( $new_attachment['url'] ) ? $new_attachment['url'] : $image_url;
-
-            } else {
-                $new_image_id  = $this->get_attachment_id( 'auxin_import_id', $image_id );
-                $new_image_url = wp_get_attachment_url( $new_image_id );
-            }
-
-            if( ! empty( $new_image_id ) && ! empty( $new_image_url ) ){
-                $new_image = str_replace( '"id":'. $image_id, '"id":'. $new_image_id, $image );
-                $new_image = str_replace( '"url":"'. $image_url, '"url":"'. str_replace( '/', '\/', $new_image_url), $new_image );
-                $meta = str_replace( $image , $new_image, $meta );
-            }
-
         }
 
         // Replace old category ID's
@@ -1503,9 +1530,11 @@ class Auxin_Demo_Importer {
                 $categories = json_decode( $cat[1], true );
                 if( is_array( $categories ) && ! empty( $categories ) ) {
                     foreach ( $categories as $cat_key => $cat_id ) {
-                        $cat_old_id = get_transient( 'auxin_category_new_id_of' . $cat_id );
-                        $cat_array[ $cat_key ] = $cat_old_id !== false ? $cat_old_id : array( ' ' );
+                        $cat_old_id = auxin_get_transient( 'auxin_category_new_id_of' . $cat_id );
+                        $cat_array[ $cat_key ] = $cat_old_id !== false ? $cat_old_id : ' ';
                     }
+                    // Remove duplicates of empty data
+                    array_unique( $cat_array );
                     $meta = str_replace( $cat[0], '"cat":'. wp_json_encode( $cat_array ), $meta );
                 }
             }

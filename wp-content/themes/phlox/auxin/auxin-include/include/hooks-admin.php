@@ -187,8 +187,8 @@ function auxin_admin_theme_lite_notices( $notice_list ){
     if( version_compare( PHP_VERSION, '5.6.0', '<=' ) ){
         $notice_list[ 'php_phlox_requirement' ] = new Auxin_Notices( array(
             'id'        => 'php_phlox_requirement',
-            'title'     => __( 'Please update your PHP version' ),
-            'desc'      => sprintf( __( 'This theme is perfectly optimized for latest version of PHP. Your current PHP version is %s, we highly recommend you to upgrade PHP to version 7.0 or higher.' ), '<strong>' . PHP_VERSION . '</strong>' ),
+            'title'     => __( 'Please update your PHP version', 'phlox' ),
+            'desc'      => sprintf( __( 'This theme is perfectly optimized for latest version of PHP. Your current PHP version is %s, we highly recommend you to upgrade PHP to version 7.0 or higher.', 'phlox' ), '<strong>' . PHP_VERSION . '</strong>' ),
             'skin'      => 'error', // 'success', 'info', 'error'
             'has_close' => false,
             // 'image'     =>[

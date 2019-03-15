@@ -442,6 +442,8 @@ function auxin_widget_recent_posts_land_style_callback( $atts, $shortcode_conten
         'show_info'                   => true,
         'show_date'                   => true,
         'author_or_readmore'          => 'readmore',
+        'display_author_footer'       => false,
+        'display_author_header'       => true,
         'image_aspect_ratio'          => 0.75,
         'tag'                         => '',
 
@@ -470,14 +472,8 @@ function auxin_widget_recent_posts_land_style_callback( $atts, $shortcode_conten
     $result = auxin_get_widget_scafold( $atts, $default_atts, $shortcode_content );
     extract( $result['parsed_atts'] );
 
-    // post-olumn needs to have below variables
-    if( $author_or_readmore == 'readmore') {
-        $show_readmore      = true;
-        $show_author_footer = false;
-    } else {
-        $show_author_footer = true;
-        $show_readmore      = false;
-    }
+    $display_author_footer = auxin_is_true( $display_author_footer );
+    $display_author_header = auxin_is_true( $display_author_header );
 
     // specify the post formats that should be excluded -------
     $exclude_post_formats_in = (array) $exclude_post_formats_in;

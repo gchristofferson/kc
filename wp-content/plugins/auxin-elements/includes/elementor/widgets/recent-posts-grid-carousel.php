@@ -154,11 +154,12 @@ class RecentPostsGridCarousel extends Widget_Base {
                 'type'        => Controls_Manager::SELECT,
                 'default'     => 'grid',
                 'options'     => array(
-                    'grid'           => __( 'Grid', 'auxin-elements' ),
-                    'grid-table'     => __( 'Grid - Table Style', 'auxin-elements' ),
-                    'grid-modern'    => __( 'Grid - Modern Style', 'auxin-elements' ),
-                    'carousel-modern'=> __( 'Carousel - Modern Style', 'auxin-elements' ),
-                    'carousel'       => __( 'Carousel', 'auxin-elements' )
+                    'grid'            => __( 'Grid', 'auxin-elements' ),
+                    'grid-table'      => __( 'Grid - Table Style', 'auxin-elements' ),
+                    'grid-modern'     => __( 'Grid - Modern Style', 'auxin-elements' ),
+                    'flip'            => __( 'Flip', 'auxin-elements' ),
+                    'carousel-modern' => __( 'Carousel - Modern Style', 'auxin-elements' ),
+                    'carousel'        => __( 'Carousel', 'auxin-elements' )
                 )
             )
         );
@@ -455,6 +456,7 @@ class RecentPostsGridCarousel extends Widget_Base {
                 ),
                 'condition'   => array(
                     'show_info' => 'yes',
+                    'preview_mode!' => 'flip'
                 )
             )
         );
@@ -569,6 +571,38 @@ class RecentPostsGridCarousel extends Widget_Base {
         );
 
         $this->add_control(
+            'display_author_header',
+            array(
+                'label'        => __('Display Author in Header','auxin-elements' ),
+                'description'  => __('Enable it to display author name in header','auxin-elements' ),
+                'type'         => Controls_Manager::SWITCHER,
+                'label_on'     => __( 'On', 'auxin-elements' ),
+                'label_off'    => __( 'Off', 'auxin-elements' ),
+                'return_value' => 'yes',
+                'default'      => 'yes',
+                'condition'    => array(
+                    'author_or_readmore' => 'author',
+                )         
+            )
+        );
+
+        $this->add_control(
+            'display_author_footer',
+            array(
+                'label'        => __('Display Author in Footer','auxin-elements' ),
+                'description'  => __('Enable it to display author name in footer','auxin-elements' ),
+                'type'         => Controls_Manager::SWITCHER,
+                'label_on'     => __( 'On', 'auxin-elements' ),
+                'label_off'    => __( 'Off', 'auxin-elements' ),
+                'return_value' => 'yes',
+                'default'      => 'no',
+                'condition'    => array(
+                    'author_or_readmore' => 'author',
+                )        
+            )
+        );
+
+        $this->add_control(
             'meta_info_position',
             array(
                 'label'       => __('Meta info position', 'auxin-elements' ),
@@ -578,6 +612,9 @@ class RecentPostsGridCarousel extends Widget_Base {
                     'after-content'  => __('After Content' , 'auxin-elements' ),
                     'before-content' => __('Before Content', 'auxin-elements' )
                 ),
+                'condition'   => array(
+                    'preview_mode!' => 'flip'
+                )
             )
         );
 
@@ -1252,7 +1289,7 @@ class RecentPostsGridCarousel extends Widget_Base {
                 'name' => 'background',
                 'label' => __( 'Background', 'auxin-elements' ),
                 'types' => array( 'classic', 'gradient' ),
-                'selector' => '{{WRAPPER}} .column-entry',
+                'selector' => '{{WRAPPER}} .aux-col .column-entry',
             )
         );
 
@@ -1260,7 +1297,7 @@ class RecentPostsGridCarousel extends Widget_Base {
             Group_Control_Box_Shadow::get_type(),
             array(
                 'name'      => 'box_shadow',
-                'selector'  => '{{WRAPPER}} .column-entry'
+                'selector'  => '{{WRAPPER}} .aux-col .column-entry'
             )
         );
 
@@ -1273,13 +1310,24 @@ class RecentPostsGridCarousel extends Widget_Base {
             )
         );
 
+        $this->add_control(
+            'general_hover_text_color',
+            array(
+                'label' => __( 'Text Color', 'auxin-elements' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => array(
+                    '{{WRAPPER}} .aux-col:hover .entry-main a, {{WRAPPER}} .aux-col:hover .entry-main *' => 'transition:all 150ms ease; color:{{VALUE}};'
+                )
+            )
+        );
+
         $this->add_group_control(
             Group_Control_Background::get_type(),
             array(
                 'name' => 'hover_background',
                 'label' => __( 'Background', 'auxin-elements' ),
                 'types' => array( 'classic', 'gradient' ),
-                'selector' => '{{WRAPPER}} .column-entry:hover',
+                'selector' => '{{WRAPPER}} .aux-col:hover .column-entry',
             )
         );
 
@@ -1287,7 +1335,7 @@ class RecentPostsGridCarousel extends Widget_Base {
             Group_Control_Box_Shadow::get_type(),
             array(
                 'name'      => 'hover_box_shadow',
-                'selector'  => '{{WRAPPER}} .column-entry:hover'
+                'selector'  => '{{WRAPPER}} .aux-col:hover .column-entry'
             )
         );
 
@@ -1348,6 +1396,131 @@ class RecentPostsGridCarousel extends Widget_Base {
         );
 
         $this->end_controls_section();
+
+        /*  flip_wrapper_style_section
+        /*-------------------------------------*/
+
+        $this->start_controls_section(
+            'flip_wrapper_style_section',
+            array(
+                'label'     => __( 'Flip Wrapper', 'auxin-elements' ),
+                'tab'       => Controls_Manager::TAB_STYLE,
+                'condition' => array(
+                    'preview_mode' => 'flip'
+                )
+            )
+        );
+
+        $this->start_controls_tabs( 'flip_button_background' );
+
+        $this->start_controls_tab(
+            'flip_button_bg_normal',
+            array(
+                'label' => __( 'Normal' , 'auxin-elements' )
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            array(
+                'name' => 'flip_background',
+                'label' => __( 'Background', 'auxin-elements' ),
+                'types' => array( 'classic', 'gradient' ),
+                'selector' => '{{WRAPPER}} .aux-col .aux-flip-back',
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Box_Shadow::get_type(),
+            array(
+                'name'      => 'flip_box_shadow',
+                'selector'  => '{{WRAPPER}} .aux-col .aux-flip-back'
+            )
+        );
+
+        $this->end_controls_tab();
+
+        $this->start_controls_tab(
+            'flip_button_bg_hover',
+            array(
+                'label' => __( 'Hover' , 'auxin-elements' )
+            )
+        );
+
+        $this->add_control(
+            'flip_general_hover_text_color',
+            array(
+                'label' => __( 'Text Color', 'auxin-elements' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => array(
+                    '{{WRAPPER}} .aux-col:hover .aux-flip-back .entry-main a, {{WRAPPER}} .aux-col:hover .aux-flip-back .entry-main *' => 'transition:all 150ms ease; color:{{VALUE}};'
+                )
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            array(
+                'name' => 'flip_hover_background',
+                'label' => __( 'Background', 'auxin-elements' ),
+                'types' => array( 'classic', 'gradient' ),
+                'selector' => '{{WRAPPER}} .aux-col:hover .aux-flip-back',
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Box_Shadow::get_type(),
+            array(
+                'name'      => 'flip_hover_box_shadow',
+                'selector'  => '{{WRAPPER}} .aux-col:hover .aux-flip-back'
+            )
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+
+        $this->add_responsive_control(
+            'flip_align',
+            array(
+                'label'      => __('Align','auxin-elements'),
+                'type'       => Controls_Manager::CHOOSE,
+                'devices'    => array( 'desktop', 'mobile' ),
+                'options'    => array(
+                    'left' => array(
+                        'title' => __( 'Left', 'auxin-elements' ),
+                        'icon' => 'fa fa-align-left',
+                    ),
+                    'center' => array(
+                        'title' => __( 'Center', 'auxin-elements' ),
+                        'icon' => 'fa fa-align-center',
+                    ),
+                    'right' => array(
+                        'title' => __( 'Right', 'auxin-elements' ),
+                        'icon' => 'fa fa-align-right',
+                    ),
+                ),
+                'default'    => 'left',
+                'toggle'     => true,
+                'selectors'  => array(
+                    '{{WRAPPER}} .aux-flip-back' => 'text-align: {{VALUE}}',
+                )
+            )
+        );
+
+        $this->add_responsive_control(
+            'flip_wrapper_padding',
+            array(
+                'label'      => __( 'Padding for content wrapper', 'auxin-elements' ),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => array( 'px', '%' ),
+                'selectors'  => array(
+                    '{{WRAPPER}} .type-post .aux-flip-back' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                )
+            )
+        );
+
+        $this->end_controls_section();
     }
 
   /**
@@ -1382,7 +1555,9 @@ class RecentPostsGridCarousel extends Widget_Base {
         'show_excerpt'                => $settings['show_excerpt'],
         'excerpt_len'                 => $settings['excerpt_len'],
         'author_or_readmore'          => $settings['author_or_readmore'],
-
+        'display_author_header'       => $settings['display_author_header'],
+        'display_author_footer'       => $settings['display_author_footer'],
+        
         // Content Section
         'desktop_cnum'                => $settings['columns'],
         'tablet_cnum'                 => $settings['columns_tablet'],

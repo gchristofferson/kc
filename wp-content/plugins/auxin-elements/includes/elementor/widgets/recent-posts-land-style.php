@@ -295,7 +295,40 @@ class RecentPostsLand extends Widget_Base {
                 'options'     => array(
                     'readmore' => __('Read More', 'auxin-elements'),
                     'author'   => __('Author Name', 'auxin-elements'),
+                    'none'     => __('None', 'auxin-elements'),
                 )
+            )
+        );
+
+        $this->add_control(
+            'display_author_header',
+            array(
+                'label'        => __('Display Author in Header','auxin-elements' ),
+                'description'  => __('Enable it to display author name in header','auxin-elements' ),
+                'type'         => Controls_Manager::SWITCHER,
+                'label_on'     => __( 'On', 'auxin-elements' ),
+                'label_off'    => __( 'Off', 'auxin-elements' ),
+                'return_value' => 'yes',
+                'default'      => 'yes',
+                'condition'    => array(
+                    'author_or_readmore' => 'author',
+                )         
+            )
+        );
+
+        $this->add_control(
+            'display_author_footer',
+            array(
+                'label'        => __('Display Author in Footer','auxin-elements' ),
+                'description'  => __('Enable it to display author name in footer','auxin-elements' ),
+                'type'         => Controls_Manager::SWITCHER,
+                'label_on'     => __( 'On', 'auxin-elements' ),
+                'label_off'    => __( 'Off', 'auxin-elements' ),
+                'return_value' => 'yes',
+                'default'      => 'no',
+                'condition'    => array(
+                    'author_or_readmore' => 'author',
+                )        
             )
         );
 
@@ -937,6 +970,8 @@ class RecentPostsLand extends Widget_Base {
         'show_excerpt'                => $settings['show_excerpt'],
         'excerpt_len'                 => $settings['excerpt_len'],
         'author_or_readmore'          => $settings['author_or_readmore'],
+        'display_author_footer'       => $settings['display_author_footer'],
+        'display_author_header'       => $settings['display_author_header'],
 
         // Query Section
         'cat'                         => $settings['cat'],

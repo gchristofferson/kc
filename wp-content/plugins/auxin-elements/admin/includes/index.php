@@ -1,6 +1,6 @@
 <?php // load admin related classes & functions
 
-// Call the instance of auxin upgrader 
+// Call the instance of auxin upgrader
 Auxin_Upgrader_Prepare::get_instance();
 
 // load admin related functions
@@ -11,6 +11,9 @@ include_once( 'compatibility/uvca/uvca.php' );
 include_once( 'compatibility/sliders/rev.php' );
 include_once( 'compatibility/sliders/layerslider.php' );
 
+if ( function_exists('icl_object_id') ) {
+    include_once( 'compatibility/wpml/translate.php' );
+}
 
 do_action( 'auxels_admin_classes_loaded' );
 

@@ -552,6 +552,8 @@ function auxin_widget_recent_posts_tiles_carousel_callback( $atts, $shortcode_co
         'button_style'                => 'pattern-1',
         'display_title'               => true,
         'show_info'                   => true,
+        'show_date'                   => true,
+        'display_categories'          => true,
         // 'preloadable'                 => false,
         // 'preload_preview'             => true,
         // 'preload_bgcolor'             => '',

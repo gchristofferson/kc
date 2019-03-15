@@ -194,9 +194,10 @@ class Auxin_Welcome_Base {
             <h1 class="aux-welcome-title"><?php echo $welcome_page_title; ?></h1>
             <div class="aux-welcome-subtitle">
                 <?php
-                    printf( esc_html__('Version %s', 'phlox'), THEME_VERSION );
+                    echo '<span class="aux-welcome-desc-meta">' . sprintf( esc_html__('Version %s', 'phlox'), THEME_VERSION ) . '</span>';
                     if( function_exists('auxin_is_activated') &&  auxin_is_activated() ){
-                        echo sprintf( '<span class="aux-is-activated"> %s </span>', esc_html__('Activated', 'phlox') );
+                        printf( '<span class="aux-is-activated aux-welcome-desc-meta"> %s </span>', esc_html__('Activated', 'phlox') );
+                        printf( '<a class="aux-welcome-desc-meta-link aux-welcome-desc-meta" href="https://docs.phlox.pro/article/174-transfer-license" target="_blank">%s</a>', esc_html__('How to deactivate?', 'phlox') );
                     }
                     echo esc_html( $welcome_description );
                 ?>

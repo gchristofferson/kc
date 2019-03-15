@@ -73,7 +73,8 @@
 
 .supsystic-plugin .supsystic-content .supsystic-container {
     margin-left: 75px;
-    /*margin-top: 10px;*/
+    /*overflow: hidden;
+    margin-top: 10px;*/
 }
 
 .supsystic-plugin .supsystic-content .supsystic-navigation {
@@ -602,6 +603,10 @@ h3.nav-tab-wrapper {
 .supsystic-plugin .fa-stack .fa.fa-stack-2x {
 	font-size: 22px !important;
 	line-height: 20px !important;
+}
+
+.fa.supsystic-tooltip {
+    color:#52bac5;
 }
 
 /*sticky items*/

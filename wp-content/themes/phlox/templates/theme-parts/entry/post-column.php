@@ -46,7 +46,7 @@
                                         </a>
                                     </div>
                                 <?php } ?>
-                                <?php if ( $show_author_footer && 'none' !== $show_author_footer ) { ?>
+                                <?php if ( 'author' === $author_or_readmore && $display_author_header) { ?>
                                     <span class="meta-sep"><?php esc_html_e("by", 'phlox'); ?></span>
                                     <span class="author vcard">
                                         <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" rel="author" title="<?php echo esc_attr( sprintf( __( 'View all posts by %s', 'phlox'), get_the_author() ) ); ?>" >
@@ -93,14 +93,14 @@
                             echo 'before-title' == $post_info_position ? $entry_header : '';
 
                             ob_start();?>
-                            <?php if( $show_readmore || $show_author_footer ) {?>
+                            <?php if( 'none' !== $author_or_readmore ) {?>
                                 <footer class="entry-meta aux-<?php echo isset( $meta_info_position ) ? esc_attr( $meta_info_position ) : 'after-content'; ?>">
-                                    <?php if( $show_readmore ) {?>
+                                    <?php if( 'readmore' === $author_or_readmore ) {?>
                                     <div class="readmore">
                                         <a href="<?php the_permalink(); ?>" class="aux-read-more"><?php echo esc_html( auxin_get_option( 'post_index_read_more_text' ) ); ?></a>
                                     </div>
                                     <?php
-                                    } elseif ( $show_author_footer && 'quote' !== $post_format && 'link' !== $post_format ) { ?>
+                                    } elseif ( 'author' === $author_or_readmore && 'quote' !== $post_format && 'link' !== $post_format && $display_author_footer) { ?>
                                     <div class="author vcard">
                                         <?php echo get_avatar( get_the_author_meta("user_email"), 32 ); ?>
                                         <span class="meta-sep"><?php esc_html_e("by", 'phlox'); ?></span>

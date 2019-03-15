@@ -178,7 +178,7 @@ if( ! function_exists('auxin_get_elementor_templates_list') ) {
         $output_array = array( ' ' => __( 'Select a template', 'phlox' ) );
         
         foreach ( $posts_array as $key => $value ) {
-            $output_array[ $value->ID ] =  $value->post_title;
+            $output_array[ $value->post_name ] =  $value->post_title;
         }
         
         return $output_array;

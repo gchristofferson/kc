@@ -11,6 +11,8 @@ use Elementor\Scheme_Typography;
 use Elementor\Utils;
 use Elementor\Control_Media;
 use Elementor\Group_Control_Border;
+use Elementor\Group_Control_Background;
+use Elementor\Group_Control_Box_Shadow;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -142,6 +144,19 @@ class RecentPostsMasonry extends Widget_Base {
                     '6'       => '6'
                 ),
                 'frontend_available' => true,
+            )
+        );
+
+        $this->add_control(
+            'content_layout',
+            array(
+                'label'       => __('Content layout', 'auxin-elements'),
+                'type'        => Controls_Manager::SELECT,
+                'default'     => 'default',
+                'options'     => array(
+                    'default'     => __('Full Content', 'auxin-elements'),
+                    'entry-boxed' => __('Boxed Content', 'auxin-elements')
+                ),
             )
         );
 
@@ -325,6 +340,18 @@ class RecentPostsMasonry extends Widget_Base {
         );
 
         $this->add_control(
+            'display_comments',
+            array(
+                'label'        => __('Display Comment Number', 'auxin-elements' ),
+                'type'         => Controls_Manager::SWITCHER,
+                'label_on'     => __( 'On', 'auxin-elements' ),
+                'label_off'    => __( 'Off', 'auxin-elements' ),
+                'return_value' => 'yes',
+                'default'      => 'yes'
+            )
+        );
+
+        $this->add_control(
             'show_excerpt',
             array(
                 'label'        => __('Display excerpt','auxin-elements' ),
@@ -361,8 +388,41 @@ class RecentPostsMasonry extends Widget_Base {
                 'options'     => array(
                     'readmore' => __('Read More', 'auxin-elements'),
                     'author'   => __('Author Name', 'auxin-elements'),
+                    'none'     => __('None', 'auxin-elements'),
                 ),
                 'label_block' => true
+            )
+        );
+
+        $this->add_control(
+            'display_author_header',
+            array(
+                'label'        => __('Display Author in Header','auxin-elements' ),
+                'description'  => __('Enable it to display author name in header','auxin-elements' ),
+                'type'         => Controls_Manager::SWITCHER,
+                'label_on'     => __( 'On', 'auxin-elements' ),
+                'label_off'    => __( 'Off', 'auxin-elements' ),
+                'return_value' => 'yes',
+                'default'      => 'yes',
+                'condition'    => array(
+                    'author_or_readmore' => 'author',
+                )         
+            )
+        );
+
+        $this->add_control(
+            'display_author_footer',
+            array(
+                'label'        => __('Display Author in Footer','auxin-elements' ),
+                'description'  => __('Enable it to display author name in footer','auxin-elements' ),
+                'type'         => Controls_Manager::SWITCHER,
+                'label_on'     => __( 'On', 'auxin-elements' ),
+                'label_off'    => __( 'Off', 'auxin-elements' ),
+                'return_value' => 'yes',
+                'default'      => 'no',
+                'condition'    => array(
+                    'author_or_readmore' => 'author',
+                )        
             )
         );
 
@@ -957,6 +1017,140 @@ class RecentPostsMasonry extends Widget_Base {
         );
 
         $this->end_controls_section();
+
+                /*  wrapper_style_section
+        /*-------------------------------------*/
+
+        $this->start_controls_section(
+            'wrapper_style_section',
+            array(
+                'label'     => __( 'Wrapper', 'auxin-elements' ),
+                'tab'       => Controls_Manager::TAB_STYLE
+            )
+        );
+
+        $this->start_controls_tabs( 'button_background' );
+
+        $this->start_controls_tab(
+            'button_bg_normal',
+            array(
+                'label' => __( 'Normal' , 'auxin-elements' )
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            array(
+                'name' => 'background',
+                'label' => __( 'Background', 'auxin-elements' ),
+                'types' => array( 'classic', 'gradient' ),
+                'selector' => '{{WRAPPER}} .aux-col .column-entry',
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Box_Shadow::get_type(),
+            array(
+                'name'      => 'box_shadow',
+                'selector'  => '{{WRAPPER}} .aux-col .column-entry'
+            )
+        );
+
+        $this->end_controls_tab();
+
+        $this->start_controls_tab(
+            'button_bg_hover',
+            array(
+                'label' => __( 'Hover' , 'auxin-elements' )
+            )
+        );
+
+        $this->add_control(
+            'general_hover_text_color',
+            array(
+                'label' => __( 'Text Color', 'auxin-elements' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => array(
+                    '{{WRAPPER}} .aux-col:hover .entry-main a, {{WRAPPER}} .aux-col:hover .entry-main *' => 'transition:all 150ms ease; color:{{VALUE}};'
+                )
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            array(
+                'name' => 'hover_background',
+                'label' => __( 'Background', 'auxin-elements' ),
+                'types' => array( 'classic', 'gradient' ),
+                'selector' => '{{WRAPPER}} .aux-col:hover .column-entry',
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Box_Shadow::get_type(),
+            array(
+                'name'      => 'hover_box_shadow',
+                'selector'  => '{{WRAPPER}} .aux-col:hover .column-entry'
+            )
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+
+        $this->add_responsive_control(
+            'align',
+            array(
+                'label'      => __('Align','auxin-elements'),
+                'type'       => Controls_Manager::CHOOSE,
+                'devices'    => array( 'desktop', 'mobile' ),
+                'options'    => array(
+                    'left' => array(
+                        'title' => __( 'Left', 'auxin-elements' ),
+                        'icon' => 'fa fa-align-left',
+                    ),
+                    'center' => array(
+                        'title' => __( 'Center', 'auxin-elements' ),
+                        'icon' => 'fa fa-align-center',
+                    ),
+                    'right' => array(
+                        'title' => __( 'Right', 'auxin-elements' ),
+                        'icon' => 'fa fa-align-right',
+                    ),
+                ),
+                'default'    => 'left',
+                'toggle'     => true,
+                'selectors'  => array(
+                    '{{WRAPPER}}' => 'text-align: {{VALUE}}',
+                )
+            )
+        );
+
+        $this->add_responsive_control(
+            'wrapper_main_padding',
+            array(
+                'label'      => __( 'Padding for main wrapper', 'auxin-elements' ),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => array( 'px', '%' ),
+                'selectors'  => array(
+                    '{{WRAPPER}} .column-entry' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                )
+            )
+        );
+
+        $this->add_responsive_control(
+            'wrapper_content_padding',
+            array(
+                'label'      => __( 'Padding for content wrapper', 'auxin-elements' ),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => array( 'px', '%' ),
+                'selectors'  => array(
+                    '{{WRAPPER}} .type-post .entry-main' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                )
+            )
+        );
+
+        $this->end_controls_section();
     }
 
   /**
@@ -988,7 +1182,11 @@ class RecentPostsMasonry extends Widget_Base {
             'show_excerpt'                => $settings['show_excerpt'],
             'excerpt_len'                 => $settings['excerpt_len'],
             'author_or_readmore'          => $settings['author_or_readmore'],
-
+            'display_author_header'       => $settings['display_author_header'],
+            'display_author_footer'       => $settings['display_author_footer'],
+            'display_comments'            => $settings['display_comments'],
+            'content_layout'              => $settings['content_layout'],
+            
             // Layout Section
             'desktop_cnum'                => $settings['columns'],
             'tablet_cnum'                 => $settings['columns_tablet'],

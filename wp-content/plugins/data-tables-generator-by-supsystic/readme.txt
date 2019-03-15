@@ -1,8 +1,8 @@
 === Data Tables Generator by Supsystic ===
 Contributors: supsystic.com
 Tags: csv, excel, table, tablesorter,data table, table, database, table generator, builder, generator, cells, chart, charting, charts, column chart, gauge chart, graph, graphs, html5, line chart, pie chart, scatter chart, spreadsheet, visualise data, Woo, Woo Commerce, WooCommerce, product table, woocommerce product, product tables, catalog, product catalog, price list, pricing list, order forms, woocommerce tables, wholesale
-Tested up to: 5.1.0
-Stable tag: 1.9.71
+Tested up to: 5.1.1
+Stable tag: 1.9.72
 
 Create data tables with charts and graphs.  Custom design, navigation, searching and ordering functions. Export to PDF, CSV, Print. Excel spreadsheet. WooCommerce Integration.
 
@@ -225,6 +225,21 @@ It's perfect for product [Price List](http://woo.supsystic.com/price-list "Price
 Create custom order forms which increase your conversion rate!
 
 == Changelog ==
+
+= 1.9.72 / 13.03.2019 =
+ * For Woo-addon added export in Excell, fixed export in PDF and fixed export self-hosted images for all tables
+ * Changed interface for settings
+ * Add option: Export Links Position
+ * Fixed formulas for wide tables
+ * Added live Preview
+ * Fix for slashes
+ * Fix currency format for editor
+ * Added wc errors output
+ * Added font adaptation for navigation bar
+ * Fix for style tooltip and overview
+ * Added Table Styling Settings
+ * Moved big ad files to cdn server
+ * Added Tags Column for woo-addon
 
 = 1.9.71 / 25.02.2019 =
  * Fix of formulas: SUMIF. Fix of applying of current date to datepicker for empty edited cells of Date type

@@ -170,6 +170,16 @@ var g_stbServerSideProcessingIsActive = false;
             return deferred.promise();
         });
 
+		vendor[appName].setTableMobileWidth = (function() {
+			$('div .supsystic-tables-wrap').each(function () {
+				var ssDiv = $(this),
+					widthMobile = ssDiv.data('table-width-mobile');
+				if(typeof(widthMobile) != 'undefined') {
+					ssDiv.css('display', (widthMobile == 'auto' ? 'inline-block' : '')).css('width', widthMobile);
+				}
+			});
+		});
+
 		vendor[appName].initTablesOnPage = (function() {
 			this._initTablesOnPage();
 		});
@@ -183,13 +193,7 @@ var g_stbServerSideProcessingIsActive = false;
 				firstTableFirstRow = '';
 
 			if($(window).width() <= 991) {
-				$('div .supsystic-tables-wrap').each(function () {
-					var ssDiv = $(this),
-						widthMobile = ssDiv.data('table-width-mobile');
-					if(typeof(widthMobile) != 'undefined') {
-						ssDiv.css('display', (widthMobile == 'auto' ? 'inline-block' : '')).css('width', widthMobile);
-					}
-				});
+				self.setTableMobileWidth();
 			}
 			$('.supsystic-table').each(function () {
 				self.initializeTable(this, self.showTable, function(table) {
@@ -333,6 +337,8 @@ var g_stbServerSideProcessingIsActive = false;
                     stateSave:  false,
                     api: 		true,
                     retrieve:   true,
+                    order: [],
+                    processing: true,
                     initComplete: callback,
                     headerCallback: function( thead, data, start, end, display ) {
                         $(thead).closest('thead').find('th').each(function() {
@@ -902,6 +908,11 @@ var g_stbServerSideProcessingIsActive = false;
 				var table = $(this),
 					tableSelector = '#supsystic-table-' + table.data('view-id') + ' #supsystic-table-' + table.data('id');
 				self.applyTableEventClb(self.pageEvent, 50, tableSelector);
+				if($table.data('pagination-scroll') == 'on') {
+					$('html, body').animate({
+						scrollTop: table.closest('.dataTables_wrapper').offset().top
+					}, 100);
+				}
 			});
 
             // Frontend fields
@@ -921,9 +932,6 @@ var g_stbServerSideProcessingIsActive = false;
                     } else {
                         self.createEditableFields($table, $editableFields);
                     }
-                    if(typeof(self.setImgLightbox) == 'function'){
-                        self.setImgLightbox($table);
-                    }
 					$table.on('init.dt', function() {
 						$table.on('responsive-resize.dt responsive-display.dt draw.dt', function() {
 							$editableFields.off('click.sup');	// for compatibility with old pro versions
@@ -931,6 +939,9 @@ var g_stbServerSideProcessingIsActive = false;
 						});
 					});
                 }
+            }
+            if(typeof(self.setImgLightbox) == 'function'){
+            	self.setImgLightbox($table);
             }
 
 			// apply page.dt event by change table pagination via select
@@ -954,25 +965,28 @@ var g_stbServerSideProcessingIsActive = false;
             if(responsiveMode === 2 || fixedHeader || fixedFooter) {
                 // Responsive Mode: Horizontal Scroll
                 $(window).on('resize', $table, function(event) {
-                    var tBody = $tableWrap.find('.dataTables_scrollBody'),
+                	var tBody = $tableWrap.find('.dataTables_scrollBody'),
                         tBodyTable = tBody.find('.supsystic-table');
 
                     if(tBody.width() > tBodyTable.width() || $tableWrap.width() > tBodyTable.width()) {
 						tBody.width(tBodyTable.width());
 						$tableWrap.find('.dataTables_scrollHead, .dataTables_scrollFoot, .dataTables_scrollBody').width(tBodyTable.width() + 1);
+						/*
+						var scrollTables = $tableWrap.find('.dataTables_scrollHead, .dataTables_scrollFoot');
+						scrollTables.width(tBodyTable.width() + 1);
+						scrollTables.find('table').width(tBodyTable.width() + 1);*/
 					}
                     if(tBody.isHorizontallyScrollable()){
                         tBody.css({'border-bottom' : 'none'});
                     }else{
                         tBody.removeStyle('border-bottom');
                     }
-                    if(g_stbServerSideProcessing) {
-						if(typeof self.getTableInstanceById(viewId).fnAdjustColumnSizing == 'function' ) {
-							setTimeout(function(){
-								self.getTableInstanceById(table.data('id')).fnAdjustColumnSizing(false);
-							}, 350);
-						}
-                    }
+                    var table = self.getTableInstanceById($table.data('id'));
+                    if(typeof table.fnAdjustColumnSizing == 'function' ) {
+						setTimeout(function(){
+							table.fnAdjustColumnSizing(false);
+						}, 350);
+					}
                 }).trigger('resize');
 
                 // need resize twice to get better frontend view

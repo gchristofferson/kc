@@ -221,7 +221,7 @@ if( ! class_exists( 'Auxin_Plugin_Requirements' ) ){
 
                             $this->admin_notices[] = sprintf(
                                 __( '%s plugin is required in order to use this plugin. Please install and activate the plugin.', 'auxin-elements' ).
-                                ' <a href="http://support.averta.net/en/step/updating-phlox-pro/" target="_blank">'. __('How to upgrade', 'auxin-elements') . '</a>',
+                                ' <a href="https://docs.phlox.pro/article/210-update-phlox-pro/" target="_blank">'. __('How to upgrade', 'auxin-elements') . '</a>',
                                 '<strong>'. $plugin_requirement['name'] . '</strong>'
                             );
 
@@ -322,7 +322,7 @@ if( ! class_exists( 'Auxin_Plugin_Requirements' ) ){
                             if( version_compare( $plugin_info['Version'], constant( $theme_requirement['theme_requires_const'] ), '<' ) ){
                                 $this->admin_notices['theme'] .= sprintf(
                                     __( '%s theme requires %s plugin version %s or higher in order to function property. Your current plugin version is %s, please update it to latest version.', 'auxin-elements' ).
-                                    ' <a href="http://support.averta.net/en/step/updating-phlox-pro/" target="_blank">'. __('How to upgrade', 'auxin-elements') . '</a>',
+                                    ' <a href="https://docs.phlox.pro/article/210-update-phlox-pro/" target="_blank">'. __('How to upgrade', 'auxin-elements') . '</a>',
                                     THEME_NAME_I18N,
                                     '<strong>'. $plugin_info['Name'] . '</strong>',
                                     '<strong>'. constant( $theme_requirement['theme_requires_const'] ) . '</strong>',
@@ -347,7 +347,7 @@ if( ! class_exists( 'Auxin_Plugin_Requirements' ) ){
 
                             $this->admin_notices['theme'] .= sprintf(
                                 __( 'The plugin requires %s theme version %s or higher in order to function property. Your current theme version is %s, please %s update to latest version %s.', 'auxin-elements' ).
-                                ' <a href="http://support.averta.net/en/step/updating-phlox-pro/" target="_blank">'. __('How to upgrade', 'auxin-elements') . '</a>',
+                                ' <a href="https://docs.phlox.pro/article/210-update-phlox-pro/" target="_blank">'. __('How to upgrade', 'auxin-elements') . '</a>',
                                 '<strong>'. $theme_requirement['name'] . '</strong>',
                                 '<strong>'. $theme_requirement['version'] . '</strong>',
                                 '<strong>'. $theme_data->Version . '</strong>',

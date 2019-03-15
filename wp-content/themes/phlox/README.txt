@@ -4,7 +4,7 @@ Tags: one-column, two-columns, three-columns, left-sidebar, right-sidebar, grid-
 Requires PHP: 5.4
 Requires at least: 4.6
 Tested up to: 5.1.0
-Stable tag: 2.3.8
+Stable tag: 2.3.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,16 +93,30 @@ Phlox bundles the following third-party resources:
 
 == Changelog ==
 
+= 2.3.11 =
+- [Fix]: An issue with background color of header section fixed.
+
+
+= 2.3.11 =
+- [New]: Addig new options for background and color hover effect for recent posts element.
+- [New]: Addig flip effect for recent posts element.
+- [Fix]: An issue with post formats fixed.
+- [Fix]: A conflict issue in header background color fixed.
+- [New]: Adding new entrance animation option for all Elementor elements.
+- [New]: New layout option for staff element added.
+- [Improvement]: Changing the google analytic tracking option to tracking ID option.
+
+
 = 2.3.8 =
-- [Fix]: Fixing some backward compatibility with PHP 5.3.0 which caused fatal error.
+- [Fix]: Fixing some backward compatibility with PHP 5.3.0 which caused a fatal error.
 - [Fix]: Fix an issue on table and modern style of gird post widget.
-- [Fix]: Fixing an issue with ovarlapping content background on header background.
-- [Fix]: Fixing an issue with reposnive options of buttons in header.
+- [Fix]: Fixing an issue with overlapping content background on the header background.
+- [Fix]: Fixing an issue with responsive options of buttons in the header.
 - [Improvement]: Improvement in like buttons.
 - [Improvement]: Improvement in shopping cart functionality.
 - [New]: New typography options for pagination skins.
-- [Fix]: Fixing the missing post formats on gutenberg.
-- [New]: New header/footer options for customizer.
+- [Fix]: Fixing the missing post formats on Gutenberg.
+- [New]: New header/footer options for the customizer.
 - [Fix]: Fixing an issue with parallax effect on Safari.
 
 

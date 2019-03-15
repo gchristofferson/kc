@@ -2181,13 +2181,13 @@ function auxin_get_comments( $args = array() ){
  * @return void
  */
 function auxin_get_header_template(){
-    $get_template_id = auxin_get_option( 'site_header_template', ' ' );
-    if( $get_template_id !== ' ' && get_post_status( $get_template_id ) ){
+    $template = get_page_by_path( auxin_get_option( 'site_header_template', ' ' ), OBJECT, 'elementor_library' );
+    if( isset( $template->ID ) && $template->ID !== ' ' && get_post_status( $template->ID ) ){
 ?>
-    <header id="site-header" class="site-header-section" itemscope="itemscope" itemtype="https://schema.org/WPHeader">
+    <header itemscope="itemscope" itemtype="https://schema.org/WPHeader">
         <div class="aux-wrapper">
             <div class="aux-header aux-header-elements-wrapper">
-            <?php echo Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $get_template_id ); ?>
+            <?php echo Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $template->ID ); ?>
             </div><!-- end of header-elements -->
         </div><!-- end of wrapper -->
     </header><!-- end header -->
@@ -2201,14 +2201,30 @@ function auxin_get_header_template(){
  * @return void
  */
 function auxin_get_footer_template(){
-    $get_template_id = auxin_get_option( 'site_footer_template', ' ' );
-    if( $get_template_id !== ' ' && get_post_status( $get_template_id ) ){
+    $template = get_page_by_path( auxin_get_option( 'site_footer_template', ' ' ), OBJECT, 'elementor_library' );
+    if( isset( $template->ID ) && $template->ID !== ' ' && get_post_status( $template->ID ) ){
 ?>
-    <footer id="sitefooter" itemtype="https://schema.org/WPFooter" itemscope="itemscope" role="contentinfo">
+    <footer itemtype="https://schema.org/WPFooter" itemscope="itemscope" role="contentinfo">
         <div class="aux-wrapper">
-        <?php echo Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $get_template_id ); ?>
+        <?php echo Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $template->ID ); ?>
         </div><!-- end of wrapper -->
     </footer><!-- end footer -->
 <?php
     }
+}
+/**
+ * generate unique token for audit API
+ *
+ * @return void
+ */
+function auxin_get_site_key(){
+    $option_name = THEME_ID . '_' . 'audit_token';
+    $site_key = get_option( $option_name );
+
+    if ( ! $site_key ) {
+        $site_key = md5( uniqid( wp_generate_password() ) );
+        update_option( $option_name, $site_key );
+    }
+
+    return $site_key;
 }

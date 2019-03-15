@@ -7,11 +7,13 @@
         $show_post_date       = auxin_get_option( 'display_post_info_date', true );
         $show_post_author     = auxin_get_option( 'display_post_info_author', true );
         $show_post_categories = auxin_get_option( 'display_post_info_categories', true );
+        $display_comments     = auxin_get_option( 'display_post_info_comments', true );
     } elseif ( is_tag() || is_category() ) {
         $show_post_info       = auxin_get_option( 'display_post_taxonomy_info', true );
         $show_post_date       = auxin_get_option( 'display_post_taxonomy_info_date', true );
         $show_post_author     = auxin_get_option( 'display_post_taxonomy_info_author', true );
         $show_post_categories = auxin_get_option( 'display_post_taxonomy_info_categories', true );
+        $display_comments     = auxin_get_option( 'display_post_taxonomy_info_comments', true );
     }
 
 
@@ -80,7 +82,7 @@
                                         </a>
                                     </span>
                                     <?php endif; ?>
-                                    <?php if( comments_open() ){ /* just display comments number if the comments is not closed. */?>
+                                    <?php if( comments_open() && auxin_is_true( $display_comments ) ){ /* just display comments number if the comments is not closed. */?>
                                     <span class="meta-sep"><?php esc_html_e("with", 'phlox'); ?></span>
                                     <a href="<?php the_permalink(); ?>#comments" class="meta-comment" ><?php comments_number( __('No Comment', 'phlox'), __('One Comment', 'phlox'), __('% Comments', 'phlox') );?></a>
                                     <?php } ?>
@@ -101,35 +103,40 @@
                                 <?php endif; ?>
                                 <?php } ?>
 
-                                <?php if( 'quote' !== $post_format ) { ?>
-                                <div class="entry-content">
-                                    <?php
-                                    if( 'link' == $post_format ) {
-                                        echo '<a href="'. esc_url( $the_link ) .'" class="link-format-excerpt">' . $the_link . '</a>';
+                                <?php if( 'quote' !== $post_format ) { 
+                                    $content_listing_type   = is_category() || is_tag() ? auxin_get_option( 'post_taxonomy_archive_content_on_listing' ) : auxin_get_option( 'blog_content_on_listing' );
+                                    $content_listing_length = is_category() || is_tag() ? auxin_get_option( 'post_taxonomy_archive_on_listing_length', 255 ) :
+                                                            auxin_get_option( 'blog_content_on_listing_length', 255 );
 
-                                    } else {
-                                        $content_listing_type   = is_category() || is_tag() ? auxin_get_option( 'post_taxonomy_archive_content_on_listing' ) : auxin_get_option( 'blog_content_on_listing' );
-                                        $content_listing_length = is_category() || is_tag() ? auxin_get_option( 'post_taxonomy_archive_on_listing_length', 255 ) :
-                                                                  auxin_get_option( 'blog_content_on_listing_length', 255 );
+                                if ( $content_listing_type !== 'none') {
+                                ?>
+                                    <div class="entry-content">
+                                        <?php
+                                        if( 'link' == $post_format ) {
+                                            echo '<a href="'. esc_url( $the_link ) .'" class="link-format-excerpt">' . $the_link . '</a>';
 
-                                        if( has_excerpt() ){
-                                            the_excerpt();
-                                        } elseif( $content_listing_type == 'full' ) {
-                                            the_content( __( 'Continue Reading', 'phlox' ) );
                                         } else {
-                                            auxin_the_trim_excerpt( null, $content_listing_length, null, false, 'p' );
+
+                                            if( has_excerpt() ){
+                                                the_excerpt();
+                                            } elseif( $content_listing_type == 'full' ) {
+                                                the_content( __( 'Continue Reading', 'phlox' ) );
+                                            } elseif( $content_listing_type == 'excerpt') {
+                                                auxin_the_trim_excerpt( null, $content_listing_length, null, false, 'p' );
+                                            }
+
+
+                                            // clear the floated elements at the end of content
+                                            echo '<div class="clear"></div>';
+
+                                            // create pagination for page content
+                                            wp_link_pages( array( 'before' => '<div class="page-links"><span>' . esc_html__( 'Pages:', 'phlox') .'</span>', 'after' => '</div>' ) );
                                         }
-
-
-                                        // clear the floated elements at the end of content
-                                        echo '<div class="clear"></div>';
-
-                                        // create pagination for page content
-                                        wp_link_pages( array( 'before' => '<div class="page-links"><span>' . esc_html__( 'Pages:', 'phlox') .'</span>', 'after' => '</div>' ) );
-                                    }
-                                    ?>
-                                </div>
-                                <?php } ?>
+                                        ?>
+                                    </div>
+                                <?php } 
+                                }
+                                ?>
 
                                 <footer class="entry-meta">
                                     <div class="readmore">

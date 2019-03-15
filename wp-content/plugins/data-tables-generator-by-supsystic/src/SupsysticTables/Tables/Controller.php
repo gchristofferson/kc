@@ -223,7 +223,7 @@ class SupsysticTables_Tables_Controller extends SupsysticTables_Core_BaseControl
             $footer = (int)$request->post->get('footer');
 			$table = $tables->getById($id);
 
-			if($this->getEnvironment()->isWooPro() && isset($table->woo_settings) && $table->woo_settings['woocommerce']['enable'] === 'on'){
+			if($this->getEnvironment()->isWooPro() && isset($table->woo_settings) && isset($table->woo_settings['woocommerce']['enable']) && $table->woo_settings['woocommerce']['enable'] === 'on'){
 				$rows = $this->getEnvironment()->getModule('woocommerce')->getController()->getRowsByPart($id, array(), $start, $length, $searchAll['value']);
 			}else{
 				$rows = $tables->getRowsByPart($id, ($searchAll['value'] == '' ? false : $searchAll['value']), $searchCols, $orderCol, $orderAsc, $start, $length, $header, $footer, $searchParams, $table);
@@ -381,7 +381,7 @@ class SupsysticTables_Tables_Controller extends SupsysticTables_Core_BaseControl
                 )
             );
         }
-
+        $this->cleanCache($id);
         return $this->ajaxSuccess();
     }
 
@@ -421,8 +421,21 @@ class SupsysticTables_Tables_Controller extends SupsysticTables_Core_BaseControl
         $tables = $this->getEnvironment()->getModule('tables');
         $id = $request->post->get('id');
 		$tables->setIniLimits();
-
-        return $this->ajaxSuccess(array('table' => $tables->render((int)$id)));
+        $data = $request->post->get('settings');
+        $settings = false;
+        if($data && !empty($data)) {
+            if(get_magic_quotes_gpc()) {
+                $data = stripslashes($data);
+            }
+            parse_str($data, $settings);
+        }
+        $preview = $request->post->get('preview');
+        
+        $tables->isPreview = ($preview && $preview == 1);
+        if($tables->isPreview) {
+            $this->cleanCache($id);
+        }
+        return $this->ajaxSuccess(array('table' => $tables->render((int)$id, $settings)));
     }
 
     /**

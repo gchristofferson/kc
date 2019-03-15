@@ -763,6 +763,7 @@ var g_stbCellBgColorTimeoutSet = false,
                     $button.unbind(event);
                     $button.on(event, function (e) {
                         e.preventDefault();
+                        g_stbIsDataEdited['data'] = true;
 
                         if (/word-wrap-default|word-wrap-visible|word-wrap-hidden/.test(method)) {
                             $('#toolbar-word-wrapping i')

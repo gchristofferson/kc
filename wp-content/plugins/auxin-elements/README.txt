@@ -6,8 +6,8 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: phlox, gallery, elementor, siteorigin, auxin, averta, auxin-elements, framework, widget, fullwidth, masonry, timeline, parallax
 Requires PHP: 5.4
 Requires at least: 4.6
-Tested up to: 5.0.2
-Stable tag: 2.3.10
+Tested up to: 5.1.0
+Stable tag: 2.3.12
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -154,8 +154,10 @@ Bugs can be reported in our [support forums](http://support.averta.net/en/item/p
 
 == Changelog ==
 
-= Version 2.3.8 / 09.01.2019) =
-
+= Version 2.3.11 / 03.01.2019) =
+- [Improvement]: Changing the google analytic tracking option to tracking ID option.
+- [New]: Addig new options for background and color hover effect for recent posts element.
+- [Fix]: An issue with post formats fixed.
 
 = Version 2.3.7 / 06.01.2019) =
 - [Fix]: New option for changing the border color of header section added to page options. 

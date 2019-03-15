@@ -221,7 +221,38 @@
                 return helpers;
             }
         } );
+            // Enables the live preview for tranistions in Elementor Editor
+            function auxOnGlobalOpenEditorForTranistions ( panel, model, view ) {
+                view.listenTo( model.get( 'settings' ), 'change', function( changedModel ){
 
+                    // Force to re-render the element if the Entrance Animation enabled for first time
+                    if( '' !== model.getSetting('aux_animation_name') && ! view.$el.hasClass('aux-animated') ){
+                        view.render();
+                    }
+
+                    // Check the changed setting value
+                    for( settingName in changedModel.changed ) {
+                        if ( changedModel.changed.hasOwnProperty( settingName ) ) {
+
+                            // Replay the animation if an animation option changed (except the animation name)
+                            if( settingName !== "aux_animation_name" && -1 !== settingName.indexOf("aux_animation_") ){
+
+                                // Reply the animation
+                                view.$el.removeClass( model.getSetting('aux_animation_name') );
+
+                                setTimeout( function() {
+                                    view.$el.addClass( model.getSetting('aux_animation_name') );
+                                }, ( model.getSetting('aux_animation_delay') || 300 ) ); // Animation Delay
+                            }
+                        }
+                    }
+
+                }, view );
+            }
+
+            elementor.hooks.addAction( 'panel/open_editor/section', auxOnGlobalOpenEditorForTranistions );
+            elementor.hooks.addAction( 'panel/open_editor/column' , auxOnGlobalOpenEditorForTranistions );
+            elementor.hooks.addAction( 'panel/open_editor/widget' , auxOnGlobalOpenEditorForTranistions );
     } );
 
 })(jQuery, window, document);

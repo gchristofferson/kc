@@ -237,6 +237,9 @@
             {% if 'paginationMenuLength' in settingsKeys %}
                 data-pagination-length="{{ table.settings.paginationMenuLength | default('') }}"
             {% endif %}
+            {% if 'scrollTopByPagination' in settingsKeys %}
+                data-pagination-scroll="{{ table.settings.scrollTopByPagination | default('') }}"
+            {% endif %}
             {% if 'alignByFirstTable' in settingsKeys and 'auto_width' not in table.settings.features | keys %}
                 data-align-by-first-table="{{ table.settings.alignByFirstTable | default('') }}"
             {% endif %}

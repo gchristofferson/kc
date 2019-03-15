@@ -183,7 +183,7 @@ class Auxin_Master_Nav_Menu {
         $args['after']      = "\n";
 
         // only init master menu in following theme locations
-        $master_menu_theme_locations = array( 'header-primary', 'header-secondary');
+        $master_menu_theme_locations = array( 'header-primary', 'header-secondary', 'element');
 
         $menu_direction  = isset( $args['direction'] ) ? $args['direction'] : 'horizontal';           // the menu type on desktop size (toggle, accordion, horizontal, vertical, cover)
 

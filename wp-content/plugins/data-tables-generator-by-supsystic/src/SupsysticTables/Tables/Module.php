@@ -28,6 +28,8 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 	private $_tablesObj = array();
 	private $_tablesStyles = array();
 
+	public $isPreview = false;
+
 	/**
      * {@inheritdoc}
      */
@@ -56,7 +58,7 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 		add_action('shutdown', array($this, 'onShutdown'));
         $dispatcher = $this->getEnvironment()->getDispatcher();
         $dispatcher->on('after_tables_loaded', array($this, 'onAfterLoaded'));
-		$this->renderTableHistorySection();
+		$this->renderTableProSections();
 
 		add_filter('jetpack_lazy_images_blacklisted_classes', array($this, 'excludeFromLazyLoad'), 999, 1);
     }
@@ -118,14 +120,42 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 	public function addDataTableStyles($tableViewId) {
 		$tableObj = is_object($tableViewId) ? $tableViewId : $this->_tablesObj[$tableViewId];
 		array_push($this->_tablesStyles, $tableObj->view_id);
+		$styles = '';
+		$customStyles = '';
 
 		if(!empty($tableObj->meta) && !empty($tableObj->meta)) {
 			$styles = $tableObj->meta['css'];
 			$styles = trim(preg_replace('/\/\*.*\*\//Us', '', $styles));
+		}
+		if(isset($tableObj->settings['styles']) && isset($tableObj->settings['styles']['useCustomStyles'])) {
+			$standardFontsList = $this->getStandardFontsList();
+			$allFontsList = $this->getFontsList();
 
-			if(!empty($styles)) {
-				return $this->getTwig()->render('@tables/styles.twig', array('tableObj' => $tableObj));
+			if(isset($tableObj->settings['styles']['headerFontFamily'])) {
+				$family = $tableObj->settings['styles']['headerFontFamily'];
+				if(in_array($family, $allFontsList)	&& !in_array($family, $standardFontsList)) {
+					$customStyles = '@import url("//fonts.googleapis.com/css?family='.str_replace(' ', '+', $family).'");';
+				}
 			}
+			if(isset($tableObj->settings['styles']['cellFontFamily'])) {
+				$family = $tableObj->settings['styles']['cellFontFamily'];
+				if(in_array($family, $allFontsList)	&& !in_array($family, $standardFontsList)) {
+					$customStyles .= '@import url("//fonts.googleapis.com/css?family='.str_replace(' ', '+', $family).'");';
+				}
+			}
+			if(!$this->isPreview) {
+				$customStyles .= str_replace('supsystic-table-{id}', 'supsystic-table-'.$tableObj->id, $tableObj->settings['styles']['customCss']);
+			}
+		}
+
+		if(!empty($styles) || !empty($customStyles)) {
+			return $this->getTwig()->render('@tables/styles.twig',
+				array(
+					'viewId' => $tableObj->view_id,
+					'styles' => empty($styles) ? '' : $tableObj->meta['css'],
+					'customStyles' => $customStyles
+				)
+			);
 		}
 		return '';
 	}
@@ -210,7 +240,7 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
      * @param int $id
      * @return string
      */
-    public function render($id)
+    public function render($id, $settings = false)
     {
         if($this->disallowIndexing($id)) {
             return;
@@ -238,6 +268,15 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 		if (!$table) {
 			return sprintf($environment->translate('The table with ID %d not exists.'), $id);
 		}
+		$table->isDB = ($environment->isPro() && !$this->isSingleCell && !$this->isTablePart && isset($table->settings['source']) && isset($table->settings['source']['database']) && $table->settings['source']['database'] == 'on');
+		
+		if($settings) {
+			if($table->isDB) {
+				$settings['source'] = $table->settings['source'];
+			}
+			$settings['disableCache'] = 'on';
+			$table->settings = $settings;
+		}
 		$table->isSSP = (!$this->isSingleCell
 			&& !$this->isTablePart
 			&& isset($table->settings['features']['paging'])
@@ -245,7 +284,6 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 			&& isset($table->settings['serverSideProcessing'])
 			&& $table->settings['serverSideProcessing'] == 'on'
 		);
-		$table->isDB = ($environment->isPro() && !$this->isSingleCell && !$this->isTablePart && isset($table->settings['source']) && isset($table->settings['source']['database']) && $table->settings['source']['database'] == 'on');
 		
 		if(!isset($table->isPageRows)) {
 			$table->isPageRows = false;
@@ -253,7 +291,8 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 		$this->checkSpreadsheet = $this->checkSpreadsheet && !$table->isPageRows
 			&& $environment->isPro()
 			&& isset($table->settings['features']['import']['google']['automatically_update'])
-			&& isset($table->settings['features']['import']['google']['link']);
+			&& isset($table->settings['features']['import']['google']['link'])
+			&& !empty($table->settings['features']['import']['google']['link']);
 
         if (!$table->isSSP
 			&& !isset($table->settings['disableCache'])
@@ -903,7 +942,7 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 
 		$ui->add(
 			$ui->createStyle('supsystic-tables-datatables-responsive-css')
-				->setHookName($frontendHookName)
+				->setHookName($dynamicHookName)
 				->setSource($coreModulePath . '/assets/css/lib/responsive.dataTables.min.css')
 				->setVersion('2.0.2')
 				->setCachingAllowed(true)
@@ -936,7 +975,7 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 
 		$ui->add(
 			$ui->createScript('supsystic-tables-datatables-responsive-js')
-				->setHookName($frontendHookName)
+				->setHookName($dynamicHookName)
 				->setSource($coreModulePath . '/assets/js/lib/dataTables.responsive.min.js')
 				->setVersion('2.0.2')
 				->setCachingAllowed(true)
@@ -1327,7 +1366,7 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 	/**
 	 * Runs the callbacks after the table editor tabs rendered.
 	 */
-	private function renderTableHistorySection()
+	private function renderTableProSections()
 	{
 		$dispatcher = $this->getEnvironment()->getDispatcher();
 
@@ -1336,17 +1375,18 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 	}
 
 	/**
-	 * Renders the "TableHistory" tab.
+	 * Renders the "TableHistory" and "Source" tab.
 	 * @param \stdClass $table Current table
 	 */
 	public function afterTabsRendered()
 	{
 		$twig = $this->getEnvironment()->getTwig();
 		$twig->display('@tables/partials/historyTab.twig', array());
+		$twig->display('@tables/partials/sourceTab.twig', array());
 	}
 
 	/**
-	 * Renders the "TableHistory" tab content.
+	 * Renders the "TableHistory" and "Source" tabs content.
 	 * @param \stdClass $table Current table
 	 */
 	public function afterTabsContentRendered($table)
@@ -1358,7 +1398,12 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 			$dispatcher->apply('table_history_tabs_content_template', array('@tables/partials/historyTabContent.twig')),
 			$dispatcher->apply('table_history_tabs_content_data', array(array( 'table' => $table )))
 		);
+		$twig->display(
+			$dispatcher->apply('table_source_tabs_content_template', array('@tables/partials/sourceTabContent.twig')),
+			$dispatcher->apply('table_source_tabs_content_data', array(array( 'table' => $table )))
+		);
 	}
+
 	public function getShortcodesList()
 	{
 		$environment = $this->getEnvironment();

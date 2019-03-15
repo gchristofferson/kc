@@ -28,6 +28,15 @@
 				$(this).addClass('current');
 			}
 		});
+        var navWidth = $('.supsystic-navigation').width();
+        $('.supsystic-navigation a span').each(function(){
+            var el = $(this),
+                fontSize = parseFloat(el.css('font-size'));
+            while(el.width() > navWidth){
+                el.css('font-size', fontSize -= 1);
+            }
+        });
+
         /* Bootstrap Tooltips */
         // $('body').tooltip({
         //     selector: '.supsystic-plugin [data-toggle="tooltip"]',
@@ -38,8 +47,9 @@
                 contentAsHTML: true,
                 interactive: true,
                 position: 'top-left',
-                updateAnimation: true,
-                animation: 'swing',
+				delay: 1000,
+                updateAnimation: false,
+                animation: '',
                 functionReady: function(origin) {
                     $('img').load(function(){
                         origin.tooltipster('reposition');

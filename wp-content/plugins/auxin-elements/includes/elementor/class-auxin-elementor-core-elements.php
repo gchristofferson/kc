@@ -609,28 +609,28 @@ final class Elements {
 
         // Elementor Default Typo Schemes on first run
         if( ! get_theme_mod( 'elementor_page_typography_scheme' ) ){
-            $theme_typo_scheme = array(
-                '1' => array(
-                    'font-family' => '',
-                    'font-weight' => ''
-                ),
-                '2' => array(
-                    'font-family' => '',
-                    'font-weight' => ''
-                ),
-                '3' => array(
-                    'font-family' => '',
-                    'font-weight' => ''
-                ),
-                '4' => array(
-                    'font-family' => '',
-                    'font-weight' => ''
-                )
-            );
-    
             $schemes_manager = new \Elementor\Schemes_Manager();
+            
             $scheme_obj = $schemes_manager->get_scheme('typography');
-            $scheme_obj->save_scheme($theme_typo_scheme);
+            $scheme_obj->save_scheme([
+                '1' => [
+                    'font-family' => 'Arial',
+                    'font-weight' => ''
+                ],
+                '2' => [
+                    'font-family' => 'Arial',
+                    'font-weight' => ''
+                ],
+                '3' => [
+                    'font-family' => 'Tahoma',
+                    'font-weight' => ''
+                ],
+                '4' => [
+                    'font-family' => 'Tahoma',
+                    'font-weight' => ''
+                ]
+            ]);
+
             set_theme_mod( 'elementor_page_typography_scheme', 1 );
         }
 

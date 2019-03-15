@@ -73,7 +73,7 @@ class Module extends BaseModule {
 			'editLink' => Utils::get_edit_link( $post_id ),
 		];
 
-		wp_localize_script( 'elementor-gutenberg', 'ElementorGutenbergSettings', $elementor_settings );
+		Utils::print_js_config( 'elementor-gutenberg', 'ElementorGutenbergSettings', $elementor_settings );
 	}
 
 	/**

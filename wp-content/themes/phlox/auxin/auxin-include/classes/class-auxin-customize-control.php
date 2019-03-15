@@ -1095,13 +1095,13 @@ class Auxin_Customize_Typography_Template_Part_Control extends Auxin_Customize_C
             data-default="">
             <select>
                 <option value=""><?php _e( 'Default', 'phlox' );?></option>
-                <option value="300"><?php _e( '300', 'phlox' );?></option>
-                <option value="400"><?php _e( '400', 'phlox' );?></option>
-                <option value="500"><?php _e( '500', 'phlox' );?></option>
-                <option value="600"><?php _e( '600', 'phlox' );?></option>
-                <option value="700"><?php _e( '700', 'phlox' );?></option>
-                <option value="800"><?php _e( '800', 'phlox' );?></option>
-                <option value="900"><?php _e( '900', 'phlox' );?></option>
+                <option value="300">300</option>
+                <option value="400">400</option>
+                <option value="500">500</option>
+                <option value="600">600</option>
+                <option value="700">700</option>
+                <option value="800">800</option>
+                <option value="900">900</option>
                 <option value="normal"><?php _e( 'Normal', 'phlox' );?></option>
                 <option value="bold"><?php _e( 'Bold', 'phlox' );?></option>
             </select>

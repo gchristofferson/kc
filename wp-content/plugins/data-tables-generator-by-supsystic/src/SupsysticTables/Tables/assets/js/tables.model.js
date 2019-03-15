@@ -1,6 +1,9 @@
 var g_stbDoSaving = true; //waiting for the end of downloads
 var g_stbDoPreview = false;
+var g_stbNeedPreview = false;
+var g_stbMobilePreview = false;
 var g_stbPreviewTimeoutSet = false;
+//var g_stbPreviewTable = null;
 (function ($, app) {
 
 	var TablesModel = (function () {
@@ -92,12 +95,11 @@ var g_stbPreviewTimeoutSet = false;
 			return deferred.promise();
 		};
 
-		TablesModel.prototype.setRows = function (id, rows, byPart, preview) {
+		TablesModel.prototype.setRows = function (id, rows, byPart) {
 			if (isNaN(id = parseInt(id))) {
 				throw new Error('Invalid table id.');
 			}
 			byPart = typeof(byPart) != 'undefined' ? byPart : false;
-			preview= typeof(preview) != 'undefined' ? preview : false;
 
 			if(byPart) {
 				var self = this,
@@ -127,17 +129,16 @@ var g_stbPreviewTimeoutSet = false;
 					});
 				});
 				ajaxPromise = ajaxPromise.then(function() {
-					app.deleteSpinner($('#buttonSave'));
-					g_stbDoSaving = false;
+					self.endSave();
 				});
-				if(preview) {
-					ajaxPromise = ajaxPromise.then(function() {
-						self.getPreview(id, preview);
-					});
-				}
 			} else {
 				return this.request('updateRows', { id: id, rows: this._prepareData(rows) });
 			}
+		};
+
+		TablesModel.prototype.endSave = function () {
+			app.deleteSpinner($('#buttonSave'));
+			g_stbDoSaving = false;
 		};
 
 		TablesModel.prototype.getMeta = function (id) {
@@ -167,12 +168,16 @@ var g_stbPreviewTimeoutSet = false;
 			return this.settingsRequest('getSettings',{});
 		};
 
-		TablesModel.prototype.setSettings = function (id, settings) {
+		TablesModel.prototype.setSettings = function (id, settings, source) {
 			if (isNaN(id = parseInt(id))) {
 				throw new Error('Invalid table id.');
 			}
+			var data = settings.serialize();
+			if(typeof(source) != 'undefined' && source.length) {
+				data += '&' + source.serialize();
+			}
 
-			return this.request('saveSettings', { id: id, settings: settings.serialize() });
+			return this.request('saveSettings', { id: id, settings: data });
 		};
 
 		TablesModel.prototype.setHistorySettings = function (id, settings) {
@@ -421,21 +426,25 @@ var g_stbPreviewTimeoutSet = false;
 			}
 		};
 
-		TablesModel.prototype.saveTable = function(preview) {
-			this._saveTable(preview);
+		TablesModel.prototype.saveTable = function(preview, rerender) {
+			this._saveTable(preview, rerender);
 		};
 
-		TablesModel.prototype._saveTable = function(preview) {
+		TablesModel.prototype._saveTable = function(preview, rerender) {
+			// rerender = 1 (needed render preview) 
+			// rerender = 2 (needed settings save and render preview) 
 			preview = typeof(preview) != 'undefined' ? preview : false;
+			rerender = typeof(rerender) != 'undefined' ? rerender : false;
 			var self = this,
 				editor = self.getEditor(),
 				id = app.getParameterByName('id'),
 				toolbar = app.Editor.Tb,
 				svlFormatsClass = toolbar.getSvlFormatClass(),
 				formatClasses = toolbar.getFormatClasses(),
-				pagination = g_stbPagination;
+				pagination = g_stbPagination,
+				lastSave = false;
 
-			if (pagination) {
+			if(pagination) {
 				editor.copyInBuffer();
 				var bufferData = editor.bufferData,
 					bufferMeta = editor.bufferMeta,
@@ -444,15 +453,37 @@ var g_stbPreviewTimeoutSet = false;
 					countCols = editor.bufferCols;
 			}
 
-			if (preview !== false) {
-				$(preview).html($('<i/>', { class: 'fa fa-spinner fa-spin' }).attr('style','font-size: 2em !important')).prepend('<label> Table generate in process.... </label>');
+			if(preview !== false) {			
+				if(g_stbDoPreview && rerender) {
+					g_stbNeedPreview = true;
+					return;	
+				}
+				for(var key in g_stbIsDataEdited) {
+					if(g_stbIsDataEdited[key] && (rerender == 2 || key != 'settings')) {
+						lastSave = key;
+					}
+				}
+
+				var $preview = $(preview),
+					$table = $preview.find('.supsystic-tables-wrap');
+				if($table.length) {
+					if(lastSave == false && !rerender && !g_stbNeedPreview) return;
+					//g_stbPreviewTable = '';
+					$table.find('.dataTables_processing').css('display', 'block');
+				}
+				else {
+					$(preview).html($('<i/>', { class: 'fa fa-spinner fa-spin' }).attr('style','font-size: 2em !important')).prepend('<label> Table generate in process.... </label>');
+				}
+			} else {
+				g_stbNeedPreview = true;
 			}
 
-			if(!g_stbDoSaving) {
+			if(!g_stbDoSaving && (!preview || lastSave !== false)) {
 				g_stbDoSaving = true;
 				app.createSpinner($('#buttonSave'));
 
-				var formData = $('form#settings'),
+				var formData = this.prepareSettingsForm($('form#settings'), id),
+					sourceData = $('form#source-settings'),
 					byPart = true,
 					metaData = [],
 					mergeData = [],
@@ -461,212 +492,236 @@ var g_stbPreviewTimeoutSet = false;
 					rowCounter = 0,
 					requiredAssets = {};
 
-				// Put textareas data into the hidden fields before the saving of table settings
-				formData.find('input[name="elements[descriptionText]"]').val( formData.find('#descriptionText').val() );
-				formData.find('input[name="elements[signatureText]"]').val( formData.find('#signatureText').val() );
-				formData.find('input[name="features[after_table_loaded_script]"]').val(this._b64EncodeUnicode(formData.find('#after-table-loaded-script-text').val()));
-				formData.find('input[name="source[dbSQL]"]').val( formData.find('#source-db-sql').val() );
+				if(!preview || g_stbIsDataEdited['data']) {
 
-				if(preview) {
-					var tableInstance = app.getTableInstanceById(id);
+					$.each((pagination ? bufferData : editor.getData()), function (x, row) {
+						var currentRow = { cells: [] };
+						rowCounter++;
 
-					if(tableInstance) {
-						tableInstance.api().destroy();
-					}
-				}
+						$.each(row, function (y, cell) {
+							var meta = (pagination ? bufferMeta[x * countCols + y] : editor.getCellMeta(x, y)),
+								metaClasses = meta.className;
 
-				$.each((pagination ? bufferData : editor.getData()), function (x, row) {
-					var currentRow = { cells: [] };
-					rowCounter++;
-
-					$.each(row, function (y, cell) {
-						var meta = (pagination ? bufferMeta[x * countCols + y] : editor.getCellMeta(x, y)),
-							metaClasses = meta.className;
-
-						if (typeof(metaClasses) != 'undefined' && metaClasses.indexOf(svlFormatsClass) !== -1) {
-							metaClasses = metaClasses.replace(svlFormatsClass, '').trim();
-							var dataFormats = ('data-formats' in meta ? meta['data-formats'] : '');
-							if (dataFormats.length > 0) {
-								for (var c in formatClasses) {
-									if (dataFormats.indexOf(c) !== -1) {
-										metaClasses += ' ' + c;
-									}
-								}
-							}
-						}
-						var cellHtml = (pagination ? bufferData[x][y] : $(editor.getCell(x, y))),
-							classes = [],
-							cellData = {
-								y: rowCounter,
-								data: cell,
-								calculatedValue: null,
-								hidden: false,
-								hiddenCell: metaClasses && metaClasses.match('hiddenCell') !== null,
-								invisibleCell: metaClasses && metaClasses.match('invisibleCell') !== null
-							},
-							mergeCell = (pagination ? editor.mergeGetInfo(x, y) : editor.mergeCells.mergedCellInfoCollection.getInfo(x, y));
-
-						// set merged params
-						if(mergeCell !== undefined) {
-							cellData.hidden = true;
-						}
-						if(!pagination)
-						{
-							// set formatted value
-							cellHtml = cellHtml.clone();
-							cellHtml.find('.htAutocompleteArrow').remove();
-							cellData.formattedValue = cellHtml.text();
-						}
-
-						if(meta.readOnly) {
-							cellData.readOnly = true;
-						}
-						// selectable cell data source
-						if(meta.source && meta.source.length) {
-							meta.type = 'dropdown';
-							cellData.source = meta.source;
-						}
-
-						// Set cell format
-						cellData.type = meta.type ? meta.type : 'text';
-						cellData.baseType = meta.baseType ? meta.baseType : 'text';
-						cellData.formatType = meta.formatType ? meta.formatType : '';
-
-						switch(cellData.formatType) {
-							case 'currency':
-								cellData.format = formData.find('[name="currencyFormat"]').val();
-								break;
-							case 'percent':
-								cellData.format = formData.find('[name="percentFormat"]').val();
-								break;
-							case 'date':
-								//one table can contain multiple date formats
-								cellData.format = meta.format != 'undefined'
-									? meta.format
-									: formData.find('[name="dateFormat"]').val();
-
-								var date = moment(cellData.data, cellData.format);
-
-								if (date.isValid()) {
-									cellData.dateOrder = date.format('x');
-								}
-								break;
-							default:
-								cellData.format = meta.format;
-								break;
-						}
-
-						// Set calculated value for cells with formulas
-						if (self.isFormula(cell)) {
-							var value = self.getFormulaResult(cell, x, y);
-
-							if (value !== undefined) {
-								if (!isNaN(value) && value !== '0' && value !== 0 && value % 1 !== 0) {	// round float
-									var floatValue = parseFloat(value);
-
-									if (floatValue.toString().indexOf('.') !== -1) {
-										var afterPointSybolsLength = floatValue.toString().split('.')[1].length;
-
-										if (afterPointSybolsLength > 4) {
-											value = floatValue.toFixed(4);
+							if (typeof(metaClasses) != 'undefined' && metaClasses.indexOf(svlFormatsClass) !== -1) {
+								metaClasses = metaClasses.replace(svlFormatsClass, '').trim();
+								var dataFormats = ('data-formats' in meta ? meta['data-formats'] : '');
+								if (dataFormats.length > 0) {
+									for (var c in formatClasses) {
+										if (dataFormats.indexOf(c) !== -1) {
+											metaClasses += ' ' + c;
 										}
 									}
 								}
-								cellData.calculatedValue = value;
 							}
-						}
+							var cellHtml = (pagination ? bufferData[x][y] : $(editor.getCell(x, y))),
+								classes = [],
+								cellData = {
+									y: rowCounter,
+									data: cell,
+									calculatedValue: null,
+									hidden: false,
+									hiddenCell: metaClasses && metaClasses.match('hiddenCell') !== null,
+									invisibleCell: metaClasses && metaClasses.match('invisibleCell') !== null
+								},
+								mergeCell = (pagination ? editor.mergeGetInfo(x, y) : editor.mergeCells.mergedCellInfoCollection.getInfo(x, y));
 
-						// Set classes for cell
-						if (metaClasses !== undefined) {
-							$.each(metaClasses.split(' '), function (index, element) {
-								if (element.length) {
-									if(toeInArray(element, ['datefield', 'tooltipCell', 'collapsibleCell']) != -1 && !requiredAssets[element]) {
-										requiredAssets[element] = true;
+							// set merged params
+							if(mergeCell !== undefined) {
+								cellData.hidden = true;
+							}
+							if(!pagination)
+							{
+								// set formatted value
+								cellHtml = cellHtml.clone();
+								cellHtml.find('.htAutocompleteArrow').remove();
+								cellData.formattedValue = cellHtml.text().replace(/\\/g, '&#92;');
+							}
+
+							if(meta.readOnly) {
+								cellData.readOnly = true;
+							}
+							// selectable cell data source
+							if(meta.source && meta.source.length) {
+								meta.type = 'dropdown';
+								cellData.source = meta.source;
+							}
+
+							// Set cell format
+							cellData.type = meta.type ? meta.type : 'text';
+							cellData.baseType = meta.baseType ? meta.baseType : 'text';
+							cellData.formatType = meta.formatType ? meta.formatType : '';
+
+							switch(cellData.formatType) {
+								case 'currency':
+									cellData.format = formData.find('[name="currencyFormat"]').val();
+									break;
+								case 'percent':
+									cellData.format = formData.find('[name="percentFormat"]').val();
+									break;
+								case 'date':
+									//one table can contain multiple date formats
+									cellData.format = meta.format != 'undefined'
+										? meta.format
+										: formData.find('[name="dateFormat"]').val();
+
+									var date = moment(cellData.data, cellData.format);
+
+									if (date.isValid()) {
+										cellData.dateOrder = date.format('x');
 									}
-									classes.push($.trim(element));
-								}
-							});
-						}
-						cellData.meta = classes;
+									break;
+								default:
+									cellData.format = meta.format;
+									break;
+							}
 
-						// Set comments for cell
-						if (typeof(meta.comment) != 'undefined') {
-							cellData.comment = meta.comment;
-						}
+							// Set calculated value for cells with formulas
+							if (self.isFormula(cell)) {
+								var value = self.getFormulaResult(cell, x, y);
 
-						// Set column width by cells of first table row
-						if (x == 0) {
-							columnsWidth.push(editor.getColWidth(y));
-						}
-						var diagramsExists = cell && cell.toString().match(/(\[\s*supsystic-table-diagram[^\]]*\])+?/gi);
-						
-						if(diagramsExists) {
-							for(var i = 0; i < diagramsExists.length; i++) {
-								var diagramId = /id=[\'|\"](\d+)[\'|\"]/gi.exec(diagramsExists[i]);
+								if (value !== undefined) {
+									if (!isNaN(value) && value !== '0' && value !== 0 && value % 1 !== 0) {	// round float
+										var floatValue = parseFloat(value);
 
-								if(diagramId && diagramId[1]) {
-									requiredAssets.diagrams = requiredAssets.diagrams ? requiredAssets.diagrams : [];
-									requiredAssets.diagrams.push(diagramId[1]);
+										if (floatValue.toString().indexOf('.') !== -1) {
+											var afterPointSybolsLength = floatValue.toString().split('.')[1].length;
+
+											if (afterPointSybolsLength > 4) {
+												value = floatValue.toFixed(4);
+											}
+										}
+									}
+									cellData.calculatedValue = value;
 								}
 							}
-						}
-						currentRow.cells.push(cellData);
+
+							// Set classes for cell
+							if (metaClasses !== undefined) {
+								$.each(metaClasses.split(' '), function (index, element) {
+									if (element.length) {
+										if(toeInArray(element, ['datefield', 'tooltipCell', 'collapsibleCell']) != -1 && !requiredAssets[element]) {
+											requiredAssets[element] = true;
+										}
+										classes.push($.trim(element));
+									}
+								});
+							}
+							cellData.meta = classes;
+
+							// Set comments for cell
+							if (typeof(meta.comment) != 'undefined') {
+								cellData.comment = meta.comment;
+							}
+
+							// Set column width by cells of first table row
+							if (x == 0) {
+								columnsWidth.push(editor.getColWidth(y));
+							}
+							var diagramsExists = cell && cell.toString().match(/(\[\s*supsystic-table-diagram[^\]]*\])+?/gi);
+							
+							if(diagramsExists) {
+								for(var i = 0; i < diagramsExists.length; i++) {
+									var diagramId = /id=[\'|\"](\d+)[\'|\"]/gi.exec(diagramsExists[i]);
+
+									if(diagramId && diagramId[1]) {
+										requiredAssets.diagrams = requiredAssets.diagrams ? requiredAssets.diagrams : [];
+										requiredAssets.diagrams.push(diagramId[1]);
+									}
+								}
+							}
+							currentRow.cells.push(cellData);
+						});
+
+						// Row height
+						currentRow.height = (pagination ? bufferHeights[x] : editor.getRowHeight(x));
+
+						rowsData.push(currentRow);
 					});
-
-					// Row height
-					currentRow.height = (pagination ? bufferHeights[x] : editor.getRowHeight(x));
-
-					rowsData.push(currentRow);
-				});
-				if(pagination) {
-					mergeData = bufferMerge;
-				} else {
-					if(editor.mergeCells.mergedCellInfoCollection.length) {
-						for(var i = 0; i < editor.mergeCells.mergedCellInfoCollection.length; i++) {
-							mergeData.push(editor.mergeCells.mergedCellInfoCollection[i]);
+					if(pagination) {
+						mergeData = bufferMerge;
+					} else {
+						if(editor.mergeCells.mergedCellInfoCollection.length) {
+							for(var i = 0; i < editor.mergeCells.mergedCellInfoCollection.length; i++) {
+								mergeData.push(editor.mergeCells.mergedCellInfoCollection[i]);
+							}
 						}
 					}
+					metaData = {
+						requiredAssets: requiredAssets,
+						mergedCells: mergeData,
+						columnsWidth: columnsWidth,
+						columnsFixedWidth: g_stbFixedColumnsWidth,
+						columnsSortOrder: g_stbMultipleColumnsSorting,
+						columnsDisableSorting: g_stbDisableColumnsSorting,
+						css: this.getCssEditor().getValue()
+					};
 				}
-				metaData = {
-					requiredAssets: requiredAssets,
-					mergedCells: mergeData,
-					columnsWidth: columnsWidth,
-					columnsFixedWidth: g_stbFixedColumnsWidth,
-					columnsSortOrder: g_stbMultipleColumnsSorting,
-					columnsDisableSorting: g_stbDisableColumnsSorting,
-					css: this.getCssEditor().getValue()
-				};
+
+				if(preview) {
+					self.getPreview(id, preview);
+				}
 
 				// Request to save settings, meta and rows
 				var ajaxPromise = new $.Deferred().resolve();
 
-				ajaxPromise = ajaxPromise.then(
-					function() {
-						return self.setSettings(id, formData);
+				if(!preview || g_stbIsDataEdited['settings'] || g_stbIsDataEdited['source']) {
+					if(sourceData.length) {
+						sourceData.find('input[name="source[dbSQL]"]').val(sourceData.find('#source-db-sql').val());
 					}
-				);
-				ajaxPromise = ajaxPromise.then(
-					function() {
-						return self.setHistorySettings(id, $('form#history-settings'));
-					}
-				);
-				ajaxPromise = ajaxPromise.then(
-					function() {
-						return self.setMeta(id, metaData);
-					}
-				);
-				ajaxPromise = ajaxPromise.then(
-					function() {
-						return self.setRows(id, rowsData, byPart, preview);
-					}
-				);
-				ajaxPromise = ajaxPromise.then(
-					function() {
-						if(SDT_DATA.isWooPro) {
-							return self.setWooSettings(id, $('form#woocommerce-settings'));
+					ajaxPromise = ajaxPromise.then(
+						function() {
+							return self.setSettings(id, formData, sourceData);
 						}
+					);
+					g_stbIsDataEdited['settings'] = false;
+					g_stbIsDataEdited['source'] = false;
+					if(lastSave == 'settings' || lastSave == 'source') {
+						ajaxPromise = ajaxPromise.then(function() {
+							self.endSave();
+						});
 					}
-				);
+				}
+				if(!preview || g_stbIsDataEdited['history']) {
+					ajaxPromise = ajaxPromise.then(
+						function() {
+							return self.setHistorySettings(id, $('form#history-settings'));
+						}
+					);
+					g_stbIsDataEdited['history'] = false;
+					if(lastSave == 'history') {
+						ajaxPromise = ajaxPromise.then(function() {
+							self.endSave();
+						});
+					}
+				}
+				if(!preview || g_stbIsDataEdited['woocommerce']) {
+					ajaxPromise = ajaxPromise.then(
+						function() {
+							if(SDT_DATA.isWooPro) {
+								return self.setWooSettings(id, $('form#woocommerce-settings'));
+							}
+						}
+					);
+					g_stbIsDataEdited['woocommerce'] = false;
+					if(lastSave == 'woocommerce') {
+						ajaxPromise = ajaxPromise.then(function() {
+							self.endSave();
+						});
+					}
+				}
+				if(!preview || g_stbIsDataEdited['data']) {
+					ajaxPromise = ajaxPromise.then(
+						function() {
+							return self.setMeta(id, metaData);
+						}
+					);
+					ajaxPromise = ajaxPromise.then(
+						function() {
+							return self.setRows(id, rowsData, byPart, preview);
+						}
+					);
+					g_stbIsDataEdited['data'] = false;
+				}
 			} else {
 				if(preview && !g_stbPreviewTimeoutSet) {
 					this.getPreview(id, preview);
@@ -684,26 +739,186 @@ var g_stbPreviewTimeoutSet = false;
 				}, 50);
 			} else {
 				g_stbPreviewTimeoutSet = false;
-				g_stbDoPreview = true;
-				var container = preview instanceof $ ? preview : $(preview),
-					table;
+				if(!g_stbDoPreview) {
+					g_stbDoPreview = true;
+					g_stbNeedPreview = false;
+					var container = preview instanceof $ ? preview : $(preview),
+						table;
 
-				if(container.length) {
+					if(container.length) {
+						var settings = (g_stbIsDataEdited['settings'] ? this.prepareSettingsForm($('form#settings'), id).serialize() : '');
 
-					return this.render(app.getParameterByName('id')).done(function(response) {
-						container.empty().append($(response.table));
-						table = container.find('table');
-						app.initializeTable(table, app.showTable, function(table) {
+						return this.render(app.getParameterByName('id'), settings).done(function(response) {
+							var tableInstance = app.getTableInstanceById(id);
+							if(tableInstance) {
+								tableInstance.api().destroy();
+								app.removeTableInstanceByViewId(tableInstance.data('view-id'));
+							}
+							//g_stbPreviewTable = response.table;
+							container.empty().append($(response.table));
+							table = container.find('table');
+							if(g_stbMobilePreview) {
+								app.setTableMobileWidth();
+							}
+							app.initTablesOnPage();
 							self._afterTablePreview(table);
-							g_stbDoPreview = false;
 							if(app.initExportTable) {
 								app.initExportTable();
 							}
+						}).always(function() {
+							setTimeout(function(){
+								g_stbDoPreview = false;
+								if(g_stbNeedPreview) {
+									self.getPreview(id, preview);
+								}
+							}, 2000);
+							
 						});
-					});
+					}
 				}
 			}
 		};
+
+		TablesModel.prototype.reinitPreview = function (preview) {
+			var self = this,
+				tableId = app.getParameterByName('id'),
+				tableInstance = app.getTableInstanceById(tableId);
+			if(tableInstance) {
+				tableInstance.api().destroy();
+				app.removeTableInstanceByViewId(tableInstance.data('view-id'));
+			}
+			//previewContainer.empty().append($(g_stbPreviewTable));
+			table = preview.find('table');
+			if(table.length == 0) return;
+
+			if(g_stbMobilePreview) {
+				app.setTableMobileWidth();
+			} else {
+				preview.find('.supsystic-tables-wrap').css('display', '').css('width', '');
+			}
+
+			app.initializeTable(table, app.showTable, function(table) {
+				self._afterTablePreview(table);
+				if(typeof tableInstance.fnAdjustColumnSizing == 'function' ) {
+					setTimeout(function(){
+						tableInstance.fnAdjustColumnSizing(false);
+					}, 350);
+				}
+				if(app.initExportTable) {
+					app.initExportTable();
+				}
+			});
+		}
+
+		TablesModel.prototype.getCssText = function(rule) {
+			var value = rule.cssText ? rule.cssText : rule.style.cssText;
+			if(typeof(value) == 'undefined' || value.length == 0 || value.indexOf('@import') >= 0) return ''; 
+			if(value.indexOf(rule.selectorText) == -1) {
+				value = rule.selectorText + '{' + value + '}';
+			}
+			return value;
+		}
+
+		TablesModel.prototype.prepareSettingsForm = function(formData, id) {
+			// Put textareas data into the hidden fields before the saving of table settings
+			formData.find('input[name="elements[descriptionText]"]').val( formData.find('#descriptionText').val() );
+			formData.find('input[name="elements[signatureText]"]').val( formData.find('#signatureText').val() );
+			formData.find('input[name="features[after_table_loaded_script]"]').val(this._b64EncodeUnicode(formData.find('#after-table-loaded-script-text').val()));
+
+			var customCss = '',
+				obj = document.getElementById('stb-preview-css'),
+				sheet = obj.sheet || obj.styleSheet;
+			if(!sheet.disabled) {
+				var rules = sheet.cssRules || sheet.rules;
+				if(rules) {
+					for(var r = 0; r < rules.length; r++) {
+						customCss += this.getCssText(rules[r]);
+					}
+				}
+			}
+			customCss = customCss.replace(new RegExp('supsystic-table-'+id, 'g'), 'supsystic-table-{id}');
+			formData.find('input[name="styles[customCss]"]').val(customCss);
+			return formData;
+		}
+
+		TablesModel.prototype.disablePreviewCss = function (mode) {
+			var obj = document.getElementById('stb-preview-css'),
+				sheet = obj.sheet || obj.styleSheet;
+			sheet.disabled = mode;
+		}
+
+		TablesModel.prototype.getFontFamily = function(family) {
+			if(g_stbStandartFontsList
+				&& toeInArray(family, g_stbStandartFontsList) == -1
+				&& g_stbAllFontsList
+				&& toeInArray(family, g_stbAllFontsList) != -1
+			) {
+				return '@import url("//fonts.googleapis.com/css?family=' + family.replace(/_/g, '+') + '"); ';
+			}
+			return '';
+		}
+
+		TablesModel.prototype.updatePreviewCss = function (selectors) {
+			var obj = document.getElementById('stb-preview-css'),
+				sheet = obj.sheet || obj.styleSheet,
+				rules = sheet.cssRules || sheet.rules;
+
+			for(var i = 0; i < selectors.length; i++) {
+				var selector = selectors[i].selector,
+					param = selectors[i].param,
+					value = selectors[i].value,
+					newRules = typeof(value) == 'string' && value.length ? param + ':' + (param == 'font-family' ? '"' + value + '"' : value) + ';' : '',
+					found = -1;
+
+				for(var r = 0; r < rules.length; r++) {
+					if(rules[r].selectorText == selector) {
+						found = r;
+						var curCss = this.getCssText(rules[r]),
+							curRules = curCss.substring(curCss.indexOf('{') + 1, curCss.lastIndexOf('}')).split(';');
+
+						for(var c = 0; c < curRules.length; c++) {
+							var rulePaar = curRules[c].split(':');
+							if(rulePaar.length == 2) {
+								if(rulePaar[0].trim() != param) {
+									newRules += curRules[c] + ';';
+								}
+							}
+						}
+						break;
+					}
+				}
+				if(found >= 0) {
+					sheet.deleteRule(found);
+				}
+				if(newRules.length) {
+					sheet.insertRule(selector + '{' + newRules + '}', rules.length);
+					if(param == 'font-family') {
+						if(g_stbStandartFontsList
+							&& toeInArray(value, g_stbStandartFontsList) == -1
+							&& g_stbAllFontsList
+							&& toeInArray(value, g_stbAllFontsList) != -1
+						) {
+							sheet.insertRule('@import url("//fonts.googleapis.com/css?family=' + value.replace(/ /g, '+') + '"); ', 0);
+						}
+					}
+				}
+			}
+		}
+		TablesModel.prototype.controlSettingsValues = function($element) {
+			this._controlSettingsValues($element);
+		};
+		TablesModel.prototype._controlSettingsValues = function($element) {
+			var formData = $('form#settings');
+			if($element.is('#table-elements-description')) {
+				if(formData.find('#descriptionText').val().length) {
+					$element.removeAttr('data-preview-not-redraw');
+				}
+			} else if($element.is('#table-elements-signature')) {
+				if(formData.find('#signatureText').val().length) {
+					$element.removeAttr('data-preview-not-redraw');
+				}
+			}
+		}
 
 		TablesModel.prototype.getPreviewHistoryTable = function (userId, preview, period) {
 			var self = this,
@@ -723,12 +938,11 @@ var g_stbPreviewTimeoutSet = false;
 			}
 		};
 
-		TablesModel.prototype.render = function (id) {
+		TablesModel.prototype.render = function (id, settings) {
 			if (isNaN(id = parseInt(id))) {
 				throw new Error('Invalid table id.');
 			}
-
-			return this.request('render', { id: id });
+			return this.request('render', { id: id, settings: typeof(settings) == 'undefined' ? false : settings, preview: '1' });
 		};
 
 		TablesModel.prototype.renderFromHistory = function (userId, tableId, period) {
@@ -926,9 +1140,8 @@ var g_stbPreviewTimeoutSet = false;
 						);
 						break;
 					case 'currency':
-						var currencySymbolMatch = format.match(/^[^\d]?|[^\d]?$/),
-							currencySymbol = currencySymbolMatch[0] || '$',
-							formatWithoutCurrency = format.replace(currencySymbol, '');
+						var formatWithoutCurrency = format.match(/\d.?\d*.?\d*/)[0],
+							currencySymbol = format.replace(formatWithoutCurrency,'') || '$';
 
 						delimiters = (formatWithoutCurrency.match(/[^\d]/g) || [',', '.']).reverse();
 						languageData.delimiters = {

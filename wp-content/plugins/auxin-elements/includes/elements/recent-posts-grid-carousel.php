@@ -822,6 +822,8 @@ function auxin_widget_recent_posts_callback( $atts, $shortcode_content = null ){
         'preview_mode'                => 'grid',
         'grid_table_hover'            => 'bgimage-bgcolor',
         'tag'                         => '',
+        'display_author_footer'       => false,
+        'display_author_header'       => true,
 
         'preloadable'                 => false,
         'preload_preview'             => true,
@@ -861,18 +863,8 @@ function auxin_widget_recent_posts_callback( $atts, $shortcode_content = null ){
     $display_like          = auxin_is_true( $display_like );
     $display_title         = auxin_is_true( $display_title );
     $show_info             = auxin_is_true( $show_info );
-
-    // post-column needs to have below variables
-    if( $author_or_readmore == 'readmore') {
-        $show_readmore      = true;
-        $show_author_footer = false;
-    } elseif( $author_or_readmore == 'author') {
-        $show_readmore      = false;
-        $show_author_footer = true;
-    } else {
-        $show_readmore      = false;
-        $show_author_footer = false;
-    }
+    $display_author_footer = auxin_is_true( $display_author_footer );
+    $display_author_header = auxin_is_true( $display_author_header );
 
     // specify the post formats that should be excluded -------
     $exclude_post_formats_in = (array) $exclude_post_formats_in;
@@ -966,13 +958,17 @@ function auxin_widget_recent_posts_callback( $atts, $shortcode_content = null ){
     $tablet_cnum = ('inherit' == $tablet_cnum  ) ? $desktop_cnum : $tablet_cnum ;
     $phone_cnum  = ('inherit' == $phone_cnum  )  ? $tablet_cnum : $phone_cnum;
 
-    if ( in_array( $preview_mode, array( 'grid', 'grid-table', 'grid-modern' ) ) ) {
+    if ( in_array( $preview_mode, array( 'grid', 'grid-table', 'grid-modern', 'flip' ) ) ) {
         // generate columns class
         $column_class  = 'aux-match-height aux-row aux-de-col' . $desktop_cnum;
 
         $column_class .=  ' aux-tb-col'.$tablet_cnum . ' aux-mb-col'.$phone_cnum;
 
         $column_class .= 'entry-boxed' == $content_layout  ? ' aux-entry-boxed' : '';
+        
+        if ( 'flip' == $preview_mode ) {
+            $column_class .= ' aux-flip-box';
+        }
 
     } elseif ( in_array( $preview_mode, array('carousel', 'carousel-modern') ) ) {
         $column_class    = 'master-carousel aux-no-js aux-mc-before-init' . ' aux-' . $carousel_nav_control_pos . '-control';
@@ -1012,7 +1008,7 @@ function auxin_widget_recent_posts_callback( $atts, $shortcode_content = null ){
     $ignore_formats =  auxin_is_true( $ignore_formats ) ? array( '*' ) : array();
 
     // Specifies whether the columns have footer meta or not
-    $column_class  .= ! $show_author_footer && ! $show_readmore ? ' aux-no-meta' : '';
+    $column_class  .= 'none' === $author_or_readmore ? ' aux-no-meta' : '';
     $column_class  .= ' aux-ajax-view  ' . $extra_column_classes;
 
     // automatically calculate the media size if was empty
@@ -1092,6 +1088,8 @@ function auxin_widget_recent_posts_callback( $atts, $shortcode_content = null ){
                 }
 
             }
+
+            $template_part_file = 'flip' === $preview_mode ? 'theme-parts/entry/post-flip' : $template_part_file;
 
             // Generate the markup by template parts
             if( has_action( $base_class . '-template-part' ) ){

@@ -30,6 +30,9 @@ class SupsysticTables_Core_Model_Core extends SupsysticTables_Core_BaseModel
 				if($this->checkQueryOnColumnNotExists($q)) {
 					$this->db->query($q);
 				}
+            }
+            elseif ('delete' === substr(strtolower($q), 0, 6)) {
+                $this->db->query($q);
 			} else {
 				$this->delta($q);
 			}

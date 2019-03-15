@@ -457,6 +457,8 @@ function auxin_widget_recent_posts_timeline_callback( $atts, $shortcode_content 
         'show_info'                   => true,
         'show_date'                   => true,
         'author_or_readmore'          => 'readmore',
+        'display_author_footer'       => false,
+        'display_author_header'       => true,
         'timeline_alignment'          => 'center',
         'display_like'                => true,
         'display_comments'            => true,
@@ -488,14 +490,8 @@ function auxin_widget_recent_posts_timeline_callback( $atts, $shortcode_content 
     $result = auxin_get_widget_scafold( $atts, $default_atts, $shortcode_content );
     extract( $result['parsed_atts'] );
 
-    // show "author" or "readmore" btn in footer
-    if( $author_or_readmore == 'readmore') {
-        $show_readmore      = true;
-        $show_author_footer = false;
-    } else {
-        $show_author_footer = true;
-        $show_readmore      = false;
-    }
+    $display_author_footer = auxin_is_true( $display_author_footer );
+    $display_author_header = auxin_is_true( $display_author_header );
 
     // specify the post formats that should be excluded -------
     $exclude_post_formats_in = (array) $exclude_post_formats_in;

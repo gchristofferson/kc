@@ -463,7 +463,7 @@ function auxin_widget_recent_posts_masonry_callback( $atts, $shortcode_content =
         'display_like'                => true,
         'display_comments'            => true,
         'display_categories'          => true,
-        'content_layout'              => 'entry-boxed', // entry-boxed
+        'content_layout'              => '', // entry-boxed
         'post_info_position'          => 'after-title', // entry-boxed
         'excerpt_len'                 => '160',
         'display_title'               => true,
@@ -472,6 +472,8 @@ function auxin_widget_recent_posts_masonry_callback( $atts, $shortcode_content =
         'show_info'                   => true,
         'show_date'                   => true,
         'author_or_readmore'          => 'readmore',
+        'display_author_header'       => true,
+        'display_author_footer'       => false,
         // 'image_aspect_ratio'          => 0.75,
         'desktop_cnum'                => 4,
         'tablet_cnum'                 => 'inherit',
@@ -502,15 +504,9 @@ function auxin_widget_recent_posts_masonry_callback( $atts, $shortcode_content =
 
     $result = auxin_get_widget_scafold( $atts, $default_atts, $shortcode_content );
     extract( $result['parsed_atts'] );
-
-    // post-olumn needs to have below variables
-    if( $author_or_readmore == 'readmore') {
-        $show_readmore      = true;
-        $show_author_footer = false;
-    } else {
-        $show_author_footer = true;
-        $show_readmore      = false;
-    }
+    
+    $display_author_footer = auxin_is_true( $display_author_footer );
+    $display_author_header = auxin_is_true( $display_author_header );
 
     // specify the post formats that should be excluded -------
     $exclude_post_formats_in = (array) $exclude_post_formats_in;

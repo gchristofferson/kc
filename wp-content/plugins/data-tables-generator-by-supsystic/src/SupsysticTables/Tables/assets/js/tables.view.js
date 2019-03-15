@@ -22,7 +22,8 @@ var g_stbCopyPasteColsCount = [];
 	$(document).ready(function () {
 		var tablesModel = app.Models.Tables,
 			editor = app.Editor.Hot,
-			cssEditor = tablesModel.getCssEditor();
+			cssEditor = tablesModel.getCssEditor()
+			previewContainer = $('#table-preview');
 
 		// Initialize Main Tabs
 		var $mainTabsContent = $('.row-tab'),
@@ -45,7 +46,7 @@ var g_stbCopyPasteColsCount = [];
 				case '#row-tab-editor':
 					editor.render();
 					break;
-				case '#row-tab-preview':
+				case '#row-tab-settings':
 					tablesModel.saveTable('#table-preview');
 					break;
 				case '#row-tab-css':
@@ -58,6 +59,7 @@ var g_stbCopyPasteColsCount = [];
 
 		// Initialize Sub Tabs
 		var linksOyPositions = [],
+			settingsSection = $('.settings-section');
 			offsetTop2 = Math.floor($("#stb-anl-main").offset().top);
 		linksOyPositions.push({
 			'id': '#stb-anl-main',
@@ -72,20 +74,15 @@ var g_stbCopyPasteColsCount = [];
 			'offset': Math.abs(Math.floor($("#stb-anl-appearance").offset().top) - offsetTop2 - 40),
 		});
 		linksOyPositions.push({
-			'id': '#stb-anl-language',
-			'offset': Math.abs(Math.floor($("#stb-anl-language").offset().top) - offsetTop2 - 40),
+			'id': '#stb-anl-text',
+			'offset': Math.abs(Math.floor($("#stb-anl-text").offset().top) - offsetTop2 - 40),
 		});
-		linksOyPositions.push({
-			'id': '#stb-anl-source',
-			'offset': Math.abs(Math.floor($("#stb-anl-source").offset().top) - offsetTop2 - 40),
-		});
-		
 
 		$('.settings-wrap').slimScroll({'height': g_stbWindowHeight+'px'}).off('slimscrolling')
 			.on('slimscrolling', null, { 'oy': linksOyPositions }, function(e, pos){
 				if(e && e.data && e.data.oy) {
 					var ind1 = 0,
-						$activeItem = $('.stb-anchor-nav-links.active'),
+						$activeItem = settingsSection.find('.stb-anchor-nav-links.active'),
 						isFind = false;
 					while(ind1 < (e.data.oy.length - 1) && !isFind) {
 						if(e.data.oy[ind1].offset <= pos && e.data.oy[ind1+1].offset > pos) {
@@ -95,7 +92,7 @@ var g_stbCopyPasteColsCount = [];
 						ind1++;
 					}
 					// if current position at last anchor
-					if(isFind == false && ind1 == 4) {
+					if(isFind == false && ind1 == 3) {
 						isFind = ind1;
 					}
 					//check curr active item
@@ -106,12 +103,12 @@ var g_stbCopyPasteColsCount = [];
 							$activeItem.removeClass('active');
 						}
 						// add active class
-						$('.stb-anchor-nav-links[href="' + e.data.oy[isFind].id + '"]').addClass('active');
+						settingsSection.find('.stb-anchor-nav-links[href="' + e.data.oy[isFind].id + '"]').addClass('active');
 					}
 				}
 			});
-		$('.stb-anchor-nav-links').on('click', function(e1, funcParams) {
-			e1.preventDefault();
+		settingsSection.find('.stb-anchor-nav-links').on('click', function(e, funcParams) {
+			e.preventDefault();
 			var $settingsWrap = $('.settings-wrap')
 			,	urlLink = $(this).attr('href')
 			,	$linkItem = $(urlLink)
@@ -129,11 +126,35 @@ var g_stbCopyPasteColsCount = [];
 				}
 			}
 		});
+		$('.preview-section .stb-anchor-nav-links').on('click', function(e, funcParams) {
+			e.preventDefault();
+			var href = $(this).attr('href');
+			
+			g_stbMobilePreview = false;
+			$('.preview-styling a').removeClass('active');
+			$(this).addClass('active');
+			switch(href) {
+				case '#stb-style-desktop':
+					previewContainer.css('max-width', 'none');
+					break;
+				case '#stb-style-tablet':
+					previewContainer.css('max-width', '768px');
+					g_stbMobilePreview = true;
+					break;
+				case '#stb-style-mobile':
+					previewContainer.css('max-width', '380px');
+					g_stbMobilePreview = true;
+					break;
+				default:
+					break;
+			}
+			tablesModel.reinitPreview(previewContainer);
+		});
 
 		// init anchor link
 		setTimeout(function() {
 			var slScrollTopPos = parseInt($('#slimScrollStartPos').val());
-			$('.stb-anchor-nav-links[href="#stb-anl-main"]').trigger('click', {'offsetScTop':slScrollTopPos});
+			$('.settings-section .stb-anchor-nav-links[href="#stb-anl-main"]').trigger('click', {'offsetScTop':slScrollTopPos});
 		}, 200);
 
 		// Fix of conflict with handsontable library - it triggers error if user makes click on link without href attribute
@@ -147,16 +168,19 @@ var g_stbCopyPasteColsCount = [];
 		// Configure CSS Editor
 		cssEditor.setTheme("ace/theme/monokai");
 		cssEditor.getSession().setMode("ace/mode/css");
+		cssEditor.getSession().on('change', function() {
+			g_stbIsDataEdited['data'] = true;
+		});
 
 		// Make editors responsive for window height
-		$('#tableEditor, #css-editor').css({
+		$('#tableEditor, #css-editor, #preview-container').css({
 			'max-height': g_stbWindowHeight,
 			'min-height': g_stbWindowHeight,
 			'height': g_stbWindowHeight
 		});
-
+		
 		// If turn on chosen plugin for selects of all types - there is conflict with handsontable plugin happen
-		$('#row-tab-settings select[multiple="multiple"]').chosen({width: '100%'});
+		$('#row-tab-settings select[multiple="multiple"], #row-tab-source select[multiple="multiple"]').chosen({width: '100%'});
 
 		// Tooltips and Shortcode select
 		$('[data-toggle="tooltip"]').tooltip();
@@ -708,6 +732,248 @@ var g_stbCopyPasteColsCount = [];
 			}
 		});
 
+		// Table Styling
+		var previewTableId = 'supsystic-table-' + app.getParameterByName('id'),
+			tableSelector = '#' + previewTableId,
+			wrapperSelector = tableSelector + '_wrapper';	
+		$('.color-picker-wrapper').each(function() {
+			var $this = $(this),
+				colorArea = $this.find('.color-picker-preview'),
+				colorInput = $this.parent().find('input.color-input'),
+				curColor = colorInput.val(),
+				timeoutSet = false;
+
+			$this.ColorPicker({
+				color: curColor,
+				onShow: function (colpkr) {
+					$this.ColorPickerSetColor(colorInput.val());
+					$(colpkr).fadeIn(500);
+					return false;
+				},
+				onHide: function (colpkr) {
+					$(colpkr).fadeOut(500);
+					return false;
+				},
+				onChange: function (hsb, hex, rgb) {
+					var self = this;
+					curColor = hex;
+					if(!timeoutSet) {
+						setTimeout(function(){
+							timeoutSet = false;
+							$(self).find('.colorpicker_submit').trigger('click');
+						}, 500);
+						timeoutSet = true;
+					}
+				},
+				onSubmit: function(hsb, hex, rgb, el) {
+					colorArea.css('backgroundColor', '#' + curColor);
+					colorInput.val('#' + curColor).trigger('change');					
+				}
+			});
+		});	
+
+		formSettings.find('input[name="styles[externalBorderWidth]"]').on('change', function() {
+			var wBorder = $(this).val(),
+				cBorder = formSettings.find('input[name="styles[externalBorderColor]"]').val();
+			tablesModel.updatePreviewCss([{selector: tableSelector, param: 'border', value: wBorder.length && cBorder.length ? wBorder + 'px solid ' + cBorder + ' !important' : ''}]);
+		});
+		formSettings.find('input[name="styles[externalBorderColor]"]').on('change', function() {
+			var cBorder = $(this).val(),
+				wBorder = formSettings.find('input[name="styles[externalBorderWidth]"]').val(),
+				isFill = wBorder.length && cBorder.length;
+			tablesModel.updatePreviewCss([
+				{selector: tableSelector, param: 'border', value: isFill ? wBorder + 'px solid ' + cBorder + ' !important' : ''},
+				{selector: wrapperSelector + ' .dataTables_scroll', param: 'border', value: isFill ? wBorder + 'px solid ' + cBorder + ' !important' : ''},
+				{selector: wrapperSelector + ' .DTFC_ScrollWrapper', param: 'border', value: isFill ? wBorder + 'px solid ' + cBorder + ' !important' : ''},
+				{selector: wrapperSelector + ' .DTFC_ScrollWrapper .dataTables_scroll', param: 'border', value: isFill ? 'none !important' : ''},
+				{selector: wrapperSelector + ' .dataTables_scrollBody table', param: 'border', value: isFill ? 'none !important' : ''},
+			]);
+			$(this).parent().find('.color-picker-preview').css('backgroundColor', cBorder);
+		});
+
+		formSettings.find('input[name="styles[headerBorderWidth]"]').on('change', function() {
+			var wBorder = $(this).val(),
+				cBorder = formSettings.find('input[name="styles[headerBorderColor]"]').val();
+			tablesModel.updatePreviewCss([{selector: wrapperSelector + ' th', param: 'border', value: wBorder.length && cBorder.length ? wBorder + 'px solid ' + cBorder + ' !important' : ''}]);
+		});
+		formSettings.find('input[name="styles[headerBorderColor]"]').on('change', function() {
+			var cBorder = $(this).val(),
+				wBorder = formSettings.find('input[name="styles[headerBorderWidth]"]').val(),
+				isFill = wBorder.length && cBorder.length;
+			tablesModel.updatePreviewCss([
+				{selector: wrapperSelector + ' th', param: 'border', value: isFill ? wBorder + 'px solid ' + cBorder + ' !important' : ''},
+				{selector: wrapperSelector + ' .dataTables_scrollBody th', param: 'border-bottom', value: isFill ? 'none !important' : ''},
+				{selector: wrapperSelector + ' .dataTables_scrollBody th', param: 'border-top', value: isFill ? 'none !important' : ''},
+				{selector: wrapperSelector + ' .DTFC_LeftBodyWrapper th', param: 'border-bottom', value: isFill ? 'none !important' : ''},
+				{selector: wrapperSelector + ' .DTFC_LeftBodyWrapper th', param: 'border-top', value: isFill ? 'none !important' : ''},
+				{selector: wrapperSelector + ' .DTFC_RightBodyWrapper th', param: 'border-bottom', value: isFill ? 'none !important' : ''},
+				{selector: wrapperSelector + ' .DTFC_RightBodyWrapper th', param: 'border-top', value: isFill ? 'none !important' : ''},
+				{selector: wrapperSelector + ' .child table', param: 'border-collapse', value: isFill ? 'collapse' : ''},
+			]);
+			$(this).parent().find('.color-picker-preview').css('backgroundColor', cBorder);
+		});
+		formSettings.find('input[name="styles[rowBorderWidth]"]').on('change', function() {
+			var wBorder = $(this).val(),
+				cBorder = formSettings.find('input[name="styles[rowBorderColor]"]').val(),
+				isFill = wBorder.length && cBorder.length;
+			tablesModel.updatePreviewCss([
+				{selector: wrapperSelector + ' td', param: 'border-top', value: isFill ? wBorder + 'px solid ' + cBorder : ''},
+				{selector: wrapperSelector + ' tbody tr:first-child td', param: 'border-top', value: isFill ? 'none' : ''},
+				{selector: wrapperSelector + ' tbody tr:last-child td', param: 'border-bottom', value: isFill ? wBorder + 'px solid ' + cBorder : ''},
+				{selector: wrapperSelector + ' .child table', param: 'border-collapse', value: isFill ? 'collapse' : ''}
+			]);
+		});
+		formSettings.find('input[name="styles[rowBorderColor]"]').on('change', function() {
+			var cBorder = $(this).val(),
+				wBorder = formSettings.find('input[name="styles[rowBorderWidth]"]').val(),
+				isFill = wBorder.length && cBorder.length;
+			tablesModel.updatePreviewCss([
+				{selector: wrapperSelector + ' td', param: 'border-top', value: isFill ? wBorder + 'px solid ' + cBorder : ''},
+				{selector: wrapperSelector + ' tbody tr:first-child td', param: 'border-top', value: isFill ? 'none' : ''},
+				{selector: wrapperSelector + ' tbody tr:last-child td', param: 'border-bottom', value: isFill ? wBorder + 'px solid ' + cBorder : ''}
+			]);
+			$(this).parent().find('.color-picker-preview').css('backgroundColor', cBorder);
+		});
+		formSettings.find('input[name="styles[columnBorderWidth]"]').on('change', function() {
+			var wBorder = $(this).val(),
+				cBorder = formSettings.find('input[name="styles[columnBorderColor]"]').val(),
+				isFill = wBorder.length && cBorder.length;
+			tablesModel.updatePreviewCss([
+				{selector: wrapperSelector + ' td', param: 'border-left', value: isFill ? wBorder + 'px solid ' + cBorder : ''},
+				{selector: wrapperSelector + ' td', param: 'border-right', value: isFill ? wBorder + 'px solid ' + cBorder : ''},
+				{selector: wrapperSelector + ' .child table', param: 'border-collapse', value: isFill ? 'collapse' : ''}
+			]);
+		});
+		formSettings.find('input[name="styles[columnBorderColor]"]').on('change', function() {
+			var cBorder = $(this).val(),
+				wBorder = formSettings.find('input[name="styles[columnBorderWidth]"]').val(),
+				isFill = wBorder.length && cBorder.length;
+			tablesModel.updatePreviewCss([
+				{selector: wrapperSelector + ' td', param: 'border-left', value: isFill ? wBorder + 'px solid ' + cBorder : ''},
+				{selector: wrapperSelector + ' td', param: 'border-right', value: isFill ? wBorder + 'px solid ' + cBorder : ''},
+				{selector: wrapperSelector + ' tbody tr:first-child td', param: 'border-top', value: isFill ? 'none' : ''}
+			]);
+			$(this).parent().find('.color-picker-preview').css('backgroundColor', cBorder);
+		});
+
+		formSettings.find('input[name="styles[headerBackgroundColor]"]').on('change', function() {
+			var color = $(this).val();
+			tablesModel.updatePreviewCss([{selector: wrapperSelector + ' th', param: 'background-color', value: color}]);
+			$(this).parent().find('.color-picker-preview').css('backgroundColor', color);
+		});
+		formSettings.find('input[name="styles[headerFontColor]"]').on('change', function() {
+			var color = $(this).val();
+			tablesModel.updatePreviewCss([{selector: wrapperSelector + ' th', param: 'color', value: color}]);
+			$(this).parent().find('.color-picker-preview').css('backgroundColor', color);
+		});
+		formSettings.find('input[name="styles[headerFontSize]"]').on('change', function() {
+			var size = $(this).val();
+			tablesModel.updatePreviewCss([{selector: wrapperSelector + ' th', param: 'font-size', value: size.length ? size + 'px' : ''}]);
+		});
+		formSettings.find('input[name="styles[cellBackgroundColor]"]').on('change', function() {
+			var color = $(this).val();
+			tablesModel.updatePreviewCss([{selector: wrapperSelector + ' td', param: 'background-color', value: color}]);
+			$(this).parent().find('.color-picker-preview').css('backgroundColor', color);
+		});
+		formSettings.find('input[name="styles[cellFontColor]"]').on('change', function() {
+			var color = $(this).val();
+			tablesModel.updatePreviewCss([{selector: wrapperSelector + ' td', param: 'color', value: color}]);
+			$(this).parent().find('.color-picker-preview').css('backgroundColor', color);
+		});
+		formSettings.find('input[name="styles[cellFontSize]"]').on('change', function() {
+			var size = $(this).val();
+			tablesModel.updatePreviewCss([{selector: wrapperSelector + ' td', param: 'font-size', value: size.length ? size + 'px' : ''}]);
+		});
+		var headerFonts = formSettings.find('select[name="styles[headerFontFamily]"]'),
+			cellFonts = formSettings.find('select[name="styles[cellFontFamily]"]');
+		$('#fontFamily option').each(function() {
+			var option = '<option value="' + $(this).val() + '">' + $(this).text() + '</option>';
+			headerFonts.append(option);
+			cellFonts.append(option);
+		});
+		headerFonts.val(headerFonts.data('value'));
+		cellFonts.val(cellFonts.data('value'));
+		headerFonts.on('change', function() {
+			var family = $(this).val();
+			tablesModel.updatePreviewCss([{selector: wrapperSelector + ' th', param: 'font-family', value: family == 'default' ? '' : family}]);
+		});
+		cellFonts.on('change', function() {
+			var family = $(this).val();
+			tablesModel.updatePreviewCss([{selector: wrapperSelector + ' td', param: 'font-family', value: family == 'default' ? '' : family}]);
+		});
+
+		var searchSelector = tableSelector + '_filter input,'+wrapperSelector+' .stbColumnsSearchWrapper input';
+		formSettings.find('input[name="styles[searchBackgroundColor]"]').on('change', function() {
+			var color = $(this).val();
+			tablesModel.updatePreviewCss([{selector: searchSelector, param: 'background-color',	value: color.length ? color + ' !important' : ''}]);
+			$(this).parent().find('.color-picker-preview').css('backgroundColor', color);
+		});
+		formSettings.find('input[name="styles[searchFontColor]"]').on('change', function() {
+			var color = $(this).val();
+			tablesModel.updatePreviewCss([{selector: searchSelector, param: 'color',	value: color.length ? color + ' !important' : ''}]);
+			$(this).parent().find('.color-picker-preview').css('backgroundColor', color);
+		});
+		formSettings.find('input[name="styles[searchBorderColor]"]').on('change', function() {
+			var color = $(this).val();
+			tablesModel.updatePreviewCss([{selector: searchSelector, param: 'border',	value: color.length ? '1px solid ' + color + ' !important' : ''}]);
+			$(this).parent().find('.color-picker-preview').css('backgroundColor', color);
+		});
+		formSettings.find('input[name="styles[fixedLayout]"]').on('change ifChanged', function() {
+			var checked = $(this).is(':checked');
+			tablesModel.updatePreviewCss([
+				{selector: tableSelector, param: 'table-layout', value: checked ? 'fixed !important' : ''},
+				{selector: tableSelector, param: 'overflow-wrap', value: checked ? 'break-word' : ''},
+			]);			
+		});
+		formSettings.find('select[name="styles[verticalAlignment]"]').on('change', function() {
+			tablesModel.updatePreviewCss([{selector: tableSelector + ' th, ' + tableSelector + ' td', param: 'vertical-align', value: $(this).val()}]);
+		});
+		formSettings.find('select[name="styles[horizontalAlignment]"]').on('change', function() {
+			tablesModel.updatePreviewCss([{selector: tableSelector + ' th, ' + tableSelector + ' td', param: 'text-align', value: $(this).val()}]);
+		});
+		formSettings.find('select[name="styles[paginationPosition]"]').on('change', function() {
+			var position = $(this).val();
+			tablesModel.updatePreviewCss([
+				{selector: wrapperSelector + ' .dataTables_paginate', param: 'text-align', value: position},
+				{selector: wrapperSelector + ' .dataTables_paginate', param: 'float', value: position.length ? 'none' : ''}
+			]);
+		});
+		formSettings.find('input[name="styles[showSortHover]"]').on('change ifChanged', function() {
+			var checked = $(this).is(':checked');
+			tablesModel.updatePreviewCss([
+				{selector: wrapperSelector + ' table .sorting', param: 'background-image', value: checked ? 'none' : ''},
+				{selector: wrapperSelector + ' table th.sorting:hover', param: 'background-image', value: checked ? 'url("'+SDT_DATA.pluginsUrl.replace(SDT_DATA.siteUrl, '/')+'/data-tables-generator-by-supsystic/src/SupsysticTables/Core/assets/css/images/sort_both.png")' : ''}
+			]);
+		});
+
+		$('#stb-preview-css').text(formSettings.find('input[name="styles[customCss]"]').val().replace(new RegExp('supsystic-table-{id}', 'g'), previewTableId));
+
+		formSettings.find('input[name="styles[useCustomStyles]"]').on('change ifChanged', function() {
+			if($(this).is(':checked')) {
+				$('.table-styles-options').show();
+				tablesModel.disablePreviewCss(false);
+				tablesModel.updatePreviewCss([{selector: wrapperSelector + ' table', param: 'border-collapse', value: 'collapse'}]);
+				formSettings.find('.table-styles-options input, .table-styles-options select').trigger('change');
+			} else {
+				$('.table-styles-options').hide();
+				tablesModel.disablePreviewCss(true);
+			}
+		});
+
+		formSettings.find('.setting-wrapper input, .setting-input select, textarea').on('change ifChanged', function(e) {
+			g_stbIsDataEdited['settings'] = true;
+			var $this = $(this);
+			tablesModel.controlSettingsValues($this);
+			if($this.attr('data-preview-not-redraw') == '1') {
+				return;
+			}
+
+			if($this.attr('data-need-data-save') == '1') {
+				g_stbIsDataEdited['data'] = true;
+			}
+			tablesModel.saveTable('#table-preview', $this.attr('data-need-settings-save') == '1' ? 2 : 1);
+		});
+		
 		// Pro Notifications and Dialog Windows
 		var $proNotify = $('.pro-notify');
 

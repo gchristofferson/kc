@@ -52,6 +52,8 @@
             <!-- /.supsystic-navigation supsystic-sticky supsystic-sticky-active -->
             <div class="supsystic-container">
                 {{ environment.getDispatcher().dispatch('notices') }}
+                {{ environment.getDispatcher().dispatch('messages') }}
+
                 {% block content %}{% endblock %}
 
                 <div id="dtgAddDialog" style="display: none;" title="{{ environment.translate('Add new table') }}" style="min-height: 70px;">

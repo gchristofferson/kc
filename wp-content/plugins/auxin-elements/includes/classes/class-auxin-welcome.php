@@ -610,7 +610,7 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
 
 	    $key = sanitize_key( 'auxin_plugin_data_'.$slug );
 
-	    if ( false === ( $plugins = get_transient( $key ) ) ) {
+	    if ( false === ( $plugins = auxin_get_transient( $key ) ) ) {
 			$args = array(
 				'slug' => $slug,
 				'fields' => array(
@@ -631,7 +631,7 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
 			$plugins = is_object( $data ) ? array( 'Description' => $data->short_description , 'Version' => $data->version ) : false;
 
 			// Set transient for next time... keep it for 24 hours
-			set_transient( $key, $plugins, 24 * HOUR_IN_SECONDS );
+			auxin_set_transient( $key, $plugins, 24 * HOUR_IN_SECONDS );
 
 	    }
 
@@ -822,7 +822,7 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
                                             }
                                         }
 
-                                        if( false !==  get_transient( sanitize_key( 'aux-template-' . $args['type'] . $args['id'] ) ) ) {
+                                        if( false !==  auxin_get_transient( sanitize_key( 'aux-templates-' . $args['type'] . $args['id'] ) ) ) {
                                             $template_status = 'copy';
                                             $btn_label       = esc_html__( 'Copy to clipboard', 'auxin-elements' );
                                             $color_class     = " aux-copy-template aux-iconic-action aux-orange";
@@ -919,14 +919,14 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
                 if( ! is_array( $demo_list ) ){
                     echo '<p class="aux-grid-item grid_12">'. __( 'An error occurred while downloading the list of demo sites. Please try again later.' ) .'</p>';
                 } else {
-    				foreach ( $demo_list as $key => $args ) {
+    				foreach ( $demo_list['items'] as $key => $args ) {
                         // Checking the last imported demo...
-                        $is_active_demo  = ! empty( $last_demo_imported ) && $last_demo_imported['id'] == $args['site_id'] ? 'aux-last-imported-demo' : '';
+                        $is_active_demo  = ! empty( $last_demo_imported ) && $last_demo_imported['id'] == $args['id'] ? 'aux-last-imported-demo' : '';
 
                         // Check demo license
-                        $is_demo_allowed = auxin_is_activated() || $args['type'] === 'free';
+                        $is_demo_allowed = auxin_is_activated() || !$args['is_pro'];
 
-    					echo '<div data-demo-id="demo-'.$args['site_id'].'" class="aux-grid-item aux-iso-item grid_4 '.$is_active_demo.'">';
+    					echo '<div data-demo-id="demo-'.$args['id'].'" class="aux-grid-item aux-iso-item grid_4 '.$is_active_demo.'">';
                         echo '<div class="aux-grid-item-inner">';
                             echo '<div class="aux-grid-item-media">';
     				            echo '<img width="579" class="demo_thumbnail" src='.$args['thumbnail'].'>';
@@ -947,7 +947,7 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
                                     } else {
                                         $color_class    = " aux-blue aux-pro-demo aux-locked-demo aux-iconic-action";
                                         $btn_label      = esc_html__( 'Unlock', 'auxin-elements' );
-                                        $import_btn_url = esc_url( 'http://phlox.pro/go-pro/?utm_source=phlox-welcome&utm_medium=phlox-free&utm_campaign=phlox-go-pro&utm_content=demo-unlock&utm_term='. $args['site_id'] );
+                                        $import_btn_url = esc_url( 'http://phlox.pro/go-pro/?utm_source=phlox-welcome&utm_medium=phlox-free&utm_campaign=phlox-go-pro&utm_content=demo-unlock&utm_term='. $args['id'] );
                                         if( defined('THEME_PRO' ) && THEME_PRO ){
                                             $color_class   .= " aux-ajax-open-modal";
                                             $import_btn_url = add_query_arg( array( 'action' => 'auxin_display_actvation_form',  'nonce' => wp_create_nonce( 'aux-activation-form' ) ), admin_url( 'admin-ajax.php' ) );
@@ -956,7 +956,7 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
                                 ?>
                                     <a target="_blank" href="<?php echo $import_btn_url; ?>"
                                         class="aux-wl-button aux-outline aux-round aux-large <?php echo esc_attr( $color_class ); ?>" data-demo-key="<?php echo esc_html( $key );?>"><?php echo $btn_label; ?></a>
-                                    <a target="_blank" href="<?php echo ! empty( $args['url'] ) ? esc_url( $args['url'] .'&utm_term='.$args['site_id'] ) : '#'; ?>"
+                                    <a target="_blank" href="<?php echo ! empty( $args['url'] ) ? esc_url( $args['url'] .'&utm_term='.$args['id'] ) : '#'; ?>"
                                        class="aux-wl-button aux-outline aux-round aux-transparent aux-large aux-preview"><?php esc_html_e( 'Preview', 'auxin-elements' ); ?></a>
                                </div>
                             </div>
@@ -980,7 +980,9 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
 	/**
 	 * Parse the demos list API
 	 */
-    public function get_demo_list( $type = 'demos', $url = 'http://api.phlox.pro/demos/all', $sanitize_key = 'auxin_available_demos' ) {
+    public function get_demo_list( $type = 'demos', $url = 'http://demo.phlox.pro/api/v2/info/', $sanitize_key = 'auxin_available_demos_info' ) {
+
+        // $url = 'http://demo.phlox.pro/api/?demo_list&demo=beta&key=averta_avtdph';
 
         if( $type === 'templates' ){
             $url          = 'http://library.phlox.pro/info-api/';
@@ -989,7 +991,7 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
 
     	$key = sanitize_key( $sanitize_key );
 
-        if ( ( false === $data = get_transient( $key ) ) || isset( $_GET['flush_transient'] ) ) {
+        if ( ( false === $data = auxin_get_transient( $key ) ) || isset( $_GET['flush_transient'] ) ) {
 
             $response = wp_remote_post( $url );
 
@@ -1013,7 +1015,7 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
             }
 
             // Add transient
-            set_transient( $key, $data, 24 * HOUR_IN_SECONDS );
+            auxin_set_transient( $key, $data, 24 * HOUR_IN_SECONDS );
         }
 
         return $data;
@@ -1292,15 +1294,15 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
 
 		$data = $this->get_demo_list();
 
-		if( ! isset( $_GET['key'] ) || empty( $data ) || ! array_key_exists( $_GET['key'] , $data ) ) {
+		if( ! isset( $_GET['key'] ) || empty( $data['items'] ) || ! array_key_exists( $_GET['key'] , $data['items'] ) ) {
 			wp_die( esc_html__( 'An Error Occurred!', 'auxin-elements' ) );
 		}
 
-		$args = $data[ $_GET['key'] ];
+		$args = $data['items'][ $_GET['key'] ];
 
         if(  $type == 'install' ) :
 	?>
-		<div id="demo-<?php echo esc_attr( $args['site_id'] ); ?>" class="aux-demo-lightbox">
+		<div id="demo-<?php echo esc_attr( $args['id'] ); ?>" class="aux-demo-lightbox">
 			<div class="aux-modal-item clearfix aux-has-required-plugins">
 				<div class="grid_5 no-gutter aux-media-col" style="background-image: url(<?php echo esc_url( $args['screen'] ); ?>);" >
 				</div>
@@ -1328,7 +1330,7 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
 	<?php
         else :
     ?>
-        <div id="demo-<?php echo esc_attr( $args['site_id'] ); ?>" class="aux-demo-lightbox">
+        <div id="demo-<?php echo esc_attr( $args['id'] ); ?>" class="aux-demo-lightbox">
             <div class="aux-modal-item clearfix aux-has-required-plugins">
                 <div class="grid_5 no-gutter aux-media-col" style="background-image: url(<?php echo esc_url( $args['screen'] ); ?>);" >
                 </div>
@@ -1342,7 +1344,7 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
                     </div>
                     <div class="aux-setup-demo-actions">
                         <div class="aux-return-back">
-                            <a href="#" class="aux-button aux-uninstall-demo aux-red aux-medium" data-demo-plugins="<?php echo htmlspecialchars( wp_json_encode( $args['plugins'] ), ENT_QUOTES, 'UTF-8' ); ?>" data-demo-id="<?php echo $args['site_id']; ?>" data-demo-nonce="<?php echo wp_create_nonce( 'aux-demo-uninstall' ); ?>" data-demo-confirm="<?php esc_html_e( 'Are you sure you want to uninstall this demo?', 'auxin-elements' ); ?>">
+                            <a href="#" class="aux-button aux-uninstall-demo aux-red aux-medium" data-demo-plugins="<?php echo htmlspecialchars( wp_json_encode( $args['plugins'] ), ENT_QUOTES, 'UTF-8' ); ?>" data-demo-id="<?php echo $args['id']; ?>" data-demo-nonce="<?php echo wp_create_nonce( 'aux-demo-uninstall' ); ?>" data-demo-confirm="<?php esc_html_e( 'Are you sure you want to uninstall this demo?', 'auxin-elements' ); ?>">
                                 <?php _e( 'Uninstall', 'auxin-elements' ); ?>
                             </a>
                             <a href="#" class="aux-button aux-outline aux-round aux-transparent aux-medium aux-pp-close">
@@ -1439,8 +1441,10 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
             return call_user_func( array( $this, 'third_step' ), $args, '4' );
         }
 
-		$plugins = $this->get_plugins( $args['plugins'] );
-		$has_plugin_required = ! empty($args['plugins'] ) && ! empty( $plugins['all'] );
+        $plugins_list = json_decode( stripslashes( $args['plugins'] ),  true );
+
+		$plugins = $this->get_plugins( $plugins_list );
+		$has_plugin_required = ! empty( $plugins_list ) && ! empty( $plugins['all'] );
 
 		if( $has_plugin_required ) :
 			ob_start();
@@ -1512,7 +1516,7 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
 			<div class="aux-setup-demo-content aux-content-col aux-install-demos">
 				<h2><?php esc_html_e( 'Import Demo Content of Phlox Theme.' ); ?></h2>
 
-				<form id="aux-import-data-<?php echo esc_attr( $args['site_id'] ); ?>" class="aux-import-parts">
+				<form id="aux-import-data-<?php echo esc_attr( $args['id'] ); ?>" class="aux-import-parts">
 					<div class="complete aux-border is-checked">
 					    <label class="aux-control aux-radio">
 					    	<?php esc_html_e( 'Complete pre-build Website', 'auxin-elements' ); ?>
@@ -1577,8 +1581,8 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
 				<div class="aux-return-back">
 					<a 	href="#"
 						class="aux-button aux-install-demo aux-medium aux-primary button-next"
-						data-nonce="<?php echo wp_create_nonce( 'aux-import-demo-' . $args['site_id'] ); ?>"
-						data-import-id="<?php echo esc_attr( $args['site_id'] ); ?>"
+						data-nonce="<?php echo wp_create_nonce( 'aux-import-demo-' . $args['id'] ); ?>"
+						data-import-id="<?php echo esc_attr( $args['id'] ); ?>"
 						data-callback="install_demos"
 						data-next-step="<?php echo esc_attr( $next_step ); ?>"
 						data-args="<?php echo htmlspecialchars( wp_json_encode($args), ENT_QUOTES, 'UTF-8' ); ?>"
