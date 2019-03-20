@@ -18,6 +18,8 @@ class EC_Plugin {
 		add_action( 'wp_head',         [ $this, 'output_head_code' ] );
 		add_action( 'wp_footer',       [ $this, 'output_footer_code' ] );
 
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
+
 	}
 
 	public function include_vendor() {
@@ -90,6 +92,15 @@ class EC_Plugin {
 
 		if ( is_singular( $this->get_enabled_post_types() ) ) {
 			echo $this->wrap_line_breaks( get_post_meta( get_the_ID(), '_ec_footer_code', true ) );
+		}
+
+	}
+
+	public function enqueue_admin_scripts( $hook ) {
+
+		if ( $hook == 'settings_page_ec_options' ) {
+			wp_enqueue_style( 'embed-code-admin-css', plugins_url('../css/admin.css', __FILE__) );
+			wp_enqueue_script( 'embed-code-admin-js', plugins_url('../js/admin.js', __FILE__), array( 'jquery' ) );
 		}
 
 	}

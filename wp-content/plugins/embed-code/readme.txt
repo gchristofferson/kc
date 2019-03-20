@@ -1,4 +1,4 @@
-=== Embed Code - Insert Header & Footer Code ===
+=== Embed Code ===
 Contributors:      DesignBombs
 Tags:              embed code, header code, footer code, tracking code, embed javascript
 Requires at least: 4.7.0
@@ -41,8 +41,11 @@ This plugin is maintained by folks over at [DesignBombs.com](http://designbombs.
 
 == Changelog ==
 
+= 2.0.3 =
+* Minor changes
+
 = 2.0.2 =
-Minor changes
+* Minor changes
 
 = 2.0.1 =
 * Minor changes
