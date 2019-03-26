@@ -23,16 +23,18 @@
 				</div>
 				<div class="dp-excerpt">
 					<div class="dp-excerpt-wrapper">
-						<?php echo $p['desc']?>
+						<?php echo !empty($p['desc']) ? $p['desc'] : ''?>
 					</div>
 				</div>
 				<div class="dp-buttons">
-					<a href="<?php echo $p['url']?>" target="_blank" class="btn btn-full hvr-shutter-out-horizontal">
+					<a href="<?php echo $p['url']?>" target="_blank" class="btn btn-full hvr-shutter-out-horizontal <?php echo empty($p['download']) ? 'btn-center' : ''?>">
 						<?php _e('More info', UMS_LANG_CODE)?>
 					</a>
-					<a href="<?php echo $p['download']?>" target="_blank" class="btn btn-full btn-info hvr-shutter-out-horizontal">
-						<?php _e('Download', UMS_LANG_CODE)?>
-					</a>
+					<?php if(!empty($p['download'])) {?>
+						<a href="<?php echo $p['download']?>" target="_blank" class="btn btn-full btn-info hvr-shutter-out-horizontal">
+							<?php _e('Download', UMS_LANG_CODE)?>
+						</a>
+					<?php }?>
 				</div>
 			</div>
 		</div>

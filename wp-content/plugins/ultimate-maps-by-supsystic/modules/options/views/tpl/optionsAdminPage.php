@@ -21,6 +21,7 @@
                 </ul>
             </nav>
             <div class="supsystic-container supsystic-<?php echo $this->activeTab?>">
+				<?php dispatcherUms::doAction('discountMsg');?>
 				<?php echo $this->content?>
                 <div class="clear"></div>
             </div>

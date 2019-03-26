@@ -2,7 +2,7 @@
 class  csvUms extends moduleUms {
 	private $_markerHeaders = array();
 	private $_mapHeaders = array();
-	
+
 	public function init() {
 		dispatcherUms::addFilter('mainAdminTabs', array($this, 'addAdminTab'));
 	}
@@ -32,15 +32,15 @@ class  csvUms extends moduleUms {
 				'coord_x' =>  'Longitude',
 				'coord_y' =>  'Latitude',
 				'animation' =>  'Animation',
-				
+
 				'icon' =>  'Icon ID',
 				'icon_path' =>  'Icon Path',
 				'icon_title' =>  'Icon Title',
-				
+
 				'marker_group_id' =>  'Group ID',
 				'marker_group_title' =>  'Group Title',
 				'marker_group_description' =>  'Group Description',
-				
+
 				'more_info_link' => 'Add More info in description window',
 				'icon_fit_standard_size' => 'Fit icon in standard size',
 			);
@@ -54,9 +54,9 @@ class  csvUms extends moduleUms {
 				'title' => 'Title',
 				// params
 				'enable_zoom' => 'Enable Zoom',
-				'enable_mouse_zoom' => 'Enable Mouse Zoom', 
+				'enable_mouse_zoom' => 'Enable Mouse Zoom',
 				'description_mouse_hover' => 'Infowindow on mouse over',
-				'zoom' => 'Zoom', 
+				'zoom' => 'Zoom',
 				'type' => 'Type',
 				'language' => 'Language',
 				'map_display_mode' => 'Display mode',
@@ -82,10 +82,10 @@ class  csvUms extends moduleUms {
 				// html options
 				'width' => 'Width',
 				'width_units' => 'Width units',
-				'height' => 'Height', 
-				'align' => 'Align', 
-				'margin' => 'Margin', 
-				'border_color' => 'Border Color', 
+				'height' => 'Height',
+				'align' => 'Align',
+				'margin' => 'Margin',
+				'border_color' => 'Border Color',
 				'border_width' => 'Border Width',
 			);
 		}

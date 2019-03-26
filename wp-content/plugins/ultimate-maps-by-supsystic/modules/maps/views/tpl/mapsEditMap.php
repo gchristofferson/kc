@@ -328,8 +328,8 @@
 					<?php $defMapType = array_shift($mapTypeKeys); ?>
 					<?php echo htmlUms::selectbox('map_opts[map_type]', array(
 						'options' => $this->engineOpts['map_type'], //array('ROADMAP' => __('Road Map', UMS_LANG_CODE), 'HYBRID' => __('Hybrid', UMS_LANG_CODE), 'SATELLITE' => __('Satellite', UMS_LANG_CODE), 'TERRAIN' => __('Terrain', UMS_LANG_CODE)),
-						'value' => $this->editMap && isset($this->map['params']['map_type']) 
-							? $this->map['params']['map_type'] 
+						'value' => $this->editMap && isset($this->map['params']['map_type'])
+							? $this->map['params']['map_type']
 							: $defMapType,
 						'attrs' => 'style="width: 100%;" id="map_opts_map_type"'))?>
 				</td>
@@ -438,10 +438,37 @@
 					<?php }?>
 				</th>
 				<td>
-					<a id="umsMapMarkersListBtn" href="#" class="button"><?php _e('Select Markers List type', UMS_LANG_CODE)?></a>
-					<?php echo htmlUms::hidden('map_opts[markers_list_type]', array(
-						'value' => $this->editMap && isset($this->map['params']['markers_list_type']) ? $this->map['params']['markers_list_type'] : ''))?>
+						<?php echo htmlUms::checkboxHiddenVal('map_opts[enable_marker_list_type]', array(
+							'value' => $this->editMap && isset($this->map['params']['enable_marker_list_type']) ? $this->map['params']['enable_marker_list_type'] : false,
+						))?>
+						<?php _e('Enable markers list', UMS_LANG_CODE)?>
+
 					<div id="umsMapMarkersListSettings" style="display: none;">
+						<?php if($this->isPro) {?>
+							<div style="margin-top:15px;">
+								<a id="umsMapMarkersListBtn" href="#" class="button"><?php _e('Select Markers List type', UMS_LANG_CODE)?></a>
+								<?php echo htmlUms::hidden('map_opts[markers_list_type]', array(
+										'value' => $this->editMap && isset($this->map['params']['markers_list_type']) ? $this->map['params']['markers_list_type'] : ''))?>
+							</div>
+							<div style="margin-top:15px;">
+								<?php echo htmlUms::checkboxHiddenVal('map_opts[hide_empty_block]', array(
+									'value' => $this->editMap && isset($this->map['params']['hide_empty_block']) ? $this->map['params']['hide_empty_block'] : false,
+								))?>
+								<?php _e('Hide blocks without image', UMS_LANG_CODE)?>
+							</div>
+							<div style="margin-top:15px;">
+								<?php echo htmlUms::checkboxHiddenVal('map_opts[autoplay_slider]', array(
+									'value' => $this->editMap && isset($this->map['params']['autoplay_slider']) ? $this->map['params']['autoplay_slider'] : false,
+								))?>
+								<?php _e('Enable autoplay slider and set', UMS_LANG_CODE)?>
+								<?php echo htmlUms::text('map_opts[slide_duration]', array(
+									'value' => $this->editMap && isset($this->map['params']['slide_duration']) ? $this->map['params']['slide_duration'] : false,
+									'placeholder' => '500',
+									'attrs' => 'style="width:50px"',
+								))?>
+								<?php _e('slide duration in (ms)', UMS_LANG_CODE)?>
+							</div>
+						<?php } ?>
 						<div style="margin-top: 10px;">
 							<label for="map_opts_markers_list_color">
 								<?php _e('Markers List Color', UMS_LANG_CODE)?>
@@ -1276,8 +1303,8 @@
 <div id="umsIconsWnd" style="display: none;">
 	<ul class="iconsList">
 		<?php foreach($this->icons as $icon) { ?>
-			<li class="previewIcon" 
-				data-id="<?php echo $icon['id']?>" 
+			<li class="previewIcon"
+				data-id="<?php echo $icon['id']?>"
 				data-width="<?php echo $icon['width']?>"
 				data-height="<?php echo $icon['height']?>"
 				title="<?php echo $icon['title']?>">

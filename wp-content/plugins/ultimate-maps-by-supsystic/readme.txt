@@ -1,83 +1,166 @@
-=== Ultimate Maps by Supsystic ===
+  === Ultimate Maps by Supsystic ===
 Contributors: supsystic.com
 Author URI: https://supsystic.com/
 Plugin URI: https://supsystic.com/plugins/plugins/ultimate-maps
 Donate link: https://supsystic.com/plugins/plugins/ultimate-maps
-Tags: map, maps, openstreetmap, leaflet, bing, map plugin, google maps, osm, thunderforest, mapbox
+Tags: map, maps, OpenStreetMap, leaflet, bing, map plugin, google maps, osm, thunderforest, mapbox
 Requires at least: 3.0.1
-Tested up to: 5.0
+Tested up to: 5.1.1
 Requires PHP: 5.2
-Stable tag: 1.0.8
+Stable tag: 1.0.9 
 License URI: https://supsystic.com/plugins/ultimate-maps-by-supsystic
 
-Ultimate Maps by Supsystic is the best Google Maps alternative. It's include OpenStreetMap (OSM), Bing Maps, MapBox and Thunderforest maps services
+Ultimate Maps by Supsystic is the best Google Maps alternative. It includes OpenStreetMap (OSM), Bing Maps, MapBox and Thunderforest maps services
 
 == Description ==
 
-[Supsystic Ultimate Maps plugin](https://supsystic.com/plugins/ultimate-maps/ "Ultimate Maps WordPress plugin by Supsystic") was developed after the changes in Google maps pricing policy. According to the new rules, using Google maps is becoming too expensive for websites with large traffic. Therefore, Supsystic team provides users with Google Maps alternatives:
+[Supsystic Ultimate Maps plugin](https://supsystic.com/plugins/ultimate-maps/?utm_source=wordpress&utm_medium=description&utm_campaign=ultimate-maps "Ultimate Maps WordPress plugin by Supsystic") was developed after the changes in Google maps pricing policy. According to the new rules, using Google maps is becoming too expensive for websites with large traffic. Therefore, Supsystic team provides users with the Google Maps alternatives:
 * Bing maps
 * OpenStreetMap or OSM
 * Leaflet maps
 * Mapbox
 * Thunderforest
 
-* [Plugin FAQ and Documentation](https://supsystic.com/plugins/ultimate-maps/#faq "Plugin FAQ and Documentation")
-* [Ultimate Maps Demo](https://supsystic.com/plugins/ultimate-maps "WordPress Ultimate Maps")
- 
 = Ultimate Maps Plugin Features =
 
-* Five Google Maps alternatives: Bing Maps, OpenStreetMap, Leaflet, Mapbox, Thunderforest
+* Google Maps alternatives: Bing Maps, Leaflet, Mapbox, Thunderforest
 * Online Ultimate Maps builder
-* [Unlimited markers](https://supsystic.com/example/marker-description "Unlimited Number of Map Markers") with description, links, images, videos and more
-* [Markers categories](https://supsystic.com/documentation/markers-categories "Markers categories")
-* Compatible with any mobile devices 
-* [100% customizable](https://supsystic.com/documentation/ultimate_maps_properties_settings “Maps Properties Customizing”). All map properties and markers options can be modified
-* Works with any WordPress themes
+* [Unlimited markers](https://supsystic.com/example/marker-description?utm_source=wordpress&utm_medium=Unlimitedmarkers&utm_campaign=ultimate-maps "Unlimited Number of Map Markers") with description, links, images, videos and more
+* [Markers categories](https://supsystic.com/documentation/markers-categories?utm_source=wordpress&utm_medium=Markerscategories&utm_campaign=ultimate-maps "Markers categories")
+* Fully responsive
+* [100% customizable](https://supsystic.com/documentation/ultimate_maps_properties_settings?utm_source=wordpress&utm_medium=PropertiesCustomizing&utm_campaign=ultimate-maps "Maps Properties Customizing")
 * Add map via shortcode or PHP code
-* Maps and Markers [Import and Export](https://supsystic.com/documentation/ultimate_maps_export-import "Import and Export"
-* [Map with Exposition slider](https://supsystic.com/example/exposition-slider "Exposition slider")
-* [KML layers Import and ](https://supsystic.com/example/kml-layer "KML layer")
-* [Map Markers Clustering](https://supsystic.com/example/clustering "Ultimate Maps Clustering")
-* [Maps Themes and Styles](https://supsystic.com/example/linked-markers/ "Map Stylization")
-* [Ultimate Maps markers with slider mode](https://supsystic.com/example/horizontal-slider-ultimate-maps "Horizontale Slider")
-* [Shapes](https://supsystic.com/documentation/ultimate-maps_shapes "Shapes on the Map")
-* [Linked markers](https://supsystic.com/example/linked-markers/ "Linked markers"
-* More [Ultimate Maps Exampes](https://supsystic.com/ultimate-maps-examples "Ultimate Maps Exampes") 
+* Maps and Markers [Import and Export](https://supsystic.com/documentation/ultimate_maps_export-import?utm_source=wordpress&utm_medium=export-import&utm_campaign=ultimate-maps "Import and Export")
+* [Map with Exposition slider](https://supsystic.com/example/exposition-slider?utm_source=wordpress&utm_medium=exposition-slider&utm_campaign=ultimate-maps "Exposition slider")
+* [KML layers Import and ](https://supsystic.com/example/kml-layer?utm_source=wordpress&utm_medium=kml-layer&utm_campaign=ultimate-maps "KML layer")
+* [Map Markers Clustering](https://supsystic.com/example/clustering?utm_source=wordpress&utm_medium=clustering&utm_campaign=ultimate-maps "Ultimate Maps Clustering")
+* [Maps Themes and Styles](https://supsystic.com/example/linked-markers?utm_source=wordpress&utm_medium=linked-markers&utm_campaign=ultimate-maps "Map Stylization")
+* [Ultimate Maps markers with slider mode](https://supsystic.com/example/horizontal-slider-ultimate-maps?utm_source=wordpress&utm_medium=horizontal-slider&utm_campaign=ultimate-maps "Horizontale Slider")
+* [Shapes](https://supsystic.com/example/ultimate-maps-shape/?utm_source=wordpress&utm_medium=Shapesexample&utm_campaign=ultimate-maps "Shapes on the Map")
+* [Linked markers](https://supsystic.com/example/linked-markers?utm_source=wordpress&utm_medium=linked-markers&utm_campaign=ultimate-maps "Linked markers")
+* More [Ultimate Maps Exampes](https://supsystic.com/ultimate-maps-examples?utm_source=wordpress&utm_medium=examples&utm_campaign=ultimate-maps "Ultimate Maps Exampes") 
 
-Create [Ultimate Maps](https://supsystic.com/plugins/ultimate-maps/ "Ultimate Maps WordPress plugin") with unlimited markers on the WordPress website or blog in a minute. Integrated with Bing map, MapBox (OpenStreetMap), Leaflet and more mapping services. Best Google Maps alternative WordPress plugin. Fully customizable, user-friendly and responsive. Map markers with any media: video and text descriptions. Easy to add into page via shortcodes or use [Ultimate Maps widget](https://supsystic.com/documentation/ultimate-maps-widget "Ultimate Maps Widget". Ultimate solution to display map on the contact page, routes, real estates, delivery areas and more. Use a map on your website to help your clients in discovering your location.
+Create [Ultimate Maps](https://supsystic.com/plugins/ultimate-maps/?utm_source=wordpress&utm_medium=description&utm_campaign=ultimate-maps "Ultimate Maps WordPress plugin") with unlimited markers on the WordPress website or blog in a minute. Integrated with Bing maps, OpenStreetMap or OSM: Mapbox, Thunderforest, Leaflet. Best Google Maps alternative WordPress plugin. Fully customizable, user-friendly and responsive. Map markers with any media: video and text descriptions. Easy to add into a page via shortcodes or use [Ultimate Maps widget](https://supsystic.com/documentation/ultimate-maps-widget?utm_source=wordpress&utm_medium=ultimate-maps-widget&utm_campaign=ultimate-maps "Ultimate Maps Widget"). An ultimate solution to display a map on the contact page, routes, real estates, delivery areas and more. Use a map on your website to help your clients in discovering your location.
 
 
  = Ultimate Maps Plugin Support =
-If you have any problem or custom feature request for the [Ultimate Maps by Supsystic](https://supsystic.com/plugins/ultimate-maps "Ultimate Maps"), please [let us know](http://supsystic.com/contact-us/ "Contact Us")!
+If you have any problem or custom feature request for the [Ultimate Maps by Supsystic](https://supsystic.com/plugins/ultimate-maps/?utm_source=wordpress&utm_medium=description&utm_campaign=ultimate-maps "Ultimate Maps"), please [let us know](http://supsystic.com/contact-us?utm_source=wordpress&utm_medium=contactus&utm_campaign=ultimate-maps "Contact Us")!
+
+= Google Maps Easy by Supsystic =
+
+Prefer to use a Google Maps? Create Google Maps in a minute with our [Google Maps Easy WordPress plugin](https://ru.wordpress.org/plugins/google-maps-easy "Google Maps Easy").
+Google Map markers with any media, location, video and text descriptions. Easy to add google map with shortcode, open it in a popup or use google map widget. A great solution to display google map on the contact page, routes, real estates, delivery areas and more.
+
 
 == Installation ==
-= To install a Ultimate Maps plugin via FTP, you need = 
+= To install an Ultimate Maps plugin via FTP, you need = 
 1. Download the [Ultimate Maps plugin](https://downloads.wordpress.org/plugin/ultimate-maps-by-supsystic.zip "Download")
 2. Unarchive plugin ultimate-maps-by-supsystic.zip
 3. Copy the folder with Ultimate Maps plugin
 4. Open the ftp \wp-content\plugins\
 5. Paste the plug-ins folder in the folder
 6. Go to admin panel => open item "Plugins" => activate Ultimate Maps plugin.
-More Info: ["How to Create Ultimate Maps in WordPress"](https://supsystic.com/documentation/getting-started-ultimate-maps/ ""How to Create Ultimate Maps in WordPress"")
 
 == Frequently Asked Questions ==
 = What map engines does the Ultimate Maps plugin support? = 
-Plugin integrated with Bing Maps, OpenStreetMap, Leaflet, Mapbox, Thunderforest 
+Plugin integrated with Bing Maps, Leaflet, Mapbox, Thunderforest 
 
-= How to add map into site content? =
-You can add a map in the site content via shortcode or php code. [Learn more here](https://supsystic.com/documentation/getting-started-ultimate-maps "Getting Started")
+= How to create an Ultimate Map? =
+
+Step 1: Creating Ultimate Map
+* On the left navigation menu click “Add Map”.
+* Enter the name of the map.
+* Click “Save Map” button.
+
+Step 2: Customizing the Map
+You can find the Main Settings section on the Map tab. It allows you to establish:
+* Map name
+* Map width
+* Map height
+* Navigation bar Mode
+* Additional Navigation Options
+* Map type
+* Markers Clusterization
+* Markers List (Pro)
+* Add KML layers (Pro)
+* Info window
+After every map option change – with Ultimate Maps, plugin, you can immediately see the result in a live preview in the right top corner.
+
+Step 4: Creating/Editing Markers
+* Click “Add New Marker” button – in the center of the map will appear a marker. Google Maps New Markers
+* Set the name of a marker.
+* Set the address of the marker – start typing and then choose the address from the list. Or you can just click on a point on the map.
+* Set additional maps markers configuration: add marker description – besides text, you can attach images, links and videos;
+* Select the icon for the marker – you can choose it after click “Choose icon” button;
+ Save marker.
+ 
+Step 5: Copy and paste the shortcode into your post or page
+Look more detailed information in our tutorial [Getting Started](https://supsystic.com/documentation/getting-started-ultimate-maps?utm_source=wordpress&utm_medium=getting-started&utm_campaign=ultimate-maps "Getting Started with Ultimate Maps").
+
+= How to add a map into site content? =
+
+You can add a map in the site content via shortcode or PHP code. PHP code and shortcode are in a dropdown list above the plugin tabs.
+
+* PHP code can be inserted at any place of the page code – in order to display exactly in this place, for example in the header or footer of the page. Besides, it can be inserted in the code of template of the theme – to display on all pages.
+* Copy and paste the shortcode into your post or page and Ultimate Maps plugin will automatically create the map on your page using the settings you choose.
 
 = Can I use Ultimate Maps as a Widget? =
-With a Ultimate Maps you can add a widget with a map to your page. Go to Appearance -> Widgets in the WordPress navigation menu. Find the [Ultimate Maps in the list of available widgets](https://supsystic.com/documentation/ultimate-maps-widget "Ultimate Maps widgets"). Drag the Ultimate Maps widget to widget area, which you need.Choose the map for widget and configure the settings - Widget Map width and height. Click "Save".
+With an Ultimate Maps, you can add a widget with a map to your page. Go to Appearance -> Widgets in the WordPress navigation menu. Find the [Ultimate Maps in the list of available widgets](https://supsystic.com/documentation/ultimate-maps-widget?utm_source=wordpress&utm_medium=ultimate-maps-widget&utm_campaign=ultimate-maps "Ultimate Maps widgets"). Drag the Ultimate Maps widget to the widget area, which you need. Choose the map for a widget and configure the settings - Widget Map width and height. Click "Save".
 
 = How to add KML layers into the map? =
-You can add layers into a map in 2 ways: enter KML file URL or upload KML file. All types of objects support: markers, points, lines, figures, etc. More info about [KML Layers](https://supsystic.com/documentation/kml-layers "KML Layers") is here.
+You can add layers into a map in 2 ways: enter KML file URL or upload KML file. 
+All types of objects support markers, points, lines, figures, etc. 
+More info about [KML Layers settings](https://supsystic.com/documentation/kml-layers?utm_source=wordpress&utm_medium=kml-layers&utm_campaign=ultimate-maps "KML Layers") and example of [Map with KML layers](https://supsystic.com/example/kml-layer?utm_source=wordpress&utm_medium=kml-layer&utm_campaign=ultimate-maps "KML layers") you can find here.
 
+= How to create linked markers map? =
 
-= More Info =
+On the left navigation menu click “New Map”.
+1. Enter the name of the map.
+2. Open "Marker" tab in the map settings.
+3. Enable "Marker Link" option in the marker settings.
+4. Paste link in the field under the option.
+5. Enable the option "Open in new window", if you want the link to be open in a new window.
+
+Create [linked markers](https://supsystic.com/example/linked-markers?utm_source=wordpress&utm_medium=linked-markers&utm_campaign=ultimate-maps "Linked Markers") for your map to easy connection with full information about the place you have marked.
+
+= How to create Marker Categories? = 
+For this go to Marker Categories tab of Ultimate Maps plugin. Here the following settings are is available:
+* **Add Category**
+* **Edit Category**
+* **Delete Category**
+* **Search by Title**
+
+To create a new category click 'Add Category' button. In a new window you can establish:
+* **Category Title** – type your category name inside the field
+* **Background Color** – tick needed color for marker icon background
+* **Cluster Icon** – Upload Icon you like or back to Default Icon variant for your markers category
+You also can create **Subcategories** – choose Parent Category when creating Category, and they will be displayed as a tree. While replacing a parent category, child ones will be moved too.
+
+When you have created the marker on the Marker Tab, scroll down till you find Markers Category, set the one you created for a current marker and click Save Marker button.
+
+= How to create a Map with Clusterization? = 
+Plugin clusters the markers and shows the number of items in each cluster, and as we zoom it adjusts the clusters based on the current view. 
+
+To [add the clustering to the map](https://supsystic.com/documentation/map-clusterization?utm_source=wordpress&utm_medium=clusteringsettings&utm_campaign=ultimate-maps "Map clusterization") is very simple:
+* Move to the Map tab settings.
+* On the Markers Clusterization menu pick Base Clusterization.
+* Set the Cluster Area Size – the grid size of a cluster. The higher the size – the more area of capture the markers to the cluster.
+
+[Example of the Map clustering](https://supsystic.com/example/clustering?utm_source=wordpress&utm_medium=clustering&utm_campaign=ultimate-maps "Clusterization") option you can find here.
+
+= How to change the design of a map? = 
+If you want a unique design for your maps, we have a big number of map themes. Pick a style of map theme variety according to your taste and wishes and make website special! Everything that you need is:
+1. Select the Map engine: Bing, Thunderforest, Mapbox, Leaflet.
+2. Enter the name of the map.
+3. Choose any of a big number of map theme (different for each Map engine) in Map Type drop-down list.
+After every map theme change – you can immediately see the result in a live preview in the right top corner.
+4. Click "Save" button.
+Check an [Example of the Map Stylization](https://supsystic.com/example/map-stylization?utm_source=wordpress&utm_medium=map-stylizationg&utm_campaign=ultimate-maps "Map Stylization") here. 
+
+= More Info = 
 * [FAQs section](https://supsystic.com/plugins/ultimate-maps#faq "Ultimate Maps WordPress plugin FAQs Section")
-* [Documentations](https://supsystic.com/docs/ultimate-maps-documentation "Ultimate Maps WordPress plugin Documentation")
-* [Forum](https://supsystic.com/forum/ultimate-maps "Ultimate Maps plugin Forum")
+* [Documentations](https://supsystic.com/docs/ultimate-maps-documentation?utm_source=wordpress&utm_medium=documentation&utm_campaign=ultimate-maps "Ultimate Maps WordPress plugin Documentation")
+* [Forum](https://supsystic.com/forum/ultimate-maps?utm_source=wordpress&utm_medium=forum&utm_campaign=ultimate-maps "Ultimate Maps plugin Forum")
 
 = Our plugins =
 
@@ -98,13 +181,32 @@ You can add layers into a map in 2 ways: enter KML file URL or upload KML file. 
 
 == Screenshots ==
   
-1. [Ultimate Maps WordPress plugin](https://supsystic.com/plugins/ultimate-maps  "Ultimate Maps WordPress plugin") admin area. 
-2. Map with different marker lists - display all map markers - as list below your map. This will help your users get more info about your map.
-3. Map markers clustering 
-4. Ultimate Maps stylization 
-5. Ultimate Maps demo 
+1. [Ultimate Maps WordPress plugin](https://supsystic.com/plugins/ultimate-maps "Ultimate Maps WordPress plugin") demo
+
+2. Switch the map engine in one click
+
+3. Map with different marker lists - display all map markers - as a list below your map. This will help your users get more info about your map
+
+4. Map markers clustering 
+
+5. Ultimate Maps stylization 
+
+6. [Ultimate Maps WordPress plugin](https://supsystic.com/plugins/ultimate-maps  "Ultimate Maps WordPress plugin") admin area. Map settings
+
+7. [Ultimate Maps WordPress plugin](https://supsystic.com/plugins/ultimate-maps  "Ultimate Maps WordPress plugin") admin area. Markers settings
+
+8. [Ultimate Maps WordPress plugin](https://supsystic.com/plugins/ultimate-maps  "Ultimate Maps WordPress plugin") admin area. Shapes settings (pro)
 
 == Changelog ==
+
+= 1.0.9 =
+ * Readme file update
+ * Scrinshots update
+ * Additional improvements to slider markers list view
+ * Possibility to Show Info Window by Default right after Map Load
+ * Add checkbox hide without img and before map slider design for
+ * Added feature for slider to show over the map
+ * Minor issues fix
 
 = 1.0.8 =
  * Additional admin area improvements
@@ -118,8 +220,8 @@ You can add layers into a map in 2 ways: enter KML file URL or upload KML file. 
  * Language files added
 
 = 1.0.6 =
- * Fix issue with position of icons for OpenStreetMaps when zooming.
- * Minor issues fix.
+ * Fix issue with position of icons for OpenStreetMaps when zooming
+ * Minor issues fix
 
 = 1.0.5 =
  * Fix issue with "floating" markers for Bing Maps
@@ -132,8 +234,8 @@ You can add layers into a map in 2 ways: enter KML file URL or upload KML file. 
  * Shapes added
 
 = 1.0.3 =
- * Fix issue with disable Dragging in admin area
- * Fix issue with disable Mouse Wheel Zoom in admin area
+ * Fix issue with disable Dragging in an admin area
+ * Fix issue with disabling Mouse Wheel Zoom in an admin area
  * Markers Lists
  * KML Layers
 

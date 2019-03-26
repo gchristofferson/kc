@@ -3,9 +3,11 @@
  * Plugin Name: Ultimate Maps by Supsystic
  * Plugin URI: https://supsystic.com/plugins/ultimate-maps/
  * Description: All in One
- * Version: 1.0.8
+ * Version: 1.0.9
  * Author: supsystic.com
  * Author URI: http://supsystic.com
+ * Text Domain: ums_lng
+ * Domain Path: /lang
  **/
 	/**
 	 * Base config constants and functions
@@ -53,5 +55,5 @@
     frameUms::_()->parseRoute();
     frameUms::_()->init();
     frameUms::_()->exec();
-	
+
 	//var_dump(frameUms::_()->getActivationErrors()); exit();

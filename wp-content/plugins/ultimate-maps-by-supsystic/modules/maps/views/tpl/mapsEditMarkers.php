@@ -135,7 +135,6 @@
 				</div>
 			</td>
 		</tr>
-		<?php /*?>
 		<tr>
 			<th scope="row">
 				<label for="marker_opts_show_description">
@@ -148,6 +147,7 @@
 					'checked' => ''))?>
 			</td>
 		</tr>
+		<?php /*?>
 		<tr>
 			<th scope="row">
 				<label for="marker_opts_description_mouse_hover">

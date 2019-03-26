@@ -1,4 +1,4 @@
-var g_gmlAllMaps = [];
+var g_umsAllMaps = [];
 function umsGetMembershipGmeViewId(map, oldViewId) {
 	var newViewId = oldViewId;
 	if(map && map.getParam && map.getParam('membershipEnable') == '1') {
@@ -96,7 +96,7 @@ function umsInitMapOnPage(mapData) {
 			mapData.heatmap = _umsPrepareHeatmapList( mapData.heatmap );
 			newMap.addHeatmap( mapData.heatmap );
 		}
-		g_gmlAllMaps.push( newMap );
+		g_umsAllMaps.push( newMap );
 	});
 	
 }
@@ -122,7 +122,7 @@ function umsGetMapInfoByViewId(viewId) {
 	return false;
 }
 function umsGetAllMaps() {
-	return g_gmlAllMaps;
+	return g_umsAllMaps;
 }
 function umsGetMapById(id) {
 	var allMaps = umsGetAllMaps();

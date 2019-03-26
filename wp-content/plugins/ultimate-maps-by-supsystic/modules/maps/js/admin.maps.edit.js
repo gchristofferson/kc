@@ -132,7 +132,7 @@ jQuery(document).ready(function(){
 		}
 
 	});*/
-	
+
 	// Preview map definition
 	umsMainMap = typeof(umsMainMap) === 'undefined' ? null : umsMainMap;
 	var previewMapParams = {}
@@ -320,6 +320,8 @@ jQuery(document).ready(function(){
 			var center = g_umsMap.getCenter();
 			jQuery('#umsMapForm input[name="map_opts[map_center][coord_x]"]').val(center.lat);
 			jQuery('#umsMapForm input[name="map_opts[map_center][coord_y]"]').val(center.lng);
+			var coord = '['+center.lat+','+center.lng+']';
+			var address = getLocationByCoordinates(coord);
 		});
 		// Map zoom
 		/*jQuery('#umsMapForm [name="map_opts[zoom_type]"]').change(function(){
@@ -549,7 +551,7 @@ jQuery(document).ready(function(){
 				umsHideCloseDescriptionCheckbox();
 		});
 	});
-	
+
 	jQuery('.supsystic-panel .tooltipstered').removeAttr('title');
 	umsInitEngineChange();
 });
@@ -734,6 +736,22 @@ function umsUnshiftButtons(btns) {
 		if(jQuery('#' + i).hasClass(btns[i]))
 			jQuery('#' + i).trigger('click');
 	}
+}
+function getLocationByCoordinates(coord) {
+	jQuery.ajax({
+		url: 'https://nominatim.openstreetmap.org/?q='+coord+'&format=json'
+	,	dataType: 'text'
+	,	success: function(data) {
+			if(data) {
+				var r = JSON.parse(data);
+				if(r) {
+					if(r && r.length > 0) {
+						jQuery("[name='map_opts[map_center][address]']").val(r[0]['display_name']);
+					}
+				}
+			}
+		}
+	});
 }
 // Change engine is separate functionality
 function umsInitEngineChange() {

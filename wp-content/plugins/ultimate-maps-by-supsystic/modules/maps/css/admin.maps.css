@@ -211,7 +211,7 @@
 .umsMmlElement img {
 	max-width: 100%;
 }
-.umsMmlElement:hover img, 
+.umsMmlElement:hover img,
 .umsMmlElement:hover .umsMmlElementBtnShell .button {
 	box-shadow: 5px 5px 5px #000;
 }
@@ -268,4 +268,7 @@
 	height: 32px;
 	margin: 0;
 	font-size: 16px;
+}
+#markerDescription_ifr {
+	min-height:200px !important;
 }

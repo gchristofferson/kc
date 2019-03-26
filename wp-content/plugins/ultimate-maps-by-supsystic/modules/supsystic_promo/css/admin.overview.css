@@ -91,10 +91,13 @@
 .supsystic-overview #form-settings th {
 	min-width: 120px;
 }
-.supsystic-overview .faq-list,
-.supsystic-overview .description,
-.supsystic-overview .video,
-.supsystic-overview .supsystic-overview-news {
+.supsystic-overview .supsistic-half-side-box > div {
 	border-bottom: 1px solid rgba(164, 170, 172, 0.28);
 	padding-bottom: 20px;
+}
+.supsystic-overview .supsistic-half-side-box > div:last-child {
+	border-bottom: none;
+}
+.supsystic-overview .text-block {
+	margin: 10px 0;
 }

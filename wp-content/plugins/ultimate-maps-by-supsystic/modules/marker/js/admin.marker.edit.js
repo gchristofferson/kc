@@ -350,6 +350,7 @@ function _umsCreateNewMapMarker(params) {
 	umsSetCurrentMarker( g_umsMap.addMarker( newMarkerData ) );
 	jQuery('#umsMarkerForm [name="marker_opts[coord_x]"]').val( lat );
 	jQuery('#umsMarkerForm [name="marker_opts[coord_y]"]').val( lng );
+	jQuery('#umsMarkerForm [name="marker_opts[marker_group_id][]"]').val('').trigger("chosen:updated");
 }
 function umsMarkerEditBtnClick(btn){
 	var markerId = jQuery(btn).data('marker_id');
@@ -554,13 +555,13 @@ function umsInitIconsWnd() {
 		}
 		return false;
 	});
-	
+
 	jQuery('#umsIconsWnd').on('click', '.previewIcon i', function(e){
 		e.preventDefault();
 		var icon = jQuery(this)
 		,   iconWrapper = icon.closest('.previewIcon')
 		,   iconId = iconWrapper.attr('data-id');
-		
+
 		jQuery.sendFormUms({
 			data: {action: 'remove', mod: 'icons', id: iconId}
 		,	onSuccess: function(res) {
@@ -634,7 +635,7 @@ function umsAddLinkOptions() {
 }
 function umsRefreshMapMarkers(map, markers) {
 	//g_umsMapLoadObserver.trigger(umsGetMapsEngine(), function() {
-	
+
 		map.clearMarkers();
 		markers = _umsPrepareMarkersListAdmin( markers );
 		for(var i in markers) {

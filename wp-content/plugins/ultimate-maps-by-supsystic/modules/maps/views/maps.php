@@ -6,9 +6,9 @@ class mapsViewUms extends viewUms {
 	private $_paramsCanNotBeEmpty = array('width', 'height');
 	private $_mapStyles = array();
 	private $_displayColumns = array();
-	
+
 	private $_mapsApiUrls = array();
-	
+
 	public function getApiKey($engine) {
 		$apiKey = '';
 
@@ -81,7 +81,7 @@ class mapsViewUms extends viewUms {
 				frameUms::_()->addStyle('ums_'. $engine. '_markercluster_api', 'https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.css');
 				frameUms::_()->addStyle('ums_'. $engine. '_markercluster_def_api', 'https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.Default.css');
 				frameUms::_()->addScript('ums_'. $engine. '_markercluster_api', 'https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/leaflet.markercluster.js');
-				
+
 				break;*/
 		}
 	}
@@ -300,7 +300,7 @@ class mapsViewUms extends viewUms {
 		frameUms::_()->addScript('admin.maps.list', $this->getModule()->getModPath(). 'js/admin.maps.list.js');
 		frameUms::_()->addJSVar('admin.maps.list', 'umsTblDataUrl', uriUms::mod('maps', 'getListForTbl', array('reqType' => 'ajax')));
 		frameUms::_()->addStyle('admin.maps', $this->getModule()->getModPath(). 'css/admin.maps.css');
-		
+
 		$this->assign('addNewLink', frameUms::_()->getModule('options')->getTabUrl('maps_add_new'));
 		return parent::getContent('mapsAdmin');
 	}
@@ -418,7 +418,7 @@ class mapsViewUms extends viewUms {
 		} else {
 			$this->assign('membershipPluginError', __('To use this feature, You need to reactivate your Ultimate Maps by Supsystic plugin.'), UMS_LANG_CODE );
 		}
-		
+
 		$this->assign('addProElementAttrs', $isPro ? '' : ' title="'. esc_html(__("This option is available in <a target='_blank' href='%s'>PRO version</a> only, you can get it <a target='_blank' href='%s'>here.</a>", UMS_LANG_CODE)). '"');
 		$this->assign('addProElementClass', $isPro ? '' : 'supsystic-tooltip umsProOpt');
 		$isCustSearchAndMarkersPeriodAvailable = true;
@@ -435,18 +435,18 @@ class mapsViewUms extends viewUms {
 		$this->assign('enginesForSelect', $this->getModule()->getEnginesForSelect());
 		$this->assign('defEngine', $defEngine);
 		$this->assign('engine', $engine);
-		
+
 		$promoData = frameUms::_()->getModule('supsystic_promo')->addPromoMapTabs();
 		//$this->assign('promoData', frameUms::_()->getModule('supsystic_promo')->addPromoMapTabs());
-		
+
 		$this->assign('tabs', array(
 			'umsMapTab' => array(
-				'label' => __('Map', UMS_LANG_CODE), 
+				'label' => __('Map', UMS_LANG_CODE),
 				'icon' => 'fa-globe',
 				'content' => parent::getContent('mapsEditMap'),
 			),
 			'umsMarkerTab' => array(
-				'label' => __('Markers', UMS_LANG_CODE), 
+				'label' => __('Markers', UMS_LANG_CODE),
 				'icon' => 'fa-map-marker',
 				'btns' => array(
 					array('id' => 'umsAddNewMarkerBtn', 'label' => __('New', UMS_LANG_CODE)),
@@ -460,7 +460,7 @@ class mapsViewUms extends viewUms {
 				'btns' => array(
 					array('id' => 'umsAddNewShapeBtn', 'classes' => 'umsProOpt', 'label' => __('New', UMS_LANG_CODE)),
 				),
-				'content' => $isPro && frameUms::_()->getModule('shape') 
+				'content' => $isPro && frameUms::_()->getModule('shape')
 					? frameUms::_()->getModule('shape')->getView()->getEditShapes(array(
 						'editMap' => $editMap, 'map' => $map, 'id' => $id
 					))
@@ -471,14 +471,14 @@ class mapsViewUms extends viewUms {
 				'icon' => 'fa-map',
 				'content' => parent::getContent('mapsEditHeatmap'),
 			),*/
-			
+
 		));
 		return parent::getContent('mapsEdit');
 	}
 	public function getAllContactForms() {
 		$formsList = array();
 		$forms = frameCfs::_()->getModule('forms')->getModel()->getSimpleList('original_id != 0 AND ab_id = 0');
-		
+
 		if($forms) {
 			foreach($forms as $f) {
 				$formsList[ $f['id'] ] = $f['label'];
@@ -486,23 +486,23 @@ class mapsViewUms extends viewUms {
 		}
 		return $formsList;
 	}
-	
-	
-	
+
+
+
 	public function connectMapsAssets($map, $forAdminArea = false, $params = array()) {
-		/*$map['params']['language'] = isset($map['params']['language']) && !empty($map['params']['language']) 
-				? $map['params']['language'] 
+		/*$map['params']['language'] = isset($map['params']['language']) && !empty($map['params']['language'])
+				? $map['params']['language']
 				: utilsUms::getLangCode2Letter();*/
-		
-		frameUms::_()->addScript('core.maps', $this->getModule()->getModPath(). 'js/core.maps.js');
-		frameUms::_()->addScript('core.marker', frameUms::_()->getModule('marker')->getModPath(). 'js/core.marker.js');
-		
+
+		frameUms::_()->addScript('ums.core.maps', $this->getModule()->getModPath(). 'js/core.maps.js');
+		frameUms::_()->addScript('ums.core.marker', frameUms::_()->getModule('marker')->getModPath(). 'js/core.marker.js');
+
 		$defEngine = frameUms::_()->getModule('options')->get('def_engine');
 		$engine = !empty($map) && !empty($map['engine']) ? $map['engine'] : $defEngine;
 		if($params && isset($params['force_engine'])) {
 			$engine = $params['force_engine'];
 		}
-		
+
 		$fullEngine = $this->_getMapsFullEngine($engine);
 		$engine = $this->_getMapsEngine($engine);
 
@@ -511,7 +511,7 @@ class mapsViewUms extends viewUms {
 		frameUms::_()->addScript('ums_'. $engine. '.core.marker', frameUms::_()->getModule('marker')->getModPath(). 'js/engines/core.'. $engine. '.marker.js');
 
 		// Connect markers clusterization assets
-		if(!empty($map) && (isset($map['params']['marker_clasterer']) && $map['params']['marker_clasterer'] != 'none') 
+		if(!empty($map) && (isset($map['params']['marker_clasterer']) && $map['params']['marker_clasterer'] != 'none')
 			|| $forAdminArea
 			|| ($params && isset($params['add_clasterer']))
 		) {
@@ -521,7 +521,7 @@ class mapsViewUms extends viewUms {
 
 		dispatcherUms::doAction('afterConnectMapAssets', $map, $forAdminArea);
 	}
-	
+
 	public function generateSocialSharingHtml($map) {
 		$res = '';
 		$socialSharingHtml = apply_filters('supsystic_maps_sm_html', '', $map);
@@ -532,7 +532,7 @@ class mapsViewUms extends viewUms {
 
 		return $res;
 	}
-	
+
 	private function _getEngineOpts($engine) {
 		$modes = array();
 		$fullEngine = $this->_getMapsFullEngine($engine);
@@ -541,20 +541,20 @@ class mapsViewUms extends viewUms {
 			case 'bing':
 				$modes = array(
 					'navigation_bar_mode' => array(
-						'compact' => __('Compact', UMS_LANG_CODE), 
-						'default' => __('Default', UMS_LANG_CODE), 
+						'compact' => __('Compact', UMS_LANG_CODE),
+						'default' => __('Default', UMS_LANG_CODE),
 						'minified' => __('Minified', UMS_LANG_CODE),
-						'none' => __('None', UMS_LANG_CODE),
+						//'none' => __('None', UMS_LANG_CODE),
 					),
 					'map_type' => array(
-						'aerial' => __('Aerial', UMS_LANG_CODE), 
-						'canvasDark' => __('Canvas Dark', UMS_LANG_CODE), 
-						'canvasLight' => __('Canvas Light', UMS_LANG_CODE), 
-						'birdseye' => __('Birdseye', UMS_LANG_CODE), 
-						'grayscale' => __('Grayscale', UMS_LANG_CODE), 
+						'aerial' => __('Aerial', UMS_LANG_CODE),
+						'canvasDark' => __('Canvas Dark', UMS_LANG_CODE),
+						'canvasLight' => __('Canvas Light', UMS_LANG_CODE),
+						'birdseye' => __('Birdseye', UMS_LANG_CODE),
+						'grayscale' => __('Grayscale', UMS_LANG_CODE),
 						// This two are not working propertly somehow
-						//'mercator' => 'mercator', 'ordnanceSurvey' => 'ordnanceSurvey', 
-						'road' => __('Road', UMS_LANG_CODE), 
+						//'mercator' => 'mercator', 'ordnanceSurvey' => 'ordnanceSurvey',
+						'road' => __('Road', UMS_LANG_CODE),
 						'streetside' => __('Street side', UMS_LANG_CODE),
 					),
 					'map_stylization' => false,	// :)
@@ -585,8 +585,8 @@ class mapsViewUms extends viewUms {
 			}
 			$modes = array_merge($modes, array(
 				'navigation_bar_mode' => array(
-					'full' => __('Full (Zoom + Scale)', UMS_LANG_CODE), 
-					'zoom_only' => __('Zoom Only', UMS_LANG_CODE), 
+					'full' => __('Full (Zoom + Scale)', UMS_LANG_CODE),
+					'zoom_only' => __('Zoom Only', UMS_LANG_CODE),
 					'scale_only' => __('Scale Only', UMS_LANG_CODE),
 					'none' => __('None', UMS_LANG_CODE),
 				),
@@ -602,7 +602,7 @@ class mapsViewUms extends viewUms {
 		switch($engine) {
 			case 'l-mapbox':
 				$types = array(
-					'mapbox.streets' => array('label' => __('Streets', UMS_LANG_CODE), 
+					'mapbox.streets' => array('label' => __('Streets', UMS_LANG_CODE),
 						'attr' => 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'),
 					'mapbox.outdoors' => __('Outdoors', UMS_LANG_CODE),
 					'mapbox.light' => __('Light', UMS_LANG_CODE),
@@ -613,7 +613,7 @@ class mapsViewUms extends viewUms {
 				break;
 			case 'l-thunderforest':
 				$types = array(
-					'cycle' => array('label' => __('OpenCycleMap', UMS_LANG_CODE), 
+					'cycle' => array('label' => __('OpenCycleMap', UMS_LANG_CODE),
 						'attr' => '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'),
 					'transport' => __('Transport', UMS_LANG_CODE),
 					'landscape' => __('Landscape', UMS_LANG_CODE),
@@ -627,11 +627,11 @@ class mapsViewUms extends viewUms {
 				break;
 			case 'leaflet':
 				$types = array(
-					'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' => array('label' => __('Default', UMS_LANG_CODE), 
+					'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' => array('label' => __('Default', UMS_LANG_CODE),
 						'attr' => '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'),
-					'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png' => array('label' => __('OpenTopoMap', UMS_LANG_CODE), 
+					'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png' => array('label' => __('OpenTopoMap', UMS_LANG_CODE),
 						'attr' => 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'),
-					'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png' => array('label' => __('Wikimedia Labs', UMS_LANG_CODE), 
+					'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png' => array('label' => __('Wikimedia Labs', UMS_LANG_CODE),
 						'attr' => 'Wikimedia maps | Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'),
 					'https://maps.wikimedia.org/osm/{z}/{x}/{y}{r}.png' => __('Wikimedia Labs No Labels', UMS_LANG_CODE),
 					'http://{s}.tiles.wmflabs.org/osm/{z}/{x}/{y}.png' => __('Wikimedia Labs OSM', UMS_LANG_CODE),
@@ -639,12 +639,12 @@ class mapsViewUms extends viewUms {
 					'http://{s}.tiles.wmflabs.org/bw-mapnik2/{z}/{x}/{y}.png' => __('Black and White', UMS_LANG_CODE),
 					'http://{s}.tiles.wmflabs.org/hillshading/{z}/{x}/{y}.png' => __('Hill Shading', UMS_LANG_CODE),
 					'http://{s}.tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png' => __('Hike and Bike', UMS_LANG_CODE),
-					'https://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}' => array('label' =>  __('OpenMapSurfer Roads', UMS_LANG_CODE), 
-						'attr' => 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'),
-					'https://korona.geog.uni-heidelberg.de/tiles/roadsg/x={x}&y={y}&z={z}' => __('OpenMapSurfer Grayscale', UMS_LANG_CODE),
-					'https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png' => array('label' =>  __('Hydda Full', UMS_LANG_CODE), 
-						'attr' => 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-					),
+					//'https://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}' => array('label' =>  __('OpenMapSurfer Roads', UMS_LANG_CODE),
+					//	'attr' => 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'),
+					//'https://korona.geog.uni-heidelberg.de/tiles/roadsg/x={x}&y={y}&z={z}' => __('OpenMapSurfer Grayscale', UMS_LANG_CODE),
+					//'https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png' => array('label' =>  __('Hydda Full', UMS_LANG_CODE),
+					//	'attr' => 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+					//	),
 					'https://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png' => __('Hydda Base', UMS_LANG_CODE),
 					'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.png' => array('label' =>  __('Stamen Toner', UMS_LANG_CODE),
 						'attr' => 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -654,7 +654,7 @@ class mapsViewUms extends viewUms {
 					'https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png' => __('Stamen Watercolor', UMS_LANG_CODE),
 					'https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}{r}.png' => __('Stamen Terrain', UMS_LANG_CODE),
 					'https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}{r}.png' => __('Stamen Terrain Background', UMS_LANG_CODE),
-					
+
 					'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}' => array('label' => __('Esri World Street', UMS_LANG_CODE),
 						'attr' => 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
 					),

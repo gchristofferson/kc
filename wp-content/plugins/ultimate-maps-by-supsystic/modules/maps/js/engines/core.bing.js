@@ -24,12 +24,12 @@ umsBingMap.prototype._beforeInit = function() {
 	if(typeof(this._mapParams.zoom_max) !== 'undefined') {
 		this._mapParams.maxZoom = parseInt(this._mapParams.zoom_max);
 	}
-	if(typeof(this._mapParams.navigation_bar_mode) !== 'undefined' 
+	if(typeof(this._mapParams.navigation_bar_mode) !== 'undefined'
 		&& Microsoft.Maps.NavigationBarMode[this._mapParams.navigation_bar_mode]
 	) {
 		this._mapParams.navigationBarMode = Microsoft.Maps.NavigationBarMode[this._mapParams.navigation_bar_mode];
 	}
-	if(typeof(this._mapParams.map_type) !== 'undefined' 
+	if(typeof(this._mapParams.map_type) !== 'undefined'
 		&& Microsoft.Maps.MapTypeId[this._mapParams.map_type]
 	) {
 		this._mapParams.mapTypeId = Microsoft.Maps.MapTypeId[this._mapParams.map_type];
@@ -48,15 +48,15 @@ umsBingMap.prototype._createMapObj = function() {
 		//,	mapTypeId: Microsoft.Maps.MapTypeId.aerial
 		,	showZoomButtons: this._mapParams.zoom_control === 'none' ? false : true
 		//,	disablePanning: parseInt(this._mapParams.draggable) ? true : false
-		,	disableScrollWheelZoom: typeof(this._mapParams.mouse_wheel_zoom) !== 'undefined' 
+		,	disableScrollWheelZoom: typeof(this._mapParams.mouse_wheel_zoom) !== 'undefined'
 				&& !parseInt(this._mapParams.mouse_wheel_zoom) ? true : false
 	}, this._mapParams);
-	
+
 	this._mapObj = new Microsoft.Maps.Map(this._element, params);
 	this._lastZoom = this.getZoom();
 };
 umsBingMap.prototype._afterInit = function() {
-	if(typeof(this._mapParams.dbl_click_zoom) !== 'undefined' 
+	if(typeof(this._mapParams.dbl_click_zoom) !== 'undefined'
 		&& !parseInt(this._mapParams.dbl_click_zoom)
 	) {
 		Microsoft.Maps.Events.addHandler(this._mapObj, 'dblclick', function(e){
@@ -235,7 +235,7 @@ umsBingMap.prototype._createCluster = function() {
 					//Create a bounding box for the pushpins.
 					var bounds = Microsoft.Maps.LocationRect.fromLocations(locs);
 
-					//Zoom into the bounding box of the cluster. 
+					//Zoom into the bounding box of the cluster.
 					//Add a padding to compensate for the pixel area of the pushpins.
 					self._mapObj.setView({ bounds: bounds, padding: 100 });
 				}

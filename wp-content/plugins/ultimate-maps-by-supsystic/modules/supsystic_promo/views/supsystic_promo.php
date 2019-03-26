@@ -80,6 +80,7 @@ class supsystic_promoViewUms extends viewUms {
 		$pluginsUrl = $siteUrl. 'plugins/';
 		$uploadsUrl = $siteUrl. 'wp-content/uploads/';
 		$downloadsUrl = 'https://downloads.wordpress.org/plugin/';
+		$imgUrl = frameUms::_()->getModule('supsystic_promo')->getModPath(). 'img/';
 		$promoCampaign = 'ultimatemaps';
 		$this->assign('pluginsList', array(
 			array('label' => __('Popup Plugin', UMS_LANG_CODE), 'url' => $pluginsUrl. 'popup-plugin/', 'img' => $uploadsUrl. '2016/07/Popup_256.png', 'desc' => __('The Best WordPress PopUp option plugin to help you gain more subscribers, social followers or advertisement. Responsive pop-ups with friendly options.', UMS_LANG_CODE), 'download' => $downloadsUrl. 'popup-by-supsystic.zip'),
@@ -96,11 +97,19 @@ class supsystic_promoViewUms extends viewUms {
 			array('label' => __('Backup Plugin', UMS_LANG_CODE), 'url' => $pluginsUrl. 'backup-plugin/', 'img' => $uploadsUrl. '2016/07/Backup_256.png', 'desc' => __('Backup and Restore WordPress Plugin by Supsystic provides quick and unhitched DropBox, FTP, Amazon S3, Google Drive backup for your WordPress website.', UMS_LANG_CODE), 'download' => $downloadsUrl. 'backup-by-supsystic.zip'),
 			array('label' => __('Ultimate Maps by Supsystic', UMS_LANG_CODE), 'url' => $pluginsUrl. 'ultimate-maps-by-supsystic/', 'img' => $uploadsUrl. '2016/07/Google_Maps_256.png', 'desc' => __('Display custom Google Maps. Set markers and locations with text, images, categories and links. Customize google map in a simple and intuitive way.', UMS_LANG_CODE), 'download' => $downloadsUrl. UMS_WP_NAME. '.zip'),
 			array('label' => __('Digital Publication Plugin', UMS_LANG_CODE), 'url' => $pluginsUrl. 'digital-publication-plugin/', 'img' => $uploadsUrl. '2016/07/Digital_Publication_256.png', 'desc' => __('Digital Publication WordPress Plugin by Supsystic for Magazines, Catalogs, Portfolios. Convert images, posts, PDF to the page flip book.', UMS_LANG_CODE), 'download' => $downloadsUrl. 'digital-publications-by-supsystic.zip'),
+			array('label' => __('Kinsta Hosting', UMS_LANG_CODE), 'url' => 'https://kinsta.com?kaid=MNRQQASUYJRT', 'external' => true, 'img' => $imgUrl. 'kinsta_banner.png', 'desc' => __('If you want to host a business site or a blog, Kinsta managed WordPress hosting is the best place to stop on. Without any hesitation, we can say Kinsta is incredible when it comes to uptime and speed.', UMS_LANG_CODE)),
 		));
 		foreach($this->pluginsList as $i => $p) {
-			$this->pluginsList[ $i ]['url'] = $this->pluginsList[ $i ]['url']. '?utm_source=plugin&utm_medium=featured_plugins&utm_campaign='. $promoCampaign;
+			if (empty($p['external'])) {
+				$this->pluginsList[$i]['url'] = $this->pluginsList[$i]['url'] . '?utm_source=plugin&utm_medium=featured_plugins&utm_campaign=' . $promoCampaign;
+			}
 		}
 		$this->assign('bundleUrl', $siteUrl. 'product/plugins-bundle/'. '?utm_source=plugin&utm_medium=featured_plugins&utm_campaign='. $promoCampaign);
 		return parent::getContent('featuredPlugins');
+	}
+	public function getDiscountMsg($buyLink = '#') {
+		$this->assign('bundlePageLink', '//supsystic.com/all-plugins/');
+		$this->assign('buyLink', $buyLink);
+		parent::display('discountMsg');
 	}
 }

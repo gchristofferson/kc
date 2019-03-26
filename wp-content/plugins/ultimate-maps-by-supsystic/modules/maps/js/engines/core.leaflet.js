@@ -42,7 +42,7 @@ umsLeafletMap.prototype._createMapObj = function() {
 };
 umsLeafletMap.prototype._createMainLayer = function(provider) {
 	var typeUrl = '';
-	
+
 	this._providerData = this._getProviderData( this._provider );
 	if(this._providerData) {
 		typeUrl = this._providerData.url;
@@ -75,7 +75,7 @@ umsLeafletMap.prototype._getProviders = function() {
 			,	props: {id: 'mapbox.streets', accessToken: UMS_DATA.mapboxKey}
 			//,	attr: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
 			/*,	types: [
-					'mapbox.streets', 'mapbox.outdoors', 
+					'mapbox.streets', 'mapbox.outdoors',
 					'mapbox.light','mapbox.dark','mapbox.satellite',
 					'mapbox.satellite-streets','mapbox.navigation-preview-day',
 					'mapbox.navigation-preview-night','mapbox.navigation-guidance-day','mapbox.navigation-guidance-night',
@@ -96,7 +96,7 @@ umsLeafletMap.prototype._getProviders = function() {
 			,	props: {id: 'cycle', apikey: UMS_DATA.thunderforestKey}
 			//,	attr: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 			/*,	types: [
-					'cycle', 'transport', 'landscape', 'outdoors', 'transport-dark', 'spinal-map', 
+					'cycle', 'transport', 'landscape', 'outdoors', 'transport-dark', 'spinal-map',
 					'pioneer', 'mobile-atlas', 'neighbourhood'
 				]*/
 			,	typeToUrl: function(type) {
@@ -125,7 +125,7 @@ umsLeafletMap.prototype._getProviderEngine = function() {
 	return this._fullEngine;
 };
 umsLeafletMap.prototype._afterInit = function() {
-	if(typeof(this._mapParams.zoom_control) !== 'undefined' 
+	if(typeof(this._mapParams.zoom_control) !== 'undefined'
 		&& this._mapParams.zoom_control !== 'none'
 	) {
 		this.enbZoom(true);
@@ -157,7 +157,7 @@ umsLeafletMap.prototype.enbZoom = function(mode) {
 		}
 	};
 	if(mode) {
-		var mode = typeof(this._mapParams.navigation_bar_mode) !== 'undefined' 
+		var mode = typeof(this._mapParams.navigation_bar_mode) !== 'undefined'
 			? this._mapParams.navigation_bar_mode
 			: 'full';
 		if(toeInArrayUms(mode, ['full', 'zoom_only']) && !this._zoomControl) {
@@ -180,8 +180,8 @@ umsLeafletMap.prototype.enbZoom = function(mode) {
 	}
 };
 umsLeafletMap.prototype.enbDraggable = function(mode) {
-	mode 
-		? this._mapObj.dragging.enable() 
+	mode
+		? this._mapObj.dragging.enable()
 		: this._mapObj.dragging.disable();
 };
 umsLeafletMap.prototype.setCenter = function (lat, lng) {
@@ -198,7 +198,7 @@ umsLeafletMap.prototype.getZoom = function () {
 	return this._mapObj.getZoom();
 };
 umsLeafletMap.prototype.setNavigationBarMode = function(mode) {
-	if(typeof(this._mapParams.zoom_control) !== 'undefined' 
+	if(typeof(this._mapParams.zoom_control) !== 'undefined'
 		&& this._mapParams.zoom_control !== 'none'
 	) {
 		this._mapParams.navigation_bar_mode = mode;
@@ -207,8 +207,8 @@ umsLeafletMap.prototype.setNavigationBarMode = function(mode) {
 	}
 };
 umsLeafletMap.prototype.enbWheelZoom = function(mode) {
-	mode 
-		? this._mapObj.scrollWheelZoom.enable() 
+	mode
+		? this._mapObj.scrollWheelZoom.enable()
 		: this._mapObj.scrollWheelZoom.disable();
 };
 umsLeafletMap.prototype.getNavigationBarMode = function() {
@@ -274,7 +274,7 @@ umsLeafletMap.prototype._generateMarkerInfoWndStyle = function() {
 };
 umsLeafletMap.prototype._mapTypeExists = function(typeUrl) {
 	this._getMapTypes();
-	if(typeof(this._mapTypes[ typeUrl ]) !== 'undefined') 
+	if(typeof(this._mapTypes[ typeUrl ]) !== 'undefined')
 		return true;
 	/*if(this._providerData && this._providerData.types && this._providerData.types.indexOf(typeUrl) !== -1)
 		return true;*/

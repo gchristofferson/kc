@@ -1,9 +1,9 @@
 <section>
 	<div class="supsystic-item supsystic-panel">
 		<div id="containerWrapper">
-			<div class="supsistic-half-side-box" style="border-right: 1px solid rgba(164, 170, 172, 0.28);">
-				<h3><?php _e('FAQ and Documentation', UMS_LANG_CODE)?></h3>
+			<div class="supsistic-half-side-box">
 				<?php /* ?><div class="faq-list">
+ 					<h3><?php _e('FAQ and Documentation', UMS_LANG_CODE)?></h3>
 					<?php foreach($this->faqList as $title => $desc) { ?>
 						<div class="faq-title">
 							 <i class="fa fa-info-circle"></i>
@@ -36,6 +36,12 @@
 							frameborder="0">
 					</iframe>
 				</div><?php */ ?>
+				<div class="banner">
+					<div class="text-block"><?php _e('If you want to host a business site or a blog, Kinsta managed WordPress hosting is the best place to stop on. Without any hesitation, we can say Kinsta is incredible when it comes to uptime and speed.', UMS_LANG_CODE)?></div>
+					<a href="https://kinsta.com?kaid=MNRQQASUYJRT">
+						<img src="<?php echo frameUms::_()->getModule('supsystic_promo')->getModPath()?>img/kinsta_banner.png" style="width: 300px;height: 250px;" />
+					</a>
+				</div>
 				<div class="server-settings">
 					<h3><?php _e('Server Settings', UMS_LANG_CODE)?></h3>
 					<ul class="settings-list">
@@ -48,7 +54,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="supsistic-half-side-box" style="padding-left: 20px;">
+			<div class="supsistic-half-side-box" style="border-left: 1px solid rgba(164, 170, 172, 0.28);padding-left: 20px;">
 				<div class="supsystic-overview-news">
 					<h3><?php _e('News', UMS_LANG_CODE)?></h3>
 					<div class="supsystic-overview-news-content">
@@ -104,6 +110,7 @@
 						<i class="fa fa-envelope-o"></i>
 						<?php _e('Your email was send, we will try to respond to you as soon as possible. Thank you for support!', UMS_LANG_CODE)?>
 					</div>
+					<div style="clear: both;"></div>
 				</div>
 			</div>
 			<div style="clear: both;"></div>

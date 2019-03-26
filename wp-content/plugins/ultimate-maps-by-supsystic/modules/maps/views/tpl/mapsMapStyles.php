@@ -5,11 +5,14 @@ if(empty($this->currentMap)){
 $viewId = $this->currentMap['view_id'];
 $mapHtmlId = $this->currentMap['view_html_id'];
 $width = trim($this->currentMap['html_options']['width']);
-
-if(strpos($width, '%') != strlen($width) - 1 && strpos($width, 'px') != strlen($width) - 2){
+$widthUnits = trim($this->currentMap['params']['width_units']);
+if(strpos($width, '%') === false && strpos($width, 'px') === false){
 	$widthUnits = isset($this->currentMap['params']['width_units']) ? $this->currentMap['params']['width_units'] : 'px';
+	
 	$width = (int)$width . ($widthUnits);
 }
+//var_dump($width, $widthUnits); exit();
+//$width = $width.$widthUnits;
 $percentMode = strpos($width, '%') == strlen($width) - 1 ? true : false;
 $mapWidth = $this->currentMap['params']['map_display_mode'] == 'popup' ? '100%' : $width;
 $controlsWidth = $percentMode ? '100%' : $width;

@@ -8,7 +8,7 @@
     border: 1px #fa4e7f solid !important;
 }
 .toeUpdateQtyButtonsWrapper {float:left; margin:4px 0 0 -22px;}
-    
+
 .toeIncDecButton {
     width: 8px;
     height: 7px;
@@ -20,4 +20,9 @@
 .toeIncButton {
     margin-bottom:5px;
     background-position: top left;
+}
+.ui-button-icon-only .ui-button-text,
+.ui-button-icons-only .ui-button-text {
+   padding: 0px !important;
+   outline: 0;
 }

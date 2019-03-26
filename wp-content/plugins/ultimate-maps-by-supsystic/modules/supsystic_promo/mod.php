@@ -20,6 +20,7 @@ class supsystic_promoUms extends moduleUms {
 		dispatcherUms::addFilter('mainAdminTabs', array($this, 'addAdminTab'));
 		dispatcherUms::addAction('beforeSaveOpts', array($this, 'checkSaveOpts'));
 		dispatcherUms::addAction('addMapBottomControls', array($this, 'checkWeLoveYou'), 99);
+		dispatcherUms::addAction('discountMsg', array($this, 'getDiscountMsg'));
 		add_action('admin_notices', array($this, 'checkAdminPromoNotices'));
 		add_action('admin_notices', array($this, 'showUserApiKeyAdminNotice'));
 	}
@@ -290,5 +291,39 @@ class supsystic_promoUms extends moduleUms {
 	}
 	public function showFeaturedPluginsPage() {
 		return $this->getView()->showFeaturedPluginsPage();
+	}
+	public function getDiscountMsg() {
+		if($this->isPro()
+			&& frameUms::_()->getModule('options')->getActiveTab() == 'license'
+			&& frameUms::_()->getModule('license')
+			&& frameUms::_()->getModule('license')->getModel()->isActive()
+		) {
+			$proPluginsList = array(
+				'ultimate-maps-by-supsystic-pro', 'newsletters-by-supsystic-pro', 'contact-form-by-supsystic-pro', 'live-chat-pro',
+				'digital-publications-supsystic-pro', 'coming-soon-supsystic-pro', 'price-table-supsystic-pro', 'tables-generator-pro',
+				'social-share-pro', 'popup-by-supsystic-pro', 'supsystic_slider_pro', 'supsystic-gallery-pro', 'google-maps-easy-pro',
+				'backup-supsystic-pro',
+			);
+			$activePluginsList = get_option('active_plugins', array());
+			$activeProPluginsCount = 0;
+			foreach($activePluginsList as $actPl) {
+				foreach($proPluginsList as $proPl) {
+					if(strpos($actPl, $proPl) !== false) {
+						$activeProPluginsCount++;
+					}
+				}
+			}
+			if($activeProPluginsCount === 1) {
+				$buyLink = $this->getDiscountBuyUrl();
+				$this->getView()->getDiscountMsg($buyLink);
+			}
+		}
+	}
+	public function getDiscountBuyUrl() {
+		$license = frameUms::_()->getModule('license')->getModel()->getCredentials();
+		$license['key'] = md5($license['key']);
+		$license = urlencode(base64_encode(implode('|', $license)));
+		$plugin_code = 'ultimate_maps_pro';
+		return 'http://supsystic.com/?mod=manager&pl=lms&action=applyDiscountBuyUrl&plugin_code='. $plugin_code. '&lic='. $license;
 	}
 }

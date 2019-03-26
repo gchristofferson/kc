@@ -14,7 +14,7 @@ class frameUms {
     private $_scriptsInitialized = false;
     private $_styles = array();
 	private $_stylesInitialized = false;
-    
+
     private $_scriptsVars = array();
     private $_mod = '';
     private $_action = '';
@@ -22,10 +22,10 @@ class frameUms {
      * Object with result of executing non-ajax module request
      */
     private $_res = null;
-    
+
     public function __construct() {
         $this->_res = toeCreateObjUms('response', array());
-        
+
     }
     static public function getInstance() {
         static $instance;
@@ -106,23 +106,23 @@ class frameUms {
         $this->_initModules();
 
 		dispatcherUms::doAction('afterModulesInit');
-		
+
 		modInstallerUms::checkActivationMessages();
-		
+
         $this->_execModules();
-        
+
         add_action('init', array($this, 'addScripts'));
         add_action('init', array($this, 'addStyles'));
 
         register_activation_hook(  UMS_DIR. DS. UMS_MAIN_FILE, array('utilsUms', 'activatePlugin')  ); //See classes/install.php file
         register_uninstall_hook(UMS_DIR. DS. UMS_MAIN_FILE, array('utilsUms', 'deletePlugin'));
 		register_deactivation_hook(UMS_DIR. DS. UMS_MAIN_FILE, array( 'utilsUms', 'deactivatePlugin' ) );
-        
+
 		add_action('init', array($this, 'connectLang'));
         //$operationTime = microtime(true) - $startTime;
     }
 	public function connectLang() {
-		load_plugin_textdomain(UMS_LANG_CODE, false, UMS_PLUG_NAME. '/lang');
+		load_plugin_textdomain(UMS_LANG_CODE, false, UMS_PLUG_NAME. '/lang/' );
 	}
     /**
      * Check permissions for action in controller by $code and made corresponding action
@@ -150,7 +150,7 @@ class frameUms {
         if($mod) {
             $permissions = $mod->getController()->getPermissions();
             if(!empty($permissions)) {  // Special permissions
-                if(isset($permissions[UMS_METHODS]) 
+                if(isset($permissions[UMS_METHODS])
                     && !empty($permissions[UMS_METHODS])
                 ) {
                     foreach($permissions[UMS_METHODS] as $method => $permissions) {   // Make case-insensitive
@@ -177,14 +177,14 @@ class frameUms {
                         if(is_array($methods)) {
                             $lowerMethods = array_map('strtolower', $methods);          // Make case-insensitive
                             if(in_array($action, $lowerMethods)) {                      // Permission for this method exists
-                                if($currentUserPosition != $userlevel) 
+                                if($currentUserPosition != $userlevel)
                                     $res = false;
                                 break;
                             }
                         } else {
                             $lowerMethod = strtolower($methods);            // Make case-insensitive
                             if($lowerMethod == $action) {                   // Permission for this method exists
-                                if($currentUserPosition != $userlevel) 
+                                if($currentUserPosition != $userlevel)
                                     $res = false;
                                 break;
                             }
@@ -212,7 +212,7 @@ class frameUms {
         if($mod) {
             $permissions = $mod->getController()->getPermissions();
             if(!empty($permissions)) {  // Special permissions
-                if(isset($permissions[UMS_METHODS]) 
+                if(isset($permissions[UMS_METHODS])
                     && !empty($permissions[UMS_METHODS])
                 ) {
                     foreach($permissions[UMS_METHODS] as $method => $permissions) {   // Make case-insensitive
@@ -319,7 +319,7 @@ class frameUms {
         }
         return $res;
     }
-    
+
     public function getModule($code) {
         return (isset($this->_modules[$code]) ? $this->_modules[$code] : NULL);
     }
@@ -338,10 +338,10 @@ class frameUms {
             wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
         } else {
             $this->_scripts[] = array(
-                'handle' => $handle, 
-                'src' => $src, 
-                'deps' => $deps, 
-                'ver' => $ver, 
+                'handle' => $handle,
+                'src' => $src,
+                'deps' => $deps,
+                'ver' => $ver,
                 'in_footer' => $in_footer,
                 'vars' => $vars
             );
@@ -354,7 +354,7 @@ class frameUms {
         if(!empty($this->_scripts)) {
             foreach($this->_scripts as $s) {
                 wp_enqueue_script($s['handle'], $s['src'], $s['deps'], $s['ver'], $s['in_footer']);
-                
+
                 if($s['vars'] || isset($this->_scriptsVars[$s['handle']])) {
                     $vars = array();
                     if($s['vars'])
@@ -378,7 +378,7 @@ class frameUms {
             $this->_scriptsVars[$script][$name] = $val;
         }
     }
-    
+
     public function addStyle($handle, $src = false, $deps = array(), $ver = false, $media = 'all') {
 		$src = empty($src) ? $src : uriUms::_($src);
 		if(!$ver)
@@ -391,7 +391,7 @@ class frameUms {
 				'src' => $src,
 				'deps' => $deps,
 				'ver' => $ver,
-				'media' => $media 
+				'media' => $media
 			);
 		}
     }
@@ -421,13 +421,13 @@ class frameUms {
 
     //Very interesting thing going here.............
     public function loadPlugins() {
-        require_once(ABSPATH. 'wp-includes/pluggable.php'); 
+        require_once(ABSPATH. 'wp-includes/pluggable.php');
     }
     public function loadWPSettings() {
-        require_once(ABSPATH. 'wp-settings.php'); 
+        require_once(ABSPATH. 'wp-settings.php');
     }
 	public function loadLocale() {
-		require_once(ABSPATH. 'wp-includes/locale.php'); 
+		require_once(ABSPATH. 'wp-includes/locale.php');
 	}
     public function moduleActive($code) {
         return isset($this->_modules[$code]);

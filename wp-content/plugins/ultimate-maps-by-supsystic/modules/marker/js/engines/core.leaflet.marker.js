@@ -62,7 +62,6 @@ umsLeafletMarker.prototype.removeFromMap = function() {
 	this._markerObj.removeFrom(this._map.getRawMapInstance());
 };
 umsLeafletMarker.prototype._setInfoWndContent = function(withOpenPopup) {
-	//console.log(withOpenPopup);
 	if(!this._infoWindow) {
 		var offsetH = 0;
 		if(this._markerParams 
@@ -86,10 +85,9 @@ umsLeafletMarker.prototype._setInfoWndContent = function(withOpenPopup) {
 
 	this._infoWindow.setContent(content);
 	this._infoWindow.update();
-	//console.log('_setInfoWndContent');
 	if(withOpenPopup) {
 		this._infoWndOpened = true;
-		//this._markerObj.openPopup();
+		this._markerObj.openPopup();
 	}
 };
 /*umsLeafletMarker.prototype.refreshInfoWnd = function() {

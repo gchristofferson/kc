@@ -1,6 +1,6 @@
 jQuery(document).ready(function(){
 	var tblId = 'umsMapsTbl';
-	jQuery('#'+ tblId).jqGrid({ 
+	jQuery('#'+ tblId).jqGrid({
 		url: umsTblDataUrl
 	,	datatype: 'json'
 	,	autowidth: true
@@ -26,7 +26,7 @@ jQuery(document).ready(function(){
 	,	sortorder: 'desc'
 	,	jsonReader: { repeatitems : false, id: '0' }
 	,	caption: toeLangUms('Current Map')
-	,	height: '100%' 
+	,	height: '100%'
 	,	emptyrecords: toeLangUms('You have no Map for now.')
 	,	multiselect: true
 	,	onSelectRow: function(rowid, e) {
@@ -95,7 +95,7 @@ jQuery(document).ready(function(){
 			}, tblId);
 		}
 	});
-	
+
 	jQuery('#'+ tblId+ 'EmptyMsg').insertAfter(jQuery('#'+ tblId+ '').parent());
 	jQuery('#'+ tblId+ '').jqGrid('navGrid', '#'+ tblId+ 'Nav', {edit: false, add: false, del: false});
 	jQuery('#cb_'+ tblId+ '').change(function(){
@@ -178,7 +178,7 @@ jQuery(document).ready(function(){
 		}
 		return false;
 	});*/
-	
+
 	umsInitCustomCheckRadio('#'+ tblId+ '_cb');
 });
 function umsRemoveMapFromTblClick(mapId){
@@ -189,7 +189,7 @@ function umsRemoveMapFromTblClick(mapId){
 		return false;
 	}
 	var msgEl = jQuery('#umsRemoveElemLoader__'+ mapId);
-	
+
 	jQuery.sendFormUms({
 		msgElID: msgEl
 	,	data: {action: 'remove', mod: 'maps', id: mapId}

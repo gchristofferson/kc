@@ -50,7 +50,7 @@ class mapsModelUms extends modelUms {
 		return $map;
 	}
 	public function getParamsList() {
-		$mapOptKeys = dispatcherUms::applyFilters('mapParamsKeys', 
+		$mapOptKeys = dispatcherUms::applyFilters('mapParamsKeys',
 				array('width_units', 'membershipEnable', 'adapt_map_to_screen_height',
 					'type' /*used "map_type" insted - as this was already nulled*/, 'map_type', 'map_display_mode', 'map_center', 'language',
 					'enable_zoom', 'enable_mouse_zoom' /*we used "mouse_wheel_zoom" insted of this - same reason as prev. one*/, 'mouse_wheel_zoom',
@@ -63,7 +63,7 @@ class mapsModelUms extends modelUms {
 					'marker_clasterer', 'marker_clasterer_icon', 'marker_clasterer_icon_width', 'marker_clasterer_icon_height', 'marker_clasterer_grid_size',
 					'marker_filter_color', 'marker_filter_button_title',
 					// Maybe PRO params - but let them be here - to avoid dublications
-					'markers_list_type', 'markers_list_color', 'is_static'));
+					'markers_list_type', 'markers_list_color', 'is_static', 'hide_empty_block', 'autoplay_slider', 'slide_duration'));
 		return $mapOptKeys;
 	}
 	public function getHtmlOptionsList() {
@@ -205,8 +205,8 @@ class mapsModelUms extends modelUms {
 	public function getMapByTitle($title) {
 		$map = frameUms::_()->getTable('maps')->get('*', array('title' => $title), '', 'row');
 		if(!empty($map)) {
-			$map['html_options'] = utilsUms::unserialize($map['html_options']);				
-			$map['params']= utilsUms::unserialize($map['params']);	
+			$map['html_options'] = utilsUms::unserialize($map['html_options']);
+			$map['params']= utilsUms::unserialize($map['params']);
 			$map = $this->_afterSimpleGet( $map );
 			return $map;
 		}
@@ -219,7 +219,7 @@ class mapsModelUms extends modelUms {
 		$map = frameUms::_()->getTable('maps')->get('*', array('id' => (int)$id), '', 'row');
 		if(!empty($map)){
 			if($withMarkers){
-			   $map['markers'] = frameUms::_()->getModule('marker')->getModel()->getMapMarkers($map['id'], $withGroups);				
+			   $map['markers'] = frameUms::_()->getModule('marker')->getModel()->getMapMarkers($map['id'], $withGroups);
 			}
 			if($withShapes && frameUms::_()->getModule('shape')) {
 				$map['shapes'] = frameUms::_()->getModule('shape')->getModel()->getMapShapes($map['id']);
@@ -227,7 +227,7 @@ class mapsModelUms extends modelUms {
 			if($withHeatmap && frameUms::_()->getModule('heatmap')) {
 				$map['heatmap'] = frameUms::_()->getModule('heatmap')->getModel()->getByMapId($map['id']);
 			}
-			$map['html_options'] = utilsUms::unserialize($map['html_options']);				
+			$map['html_options'] = utilsUms::unserialize($map['html_options']);
 			$map['params']= utilsUms::unserialize($map['params']);
 			$map = $this->_afterSimpleGet( $map );
 			return $map;
@@ -287,7 +287,7 @@ class mapsModelUms extends modelUms {
 			'ru'=>'RUSSIAN',
 			'sv'=>'SWEDISH',
 			'zh-CN'=>'CHINESE (SIMPLIFIED)',
-			'zh-TW'=>'CHINESE (TRADITIONAL)',		  
+			'zh-TW'=>'CHINESE (TRADITIONAL)',
 		);
 		$params['align'] = array('top' => 'top', 'right' => 'right', 'bottom' => 'bottom', 'left' => 'left');
 		$params['display_mode'] = array('map' => 'Display Map', 'popup' => 'Display Map Icon');
@@ -315,7 +315,7 @@ class mapsModelUms extends modelUms {
 		return true;
 	}
 	public function resortShapes($d = array()) {
-		if(!frameUms::_()->getModule('shape')) 
+		if(!frameUms::_()->getModule('shape'))
 			return true;	// Why always true?
 		$mapId = isset($d['map_id']) ? (int) $d['map_id'] : 0;
 		$shapesList = isset($d['shapes_list']) ? $d['shapes_list'] : false;

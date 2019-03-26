@@ -209,9 +209,9 @@ umsBaseMap.prototype.geocodeSearchAutocomplete = function($el, params) {
 	$el.keyup(function(event){
 		// Ignore tab, enter, caps, end, home, arrows
 		if(toeInArrayUms(event.keyCode, [9, 13, 20, 35, 36, 37, 38, 39, 40])) return;
-		
+
 		var searchData = jQuery.trim(jQuery(this).val());
-		
+
 		if(searchData && searchData != '') {
 			if(typeof(params.msgEl) === 'string') {
 				params.msgEl = jQuery(params.msgEl);
@@ -221,10 +221,10 @@ umsBaseMap.prototype.geocodeSearchAutocomplete = function($el, params) {
 
 			jQuery(this).autocomplete({
 				source: function(request, response) {
-					var autocomleateData = typeof(params.additionalData) != 'undefined' 
-						? umsAutocomleateData(params.additionalData, request.term) 
+					var autocomleateData = typeof(params.additionalData) != 'undefined'
+						? umsAutocomleateData(params.additionalData, request.term)
 						: []
-					
+
 					mapSelf.geocodeQuery(searchData, function(results) {
 						params.msgEl.html('');
 						for(var i = 0; i < results.length; i++) {
@@ -290,7 +290,7 @@ umsBaseMap.prototype.checkMarkersParams = function(markers, needToShow) {
 			var markerParams = markers[i].getMarkerParam('params')
 			,	showDescription = parseInt(markerParams.show_description);
 			if(showDescription || needToShow) {
-				markers[i].showInfoWnd( true, showDescription );
+				markers[i].showInfoWnd( true, showDescription, true );
 			}
 		}
 	}
@@ -342,10 +342,10 @@ umsBaseMap.prototype._generateMarkerInfoWndStyle = function() {
 	return false;
 };
 umsBaseMap.prototype._getCreateCoords = function() {
-	return this._mapParams.map_center 
+	return this._mapParams.map_center
 			&& this._mapParams.map_center.coord_x && this._mapParams.map_center.coord_x !== ''
 			&& this._mapParams.map_center.coord_y && this._mapParams.map_center.coord_y !== ''
-		? this._mapParams.map_center 
+		? this._mapParams.map_center
 		: {coord_x: 51.50632, coord_y: -0.12714};
 };
 umsBaseMap.prototype.enableClasterization = function(clasterType, needTrigger) {

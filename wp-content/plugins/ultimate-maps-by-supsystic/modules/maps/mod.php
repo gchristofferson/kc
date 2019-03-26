@@ -4,21 +4,21 @@ class  mapsUms extends moduleUms {
 	private $_markersLists = array();
 	private $_mapsInPosts = array();
 	public $_mapsInPostsParams = array();
-	
+
 	private $_engines = array();
-	
+
 	public function __construct($d) {
 		parent::__construct($d);
 		dispatcherUms::addAction('afterOptsLoaded', array($this, 'checkDefEngine'));
 	}
-	
+
 	public function checkDefEngine() {
 		$engineFromReq = reqUms::getVar('ums_engine');
 		if(!empty($engineFromReq)) {
 			frameUms::_()->getModule('options')->getModel()->save('def_engine', $engineFromReq, true);
 		}
 	}
-	
+
 	public function init() {
 		dispatcherUms::addFilter('mainAdminTabs', array($this, 'addAdminTab'));
 		add_action('wp_head', array($this, 'addMapStyles'));
@@ -28,7 +28,7 @@ class  mapsUms extends moduleUms {
 		// Add to admin bar new item
 		add_action('admin_bar_menu', array($this, 'addAdminBarNewItem'), 300);
 	}
-	
+
 	public function getEngines() {
 		if(empty($this->_engines)) {
 			$this->_engines = array(
@@ -42,7 +42,7 @@ class  mapsUms extends moduleUms {
 		}
 		return $this->_engines;
 	}
-	
+
 	public function getEnginesForSelect() {
 		$this->getEngines();
 		$enginesForSelect = array();
@@ -51,7 +51,7 @@ class  mapsUms extends moduleUms {
 		}
 		return $enginesForSelect;
 	}
-	
+
 	public function addAdminTab($tabs) {
 		$tabs[ $this->getCode(). '_add_new' ] = array(
 			'label' => __('Add Map', UMS_LANG_CODE), 'callback' => array($this, 'getAddNewTabContent'), 'fa_icon' => 'fa-plus-circle', 'sort_order' => 10, 'add_bread' => $this->getCode(),
@@ -188,9 +188,11 @@ class  mapsUms extends moduleUms {
 	}
 	public function getMarkerLists() {
 		if(empty($this->_markersLists)) {
-			// or == orientation (horizontal, vertical), d == display (title, image, description), eng == slider engine (jssor)
+			// or == orientation (horizontal, vertical), d == display (title, image, description), eng == slider engine (jssor), pos == position (before, after)
 			$this->_markersLists = array(
+				'slider_simple_before' => array('label' => __('Slider before map', UMS_LANG_CODE), 'or' => 'h', 'd' => array('title', 'img', 'desc'), 'eng' => 'jssor', 'pos' => 'before'),
 				'slider_simple' => array('label' => __('Slider', UMS_LANG_CODE), 'or' => 'h', 'd' => array('title', 'img', 'desc'), 'eng' => 'jssor'),
+				'slider_simple_title_img_before' => array('label' => __('Slider before map - Title and Img', UMS_LANG_CODE), 'or' => 'h', 'd' => array('title', 'img'), 'eng' => 'jssor', 'pos' => 'before'),
 				'slider_simple_title_img' => array('label' => __('Slider - Title and Img', UMS_LANG_CODE), 'or' => 'h', 'd' => array('title', 'img'), 'eng' => 'jssor'),
 				'slider_simple_vertical_title_img' => array('label' => __('Slider Vertical - Title and Img', UMS_LANG_CODE), 'or' => 'v', 'd' => array('title', 'img'), 'eng' => 'jssor'),
 				'slider_simple_vertical_title_desc' => array('label' => __('Slider Vertical - Title and Description', UMS_LANG_CODE), 'or' => 'v', 'd' => array('title', 'desc'), 'eng' => 'jssor'),

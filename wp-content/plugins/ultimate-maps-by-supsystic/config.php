@@ -44,27 +44,27 @@
 
     define('UMS_DEFAULT', 'default');
     define('UMS_CURRENT', 'current');
-	
-	define('UMS_EOL', "\n");    
-    
+
+	define('UMS_EOL', "\n");
+
     define('UMS_PLUGIN_INSTALLED', true);
-    define('UMS_VERSION_PLUGIN', '1.0.8');
+    define('UMS_VERSION_PLUGIN', '1.0.9');
     define('UMS_USER', 'user');
-    
-    define('UMS_CLASS_PREFIX', 'umsc');     
+
+    define('UMS_CLASS_PREFIX', 'umsc');
     define('UMS_FREE_VERSION', false);
 	define('UMS_TEST_MODE', true);
-    
+
     define('UMS_SUCCESS', 'Success');
     define('UMS_FAILED', 'Failed');
 	define('UMS_ERRORS', 'umsErrors');
-	
+
 	define('UMS_ADMIN',	'admin');
 	define('UMS_LOGGED','logged');
 	define('UMS_GUEST',	'guest');
-	
+
 	define('UMS_ALL',		'all');
-	
+
 	define('UMS_METHODS',		'methods');
 	define('UMS_USERLEVELS',	'userlevels');
 	/**
@@ -85,7 +85,7 @@
 	 * Dash icon for WP admin area menu
 	 */
 	define('UMS_ADMIN_MENU_ICON', 'dashicons-admin-site');
-	
+
 	define('UMS_WP_NAME', 'ultimate-maps-by-supsystic');
 	/**
 	 * Custom defined for plugin
@@ -93,5 +93,5 @@
 	define('UMS_COMMON', 'common');
 	define('UMS_FB_LIKE', 'fb_like');
 	define('UMS_VIDEO', 'video');
-	
+
 	define('UMS_SHORTCODE', 'ultimate_maps');
