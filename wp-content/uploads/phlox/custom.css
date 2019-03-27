@@ -40,7 +40,7 @@
 #fs-menu-search:before { background-color:rgba(255, 255, 255, 0.95); }
 /* site-top-header-background-color 
 =========================*/
-.aux-top-header{background-color:#FFFFFF;}
+#top-header{background-color:#FFFFFF;}
 /* post-title-bar-overlay-pattern-opacity 
 =========================*/
 .single-post .aux-overlay-bg-hash::before { opacity:0.15; }
