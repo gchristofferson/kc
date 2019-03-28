@@ -1,4 +1,4 @@
-/*! elementor - v2.5.9 - 18-03-2019 */
+/*! elementor - v2.5.10 - 26-03-2019 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -1696,7 +1696,7 @@ var Shapes = elementorModules.frontend.handlers.Base.extend({
 		    shapeType = self.getElementSettings(baseSettingKey),
 		    $svgContainer = this.elements['$' + side + 'Container'];
 
-		$svgContainer.empty().attr('data-shape', shapeType);
+		$svgContainer.attr('data-shape', shapeType);
 
 		if (!shapeType) {
 			return;
@@ -1711,7 +1711,7 @@ var Shapes = elementorModules.frontend.handlers.Base.extend({
 		var svgURL = self.getSvgURL(shapeType, fileName);
 
 		jQuery.get(svgURL, function (data) {
-			$svgContainer.append(data.childNodes[0]);
+			$svgContainer.empty().append(data.childNodes[0]);
 		});
 
 		this.setNegative(side);
