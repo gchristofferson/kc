@@ -125,7 +125,7 @@ class Module extends Module_Base {
 					}
 
 					$results[] = [
-						'id' => $term->term_id,
+						'id' => $term->term_taxonomy_id,
 						'text' => $text,
 					];
 				}
@@ -203,7 +203,7 @@ class Module extends Module_Base {
 			case 'taxonomy':
 				$terms = get_terms(
 					[
-						'include' => $ids,
+						'term_taxonomy_id' => $ids,
 						'hide_empty' => false,
 					]
 				);
@@ -216,7 +216,7 @@ class Module extends Module_Base {
 					} else {
 						$text = $term_name;
 					}
-					$results[ $term->term_id ] = $text;
+					$results[ $term->term_taxonomy_id ] = $text;
 				}
 				break;
 
@@ -295,7 +295,7 @@ class Module extends Module_Base {
 		$test_term = $term;
 		$names = [];
 		while ( $test_term->parent > 0 ) {
-			$test_term = get_term_by( 'id', $test_term->parent, $test_term->taxonomy );
+			$test_term = get_term_by( 'term_taxonomy_id', $test_term->parent );
 			if ( ! $test_term ) {
 				break;
 			}

@@ -2,7 +2,6 @@
 namespace ElementorPro\Modules\QueryControl\Classes;
 
 use Elementor\Widget_Base;
-use ElementorPro\Modules\QueryControl\Module;
 use ElementorPro\Classes\Utils;
 
 class Elementor_Related_Query extends Elementor_Post_Query {
@@ -51,7 +50,8 @@ class Elementor_Related_Query extends Elementor_Post_Query {
 	}
 
 	private function is_valid_fallback() {
-		if ( empty( $this->get_widget_settings( 'related_fallback' ) ) ) {
+		$related_callback = $this->get_widget_settings( 'related_fallback' );
+		if ( empty( $related_callback ) ) {
 			return false;
 		}
 		$valid = false;
@@ -60,7 +60,8 @@ class Elementor_Related_Query extends Elementor_Post_Query {
 				$valid = true;
 				break;
 			case 'fallback_by_id':
-				if ( ! empty( $this->get_widget_settings( 'fallback_ids' ) ) ) {
+				$fallback_id = $this->get_widget_settings( 'fallback_ids' );
+				if ( ! empty( $fallback_id ) ) {
 					$valid = true;
 				}
 				break;

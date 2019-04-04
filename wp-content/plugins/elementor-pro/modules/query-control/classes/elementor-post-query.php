@@ -50,7 +50,8 @@ class Elementor_Post_Query {
 
 		$offset_control = $this->get_widget_settings( 'offset' );
 
-		if ( ! empty( $this->get_widget_settings( 'query_id' ) ) ) {
+		$query_id = $this->get_widget_settings( 'query_id' );
+		if ( ! empty( $query_id ) ) {
 			add_action( 'pre_get_posts', [ $this, 'pre_get_posts_query_filter' ] );
 		}
 
@@ -62,8 +63,8 @@ class Elementor_Post_Query {
 		$query = new \WP_Query( $this->query_args );
 
 		remove_action( 'pre_get_posts', [ $this, 'pre_get_posts_query_filter' ] );
-		remove_action( 'pre_get_posts', [ $this, 'fix_query_offset' ] );
-		remove_filter( 'found_posts', [ $this, 'fix_query_found_posts' ] );
+		remove_action( 'pre_get_posts', [ $this, 'fix_query_offset' ], 1 );
+		remove_filter( 'found_posts', [ $this, 'fix_query_found_posts' ], 1 );
 
 		Module::add_to_avoid_list( wp_list_pluck( $query->posts, 'ID' ) );
 
@@ -156,25 +157,23 @@ class Elementor_Post_Query {
 
 	protected function set_post_exclude_args() {
 
-		if ( empty( $this->get_widget_settings( 'exclude' ) ) ) {
+		$exclude = $this->get_widget_settings( 'exclude' );
+
+		if ( empty( $exclude ) ) {
 			return;
 		}
 
 		$post__not_in = [];
 
-		$exclude = $this->get_widget_settings( 'exclude' );
-
-		if ( $exclude ) {
-
-			if ( $this->maybe_in_array( 'current_post', $this->get_widget_settings( 'exclude' ) ) ) {
-				if ( is_singular() ) {
-					$post__not_in[] = get_queried_object_id();
-				}
+		if ( $this->maybe_in_array( 'current_post', $exclude ) ) {
+			if ( is_singular() ) {
+				$post__not_in[] = get_queried_object_id();
 			}
+		}
 
-			if ( $this->maybe_in_array( 'manual_selection', $this->get_widget_settings( 'exclude' ) ) && ! empty( $this->get_widget_settings( 'exclude_ids' ) ) ) {
-				$post__not_in = array_merge( $post__not_in, $this->get_widget_settings( 'exclude_ids' ) );
-			}
+		$exclude_ids = $this->get_widget_settings( 'exclude_ids' );
+		if ( $this->maybe_in_array( 'manual_selection', $exclude ) && ! empty( $exclude_ids ) ) {
+			$post__not_in = array_merge( $post__not_in, $exclude_ids );
 		}
 
 		$this->set_query_arg( 'post__not_in', $post__not_in );
@@ -208,38 +207,26 @@ class Elementor_Post_Query {
 	}
 
 	protected function build_terms_query( $tab_id, $control_id, $exclude = false ) {
-		if ( empty( $this->get_widget_settings( $tab_id ) ) || empty( $this->get_widget_settings( $control_id ) ) || ! $this->maybe_in_array( 'terms', $this->get_widget_settings( $tab_id ) ) ) {
+		$tab_id = $this->get_widget_settings( $tab_id );
+		$settings_terms = $this->get_widget_settings( $control_id );
+		if ( empty( $tab_id ) || empty( $settings_terms ) || ! $this->maybe_in_array( 'terms', $tab_id ) ) {
 			return;
 		}
 
-		$terms = [];
-		foreach ( $this->get_widget_settings( $control_id ) as $id ) {
-			$term_data = get_term_by( 'term_taxonomy_id', $id );
-			$taxonomy = $term_data->taxonomy;
-			$terms[ $taxonomy ][] = $id;
-		}
-		$this->insert_tax_query( $terms, $exclude );
-	}
+		$query = [
+			'field' => 'term_taxonomy_id',
+			'terms' => $settings_terms,
+		];
 
-	protected function insert_tax_query( $terms, $exclude ) {
-		$tax_query = [];
-		foreach ( $terms as $taxonomy => $ids ) {
-			$query = [
-				'taxonomy' => $taxonomy,
-				'field' => 'term_id',
-				'terms' => $ids,
-			];
-
-			if ( $exclude ) {
-				$query['operator'] = 'NOT IN';
-			}
-
-			$tax_query[] = $query;
+		if ( $exclude ) {
+			$query['operator'] = 'NOT IN';
 		}
 
-		if ( empty( $tax_query ) ) {
+		if ( empty( $query ) ) {
 			return;
 		}
+
+		$tax_query = [ $query ];
 
 		if ( empty( $this->query_args['tax_query'] ) ) {
 			$this->query_args['tax_query'] = $tax_query;
@@ -251,20 +238,23 @@ class Elementor_Post_Query {
 
 	protected function set_author_args() {
 
-		if ( ! empty( $this->get_widget_settings( 'include_authors' ) ) && $this->maybe_in_array( 'authors', $this->get_widget_settings( 'include' ) ) ) {
-			$this->set_query_arg( 'author__in', $this->get_widget_settings( 'include_authors' ) );
+		$include_authors = $this->get_widget_settings( 'include_authors' );
+		if ( ! empty( $include_authors ) && $this->maybe_in_array( 'authors', $this->get_widget_settings( 'include' ) ) ) {
+			$this->set_query_arg( 'author__in', $include_authors );
 		}
 
-		if ( ! empty( $this->get_widget_settings( 'exclude_authors' ) ) && $this->maybe_in_array( 'authors', $this->get_widget_settings( 'exclude' ) ) ) {
+		$exclude_authors = $this->get_widget_settings( 'exclude_authors' );
+		if ( ! empty( $exclude_authors ) && $this->maybe_in_array( 'authors', $this->get_widget_settings( 'exclude' ) ) ) {
 			//exclude only if not explicitly included
 			if ( empty( $this->query_args['author__in'] ) ) {
-				$this->set_query_arg( 'author__not_in', $this->get_widget_settings( 'exclude_authors' ) );
+				$this->set_query_arg( 'author__not_in', $exclude_authors );
 			}
 		}
 	}
 
 	protected function set_order_args() {
-		if ( ! empty( $this->get_widget_settings( 'order' ) ) ) {
+		$order = $this->get_widget_settings( 'order' );
+		if ( ! empty( $order ) ) {
 			$this->set_query_arg( 'orderby', $this->get_widget_settings( 'orderby' ) );
 			$this->set_query_arg( 'order', $this->get_widget_settings( 'order' ) );
 		}
@@ -272,9 +262,10 @@ class Elementor_Post_Query {
 
 	protected function set_date_args() {
 
-		if ( ! empty( $this->get_widget_settings( 'select_date' ) ) ) {
+		$select_date = $this->get_widget_settings( 'select_date' );
+		if ( ! empty( $select_date ) ) {
 			$date_query = [];
-			switch ( $this->get_widget_settings( 'select_date' ) ) {
+			switch ( $select_date ) {
 				case 'today':
 					$date_query['after'] = '-1 day';
 					break;
@@ -291,11 +282,13 @@ class Elementor_Post_Query {
 					$date_query['after'] = '-1 year';
 					break;
 				case 'exact':
-					if ( ! empty( $this->get_widget_settings( 'date_after' ) ) ) {
-						$date_query['after'] = $this->get_widget_settings( 'date_after' );
+					$after_date = $this->get_widget_settings( 'date_after' );
+					if ( ! empty( $after_date ) ) {
+						$date_query['after'] = $after_date;
 					}
-					if ( ! empty( $this->get_widget_settings( 'date_before' ) ) ) {
-						$date_query['before'] = $this->get_widget_settings( 'date_before' );
+					$before_date = $this->get_widget_settings( 'date_before' );
+					if ( ! empty( $before_date ) ) {
+						$date_query['before'] = $before_date;
 					}
 					$date_query['inclusive'] = true;
 					break;

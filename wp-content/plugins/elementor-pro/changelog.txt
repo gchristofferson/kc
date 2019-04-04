@@ -1,5 +1,17 @@
 # Elementor Pro - by Elementor.com
 
+#### 2.5.4 - 2019-04-03
+* Fix: Move from using `term_id` to `term_taxonomy_id` ([#7653](https://github.com/elementor/elementor/issues/7653))
+* Fix: Offset manipulation hook removal
+* Fix: Missing form field `ID` in some edge cases ([#7711](https://github.com/elementor/elementor/issues/7711), [#7660](https://github.com/elementor/elementor/issues/7660))
+
+#### 2.5.3 - 2019-03-31
+* Tweak: Updated Google Calendar dynamic tag URL ([#7673](https://github.com/elementor/elementor/issues/7673))
+* Fix: Missing form field names ([#7651](https://github.com/elementor/elementor/issues/7651))
+* Fix: PHP 5.4 backward compatibility in Query Control ([#7633](https://github.com/elementor/elementor/issues/7633))
+* Fix: `products_deprecated` Query Control module compatibility ([#7654](https://github.com/elementor/elementor/issues/7654))
+* Fix: Changed query method from `term_id` to `term_taxonomy_id` ([#7653](https://github.com/elementor/elementor/issues/7653))
+
 #### 2.5.2 - 2019-03-27
 * Fix: Overwrite parent widget type in Global Widget ([#7632](https://github.com/elementor/elementor/issues/7632))
 * Fix: Avoid Duplicates option not working in Query Control ([#7635](https://github.com/elementor/elementor/issues/7635))
