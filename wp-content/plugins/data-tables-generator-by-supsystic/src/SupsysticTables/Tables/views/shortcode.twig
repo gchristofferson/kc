@@ -162,17 +162,20 @@
                      visibility: hidden;
              {% endif %}
                  "
-        {% if tableWidth is defined and table.settings.tableWidthMobileType is defined %}
-            {% if table.settings.tableWidthMobileType == 'auto' %}
-                {% set tableWidthMobile = 'auto' %}
-            {% elseif table.settings.tableWidthMobile is defined %}
-                {% set tableWidthMobile = table.settings.tableWidthMobile ~ table.settings.tableWidthMobileType %}
+        {% if tableWidth is defined %}
+            data-table-width-fixed="{{ tableWidth }}"
+            {% if table.settings.tableWidthMobileType is defined %}
+                {% if table.settings.tableWidthMobileType == 'auto' %}
+                    {% set tableWidthMobile = 'auto' %}
+                {% elseif table.settings.tableWidthMobile is defined %}
+                    {% set tableWidthMobile = table.settings.tableWidthMobile ~ table.settings.tableWidthMobileType %}
+                {% endif %}
+                data-table-width-mobile="{{ tableWidthMobile }}"
             {% endif %}
-            data-table-width-mobile="{{ tableWidthMobile }}"
         {% endif %}
                  >
     {% block before_table %}{% endblock %}
-	{% if table.woo_settings is defined and table.woo_settings.woocommerce.multiple_add_cart =='on' %}
+	{% if table.woo_settings is defined and table.woo_settings.woocommerce.enable == 'on' and table.woo_settings.woocommerce.multiple_add_cart =='on' %}
 		<div class="stAddMultyWrapper"><button class="button stAddMultyButton stHidden" data-table-id="{{ table.id }}"><span>{{ environment.translate('Add selected to cart') }}</span></button></div>
 	{% endif %}
     {% block caption_fixed %}

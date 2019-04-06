@@ -592,6 +592,9 @@ var g_stbPreviewTimeoutSet = false;
 										}
 									}
 									cellData.calculatedValue = value;
+									if(typeof cell == 'string' && cell.toLowerCase().indexOf('=hyperlink') === 0) {
+										cellData.calculatedValue = app._hyperlinkUrl ? app._hyperlinkUrl : value;
+									}
 								}
 							}
 
@@ -791,11 +794,7 @@ var g_stbPreviewTimeoutSet = false;
 			table = preview.find('table');
 			if(table.length == 0) return;
 
-			if(g_stbMobilePreview) {
-				app.setTableMobileWidth();
-			} else {
-				preview.find('.supsystic-tables-wrap').css('display', '').css('width', '');
-			}
+			app.setTableMobileWidth(g_stbMobilePreview);
 
 			app.initializeTable(table, app.showTable, function(table) {
 				self._afterTablePreview(table);
@@ -904,6 +903,28 @@ var g_stbPreviewTimeoutSet = false;
 				}
 			}
 		}
+
+		TablesModel.prototype.getLightenDarkenColor = function(col, amt) {
+			var usePound = false;
+			if(col[0] == "#") {
+				col = col.slice(1);
+				usePound = true;
+			}
+ 			var num = parseInt(col, 16),
+				r = (num >> 16) + amt,
+				b = ((num >> 8) & 0x00FF) + amt,
+				g = (num & 0x0000FF) + amt;
+			if(r > 255) r = 255;
+			else if(r < 0) r = 0;
+			if(b > 255) b = 255;
+			else if(b < 0) b = 0;
+			if(g > 255) g = 255;
+			else if(g < 0) g = 0;
+			//return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+			var res = (g | (b << 8) | (r << 16)).toString(16);
+			return (usePound?"#":"") + '0'.repeat(6 - res.length) + res;
+		}
+
 		TablesModel.prototype.controlSettingsValues = function($element) {
 			this._controlSettingsValues($element);
 		};

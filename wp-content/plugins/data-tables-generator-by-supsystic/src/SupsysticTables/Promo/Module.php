@@ -20,6 +20,24 @@ class SupsysticTables_Promo_Module extends SupsysticTables_Core_BaseModule
 
 			$dispatcher = $this->getEnvironment()->getDispatcher();
 			$dispatcher->on('messages', array($this, 'renderDiscountMsg'));
+			
+			$this->_checkFirstRun();
+			add_action('admin_footer', array($this, 'checkPluginDeactivation'));
+		}
+	}
+	
+	private function _setUsed() {
+		update_option($this->config('db_prefix'). 'plug_was_used', 1);
+	}
+	
+	private function _isUsed() {
+		return (int) get_option($this->config('db_prefix'). 'plug_was_used');
+	}
+	
+	private function _checkFirstRun() {
+		if(!$this->_isUsed()) {	// First time plugin run
+			$this->getController()->getModel('promo')->firstRun();
+			$this->_setUsed();
 		}
 	}
 
@@ -204,5 +222,51 @@ class SupsysticTables_Promo_Module extends SupsysticTables_Core_BaseModule
 		$license['key'] = md5($license['key']);
 		$license = urlencode(base64_encode(implode('|', $license)));
 		return 'http://supsystic.com/?mod=manager&pl=lms&action=extend&plugin_code='. $pluginCode. '&lic='. $license;
+	}
+	
+	public function checkPluginDeactivation() {
+		if(function_exists('get_current_screen')) {
+			$screen = get_current_screen();
+			if($screen && isset($screen->base) && $screen->base == 'plugins') {
+				$twig = $this->getEnvironment()->getTwig();
+				$twig->display('@promo/pluginDeactivation.twig', array(
+					'pluginName' => $this->getConfig()->get('plugin_title_name'),
+				));
+				$modulePath = untrailingslashit(plugin_dir_url(__FILE__));
+				wp_enqueue_script('jquery-ui-dialog');
+				wp_enqueue_script(
+					$this->config('db_prefix'). 'plug-deactivation',
+					$modulePath . '/assets/js/admin.plugins.js',
+					array('jquery-ui-dialog')
+				);
+				// And you will ask - "So, why we actyally have OOP, MVC and other patterns here - 
+				// if only one possibility to acomplish your goal - is to make such dump codes?"
+				// And I will answer - "I don't know" ........
+				$pluginPath = $this->getEnvironment()->getPluginPath();
+				$pluginDirName = basename($pluginPath);
+				$pluginUrl = plugin_dir_url($pluginPath). $pluginDirName. '/';
+
+				wp_enqueue_script('jquery-ui-dialog');
+				
+				/*$ui->createStyle('tables-ui-styles')
+				->setHookName($hookName)
+				->setLocalSource('css/supsystic-ui.css')*/
+						
+				wp_enqueue_style('tables-ui-styles', $pluginUrl. '/app/assets/css/supsystic-ui.css');
+				wp_enqueue_style('supsystic-jquery-ui', $pluginUrl. '/app/assets/css/jquery-ui.min.css');
+				wp_enqueue_style('supsystic-jquery-ui.theme', $pluginUrl. '/app/assets/css/jquery-ui.theme.min.css');
+				wp_enqueue_style('supsystic-jquery-ui.structure', $pluginUrl. '/app/assets/css/jquery-ui.structure.min.css');
+				wp_enqueue_style('supsystic-font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+				
+				wp_localize_script($this->config('db_prefix'). 'plug-deactivation', 'dtsPluginsData', array(
+					'plugName' => $pluginDirName. '/index.php',
+				));
+		
+				/*framePtw::_()->getModule('templates')->loadCoreJs();
+				framePtw::_()->getModule('templates')->loadCoreCss();
+				framePtw::_()->getModule('templates')->loadJqueryUi();
+*/
+			}
+		}
 	}
 }

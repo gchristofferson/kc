@@ -225,6 +225,11 @@ table.oneColumnWithLabels tr:not(.haveMergedCell) td:after {
 	padding: 4px;
 }
 
+/* For of applying unneeded scroll to fixed columns */
+.supsystic-tables-wrap .DTFC_LeftWrapper .supsystic-table, .supsystic-tables-wrap .DTFC_RightWrapper .supsystic-table {
+	border-right: none;
+}
+
 /* For search by hidden cells and for invisible cells */
 .supsystic-tables-wrap table.supsystic-table tr .hiddenCell, .supsystic-tables-wrap table.supsystic-table tr .invisibleCell {
 	display: none !important;
@@ -269,4 +274,7 @@ table.dataTable input.search-column {
 .dataTables_wrapper table td,
 .dataTables_wrapper table th {
 	word-break: unset!important;
+}
+.supsystic-tables-wrap table.supsystic-table.stripe, .supsystic-tables-wrap table.supsystic-table.hover td {
+    background-color: inherit;
 }

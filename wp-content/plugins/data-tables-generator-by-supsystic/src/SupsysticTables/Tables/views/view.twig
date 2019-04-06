@@ -393,7 +393,7 @@
                                         <input name="fixedRightColumnsCount" id="fixedRightColumnsCount" type="text" value="{{ table.settings.fixedRightColumnsCount | default(0) }}">
                                     </div>
                                 </div>
-                                <div class="setting-wrapper">
+                                <div class="setting-wrapper setting-wrapper-inline">
                                     <div class="setting-label">
                                         <label for="autoIndex">
                                             {{ environment.translate('Auto Index') }}
@@ -471,7 +471,7 @@
                                         <input name="numberFormat" id="editor-set-number-format" type="text" value="{{ table.settings.numberFormat | default('1,000.00') }}">
                                     </div>
                                 </div>
-                                <div class="setting-wrapper">
+                                <div class="setting-wrapper setting-wrapper-inline">
                                     <div class="setting-label">
                                         <label for="editor-set-currency-format">
                                             {{ environment.translate('Currency') }}
@@ -484,7 +484,7 @@
                                         <input name="currencyFormat" id="editor-set-currency-format" type="text" data-need-data-save='1' value="{{ table.settings.currencyFormat | default('$1,000.00') }}">
                                     </div>
                                 </div>
-                                <div class="setting-wrapper">
+                                <div class="setting-wrapper setting-wrapper-inline">
                                     <div class="setting-label">
                                         <label for="editor-set-percent-format">
                                             {{ environment.translate('Percent') }}
@@ -497,7 +497,7 @@
                                         <input name="percentFormat" id="editor-set-percent-format" type="text" data-need-data-save='1' value="{{ table.settings.percentFormat | default('10.00%') }}">
                                     </div>
                                 </div>
-                                <div class="setting-wrapper">
+                                <div class="setting-wrapper setting-wrapper-inline">
                                     <div class="setting-label">
                                         <label for="editor-set-date-format">
                                             {{ environment.translate('Date') }}
@@ -510,7 +510,7 @@
                                         <input name="dateFormat" id="editor-set-date-format" type="text" data-need-data-save='1' value="{{ table.settings.dateFormat | default('DD.MM.YYYY') }}">
                                     </div>
                                 </div>
-                                <div class="setting-wrapper">
+                                <div class="setting-wrapper setting-wrapper-inline">
                                     <div class="setting-label">
                                         <label for="editor-set-time-duration-format">
                                             {{ environment.translate('Time / Duration') }}
@@ -535,7 +535,7 @@
                                 <div class="setting-title">
                                     <h3>{{ environment.translate('General') }}</h3>
                                 </div>
-                                <div class="setting-wrapper">
+                                <div class="setting-wrapper setting-wrapper-inline">
                                     <div class="setting-label">
                                         <label for="features-responsive-mode">
                                             {{ environment.translate('Responsive Mode') }}
@@ -1085,27 +1085,29 @@
                                             {{ tooltip.icon(environment.translate('Set fixed table width in px or %. Choose &quot;disable&quot; to make table width adjust by table content.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-input">
-                                        <input type="text" name="tableWidth" value="{{ table.settings.tableWidth | default('100') }}" id="fixed-table-width"
-                                                {% if table.settings.tableWidthType == 'auto' %}
-                                                    style="display:none"
-                                                {% endif %}/>
-                                        {% set tableWidthTypeDefault = '%' %}
-                                    </div>
-                                    <div class="setting-input">
-                                        <label for="fixed-table-width-type-percent" class="sub-label">
-                                            <input type="radio" name="tableWidthType" id="fixed-table-width-type-percent" value="%" {{ checkbox.radio_checked(table.settings.tableWidthType|default(tableWidthTypeDefault), '%') }} />
-                                            <span>%</span>
-                                        </label>
-                                        <label for="fixed-table-width-type-pixels" class="sub-label">
-                                            <input type="radio" name="tableWidthType" id="fixed-table-width-type-pixels" value="px" {{ checkbox.radio_checked(table.settings.tableWidthType|default(tableWidthTypeDefault), 'px') }} />
-                                            <span>px</span>
-                                        </label>
-                                        <label for="fixed-table-width-type-auto" class="sub-label">
-                                            <input type="radio" name="tableWidthType" id="fixed-table-width-type-auto" value="auto" {{ checkbox.radio_checked(table.settings.tableWidthType|default(tableWidthTypeDefault), 'auto') }} />
-                                            <span>{{ environment.translate('disable') }}</span>
-                                        </label>
-                                    </div>
+									<div class="setting-input-inline-wrapper">
+	                                    <div class="setting-input setting-input-inline">
+	                                        <input type="text" name="tableWidth" value="{{ table.settings.tableWidth | default('100') }}" id="fixed-table-width"
+	                                                {% if table.settings.tableWidthType == 'auto' %}
+	                                                    style="display:none"
+	                                                {% endif %}/>
+	                                        {% set tableWidthTypeDefault = '%' %}
+	                                    </div>
+	                                    <div class="setting-input setting-input-inline">
+	                                        <label for="fixed-table-width-type-percent" class="sub-label">
+	                                            <input type="radio" name="tableWidthType" id="fixed-table-width-type-percent" value="%" {{ checkbox.radio_checked(table.settings.tableWidthType|default(tableWidthTypeDefault), '%') }} />
+	                                            <span>%</span>
+	                                        </label>
+	                                        <label for="fixed-table-width-type-pixels" class="sub-label">
+	                                            <input type="radio" name="tableWidthType" id="fixed-table-width-type-pixels" value="px" {{ checkbox.radio_checked(table.settings.tableWidthType|default(tableWidthTypeDefault), 'px') }} />
+	                                            <span>px</span>
+	                                        </label>
+	                                        <label for="fixed-table-width-type-auto" class="sub-label">
+	                                            <input type="radio" name="tableWidthType" id="fixed-table-width-type-auto" value="auto" {{ checkbox.radio_checked(table.settings.tableWidthType|default(tableWidthTypeDefault), 'auto') }} />
+	                                            <span>{{ environment.translate('disable') }}</span>
+	                                        </label>
+	                                    </div>
+									</div>
                                 </div>
                                 <div class="setting-wrapper auto-width-options setting-suboption"
                                         {% if table.settings.features.auto_width is defined %}
@@ -1118,27 +1120,29 @@
                                             {{ tooltip.icon(environment.translate('Set fixed table width in px or %. Choose &quot;disable&quot; to make table width adjust by table content.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-input">
-                                        <input type="text" name="tableWidthMobile" value="{{ table.settings.tableWidthMobile | default('100') }}" id="fixed-table-width-mobile"
-                                                {% if table.settings.tableWidthMobileType == 'auto' %}
-                                                    style="display:none"
-                                                {% endif %}/>
-                                        {% set tableWidthMobileTypeDefault = '%' %}
-                                    </div>
-                                    <div class="setting-input">
-                                        <label for="fixed-table-width-mobile-type-percent" class="sub-label">
-                                            <input type="radio" name="tableWidthMobileType" id="fixed-table-width-mobile-type-percent" value="%" {{ checkbox.radio_checked(table.settings.tableWidthMobileType|default(tableWidthMobileTypeDefault), '%') }} />
-                                            <span>%</span>
-                                        </label>
-                                        <label for="fixed-table-width-mobile-type-pixels" class="sub-label">
-                                            <input type="radio" name="tableWidthMobileType" id="fixed-table-width-mobile-type-pixels" value="px" {{ checkbox.radio_checked(table.settings.tableWidthMobileType|default(tableWidthMobileTypeDefault), 'px') }} />
-                                            <span>px</span>
-                                        </label>
-                                        <label for="fixed-table-width-mobile-type-auto" class="sub-label">
-                                            <input type="radio" name="tableWidthMobileType" id="fixed-table-width-mobile-type-auto" value="auto" {{ checkbox.radio_checked(table.settings.tableWidthMobileType|default(tableWidthMobileTypeDefault), 'auto') }} />
-                                            <span>{{ environment.translate('disable') }}</span>
-                                        </label>
-                                    </div>
+									<div class="setting-input-inline-wrapper">
+	                                    <div class="setting-input setting-input-inline">
+	                                        <input type="text" name="tableWidthMobile" value="{{ table.settings.tableWidthMobile | default('100') }}" id="fixed-table-width-mobile"
+	                                                {% if table.settings.tableWidthMobileType == 'auto' %}
+	                                                    style="display:none"
+	                                                {% endif %}/>
+	                                        {% set tableWidthMobileTypeDefault = '%' %}
+	                                    </div>
+	                                    <div class="setting-input setting-input-inline">
+	                                        <label for="fixed-table-width-mobile-type-percent" class="sub-label">
+	                                            <input type="radio" name="tableWidthMobileType" id="fixed-table-width-mobile-type-percent" value="%" {{ checkbox.radio_checked(table.settings.tableWidthMobileType|default(tableWidthMobileTypeDefault), '%') }} />
+	                                            <span>%</span>
+	                                        </label>
+	                                        <label for="fixed-table-width-mobile-type-pixels" class="sub-label">
+	                                            <input type="radio" name="tableWidthMobileType" id="fixed-table-width-mobile-type-pixels" value="px" {{ checkbox.radio_checked(table.settings.tableWidthMobileType|default(tableWidthMobileTypeDefault), 'px') }} />
+	                                            <span>px</span>
+	                                        </label>
+	                                        <label for="fixed-table-width-mobile-type-auto" class="sub-label">
+	                                            <input type="radio" name="tableWidthMobileType" id="fixed-table-width-mobile-type-auto" value="auto" {{ checkbox.radio_checked(table.settings.tableWidthMobileType|default(tableWidthMobileTypeDefault), 'auto') }} />
+	                                            <span>{{ environment.translate('disable') }}</span>
+	                                        </label>
+	                                    </div>
+									</div>
                                 </div>
                                 <div class="setting-wrapper auto-width-options setting-suboption"
                                         {% if table.settings.features.auto_width is defined %}
@@ -1234,7 +1238,7 @@
                                                id="ColWithMergeCellsAlign"/>
                                     </div>
                                 </div>
-                                <div class="setting-wrapper">
+                                <div class="setting-wrapper setting-wrapper-inline">
                                     <div class="setting-label">
                                         <label for="styling-border">
                                             {{ environment.translate('Borders') }}
@@ -1474,7 +1478,7 @@
                                 </div>
                                 {% set headerBackgroundColor = table.settings.styles.headerBackgroundColor | default('') %}
                                 {% set headerFontColor = table.settings.styles.headerFontColor | default('') %}
-                                
+
                                 <div class="setting-wrapper table-styles-options setting-suboption"
                                     {% if hiddenOption %}
                                         style="display:none"
@@ -1523,7 +1527,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 {% set cellBackgroundColor = table.settings.styles.cellBackgroundColor | default('') %}
                                 {% set cellFontColor = table.settings.styles.cellFontColor | default('') %}
                                 <div class="setting-wrapper table-styles-options setting-suboption"
@@ -1652,7 +1656,7 @@
                                             {{ tooltip.icon(environment.translate('Set vertical alignment of table cell contents.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-input">  
+                                    <div class="setting-input">
                                         <select name="styles[verticalAlignment]" data-preview-not-redraw="1">
                                             {% for option in [
                                             { 'name': environment.translate('None'), 'value': '' },
@@ -1676,7 +1680,7 @@
                                             {{ tooltip.icon(environment.translate('Set horizontal alignment of table cell contents.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-input">  
+                                    <div class="setting-input">
                                         <select name="styles[horizontalAlignment]" data-preview-not-redraw="1">
                                             {% for option in [
                                             { 'name': environment.translate('None'), 'value': '' },
@@ -1700,7 +1704,7 @@
                                             {{ tooltip.icon(environment.translate('Set horizontal pagination buttons position.')) }}
                                         </label>
                                     </div>
-                                    <div class="setting-input">  
+                                    <div class="setting-input">
                                         <select name="styles[paginationPosition]" data-preview-not-redraw="1">
                                             {% for option in [
                                             { 'name': environment.translate('None'), 'value': '' },
@@ -1793,7 +1797,7 @@
                                 <div class="setting-title">
                                     <h3>{{ environment.translate('Language') }}</h3>
                                 </div>
-                                <div class="setting-wrapper">
+                                <div class="setting-wrapper setting-wrapper-inline">
                                     <div class="setting-label">
                                         <label for="language-file">
                                             {{ environment.translate('Table Language') }}

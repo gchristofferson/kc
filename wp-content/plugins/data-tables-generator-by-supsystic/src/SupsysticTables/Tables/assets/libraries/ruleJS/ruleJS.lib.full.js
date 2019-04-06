@@ -20836,6 +20836,7 @@ this.j$ = this.jStat = (function(Math, undefined) {
 	  // Custom supsystic formulas
 	  Formula.HYPERLINK = function(url, linkLabel) {
 		  linkLabel = linkLabel ? linkLabel : url;
+		  window.supsystic.Tables._hyperlinkUrl = url;	// to collect correct calculate value during table saving
 
 		  var res = linkLabel,
 			  protocols = ['http', 'https', 'mailto', 'aim:', 'ftp', 'gopher', 'telnet'],

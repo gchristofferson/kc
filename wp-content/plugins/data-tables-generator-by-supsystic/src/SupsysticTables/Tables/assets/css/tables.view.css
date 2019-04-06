@@ -232,6 +232,7 @@
 }
 .tables-view .preview-section .dataTables_processing {
 	z-index: 100;
+	top: 10px;
 }
 .tables-view .settings-wrap {
 	padding-left: 10px;
@@ -600,4 +601,73 @@
 }
 .preview-styling .stb-wraper-anchor-nav-links {
     text-align: center;
+}
+.setting-wrapper-inline {
+	display:table;
+	width:100%;
+}
+.setting-wrapper-inline .setting-label {
+	display:table-cell;
+	width: auto;
+	float: none;
+	vertical-align:middle;
+	padding-right:4px;
+	white-space:nowrap;
+}
+.setting-wrapper-inline .setting-input {
+	display:inline-block;
+	width:inherit;
+	float:left;
+}
+.setting-wrapper-inline .setting-input input,
+.setting-wrapper-inline .setting-input select {
+	width:100%;
+}
+.setting-input {
+	text-align:right;
+}
+.setting-input-inline {
+	display:table-cell;
+	width: auto;
+	float: none;
+	vertical-align:middle;
+	padding-right:4px;
+	white-space:nowrap;
+}
+.setting-input-inline .sub-label span {
+	padding: 0 5px 0 0px;
+}
+.setting-input-inline .iradio_minimal {
+	margin: 0px;
+}
+.setting-input-inline-wrapper {
+	display:table;
+	width:100%;
+}
+.setting-input-inline input {
+	width: 100%;
+	max-width: 90px;
+}
+.setting-input-divider {
+	display:block;
+	position:relative;
+	margin:10px 0px;
+}
+#editor-set-currency-format {
+	width:100px !important;
+}
+#editor-set-percent-format {
+	width:85px !important;
+}
+#editor-set-date-format {
+	width:123px !important;
+}
+#editor-set-time-duration-format {
+	width:90px !important;
+}
+#features-export-pdf-paper-size,
+#autoIndex,
+#styling-border,
+#language-file {
+	width:96px !important;
 }

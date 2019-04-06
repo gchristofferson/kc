@@ -871,8 +871,18 @@ var g_stbCopyPasteColsCount = [];
 			tablesModel.updatePreviewCss([{selector: wrapperSelector + ' th', param: 'font-size', value: size.length ? size + 'px' : ''}]);
 		});
 		formSettings.find('input[name="styles[cellBackgroundColor]"]').on('change', function() {
-			var color = $(this).val();
-			tablesModel.updatePreviewCss([{selector: wrapperSelector + ' td', param: 'background-color', value: color}]);
+			var color = $(this).val(),
+				even = tablesModel.getLightenDarkenColor(color, -20),
+				hover = tablesModel.getLightenDarkenColor(color, -40);
+			tablesModel.updatePreviewCss([
+				{selector: wrapperSelector + ' tbody tr', param: 'background-color', value: color},
+				{selector: wrapperSelector + ' table.stripe tbody tr.even', param: 'background-color', value: even},
+				{selector: wrapperSelector + ' table.hover tbody tr:hover', param: 'background-color', value: hover},
+				{selector: wrapperSelector + ' table.order-column tbody tr>.sorting_1', param: 'background-color', value: even},
+				{selector: wrapperSelector + ' table.order-column tbody tr.even>.sorting_1', param: 'background-color', value: hover},
+				{selector: wrapperSelector + ' table.order-column tbody tr:hover>.sorting_1', param: 'background-color', value: tablesModel.getLightenDarkenColor(color, -60)},
+				{selector: wrapperSelector + ' tbody td', param: 'background-color', value: 'inherit'},
+			]);
 			$(this).parent().find('.color-picker-preview').css('backgroundColor', color);
 		});
 		formSettings.find('input[name="styles[cellFontColor]"]').on('change', function() {
@@ -923,6 +933,8 @@ var g_stbCopyPasteColsCount = [];
 			tablesModel.updatePreviewCss([
 				{selector: tableSelector, param: 'table-layout', value: checked ? 'fixed !important' : ''},
 				{selector: tableSelector, param: 'overflow-wrap', value: checked ? 'break-word' : ''},
+				{selector: wrapperSelector + ' .dataTables_scroll table', param: 'table-layout', value: checked ? 'fixed !important' : ''},
+				{selector: wrapperSelector + ' .dataTables_scroll table', param: 'overflow-wrap', value: checked ? 'break-word' : ''},
 			]);			
 		});
 		formSettings.find('select[name="styles[verticalAlignment]"]').on('change', function() {

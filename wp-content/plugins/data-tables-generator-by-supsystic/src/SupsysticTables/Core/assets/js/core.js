@@ -170,12 +170,13 @@ var g_stbServerSideProcessingIsActive = false;
             return deferred.promise();
         });
 
-		vendor[appName].setTableMobileWidth = (function() {
+		vendor[appName].setTableMobileWidth = (function(isMobile) {
 			$('div .supsystic-tables-wrap').each(function () {
+				isMobile = (typeof(isMobile) == 'undefined' ? true : isMobile);
 				var ssDiv = $(this),
-					widthMobile = ssDiv.data('table-width-mobile');
-				if(typeof(widthMobile) != 'undefined') {
-					ssDiv.css('display', (widthMobile == 'auto' ? 'inline-block' : '')).css('width', widthMobile);
+					widthAttr = ssDiv.data('table-width-' + (isMobile ? 'mobile' : 'fixed'));
+				if(typeof(widthAttr) != 'undefined') {
+					ssDiv.css('display', (widthAttr == 'auto' ? 'inline-block' : '')).css('width', widthAttr);
 				}
 			});
 		});
@@ -250,6 +251,7 @@ var g_stbServerSideProcessingIsActive = false;
 					}
 					if(typeof self.getTableInstanceById(table.data('id')).fnAdjustColumnSizing == 'function' ) {
 						setTimeout(function(){
+							table.trigger('responsive-resize.dt');
 							self.getTableInstanceById(table.data('id')).fnAdjustColumnSizing(false);
 						}, 350);
 					}
@@ -337,7 +339,6 @@ var g_stbServerSideProcessingIsActive = false;
                     stateSave:  false,
                     api: 		true,
                     retrieve:   true,
-                    order: [],
                     processing: true,
                     initComplete: callback,
                     headerCallback: function( thead, data, start, end, display ) {
@@ -349,7 +350,13 @@ var g_stbServerSideProcessingIsActive = false;
                         $(tfoot).closest('tfoot').find('th').each(function() {
 							self.setStylesToCell(this);
                         });
-                    }
+                    },
+					// order param disable the default table sorting.
+					// it should be here because of Woocommerce addon:
+					// it has no hidden header for tables without header
+					// and in triggers an error during initializing.
+					// order param should be disabled later during sorting activation
+					order: []
                 };
 			
 			g_stbServerSideProcessing = $table.data('server-side-processing') && $table.data('server-side-processing') == 'on';
@@ -403,7 +410,6 @@ var g_stbServerSideProcessingIsActive = false;
                     searchingSettings.resultOnly ||
                     searchingSettings.strictMatching
                 ) {
-
                     $.fn.dataTable.ext.search.push(function(settings, data) {
                         var $searchInput = $(settings.nTableWrapper).find('.dataTables_filter input'),
                             searchValue = $searchInput.val();
@@ -505,13 +511,13 @@ var g_stbServerSideProcessingIsActive = false;
                     multipleSorting = $table.data('multiple-sorting'),
                     disableSorting = $table.data('disable-sorting');
 
-                if (!$table.data('head')) {
+                if(!$table.data('head')) {
                     sortingDisable = ['_all'];
                 }
                 if(disableSorting && disableSorting.length) {
                     sortingDisable = disableSorting;
                 }
-                if (multipleSorting && multipleSorting.length) {
+                if(multipleSorting && multipleSorting.length) {
                     aaSorting = multipleSorting;
                 } else {
                     var columnsCount = $table.find('tr:first th').length,
@@ -529,6 +535,7 @@ var g_stbServerSideProcessingIsActive = false;
                     { "sortable": true, "targets": sortingEnable }
                 ];
                 config.aaSorting = aaSorting;
+				delete defaultFeatures.order;
             }
             if ($table.data('pagination-length')) {
                 var paginationLength = String($table.data('pagination-length'));
@@ -637,6 +644,8 @@ var g_stbServerSideProcessingIsActive = false;
 						}
 					}
                     if ($table.width() > $table.parent().width()) {
+                    	$table.css('width', '100%');
+                    	$table.css('max-width', '100%');
                         api.responsive.recalc();
                         return;
                     }
@@ -1793,4 +1802,83 @@ function toeInArray(needle, haystack) {
             });
         });
     };
+
+	if (!Array.from) {
+		// Fix of compatibility with IE browser to use ES6 feature
+		Array.from = (function () {
+			var toStr = Object.prototype.toString;
+			var isCallable = function (fn) {
+				return typeof fn === 'function' || toStr.call(fn) === '[object Function]';
+			};
+			var toInteger = function (value) {
+				var number = Number(value);
+				if (isNaN(number)) { return 0; }
+				if (number === 0 || !isFinite(number)) { return number; }
+				return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number));
+			};
+			var maxSafeInteger = Math.pow(2, 53) - 1;
+			var toLength = function (value) {
+				var len = toInteger(value);
+				return Math.min(Math.max(len, 0), maxSafeInteger);
+			};
+
+			// The length property of the from method is 1.
+			return function from(arrayLike/*, mapFn, thisArg */) {
+				// 1. Let C be the this value.
+				var C = this;
+
+				// 2. Let items be ToObject(arrayLike).
+				var items = Object(arrayLike);
+
+				// 3. ReturnIfAbrupt(items).
+				if (arrayLike == null) {
+					throw new TypeError('Array.from requires an array-like object - not null or undefined');
+				}
+
+				// 4. If mapfn is undefined, then let mapping be false.
+				var mapFn = arguments.length > 1 ? arguments[1] : void undefined;
+				var T;
+				if (typeof mapFn !== 'undefined') {
+					// 5. else
+					// 5. a If IsCallable(mapfn) is false, throw a TypeError exception.
+					if (!isCallable(mapFn)) {
+						throw new TypeError('Array.from: when provided, the second argument must be a function');
+					}
+
+					// 5. b. If thisArg was supplied, let T be thisArg; else let T be undefined.
+					if (arguments.length > 2) {
+						T = arguments[2];
+					}
+				}
+
+				// 10. Let lenValue be Get(items, "length").
+				// 11. Let len be ToLength(lenValue).
+				var len = toLength(items.length);
+
+				// 13. If IsConstructor(C) is true, then
+				// 13. a. Let A be the result of calling the [[Construct]] internal method
+				// of C with an argument list containing the single item len.
+				// 14. a. Else, Let A be ArrayCreate(len).
+				var A = isCallable(C) ? Object(new C(len)) : new Array(len);
+
+				// 16. Let k be 0.
+				var k = 0;
+				// 17. Repeat, while k < len… (also steps a - h)
+				var kValue;
+				while (k < len) {
+					kValue = items[k];
+					if (mapFn) {
+						A[k] = typeof T === 'undefined' ? mapFn(kValue, k) : mapFn.call(T, kValue, k);
+					} else {
+						A[k] = kValue;
+					}
+					k += 1;
+				}
+				// 18. Let putStatus be Put(A, "length", len, true).
+				A.length = len;
+				// 20. Return A.
+				return A;
+			};
+		}());
+	}
 }(jQuery));

@@ -2,42 +2,30 @@
 Contributors: supsystic.com
 Tags: csv, excel, table, tablesorter,data table, table, database, table generator, builder, generator, cells, chart, charting, charts, column chart, gauge chart, graph, graphs, html5, line chart, pie chart, scatter chart, spreadsheet, visualise data, Woo, Woo Commerce, WooCommerce, product table, woocommerce product, product tables, catalog, product catalog, price list, pricing list, order forms, woocommerce tables, wholesale
 Tested up to: 5.1.1
-Stable tag: 1.9.72
+Stable tag: 1.9.74
 
 Create data tables with charts and graphs.  Custom design, navigation, searching and ordering functions. Export to PDF, CSV, Print. Excel spreadsheet. WooCommerce Integration.
 
 == Description ==
 
-Create and manage tables from the admin panel quickly, easily and effectively. Each Data Table can be used as a data source for creating DIAGRAMS & CHART. Create responsive, interactive data tables using sorting, searching, pagination, filtering and more.
-List the products with responsive [WooCommerce Product Table](https://supsystic.com/plugins/woocommerce-product-table?utm_source=wordpress&utm_medium=description&utm_campaign=woocommercedatatable "WooCommerce Product Table"). Perfect for product list views, order forms, wholesale, product catalogs.
-Tables do not require HTML/CSS knowledge, this plugin is really easy for beginners. Definitively the powerful and easy to use Data Tables.
+Create responsive data tables with sorting, searching, pagination, filtering and more. Easy-to-use tables, charts and data management. * [Data Table Examples](http://supsystic.com/data-tables-examples?utm_source=wordpress&utm_medium=databasesource&utm_campaign=datatables "Data Table Examples")
 
-[Data Tables by Supsystic](http://supsystic.com/plugins/data-tables-generator-plugin?utm_source=wordpress&utm_medium=description&utm_campaign=datatables "Data Tables WordPress plugin") plugin features:
+[Data Tables WordPress plugin](http://supsystic.com/plugins/data-tables-generator-plugin?utm_source=wordpress&utm_medium=description&utm_campaign=datatables "Data Tables WordPress plugin") features:
 
-* No coding required, [Responsive Modes](https://supsystic.com/feature/responsive-modes-feature/?utm_source=wordpress&utm_medium=responsivemodes&utm_campaign=datatables "Responsive Modes")
+* [Responsive Modes](https://supsystic.com/feature/responsive-modes-feature/?utm_source=wordpress&utm_medium=responsivemodes&utm_campaign=datatables "Responsive Modes") and [Large Tables](https://supsystic.com/example/tables-with-server-side-processing-example/ "Large Tables") support
+* [Diagrams, Charts and Graphs](https://supsystic.com/example/table-with-diagram-example/?utm_source=wordpress&utm_medium=screenshotscharts&utm_campaign=datatables "Data Table With Google Charts")
+* [Formulas and HTML support](https://supsystic.com/example/table-with-calculations-example?utm_source=wordpress&utm_medium=calculations&utm_campaign=datatables "Formulas and HTML support")
+* [Filters, Search, Sorting and Pagination](https://supsystic.com/example/table-with-sorting-and-search-example?utm_source=wordpress&utm_medium=tablenavigation&utm_campaign=datatables "Data Table navigation with Searching and Ordering functions")
 * [FrontEnd Table Editing](https://supsystic.com/example/drop-down-bar/?utm_source=wordpress&utm_medium=frontendediting&utm_campaign=datatables "FrontEnd Data Table Editing Example")
-* [FrontEnd Table export - CSV, Excel, PDF](https://supsystic.com/example/export-import-of-tables?utm_source=wordpress&utm_medium=export&utm_campaign=datatables "Export & Import of Tables")
-* [Diagrams, Charts and Graphs](https://supsystic.com/example/table-with-diagram-examplehttps://supsystic.com/example/table-with-diagram-example/?utm_source=wordpress&utm_medium=screenshotscharts&utm_campaign=datatables "Data Table With Google Charts")
-* [Formulas support, HTML tables support for data cells](https://supsystic.com/example/table-with-calculations-example?utm_source=wordpress&utm_medium=calculations&utm_campaign=datatables "Table with Calculations")
+* [Table export and import from CSV, Excel, PDF](https://supsystic.com/example/export-import-of-tables?utm_source=wordpress&utm_medium=export&utm_campaign=datatables "Export & Import of Tables")
 * [Images, Links & Video support](https://supsystic.com/example/table-with-pictures-and-links-example?utm_source=wordpress&utm_medium=vedeo&utm_campaign=datatables "Images, Links & Video support")
-* [WooCommerce Integration](https://supsystic.com/plugins/woocommerce-product-table?utm_source=wordpress&utm_medium=description&utm_campaign=woocommercedatatable "WooCommerce Product Table")
-* [Table Properties Variations](https://woo.supsystic.com/table-properties-variations?utm_source=wordpress&utm_medium=propertiesvariations&utm_campaign=woocommercedatatable "WooCommerce Product Table Properties Variations")
-* [Quantities and Multiple add to cart](https://supsystic.com/feature/quantities-multiple-add-to-cart?utm_source=wordpress&utm_medium=multipleaddtocart&utm_campaign=woocommercedatatable "Quantities and Multiple add to cart") 
-* [Product Table online builder](https://supsystic.com/feature/product-table-online-builder?utm_source=wordpress&utm_medium=builder&utm_campaign=datatables "Product Table online builder")
-* "Bold" and "Italic" font style support for the data table cells
-* [Navigation with Searching, Sorting, Pagination functions](https://supsystic.com/example/table-with-sorting-and-search-example?utm_source=wordpress&utm_medium=tablenavigation&utm_campaign=datatables "Data Table navigation with Searching and Ordering functions")
-* [Various style setting appropriated for any sites type](https://supsystic.com/documentation/table-styling?utm_source=wordpress&utm_medium=tabledesign&utm_campaign=datatables "Table Design")
-* [Collapsible rows on front-end](https://supsystic.com/example/collapsible-rows-on-front-end/?utm_source=wordpress&utm_medium=collapsiblerows&utm_campaign=datatables "Collapsible rows")
-* [Server-side processing technology](https://supsystic.com/example/tables-with-server-side-processing-example?utm_source=wordpress&utm_medium=serversideprocessing&utm_campaign=datatables "Server-side processing")
-* SEO friendly, content of DataTable picked up by search engines
-* [Table data and Diagrams interaction](https://supsystic.com/example/table-and-diagrams-interaction?utm_source=wordpress&utm_medium=serversideprocessing&utm_campaign=datatables "Table data and Diagrams interaction")
+* [WooCommerce Product Table](https://supsystic.com/plugins/woocommerce-product-table?utm_source=wordpress&utm_medium=description&utm_campaign=woocommercedatatable "WooCommerce Product Table")
 * [Automatic import from Google Sheets](https://supsystic.com/documentation/synchronization-table-google-sheet?utm_source=wordpress&utm_medium=featuresgoogle&utm_campaign=datatables "Autoupdates from Google Sheets") 
 * [Database Source](https://supsystic.com/feature/database-source?utm_source=wordpress&utm_medium=featuresgoogle&utm_campaign=datatables "Database Source")
-* [All Data Table Examples](http://supsystic.com/data-tables-examples?utm_source=wordpress&utm_medium=databasesource&utm_campaign=datatables "Data Table Examples")
-
-Data Tables Generator allows you to process and manage SEO friendly data tables quickly and easily. This plugin can structure information and can be adjusted to fit every need. Many ways of functional and visual customization of the tables improve site design and let you modify it to cater to a particular individual or a specific task. The intuitive Settings panel and the responsive Editor save lots of time that you would much rather allocate for other useful things or relaxation. Tables are responsive and awesome on all devices.
 
 [youtube https://www.youtube.com/watch?v=RZ2I-aCiLZE]
+
+Data Tables Generator allows you to process and manage SEO friendly data tables quickly and easily. This plugin can structure information and can be adjusted to fit every need. Many ways of functional and visual customization of the tables improve site design and let you modify it to cater to a particular individual or a specific task. The intuitive Settings panel and the responsive Editor save lots of time that you would much rather allocate for other useful things or relaxation. Tables are responsive and awesome on all devices.
 
 = Data Tables Plugin Support =
 
@@ -225,6 +213,22 @@ It's perfect for product [Price List](http://woo.supsystic.com/price-list "Price
 Create custom order forms which increase your conversion rate!
 
 == Changelog ==
+
+= 1.9.74 / 03.04.2019 =
+ * Fix for CSS
+ * Fix of importing hyperlinks from MS Excel and Google Spreadsheet
+ * Fix of excluding rows / columns from diagrams range. Add ability to set excluding rows / columns by rows / columns indexes
+ * Fix of applying of default sorting
+ * Added display variation attributes
+ * Added strip, hover and highlighting for custom styles
+ * Added select attribute for woo-tables
+ * Added the ability to trigger import from external code
+ * Minor issues fix
+
+= 1.9.73 / 15.03.2019 =
+ * Custom styles lables fix
+ * IE table loading bug fix
+ * Minor issues fix
 
 = 1.9.72 / 13.03.2019 =
  * For Woo-addon added export in Excell, fixed export in PDF and fixed export self-hosted images for all tables
