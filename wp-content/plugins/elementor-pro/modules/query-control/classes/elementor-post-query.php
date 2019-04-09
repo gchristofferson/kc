@@ -213,20 +213,38 @@ class Elementor_Post_Query {
 			return;
 		}
 
-		$query = [
-			'field' => 'term_taxonomy_id',
-			'terms' => $settings_terms,
-		];
+		$terms = [];
 
-		if ( $exclude ) {
-			$query['operator'] = 'NOT IN';
+		// Switch to term_id in order to get all term children (sub-categories):
+		foreach ( $settings_terms as $id ) {
+			$term_data = get_term_by( 'term_taxonomy_id', $id );
+			if ( false !== $term_data ) {
+				$taxonomy = $term_data->taxonomy;
+				$terms[ $taxonomy ][] = $id;
+			}
+		}
+		$this->insert_tax_query( $terms, $exclude );
+	}
+
+	protected function insert_tax_query( $terms, $exclude ) {
+		$tax_query = [];
+		foreach ( $terms as $taxonomy => $ids ) {
+			$query = [
+				'taxonomy' => $taxonomy,
+				'field' => 'term_taxonomy_id',
+				'terms' => $ids,
+			];
+
+			if ( $exclude ) {
+				$query['operator'] = 'NOT IN';
+			}
+
+			$tax_query[] = $query;
 		}
 
-		if ( empty( $query ) ) {
+		if ( empty( $tax_query ) ) {
 			return;
 		}
-
-		$tax_query = [ $query ];
 
 		if ( empty( $this->query_args['tax_query'] ) ) {
 			$this->query_args['tax_query'] = $tax_query;

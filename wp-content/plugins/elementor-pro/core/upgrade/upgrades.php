@@ -460,50 +460,6 @@ class Upgrades {
 		return self::_update_widget_settings( 'woocommerce-products', $updater, $changes );
 	}
 
-	public static function _v_2_5_4_posts( $updater ) {
-		$merge_taxonomies = self::taxonomies_mapping( 'posts_', 'posts_include_term_ids' );
-
-		$changes = [
-			[
-				'callback' => [ 'ElementorPro\Core\Upgrade\Upgrades', '_convert_term_id_to_term_taxonomy_id' ],
-				'control_ids' => $merge_taxonomies,
-				'prefix' => 'posts_',
-				'new_id' => 'include_term_ids',
-			],
-		];
-
-		return self::_update_widget_settings( 'posts', $updater, $changes );
-	}
-
-	public static function _v_2_5_4_portfolio( $updater ) {
-		$merge_taxonomies = self::taxonomies_mapping( 'posts_', 'posts_include_term_ids' );
-
-		$changes = [
-			[
-				'callback' => [ 'ElementorPro\Core\Upgrade\Upgrades', '_convert_term_id_to_term_taxonomy_id' ],
-				'control_ids' => $merge_taxonomies,
-				'prefix' => 'posts_',
-				'new_id' => 'include_term_ids',
-			],
-		];
-
-		return self::_update_widget_settings( 'portfolio', $updater, $changes );
-	}
-
-	public static function _v_2_5_4_products( $updater ) {
-		$merge_taxonomies = self::taxonomies_mapping( 'query_', 'query_include_term_ids' );
-		$changes = [
-			[
-				'callback' => [ 'ElementorPro\Core\Upgrade\Upgrades', '_convert_term_id_to_term_taxonomy_id' ],
-				'control_ids' => $merge_taxonomies,
-				'prefix' => 'query_',
-				'new_id' => 'include_term_ids',
-			],
-		];
-
-		return self::_update_widget_settings( 'woocommerce-products', $updater, $changes );
-	}
-
 	/**
 	 * @param $updater
 	 *
@@ -582,6 +538,49 @@ class Upgrades {
 		return $updater->should_run_again( $post_ids );
 	}
 
+	public static function _v_2_5_4_posts( $updater ) {
+		$merge_taxonomies = self::taxonomies_mapping( 'posts_', 'posts_include_term_ids' );
+
+		$changes = [
+			[
+				'callback' => [ 'ElementorPro\Core\Upgrade\Upgrades', '_convert_term_id_to_term_taxonomy_id' ],
+				'control_ids' => $merge_taxonomies,
+				'prefix' => 'posts_',
+				'new_id' => 'include_term_ids',
+			],
+		];
+
+		return self::_update_widget_settings( 'posts', $updater, $changes );
+	}
+
+	public static function _v_2_5_4_portfolio( $updater ) {
+		$merge_taxonomies = self::taxonomies_mapping( 'posts_', 'posts_include_term_ids' );
+
+		$changes = [
+			[
+				'callback' => [ 'ElementorPro\Core\Upgrade\Upgrades', '_convert_term_id_to_term_taxonomy_id' ],
+				'control_ids' => $merge_taxonomies,
+				'prefix' => 'posts_',
+				'new_id' => 'include_term_ids',
+			],
+		];
+
+		return self::_update_widget_settings( 'portfolio', $updater, $changes );
+	}
+
+	public static function _v_2_5_4_products( $updater ) {
+		$merge_taxonomies = self::taxonomies_mapping( 'query_', 'query_include_term_ids' );
+		$changes = [
+			[
+				'callback' => [ 'ElementorPro\Core\Upgrade\Upgrades', '_convert_term_id_to_term_taxonomy_id' ],
+				'control_ids' => $merge_taxonomies,
+				'prefix' => 'query_',
+				'new_id' => 'include_term_ids',
+			],
+		];
+
+		return self::_update_widget_settings( 'woocommerce-products', $updater, $changes );
+	}
 
 	public static function _v_2_5_4_form( $updater ) {
 		$changes = [
