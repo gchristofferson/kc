@@ -822,7 +822,7 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
                                             }
                                         }
 
-                                        if( false !==  auxin_get_transient( sanitize_key( 'aux-templates-' . $args['type'] . $args['id'] ) ) ) {
+                                        if( false !==  auxin_get_transient( sanitize_key( 'aux-template-' . $args['type'] . $args['id'] ) ) ) {
                                             $template_status = 'copy';
                                             $btn_label       = esc_html__( 'Copy to clipboard', 'auxin-elements' );
                                             $color_class     = " aux-copy-template aux-iconic-action aux-orange";
@@ -1285,7 +1285,7 @@ class Auxin_Welcome extends Auxin_Welcome_Base {
             $data    = $this->get_demo_list( 'templates' );
             $args    = $data['templates'][ $_GET['key'] ];
             $args    = array(
-                'plugins'     => json_decode( $args['plugins'], true ),
+                'plugins'     => $args['plugins'],
                 'next_action' => 'template_manager'
             );
             echo sprintf( '<div class="aux-template-lightbox"><div class="aux-modal-item aux-default-modal clearfix aux-has-required-plugins aux-steps-col">%s</div></div>', $this->second_step( $args, '5' ) );

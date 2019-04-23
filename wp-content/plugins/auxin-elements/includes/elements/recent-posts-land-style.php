@@ -446,7 +446,7 @@ function auxin_widget_recent_posts_land_style_callback( $atts, $shortcode_conten
         'display_author_header'       => true,
         'image_aspect_ratio'          => 0.75,
         'tag'                         => '',
-
+        'taxonomy_name'               => 'category',
         'preloadable'                 => false,
         'preload_preview'             => true,
         'preload_bgcolor'             => '',

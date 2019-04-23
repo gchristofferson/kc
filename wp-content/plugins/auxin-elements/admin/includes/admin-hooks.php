@@ -254,65 +254,6 @@ function auxin_add_update_count_to_theme_menu( $count ){
 add_action( 'auxin_theme_menu_update_count', 'auxin_add_update_count_to_theme_menu' );
 
 /*-----------------------------------------------------------------------------------*/
-/*  Define demo info list / for auxin-element plugin
-/*-----------------------------------------------------------------------------------*/
-
-/**
- * Retrieves the list of available demos for current theme
- *
- * @return array List of demos
- */
-function auxels_add_to_demo_info_list( $default_demos ){
-
-    $demos_list = array(
-        'the-journey' => array(
-            'id'            => 'the-journey',
-            'title'         => __('The Journey', 'auxin-elements'),
-            'desc'          => __('Create your awesome Journey Website using this demo as a starter. Best choice for adventure looks.', 'auxin-elements'),
-            'preview_url'   => 'http://averta.net/phlox/demo/journey/',
-            'thumb_url'     => AUXELS_URL . '/embeds/demos/journey-blog/banner.jpg',
-            'file'          => AUXELS_DIR . '/embeds/demos/journey-blog/data.xml'
-        ),
-        'classic-blog' => array(
-            'id'            => 'classic-blog',
-            'title'         => __('Classic Blog', 'auxin-elements'),
-            'desc'          => __('Create your classic good looking Blog using this demo as a starter. Best choice for a classic blogger.', 'auxin-elements'),
-            'preview_url'   => 'http://averta.net/phlox/demo/classic-blog/',
-            'thumb_url'     => AUXELS_URL . '/embeds/demos/classic-blog/banner.jpg',
-            'file'          => AUXELS_DIR . '/embeds/demos/classic-blog/data.xml'
-        ),
-        'food-blog' => array(
-            'id'            => 'food-blog',
-            'title'         => __('Food Blog', 'auxin-elements'),
-            'desc'          => __('Create your awesome Food Website using this demo as a starter. Best choice for restaurant looks.', 'auxin-elements'),
-            'preview_url'   => 'http://averta.net/phlox/demo/food/',
-            'thumb_url'     => AUXELS_URL . '/embeds/demos/food-blog/banner.jpg',
-            'file'          => AUXELS_DIR . '/embeds/demos/food-blog/data.xml'
-        ),
-        'portfolio' => array(
-            'id'            => 'portfolio',
-            'title'         => __('Protfolio', 'auxin-elements'),
-            'desc'          => __('A stunning demo for Phlox portfolio that represents your projects in a modern and stylish way.', 'auxin-elements'),
-            'preview_url'   => 'http://averta.net/phlox/demo/portfolio/',
-            'thumb_url'     => AUXELS_URL . '/embeds/demos/portfolio/banner.jpg',
-            'file'          => AUXELS_DIR . '/embeds/demos/food-blog/data.xml'
-        ),
-        'default' => array(
-            'id'            => 'default',
-            'title'         => __('Default', 'auxin-elements'),
-            'desc'          => __('An excellent example to get familiar with all available layouts, elements, shortcodes and other features of Phlox.', 'auxin-elements'),
-            'preview_url'   => 'http://averta.net/phlox/demo/default/',
-            'thumb_url'     => AUXELS_URL . '/embeds/demos/default/banner.jpg',
-            'file'          => AUXELS_DIR . '/embeds/demos/default/data.xml'
-        )
-    );
-
-    return array_merge( $default_demos, $demos_list );
-}
-
-add_filter( 'auxin_get_demo_info_list', 'auxels_add_to_demo_info_list' );
-
-/*-----------------------------------------------------------------------------------*/
 /*  Adding fallback for deprecated theme option name
 /*-----------------------------------------------------------------------------------*/
 

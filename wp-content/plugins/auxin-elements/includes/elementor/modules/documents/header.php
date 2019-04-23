@@ -55,4 +55,12 @@ class Header extends Library_Document {
 
 		Post::register_style_controls( $this );
 	}
+	
+	/*  For Adding Custom Classnames To Elementor Header
+	/*-------------------------------------*/
+	// public function get_container_classes() {
+	// 	$classes  = parent::get_container_classes();
+	// 	$classes .= ' aux-elementor-header';
+	// 	return $classes;
+	// }
 }

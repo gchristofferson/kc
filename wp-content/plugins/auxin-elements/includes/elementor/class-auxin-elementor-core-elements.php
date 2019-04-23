@@ -331,6 +331,18 @@ final class Elements {
             '420' => array(
                 'file'  => $this->dir_path . '/widgets/theme-elements/current-time.php',
                 'class' => 'Elements\Theme_Elements\Current_Time'
+            ),
+            '430' => array(
+                'file'  => $this->dir_path . '/widgets/theme-elements/search.php',
+                'class' => 'Elements\Theme_Elements\SearchBox'
+            ),
+            '440' => array(
+                'file'  => $this->dir_path . '/widgets/theme-elements/site-title.php',
+                'class' => 'Elements\Theme_Elements\SiteTitle'
+            ),
+            '450' => array(
+                'file'  => $this->dir_path . '/widgets/theme-elements/menu.php',
+                'class' => 'Elements\Theme_Elements\MenuBox'
             )
 
             /*
@@ -614,20 +626,20 @@ final class Elements {
             $scheme_obj = $schemes_manager->get_scheme('typography');
             $scheme_obj->save_scheme([
                 '1' => [
-                    'font-family' => 'Arial',
-                    'font-weight' => ''
+                    'font_family' => 'Arial',
+                    'font_weight' => ''
                 ],
                 '2' => [
-                    'font-family' => 'Arial',
-                    'font-weight' => ''
+                    'font_family' => 'Arial',
+                    'font_weight' => ''
                 ],
                 '3' => [
-                    'font-family' => 'Tahoma',
-                    'font-weight' => ''
+                    'font_family' => 'Tahoma',
+                    'font_weight' => ''
                 ],
                 '4' => [
-                    'font-family' => 'Tahoma',
-                    'font-weight' => ''
+                    'font_family' => 'Tahoma',
+                    'font_weight' => ''
                 ]
             ]);
 

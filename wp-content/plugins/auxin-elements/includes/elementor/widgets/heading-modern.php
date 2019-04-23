@@ -349,9 +349,6 @@ class ModernHeading extends Widget_Base {
                 'selectors' => array(
                     '{{WRAPPER}} .aux-modern-heading-primary:hover' => 'color: {{VALUE}};',
                 ),
-                'condition' => array(
-                    'link!' => ''
-                )
             )
         );
 
@@ -447,9 +444,6 @@ class ModernHeading extends Widget_Base {
                 'selectors' => array(
                     '{{WRAPPER}} .aux-modern-heading-secondary:hover' => 'color: {{VALUE}};',
                 ),
-                'condition' => array(
-                    'link_secondary!' => ''
-                )
             )
         );
 
@@ -544,9 +538,6 @@ class ModernHeading extends Widget_Base {
                 'selectors' => array(
                     '{{WRAPPER}} .aux-modern-heading-secondary .aux-head-highlight:hover' => 'color: {{VALUE}};',
                 ),
-                'condition' => array(
-                    'link_secondary!' => ''
-                )
             )
         );
 
@@ -881,7 +872,7 @@ class ModernHeading extends Widget_Base {
         $divider_markup  = auxin_is_true( $settings['divider'] ) ? '<div class="aux-modern-heading-divider"></div>' : '';
         $alignment_class = ! empty( $settings['alignment'] ) ? 'aux-text-align-' . $settings['alignment'] : '';
 
-        echo '<section class="widget-container aux-widget-modern-heading">
+        echo '<section class="aux-widget-modern-heading">
             <div class="aux-widget-inner '. esc_attr( $alignment_class ) .'">';
 
                 // Maybe print divider before

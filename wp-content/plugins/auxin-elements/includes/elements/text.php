@@ -573,6 +573,10 @@ function  auxin_get_text_master_array( $master_array ) {
                 'param_name'        => 'img_shape',
                 'type'              => 'aux_visual_select',
                 'choices'           => array(
+                    'default'    => array(
+                        'label'     => __('Default Aspect', 'auxin-elements'),
+                        'image'     => AUXIN_URL . 'images/visual-select/icon-style-rectangle.svg'
+                    ),
                     'circle'          => array(
                         'label'     => __('Circle', 'auxin-elements'),
                         'image'     => AUXIN_URL . 'images/visual-select/icon-style-circle.svg'
@@ -1086,7 +1090,7 @@ function auxin_widget_column_callback( $atts, $shortcode_content = null ){
         $icon_styles .= empty( $icon_bg_color ) ? '' : 'background-color:' . esc_attr( $icon_bg_color ) . '; ';
     }
     $icon_styles .= empty( $icon_border_color ) && empty( $icon_border_width ) ? '' : 'border: '. esc_attr( $icon_border_width ) . 'px solid ' . esc_attr( $icon_border_color ) . '; ';
-    $icon_styles .= empty( $icon ) && ! empty( $image_data[1] ) ? 'width: ' . $image_data[1] . 'px;' : '' ;
+    $icon_styles .= empty( $icon ) && ! empty( $image_data[1] ) && 'default' !== $img_shape ? 'width: ' . $image_data[1] . 'px;' : '' ;
 
     $icon_styles  = ! empty( $icon_styles ) ? 'style="' . $icon_styles . '"' : '';
 

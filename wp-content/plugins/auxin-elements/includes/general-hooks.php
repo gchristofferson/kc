@@ -1710,16 +1710,6 @@ function auxin_ele_add_google_analytics_code() {
 add_action( 'wp_head','auxin_ele_add_google_analytics_code' );
 
 /*-----------------------------------------------------------------------------------*/
-/*  Add allowed custom mieme types
-/*-----------------------------------------------------------------------------------*/
-
-function auxin_mime_types( $mimes ) {
-    $mimes['svg'] = 'image/svg+xml';
-    return $mimes;
-}
-add_filter('upload_mimes', 'auxin_mime_types');
-
-/*-----------------------------------------------------------------------------------*/
 /*  Injects JavaScript codes from theme options in JS file
 /*-----------------------------------------------------------------------------------*/
 
@@ -2781,7 +2771,7 @@ add_filter( 'qm/dispatch/html', "auxin_disable_query_monitor_on_elementor" );
 /*-----------------------------------------------------------------------------------*/
 
 function auxin_is_maintenance() {
-    if ( auxin_get_option( 'auxin_maintenance_enable', '0') || file_exists( ABSPATH . '.maintenance' ) ){
+    if ( ( function_exists('auxin_get_option') && auxin_get_option('auxin_maintenance_enable', '0') ) || file_exists( ABSPATH . '.maintenance' ) ){
         return true;
     } else {
         return false;

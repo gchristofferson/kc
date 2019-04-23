@@ -12,9 +12,11 @@ if( ! defined( 'THEME_NAME' ) ){
 }
 
 
-define( 'AUXELS_VERSION'        , '2.3.12' );
+define( 'AUXELS_VERSION'        , '2.4.0' );
 
 define( 'AUXELS_SLUG'           , 'auxin-elements' );
+
+define( 'AUXELS_PURCHASE_KEY'   , 'envato_purchase_code_3909293' );
 
 
 define( 'AUXELS_DIR'            , dirname( plugin_dir_path( __FILE__ ) ) );

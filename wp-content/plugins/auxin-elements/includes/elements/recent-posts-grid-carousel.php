@@ -800,10 +800,12 @@ function auxin_widget_recent_posts_callback( $atts, $shortcode_content = null ){
 
         'size'                        => '',
         'display_title'               => true,
+        'words_num'                   => '',
         'show_media'                  => true,
         'display_like'                => true,
         'display_comments'            => true,
         'display_categories'          => true,
+        'show_badge'                  => false,
         'content_layout'              => '', // entry-boxed
         'excerpt_len'                 => '160',
         'show_excerpt'                => true,
@@ -965,7 +967,7 @@ function auxin_widget_recent_posts_callback( $atts, $shortcode_content = null ){
         $column_class .=  ' aux-tb-col'.$tablet_cnum . ' aux-mb-col'.$phone_cnum;
 
         $column_class .= 'entry-boxed' == $content_layout  ? ' aux-entry-boxed' : '';
-        
+
         if ( 'flip' == $preview_mode ) {
             $column_class .= ' aux-flip-box';
         }

@@ -488,6 +488,7 @@ function auxin_widget_recent_posts_masonry_callback( $atts, $shortcode_content =
         'extra_classes'               => '',
         'extra_column_classes'        => '',
         'custom_el_id'                => '',
+        'taxonomy_name'               => 'category',
 
         'template_part_file'          => 'theme-parts/entry/post-column',
         'extra_template_path'         => '',

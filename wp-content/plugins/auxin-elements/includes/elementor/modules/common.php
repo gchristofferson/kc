@@ -27,7 +27,7 @@ class Common {
     function __construct(){
 
         // Add new controls to advanced tab globally
-        add_action( "elementor/element/after_section_end", array( $this, 'add_position_controls_section'  ), 11, 3 );
+        add_action( "elementor/element/after_section_end", array( $this, 'add_position_controls_section'  ), 10, 3 );
         
         // Go pro notice for parallax options
         add_action( "elementor/element/after_section_end", array( $this, 'add_parallax_go_pro_notice'     ), 15, 3 );

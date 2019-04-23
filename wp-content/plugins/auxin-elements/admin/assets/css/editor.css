@@ -29,3 +29,17 @@
 .wp_themeSkin .mceIcon.mce_utube   { background-position    :-366px -128px; }
 .wp_themeSkin .mceIcon.mce_vimeo   { background-position    :-218px -287px; }
 .wp_themeSkin .mceIcon.mce_video   { background-position    :-38px -288px; }
+
+/**
+ * Fix SVGs not showing correctly as featured images.
+ */
+ #postimagediv .inside .svg img {
+    width: 100%;
+}
+
+/**
+ * Fix for Gutenberg not showing featured images correctly.
+ */
+img.components-responsive-wrapper__content[src$=".svg"] {
+    position: relative;
+}

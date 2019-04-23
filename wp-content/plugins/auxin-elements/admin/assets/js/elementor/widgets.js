@@ -50,7 +50,14 @@
                     $.fn.AuxinCartCanvasInit( $('body') ); 
                 }
             );
-    
+
+            elementorFrontend.hooks.addAction( 'frontend/element_ready/aux_menu_box.default',
+                function( $scope ){ 
+                    $scope.find('.aux-master-menu').mastermenu();
+                    $.fn.AuxinMobileMenuInit( $scope );
+                }
+            );
+
             elementorFrontend.hooks.addAction( 'frontend/element_ready/aux_image.default', function($scope) {
                $.fn.AuxinDynamicDropshadowInit($scope);
                $.fn.AuxinTiltElementInit($scope);

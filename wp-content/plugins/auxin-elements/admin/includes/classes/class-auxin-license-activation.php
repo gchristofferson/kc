@@ -15,16 +15,15 @@ class Auxin_License_Activation {
 	 * @var      object
 	 */
 	protected static $instance  = null;
-	
+
 	protected $api           = 'http://support.averta.net/en/api/?branch=envato&group=items&cat=verify-purchase';
-    protected $option_prefix = 'auxin_';
     protected $usermail      = '';
     protected $purchase_code = '';
     protected $action        = 'activate';
 
 
 	function __construct(){
-		$this->option_prefix = THEME_ID . '_';
+		$this->option_prefix = AUXELS_PURCHASE_KEY;
 	}
 
 	/**
@@ -136,24 +135,20 @@ class Auxin_License_Activation {
 	    	if( 'success' == $response['result'] ){
 				// Remove token transient
 				auxin_delete_transient( 'auxin_check_token_validation_status' );
-				
+
 	    		if( 'active' == $response['status'] ){
 
 	        		$token 		= isset( $response['token'] ) ? $response['token'] : '';
-
 					$license_info['usermail'] 		= $usermail;
 	        		$license_info['purchase_code']  = $purchase_code;
 	        		$license_info['token']  		= $token;
-
-	    			update_option( $this->option_prefix . 'license', $license_info );
-					update_option( $this->option_prefix . 'is_license_actived', 1 );
+	    			update_option( $this->option_prefix, $license_info );
 
 	    		} elseif( 'deactive' == $response['status'] ){
 
 					$license_info['token']  		= '';
+					update_option( $this->option_prefix, $license_info );
 
-	    			update_option( $this->option_prefix . 'license', $license_info );
-					update_option( $this->option_prefix . 'is_license_actived', 0  );
 	    		}
 
 	    		$output['success'] = 1;
@@ -215,11 +210,9 @@ class Auxin_License_Activation {
         if( false !== $status && isset( $status['allowed'] ) ){
             // if token is no longer valid to be used on this domain
             if ( ! $status['allowed'] ){
-                update_option( $this->option_prefix . 'is_license_actived', 0 );
-
-                $license_info = get_option( $this->option_prefix . 'license', array() );
+                $license_info = get_option( $this->option_prefix, array() );
                 $license_info['token'] = '';
-                update_option( $this->option_prefix . 'license', $license_info );
+                update_option( $this->option_prefix, $license_info );
             }
         }
 
@@ -235,7 +228,7 @@ class Auxin_License_Activation {
 	 * @return array|string     Returns all license info in array or a string containing license field value
 	 */
 	private function get_license_info( $field = '', $default = '' ){
-		$license_info = get_option( $this->option_prefix . 'license', array() );
+		$license_info = get_option( $this->option_prefix, array() );
 
 		if( empty( $field ) )
 			return $license_info;

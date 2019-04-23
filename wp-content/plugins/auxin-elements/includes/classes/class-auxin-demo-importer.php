@@ -341,6 +341,7 @@ class Auxin_Demo_Importer {
             );
         } else {
             $getLicense = get_option( THEME_ID . '_license' );
+            $getLicense = empty( $getLicense ) ? get_option( AUXELS_PURCHASE_KEY ) : $getLicense;
             $getToken   = 'Bearer ' . base64_encode( $getLicense['token'] );
             $request    = wp_remote_post(
                 $url,
@@ -449,20 +450,20 @@ class Auxin_Demo_Importer {
         // @deprecated A temporary fix for an issue with elementor typography scheme
         $elementor_typo_scheme = [
             '1' => [
-                'font-family' => 'Arial',
-                'font-weight' => ''
+                'font_family' => 'Arial',
+                'font_weight' => ''
             ],
             '2' => [
-                'font-family' => 'Arial',
-                'font-weight' => ''
+                'font_family' => 'Arial',
+                'font_weight' => ''
             ],
             '3' => [
-                'font-family' => 'Tahoma',
-                'font-weight' => ''
+                'font_family' => 'Tahoma',
+                'font_weight' => ''
             ],
             '4' => [
-                'font-family' => 'Tahoma',
-                'font-weight' => ''
+                'font_family' => 'Tahoma',
+                'font_weight' => ''
             ]
         ];
         update_option( 'elementor_scheme_typography', $elementor_typo_scheme );
@@ -829,21 +830,26 @@ class Auxin_Demo_Importer {
                     update_option( 'mc4wp_default_form_id', $post_id );
                 }
 
-                if ( ! empty( $post['comments'] ) ){
+                if ( ! empty( $post['post_comments'] ) ){
                     // Add post comments
-                    foreach ( $post['comments'] as $comment_key => $comment_values ) {
-                        $comment_values['comment_post_ID']      = $post_id;
-                        $comment_old_ID                         = $comment_values['comment_ID'];
+                    foreach ( $post['post_comments'] as $comment_key => $comment_values ) {
+                        $comment_values['data']['comment_post_ID']      = $post_id;
+                        $comment_old_ID                         = $comment_values['data']['comment_ID'];
 
-                        if ( $comment_values['comment_parent'] != 0 ) {
-                            $comment_values['comment_parent']   = auxin_get_transient( 'auxin_comment_new_comment_id_' . $comment_values['comment_parent'] );
+                        if ( $comment_values['data']['comment_parent'] != 0 ) {
+                            $comment_values['data']['comment_parent']   = auxin_get_transient( 'auxin_comment_new_comment_id_' . $comment_values['data']['comment_parent'] );
                         }
 
-                        unset( $comment_values['comment_ID'] );
-                        $comment_ID = wp_insert_comment( $comment_values );
+                        unset( $comment_values['data']['comment_ID'] );
+                        $comment_ID = wp_insert_comment( $comment_values['data'] );
                         if ( is_wp_error( $comment_ID ) ) {
                             continue;
                         } else {
+                            if( ! empty( $comment_values['meta'] ) ){
+                                foreach ($comment_values['meta'] as $meta_key => $meta_value) {
+                                    update_comment_meta( $comment_ID, $meta_key, $meta_value );
+                                }
+                            }
                             auxin_set_transient( 'auxin_comment_new_comment_id_' . $comment_old_ID, $comment_ID, 3600 );
                         }
                     }
@@ -885,7 +891,7 @@ class Auxin_Demo_Importer {
         // Preparing requests
         foreach ( $args as $import_id => $import_url ) {
 
-            if ( $this->attachment_exist( pathinfo( $import_url['url'], PATHINFO_BASENAME ) ) ) {
+            if ( $this->attachment_exist( $import_id, pathinfo( $import_url['url'], PATHINFO_BASENAME ) ) ) {
                 continue;
             }
 
@@ -1334,11 +1340,12 @@ class Auxin_Demo_Importer {
      * @return  Integer
      */
     public function insert_attachment( $import_id, $url, $file_name, $path = '', $post_id = 0 ) {
+        $base_file_name = pathinfo( $url, PATHINFO_BASENAME );
         // Check if media exist then get out
-        if ( $this->attachment_exist( pathinfo( $url, PATHINFO_BASENAME ) ) ) {
+        if ( $this->attachment_exist( $import_id, $base_file_name ) ) {
             // Add meta data for duplicated videos
             if ( pathinfo( $url, PATHINFO_FILENAME ) == "video" ) {
-                $imported_id    = $this->get_attachment_id_by_basename( pathinfo( $url, PATHINFO_BASENAME ) );
+                $imported_id    = $this->get_attachment_id_by_basename( $base_file_name );
                 update_post_meta( $imported_id, 'auxin_attachment_has_duplicate_' . $import_id , $import_id );
             }
 
@@ -1376,15 +1383,15 @@ class Auxin_Demo_Importer {
 
         $file = wp_handle_sideload( $file_array, $overrides, $time );
 
-        if ( isset( $file['error'] ) ) {
+        if ( isset( $file['error'] ) && ! empty( $file['error'] ) ) {
             return;
         }
 
-        $url     = $file['url'];
-        $type    = $file['type'];
-        $file    = $file['file'];
-        $title   = preg_replace('/\.[^.]+$/', '', basename($file));
-        $content = '';
+        $url      = $file['url'];
+        $type     = $file['type'];
+        $file     = $file['file'];
+        $title    = preg_replace('/\.[^.]+$/', '', 'demo-attachment-' . $import_id . '-' . $base_file_name );
+        $content  = '';
 
         // Use image exif/iptc data for title and caption defaults if possible.
         if ( $image_meta = @wp_read_image_metadata($file) ) {
@@ -1435,9 +1442,10 @@ class Auxin_Demo_Importer {
      *
      * @return  boolean
      */
-    public function attachment_exist( $filename ) {
+    public function attachment_exist( $import_id, $filename ) {
 
         global $wpdb;
+        $title = preg_replace('/\.[^.]+$/', '', 'demo-attachment-' . $import_id . '-' . $filename );
 
         return $wpdb->get_var( "
             SELECT COUNT(*)
@@ -1448,7 +1456,7 @@ class Auxin_Demo_Importer {
             p.ID = m.post_id
             AND p.post_type = 'attachment'
             AND m.meta_key  = 'auxin_import_id'
-            AND p.guid LIKE '%/".$filename."%'
+            AND p.post_title LIKE '$title'
         " );
 
     }
@@ -1531,7 +1539,9 @@ class Auxin_Demo_Importer {
                 if( is_array( $categories ) && ! empty( $categories ) ) {
                     foreach ( $categories as $cat_key => $cat_id ) {
                         $cat_old_id = auxin_get_transient( 'auxin_category_new_id_of' . $cat_id );
-                        $cat_array[ $cat_key ] = $cat_old_id !== false ? $cat_old_id : ' ';
+                        if( $cat_old_id !== false ){
+                            $cat_array[ $cat_key ] = $cat_old_id;
+                        }
                     }
                     // Remove duplicates of empty data
                     array_unique( $cat_array );

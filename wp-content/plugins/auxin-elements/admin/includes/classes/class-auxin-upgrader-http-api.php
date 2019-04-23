@@ -79,6 +79,7 @@ class Auxin_Upgrader_Http_Api {
     public function get_download_link( $key ){
 
         $token  = $this->get_setting( 'token' , THEME_ID . '_license' );
+        $token  = empty( $token ) ? $this->get_setting( 'token' , AUXELS_PURCHASE_KEY ) : $token;
 
         if( empty( $token ) ) {
             return new WP_Error( 'no_credentials',

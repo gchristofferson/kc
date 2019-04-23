@@ -208,6 +208,8 @@ class MailChimp extends Widget_Base {
         if(  $settings['form_type'] === 'custom' ) {
             add_filter( 'mc4wp_form_content', array( $this, 'custom_form'), 10, 1 );
             $settings['form_id'] = 0;
+        } elseif( get_post_type( $settings['form_id'] ) !== 'mc4wp-form' ){
+            $settings['form_id'] = 0;
         }
 
         return mc4wp_show_form( $settings['form_id'] );

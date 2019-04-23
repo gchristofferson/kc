@@ -481,6 +481,10 @@ class Text extends Widget_Base {
                 'label'       => __('Image shape','auxin-elements'),
                 'type'        => 'aux-visual-select',
                 'options'     => array(
+                    'default' => array(
+                        'label' => __('Default Aspect', 'auxin-elements'),
+                        'image' => AUXIN_URL . 'images/visual-select/icon-style-rectangle.svg'
+                    ),
                     'circle' => array(
                         'label' => __('Circle', 'auxin-elements'),
                         'image' => AUXIN_URL . 'images/visual-select/icon-style-circle.svg'
@@ -496,9 +500,9 @@ class Text extends Widget_Base {
                     'rect' => array(
                         'label' => __('Rectangle', 'auxin-elements'),
                         'image' => AUXIN_URL . 'images/visual-select/icon-style-rectangle.svg'
-                    )
+                    ),
                 ),
-                'default'     => 'circle',
+                'default'     => 'default',
                 'condition'   => array(
                     'icon_or_image' => array('image')
                 )

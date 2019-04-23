@@ -2147,6 +2147,7 @@ function auxin_get_preloadable_previews(){
  */
 function auxin_is_activated(){
     $getLicense = get_option( THEME_ID . '_license' );
+    $getLicense = empty( $getLicense ) ? get_option( AUXELS_PURCHASE_KEY ) : $getLicense;
     $isPro      = defined('THEME_PRO' ) && THEME_PRO;
     if( $isPro && ( isset( $getLicense['token'] ) && ! empty( $getLicense['token'] ) ) ){
         // Check token validation every 24 hours
@@ -2227,4 +2228,17 @@ function auxin_get_site_key(){
     }
 
     return $site_key;
+}
+
+/**
+ * Whether a plugin is active or not
+ *
+ * @param  string $plugin_basename  plugin directory name and mail file address
+ * @return bool                     True if plugin is active and FALSE otherwise
+ */
+if( ! function_exists( 'auxin_is_plugin_active' ) ){
+    function auxin_is_plugin_active( $plugin_basename ){
+        include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+        return is_plugin_active( $plugin_basename );
+    }
 }

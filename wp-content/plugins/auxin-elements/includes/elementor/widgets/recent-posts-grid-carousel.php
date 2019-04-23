@@ -362,7 +362,7 @@ class RecentPostsGridCarousel extends Widget_Base {
                 'label_block'  => true,
                 'condition'    => array(
                     'show_media' => 'yes'
-                )                
+                )
             )
         );
 
@@ -421,6 +421,18 @@ class RecentPostsGridCarousel extends Widget_Base {
         );
 
         $this->add_control(
+            'words_num',
+            array(
+                'label'       => __( 'Title Trim', 'auxin-elements' ),
+                'type'        => Controls_Manager::NUMBER,
+                'default'     => '',
+                'condition'   => array(
+                    'display_title' => 'yes',
+                )
+            )
+        );
+
+        $this->add_control(
             'show_info',
             array(
                 'label'        => __('Display post info','auxin-elements' ),
@@ -442,7 +454,7 @@ class RecentPostsGridCarousel extends Widget_Base {
                 'return_value' => 'yes',
                 'default'      => 'no'
             )
-        );        
+        );
 
         $this->add_control(
             'post_info_position',
@@ -473,6 +485,18 @@ class RecentPostsGridCarousel extends Widget_Base {
                 'condition'   => array(
                     'show_info' => 'yes',
                 )
+            )
+        );
+
+        $this->add_control(
+            'show_badge',
+            array(
+                'label'        => __('Display Category Badge', 'auxin-elements' ),
+                'type'         => Controls_Manager::SWITCHER,
+                'label_on'     => __( 'On', 'auxin-elements' ),
+                'label_off'    => __( 'Off', 'auxin-elements' ),
+                'return_value' => 'yes',
+                'default'      => 'no'
             )
         );
 
@@ -582,7 +606,7 @@ class RecentPostsGridCarousel extends Widget_Base {
                 'default'      => 'yes',
                 'condition'    => array(
                     'author_or_readmore' => 'author',
-                )         
+                )
             )
         );
 
@@ -598,7 +622,7 @@ class RecentPostsGridCarousel extends Widget_Base {
                 'default'      => 'no',
                 'condition'    => array(
                     'author_or_readmore' => 'author',
-                )        
+                )
             )
         );
 
@@ -685,20 +709,20 @@ class RecentPostsGridCarousel extends Widget_Base {
                 'label'       => __('Include custom post formats', 'auxin-elements'),
                 'type'        => Controls_Manager::SELECT2,
                 'multiple'    => true,
-                'options'     => array( 
-                    'aside'    => __('Aside', 'auxin-elements'), 
-                    'gallery'  => __('Gallery', 'auxin-elements'), 
-                    'image'    => __('Image', 'auxin-elements'), 
-                    'link'     => __('Link', 'auxin-elements'), 
-                    'quote'    => __('Quote', 'auxin-elements'), 
-                    'video'    => __('Video', 'auxin-elements'), 
-                    'audio'    => __('Audio', 'auxin-elements') 
+                'options'     => array(
+                    'aside'    => __('Aside', 'auxin-elements'),
+                    'gallery'  => __('Gallery', 'auxin-elements'),
+                    'image'    => __('Image', 'auxin-elements'),
+                    'link'     => __('Link', 'auxin-elements'),
+                    'quote'    => __('Quote', 'auxin-elements'),
+                    'video'    => __('Video', 'auxin-elements'),
+                    'audio'    => __('Audio', 'auxin-elements')
                 ),
                 'condition'    => array(
                     'exclude_custom_post_formats!' => 'yes',
-                )                
+                )
             )
-        );        
+        );
 
         $this->add_control(
             'exclude_quote_link',
@@ -714,7 +738,7 @@ class RecentPostsGridCarousel extends Widget_Base {
                 )
             )
         );
-        
+
 
         $this->add_control(
             'order_by',
@@ -849,13 +873,33 @@ class RecentPostsGridCarousel extends Widget_Base {
                 'type'        => Controls_Manager::SELECT,
                 'default'     => '0.75',
                 'options'     => array(
-                    '0.75' => __('Horizontal 4:3' , 'auxin-elements'),
-                    '0.56' => __('Horizontal 16:9', 'auxin-elements'),
-                    '1.00' => __('Square 1:1'     , 'auxin-elements'),
-                    '1.33' => __('Vertical 3:4'   , 'auxin-elements')
+                    '0.75'   => __('Horizontal 4:3' , 'auxin-elements'),
+                    '0.56'   => __('Horizontal 16:9', 'auxin-elements'),
+                    '1.00'   => __('Square 1:1'     , 'auxin-elements'),
+                    '1.33'   => __('Vertical 3:4'   , 'auxin-elements'),
+                    'custom' => __('Custom'         , 'auxin-elements'),
                 ),
                 'condition' => array(
                     'show_media' => 'yes',
+                ),
+            )
+        );
+
+
+        $this->add_responsive_control(
+            'image_aspect_ratio_custom',
+            array(
+                'label' => __( 'Custom Aspect Ratio', 'auxin-elements' ),
+                'type' => Controls_Manager::SLIDER,
+                'range' => array(
+                    'px' => array(
+                        'min'  => 0,
+                        'max'  => 3,
+                        'step' => 0.1
+                    ),
+                ),
+                'condition' => array(
+                    'image_aspect_ratio' => 'custom',
                 ),
             )
         );
@@ -1162,6 +1206,125 @@ class RecentPostsGridCarousel extends Widget_Base {
                 'condition' => array(
                     'show_excerpt' => 'yes',
                 ),
+            )
+        );
+
+        $this->end_controls_section();
+
+
+        /*-----------------------------------------------------------------------------------*/
+        /*  badge_style_section
+        /*-----------------------------------------------------------------------------------*/
+
+        $this->start_controls_section(
+            'badge_style_section',
+            array(
+                'label'     => __( 'Badge', 'auxin-elements' ),
+                'tab'       => Controls_Manager::TAB_STYLE,
+                'condition' => array(
+                    'show_badge' => 'yes',
+                )
+            )
+        );
+
+        $this->start_controls_tabs( 'badge_colors' );
+
+        $this->start_controls_tab(
+            'badge_color_normal',
+            array(
+                'label' => __( 'Normal' , 'auxin-elements' )
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            array(
+                'name' => 'badge_background_color',
+                'label' => __( 'Background', 'auxin-elements' ),
+                'types' => array( 'classic', 'gradient' ),
+                'selector' => '{{WRAPPER}} .entry-badge',
+            )
+        );
+
+        $this->add_control(
+            'badge_text_color',
+            array(
+                'label' => __( 'Text', 'auxin-elements' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => array(
+                    '{{WRAPPER}} .entry-badge a' => 'color: {{VALUE}} !important;',
+                )
+            )
+        );
+
+        $this->end_controls_tab();
+
+        $this->start_controls_tab(
+            'badge_color_hover',
+            array(
+                'label' => __( 'Hover' , 'auxin-elements' )
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            array(
+                'name' => 'badge_hover_background_color',
+                'label' => __( 'Background', 'auxin-elements' ),
+                'types' => array( 'classic', 'gradient' ),
+                'selector' => '{{WRAPPER}} .entry-badge:hover',
+            )
+        );
+
+        $this->add_control(
+            'badge_hover_text_color',
+            array(
+                'label' => __( 'Text', 'auxin-elements' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => array(
+                    '{{WRAPPER}} .entry-badge a:hover' => 'color: {{VALUE}} !important;',
+                )
+            )
+        );
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            array(
+                'name' => 'badge_typography',
+                'scheme' => Scheme_Typography::TYPOGRAPHY_1,
+                'selector' => '{{WRAPPER}} .entry-badge a'
+            )
+        );
+
+
+        $this->add_responsive_control(
+            'button_padding',
+            array(
+                'label'      => __( 'Padding', 'auxin-elements' ),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => array( 'px', '%' ),
+                'selectors'  => array(
+                    '{{WRAPPER}} .entry-badge' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                )
+            )
+        );
+
+        $this->add_responsive_control(
+            'badge_margin_bottom',
+            array(
+                'label' => __( 'Bottom space', 'auxin-elements' ),
+                'type' => Controls_Manager::SLIDER,
+                'range' => array(
+                    'px' => array(
+                        'max' => 100,
+                    ),
+                ),
+                'selectors' => array(
+                    '{{WRAPPER}} .entry-badge' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                )
             )
         );
 
@@ -1543,6 +1706,7 @@ class RecentPostsGridCarousel extends Widget_Base {
         'preload_preview'             => $settings['preload_preview'],
         'preload_bgcolor'             => $settings['preload_bgcolor'],
         'display_title'               => $settings['display_title'],
+        'words_num'                   => $settings['words_num'],
         'show_info'                   => $settings['show_info'],
         'show_format_icon'            => $settings['show_format_icon'],
         'post_info_position'          => $settings['post_info_position'],
@@ -1551,13 +1715,14 @@ class RecentPostsGridCarousel extends Widget_Base {
         'display_like'                => $settings['display_like'],
         'show_content'                => $settings['show_content'],
         'display_categories'          => $settings['display_categories'],
+        'show_badge'                  => $settings['show_badge'],
         'show_date'                   => $settings['show_date'],
         'show_excerpt'                => $settings['show_excerpt'],
         'excerpt_len'                 => $settings['excerpt_len'],
         'author_or_readmore'          => $settings['author_or_readmore'],
         'display_author_header'       => $settings['display_author_header'],
         'display_author_footer'       => $settings['display_author_footer'],
-        
+
         // Content Section
         'desktop_cnum'                => $settings['columns'],
         'tablet_cnum'                 => $settings['columns_tablet'],
@@ -1592,7 +1757,7 @@ class RecentPostsGridCarousel extends Widget_Base {
         'loadmore_type'               => $settings['loadmore_type'],
 
         // Style Section
-        'image_aspect_ratio'          => $settings['image_aspect_ratio'],
+        'image_aspect_ratio'          => $settings['image_aspect_ratio'] === 'custom' ? $settings['image_aspect_ratio_custom']['size'] : $settings['image_aspect_ratio'],
     );
 
     // get the shortcode base blog page

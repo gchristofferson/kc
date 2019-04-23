@@ -8,7 +8,7 @@ include_once( 'general-hooks.php' );
 // load shortcode files
 include_once( 'general-shortcodes.php' );
 
-
+Auxin_SVG_Support::get_instance();
 Auxin_Widget_Shortcode_Map::get_instance();
 Auxin_Import::get_instance();
 

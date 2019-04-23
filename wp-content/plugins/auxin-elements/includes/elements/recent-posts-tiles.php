@@ -467,6 +467,7 @@ function auxin_widget_recent_posts_tiles_callback( $atts, $shortcode_content = n
         'extra_classes'               => '',
         'extra_column_classes'        => '',
         'custom_el_id'                => '',
+        'taxonomy_name'               => 'category',
 
         'template_part_file'          => 'theme-parts/entry/post-tile',
         'extra_template_path'         => '',

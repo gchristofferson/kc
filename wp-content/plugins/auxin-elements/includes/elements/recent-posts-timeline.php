@@ -469,6 +469,7 @@ function auxin_widget_recent_posts_timeline_callback( $atts, $shortcode_content 
         'preloadable'                 => false,
         'preload_preview'             => true,
         'preload_bgcolor'             => '',
+        'taxonomy_name'               => 'category',
 
         'extra_classes'               => '',
         'extra_column_classes'        => '',

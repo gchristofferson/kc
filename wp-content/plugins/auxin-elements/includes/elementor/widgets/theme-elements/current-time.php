@@ -132,6 +132,32 @@ class Current_Time extends Widget_Base {
             )
         );
 
+        $this->add_responsive_control(
+            'align',
+            array(
+                'label'      => __('Align','auxin-elements'),
+                'type'       => Controls_Manager::CHOOSE,
+                'options'    => array(
+                    'left' => array(
+                        'title' => __( 'Left', 'auxin-elements' ),
+                        'icon' => 'fa fa-align-left',
+                    ),
+                    'center' => array(
+                        'title' => __( 'Center', 'auxin-elements' ),
+                        'icon' => 'fa fa-align-center',
+                    ),
+                    'right' => array(
+                        'title' => __( 'Right', 'auxin-elements' ),
+                        'icon' => 'fa fa-align-right',
+                    ),
+                ),
+                'toggle'     => true,
+                'selectors'  => array(
+                    '{{WRAPPER}}' => 'text-align: {{VALUE}}',
+                )
+            )
+        );
+
         $this->end_controls_section();
 
         /*-----------------------------------------------------------------------------------*/
