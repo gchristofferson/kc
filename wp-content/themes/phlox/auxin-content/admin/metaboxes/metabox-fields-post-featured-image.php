@@ -35,7 +35,7 @@ function auxin_metabox_fields_featured_image(){
             'type'          => 'dropdown',
             'default'       => 'auto',
             'choices'     => array(
-                'auto'    => __( 'Auto', 'phlox' ),
+                'default' => __( 'default', 'phlox' ),
                 'yes'     => __( 'Yes, always' , 'phlox' ),
                 'no'      => __( 'No' , 'phlox'  )
             )

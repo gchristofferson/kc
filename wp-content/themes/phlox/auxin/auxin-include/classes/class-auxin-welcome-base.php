@@ -191,7 +191,11 @@ class Auxin_Welcome_Base {
 
         ?>
         <div class="aux-welcome-header">
-            <h1 class="aux-welcome-title"><?php echo $welcome_page_title; ?></h1>
+            <h1 class="aux-welcome-title"><?php echo wp_kses( $welcome_page_title, array(
+                'br' => array(),
+                'em' => array(),
+                'strong' => array(),
+            ) ); ?></h1>
             <div class="aux-welcome-subtitle">
                 <?php
                     echo '<span class="aux-welcome-desc-meta">' . sprintf( esc_html__('Version %s', 'phlox'), THEME_VERSION ) . '</span>';
@@ -324,7 +328,7 @@ class Auxin_Welcome_Base {
      * @return string     Page url
      */
     public function get_tab_link( $tab = '' ){
-        return $this->get_page_link() . ( $tab ? '&tab=' . $tab : '');
+        return esc_url( $this->get_page_link() . ( $tab ? '&tab=' . $tab : '') );
     }
 
     /**

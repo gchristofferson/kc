@@ -36,7 +36,7 @@ if( true === $result ){
 
 // if it is a shortcode base blog layout
 } elseif( false !== $result && '' !== $result ){
-    echo $result;
+    echo wp_kses_post( $result );
 
 // if result not found
 } else {

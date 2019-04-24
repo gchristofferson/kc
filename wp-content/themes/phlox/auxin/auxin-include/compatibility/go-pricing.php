@@ -607,7 +607,7 @@ function auxin_go_pricing_font_loader( $col_data, $section, $subsection ) {
 						}
 
 						if ( !empty( $font['url'] ) && !empty( $font_url_params ) ) {
-							$google_font = sprintf( '@import url(%s)', $font['url'], $font_url_params );
+							$google_font = sprintf( '@' . 'import url(%s)', $font['url'] );
 							if ( !in_array( $google_font, (array)$google_fonts ) ) $google_fonts[] = $google_font;
 						}
 

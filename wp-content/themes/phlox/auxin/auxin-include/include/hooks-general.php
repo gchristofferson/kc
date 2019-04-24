@@ -1035,7 +1035,7 @@ function auxin_add_page_preload_animation(){
             $progressbar_style    = auxin_get_option( 'page_preload_prgoress_bar_color' ) ? 'style="background-color:'.  esc_attr( auxin_get_option( 'page_preload_prgoress_bar_color' ) ) .';"': '';
             $progressbar_position = 'aux-progressbar-' . auxin_get_option( 'page_preload_prgoress_bar_position' ) ;
         ?>
-    <div id="pagePreloadProgressbar" class="aux-no-js <?php echo $progressbar_position ;?> " <?php echo $progressbar_style; ?> ></div>
+    <div id="pagePreloadProgressbar" class="aux-no-js <?php echo esc_attr( $progressbar_position ) ;?> " <?php echo $progressbar_style; ?> ></div>
         <?php
         }
 

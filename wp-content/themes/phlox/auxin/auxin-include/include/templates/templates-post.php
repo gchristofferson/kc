@@ -377,10 +377,10 @@ function auxin_content_main_class( $class = '' ){
 
         } elseif( is_archive() ){
 
-
+            
             if( is_category() || is_tag() ){ // for category.php
                 $classes['template_type'] = 'aux-template-type-' . auxin_get_option( 'post_taxonomy_archive_template_type', 'default' );
-
+                
             } elseif( $post ) { // for archive.php
                 $classes['template_type'] = 'aux-template-type-' . auxin_get_option( $post->post_type . '_index_template_type', 'default' );
             }
@@ -401,7 +401,7 @@ function auxin_content_main_class( $class = '' ){
 
         }
 
-        if ( auxin_is_plugin_active( 'auxin-shop-plugin/auxin-shop.php') ) {
+        if ( class_exists( 'AUXSHP' ) ) {
             
             if ( is_shop() ) {
                 $show_top_margin = auxin_get_option('product_index_top_content_margin', '1') ;
@@ -1872,7 +1872,7 @@ function auxin_get_footer_components_markup( $args = '' ){
 function auxin_wc_add_to_cart( $args = array() ){
 
     //Check status of woocommerce activation
-    if ( auxin_is_plugin_active( 'woocommerce/woocommerce.php') ) {
+    if ( class_exists( 'WooCommerce' ) ) {
 
         global $woocommerce;
 
@@ -1939,7 +1939,7 @@ function auxin_wc_add_to_cart( $args = array() ){
                                         <?php echo $values['data']->get_title(); ?>
                                     </h3>
                                     <span>
-                                        <?php echo $values['quantity'] . ' &times; ' . $values['data']->get_price_html(); ?>
+                                        <?php echo esc_html( $values['quantity'] ) . ' &times; ' . $values['data']->get_price_html(); ?>
                                     </span>
                                     <a href="<?php echo esc_url( wc_get_cart_remove_url( $item ) ); ?>" class="aux-remove-cart-content aux-svg-symbol aux-small-cross <?php echo esc_attr( $args['color_class'] ); ?>" data-verify_nonce="<?php echo wp_create_nonce( 'remove_cart-' . $values['product_id'] ); ?>" data-product_id="<?php echo esc_attr( $values['product_id'] ); ?>"></a>
                                 </div>
@@ -2630,16 +2630,18 @@ function auxin_get_post_format_media( $post, $settings = array(), $aux_content_w
             if( 'archive' === $request_from ){
 
                 $show_featured_image = true;
+                $show_featured_image_meta_field = auxin_get_post_meta( $post, 'blog_archive_show_featured_image', 'auto' );
 
                 // get metafield featured image visibility option
-                if( 'auto' == $show_featured_image_meta_field = auxin_get_post_meta( $post, 'blog_archive_show_featured_image', 'auto' ) ){
-                    if( 'full' == auxin_get_option( 'blog_content_on_listing', 'full' ) ){
-                        $post_content = get_the_content();
-                        $show_featured_image_meta_field = ! ( false !== strpos( $post_content, '<img' ) );
-                        $show_featured_image = $show_featured_image_meta_field ? auxin_get_option( 'blog_archive_show_featured_image', 1 ): $show_featured_image_meta_field;
-                    } else {
-                        $show_featured_image = auxin_get_option( 'blog_archive_show_featured_image', 1 );
-                    }
+                if( in_array( $show_featured_image_meta_field, array( 'auto', 'default') ) ){
+                    // if( 'full' == auxin_get_option( 'blog_content_on_listing', 'full' ) ){
+                    //     $post_content = get_the_content();
+                    //     $show_featured_image_meta_field = ! ( false !== strpos( $post_content, '<img' ) );
+                    //     $show_featured_image = $show_featured_image_meta_field ? auxin_get_option( 'blog_archive_show_featured_image', 1 ): $show_featured_image_meta_field;
+                    // } else {
+                    //     $show_featured_image = auxin_get_option( 'blog_archive_show_featured_image', 1 );
+                    // }
+                    $show_featured_image = auxin_get_option( 'blog_archive_show_featured_image', 1 );
                 } else {
                     $show_featured_image = auxin_is_true( $show_featured_image_meta_field );
                 }
@@ -2833,7 +2835,7 @@ function auxin_get_post_format_media( $post, $settings = array(), $aux_content_w
         default:
 
         $args['has_attach'] = has_post_thumbnail();
-        
+
             // skip generating media for this format
             if( $ignore_media ){
                 break;
@@ -2843,16 +2845,18 @@ function auxin_get_post_format_media( $post, $settings = array(), $aux_content_w
             if( 'archive' === $request_from ){
 
                 $show_featured_image = true;
+                $show_featured_image_meta_field = auxin_get_post_meta( $post, 'blog_archive_show_featured_image', 'auto' );
 
                 // get metafield featured image visibility option
-                if( 'auto' == $show_featured_image_meta_field = auxin_get_post_meta( $post, 'blog_archive_show_featured_image', 'auto' ) ){
-                    if( 'full' == auxin_get_option( 'blog_content_on_listing', 'full' ) && in_array( auxin_get_option( 'post_index_template_type' ), array('default', '1', '2', '3', '4') ) ){
-                        $post_content = get_the_content();
-                        $show_featured_image_meta_field = ! ( false !== strpos( $post_content, '<img' ) );
-                        $show_featured_image = $show_featured_image_meta_field ? auxin_get_option( 'blog_archive_show_featured_image', 1 ): $show_featured_image_meta_field;
-                    } else {
-                        $show_featured_image = auxin_get_option( 'blog_archive_show_featured_image', 1 );
-                    }
+                if( in_array( $show_featured_image_meta_field, array( 'auto', 'default') ) ){
+                    // if( 'full' == auxin_get_option( 'blog_content_on_listing', 'full' ) ){
+                    //     $post_content = get_the_content();
+                    //     $show_featured_image_meta_field = ! ( false !== strpos( $post_content, '<img' ) );
+                    //     $show_featured_image = $show_featured_image_meta_field ? auxin_get_option( 'blog_archive_show_featured_image', 1 ): $show_featured_image_meta_field;
+                    // } else {
+                    //     $show_featured_image = auxin_get_option( 'blog_archive_show_featured_image', 1 );
+                    // }
+                    $show_featured_image = auxin_get_option( 'blog_archive_show_featured_image', 1 );
                 } else {
                     $show_featured_image = auxin_is_true( $show_featured_image_meta_field );
                 }
@@ -3016,7 +3020,7 @@ function auxin_wc_my_account( $args = array() ){
 
     $args = wp_parse_args( $args, $defaults );
 
-    if ( auxin_is_plugin_active( 'woocommerce/woocommerce.php') ) {
+    if ( class_exists( 'WooCommerce' ) ) {
         $my_account_url = wc_get_page_permalink( 'myaccount' );
         
         $output  = '<div class="aux-myaccount-wrapper ' . esc_attr( $args['css_class'] ) . '">';

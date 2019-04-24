@@ -111,7 +111,7 @@ function auxin_core_plugin_notice(){
         $links_attrs['data-action'] = 'install';
         $links_attrs['href'] = $links_attrs['data-install-url'];
         $button_label = sprintf( esc_html__( 'Install %s', 'phlox' ), $plugin_title );
-    } elseif( ! auxin_is_plugin_active( $plugin_base_name ) ) {
+    } elseif( ! class_exists( 'AUXELS' ) ) {
         $links_attrs['data-action'] = 'activate';
         $links_attrs['href'] = $links_attrs['data-activate-url'];
         $button_label = sprintf( esc_html__( 'Activate %s', 'phlox' ), $plugin_title );

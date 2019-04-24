@@ -448,7 +448,7 @@ if( ! function_exists( 'auxin_the_main_title_section' ) ){
 
         $inline_style = '';
         if( ! empty( $page_header_style ) ){
-            $inline_style = ' style="' . $page_header_style . '" ';
+            $inline_style = ' style="' . esc_attr( $page_header_style ) . '" ';
         }
 
         // get the bg color of heading box
@@ -491,11 +491,11 @@ if( ! function_exists( 'auxin_the_main_title_section' ) ){
                     <?php } ?>
                             <section class="page-title-group" <?php echo $title_group_inline_style; ?>>
                                 <?php if( ! empty( $args['subtitle'] ) && $args['position'] === 'before'  ) { ?>
-                                <h3 class="page-subtitle" ><?php echo $args['subtitle']; ?></h3>
+                                <h3 class="page-subtitle" ><?php echo wp_kses( $args['subtitle'], array() ); ?></h3>
                                 <?php } if( $args['titles_enabled'] && ! empty( $args['title'] ) ) { ?>
-                                <h1 class="page-title"><?php echo $args['title']; ?></h1>
+                                <h1 class="page-title"><?php echo esc_html( $args['title'] ); ?></h1>
                                 <?php } if( ! empty( $args['subtitle'] ) && $args['position'] === 'after'  ) {  ?>
-                                <h3 class="page-subtitle" ><?php echo $args['subtitle']; ?></h3>
+                                <h3 class="page-subtitle" ><?php echo wp_kses( $args['subtitle'], array() ); ?></h3>
                                 <?php } ?>
                             </section>
 
@@ -663,7 +663,7 @@ function auxin_get_the_archive_slider( $post_type = 'post', $request_for_locatio
         return '';
     }
     // skip if it is a woocommerce or portfolio arhicve.
-    if( is_tax() || is_post_type_archive('portfolio') || is_post_type_archive('news') || ( auxin_is_plugin_active( 'woocommerce/woocommerce.php') && ( is_shop() || is_product_category() || is_product_tag() ) ) ) {
+    if( is_tax() || is_post_type_archive('portfolio') || is_post_type_archive('news') || ( class_exists( 'WooCommerce' ) && ( is_shop() || is_product_category() || is_product_tag() ) ) ) {
                 return'';
         }
     // get and compare the allowed location for archive post slider
@@ -792,7 +792,6 @@ function auxin_get_header_layout( $layout = '' ){
     switch ( $layout ) {
 
         case 'horizontal-menu-left':
-
             ?>
             <div class="aux-header aux-header-elements-wrapper aux-float-layout">
                 <!-- ribbon bar -->
@@ -802,9 +801,9 @@ function auxin_get_header_layout( $layout = '' ){
                     <div id="logo" class="aux-logo-header aux-end aux-fill aux-tablet-center aux-phone-left">
                         <?php echo $logo_markup; ?>
                     </div>
-                    <?php if ( 'none' !== $menu ) { ?>                    
+                    <?php if ( 'none' !== $menu ) { ?>
                     <!-- burger -->
-                    <div id="nav-burger" class="aux-burger-box aux-start aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>">
+                    <div id="nav-burger" class="aux-burger-box aux-start aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" data-target-content=".site-header-section .aux-master-menu">
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
                     <?php } ?>
@@ -878,13 +877,13 @@ function auxin_get_header_layout( $layout = '' ){
                         <?php echo $logo_markup; ?>
                     </div>
 
-                    <?php if ( 'none' !== $menu ) { ?>                    
+                    <?php if ( 'none' !== $menu ) { ?>
                     <!-- burger -->
-                    <div id="nav-burger" class="aux-burger-box aux-end aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" >
+                    <div id="nav-burger" class="aux-burger-box aux-end aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>"  data-target-content=".site-header-section .aux-master-menu">
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
                     <?php } ?>
-                    
+
                     <?php if ( auxin_is_true( $add_search ) ) { ?>
                      <!-- search -->
                     <div class="aux-search-box aux-desktop-on aux-end aux-middle">
@@ -924,7 +923,7 @@ function auxin_get_header_layout( $layout = '' ){
                         ));
                     ?>
                     </div>
-                    <?php } ?>                    
+                    <?php } ?>
                 </div>
 
                 <!-- toggle menu bar: this element will be filled in tablet and mobile size -->
@@ -947,10 +946,10 @@ function auxin_get_header_layout( $layout = '' ){
                     </div>
                     <?php if ( 'none' !== $menu ) { ?>
                     <!-- burger -->
-                    <div id="nav-burger" class="aux-burger-box aux-start aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>">
+                    <div id="nav-burger" class="aux-burger-box aux-start aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" data-target-content=".site-header-section .aux-master-menu">
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
-                    <?php } ?>                    
+                    <?php } ?>
                     <?php if ( auxin_is_true( $add_search ) ) { ?>
                     <!-- search -->
                     <div class="aux-search-box aux-desktop-on aux-start aux-middle">
@@ -990,7 +989,7 @@ function auxin_get_header_layout( $layout = '' ){
                         ));
                     ?>
                     </div>
-                    <?php } ?>                    
+                    <?php } ?>
                 </div>
 
                 <!-- toggle menu bar: this element will be filled in tablet and mobile size -->
@@ -1011,9 +1010,9 @@ function auxin_get_header_layout( $layout = '' ){
                     <div id="logo" class="aux-logo-header aux-fill aux-center aux-phone-center">
                         <?php echo $logo_markup; ?>
                     </div>
-                    <?php if ( 'none' !== $menu ) { ?>                    
+                    <?php if ( 'none' !== $menu ) { ?>
                     <!-- burger -->
-                    <div id="nav-burger" class="aux-burger-box aux-start aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>">
+                    <div id="nav-burger" class="aux-burger-box aux-start aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" data-target-content=".site-header-section .aux-master-menu">
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
                     <?php } ?>
@@ -1048,7 +1047,7 @@ function auxin_get_header_layout( $layout = '' ){
                 </div>
 
                 <div class="bottom-bar secondary-bar aux-phone-off aux-float-wrapper">
-                    <?php if ( 'none' !== $menu ) { ?>                    
+                    <?php if ( 'none' !== $menu ) { ?>
                     <!-- menu -->
                     <div class="aux-menu-box <?php echo $submenu_below ? 'aux-middle aux-center-middle' : 'aux-fill aux-center'; ?>">
 <?php
@@ -1077,9 +1076,9 @@ function auxin_get_header_layout( $layout = '' ){
                         <?php echo $logo_markup; ?>
                     </div>
 
-                    <?php if ( 'none' !== $menu ) { ?>                 
+                    <?php if ( 'none' !== $menu ) { ?>
                     <!-- burger -->
-                    <div id="nav-burger" class="aux-burger-box aux-end aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>">
+                    <div id="nav-burger" class="aux-burger-box aux-end aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" data-target-content=".site-header-section .aux-master-menu>
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
                     <!-- menu -->
@@ -1089,7 +1088,7 @@ function auxin_get_header_layout( $layout = '' ){
                         wp_nav_menu( array( 'menu' => $menu, 'container_id' => 'master-menu-main-header', 'theme_location' => 'header-primary' ) );
                     ?>
                     </div>
-                    <?php } ?>                    
+                    <?php } ?>
                 </div>
                 <!-- secondary bar: this element will be filled in tablet size -->
                 <div class="bottom-bar secondary-bar secondary-bar-2  aux-tablet-on aux-float-wrapper"></div>
@@ -1183,7 +1182,7 @@ function auxin_get_header_layout( $layout = '' ){
                     </div>
                     <?php if ( 'none' !== $menu ) { ?>
                     <!-- burger -->
-                    <div id="nav-burger" class="aux-burger-box aux-end aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" data-target-menu="overlay" >
+                    <div id="nav-burger" class="aux-burger-box aux-end aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" data-target-menu="overlay" data-target-content=".site-header-section .aux-master-menu">
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
                     <?php } ?>
@@ -1258,7 +1257,7 @@ function auxin_get_header_layout( $layout = '' ){
 
             ?>
             <!-- burger -->
-            <div id="nav-burger" class="aux-burger-box aux-end aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" data-target-menu="overlay" >
+            <div id="nav-burger" class="aux-burger-box aux-end aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" data-target-menu="overlay" data-target-content=".aux-vertical-menu-side .aux-master-menu">
                 <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
             </div>
             <div class="aux-vertical-menu-side aux-header aux-header-elements-wrapper <?php echo esc_attr( $items_align ) ;?>" <?php echo $bg_color ;?> >
@@ -1344,7 +1343,7 @@ function auxin_get_header_layout( $layout = '' ){
                             </div>
                             <?php if ( 'none' !== $menu ) { ?>
                             <!-- burger -->
-                            <div id="nav-burger" class="aux-burger-box aux-end aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>">
+                            <div id="nav-burger" class="aux-burger-box aux-end aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" data-target-content=".site-header-section .aux-master-menu">
                                 <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                             </div>
 
@@ -1448,7 +1447,7 @@ function auxin_get_header_layout( $layout = '' ){
                     </div>
                     <?php if ( 'none' !== $menu ) { ?>
                     <!-- burger -->
-                    <div id="nav-burger" class="aux-burger-box aux-end aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" >
+                    <div id="nav-burger" class="aux-burger-box aux-end aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>"  data-target-content=".site-header-section .aux-master-menu">
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
                     <?php } ?>
@@ -1521,7 +1520,7 @@ function auxin_get_header_layout( $layout = '' ){
                     </div>
                     <?php if ( 'none' !== $menu ) { ?>
                     <!-- burger -->
-                    <div id="nav-burger" class="aux-burger-box aux-end aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" data-target-menu="overlay" >
+                    <div id="nav-burger" class="aux-burger-box aux-end aux-phone-on aux-middle" data-target-panel="<?php echo esc_attr( $mobile_menu_position ); ?>" data-target-menu="overlay" data-target-content=".site-header-section .aux-master-menu">
                         <div class="aux-burger <?php echo esc_attr( $site_mobile_header_toggle_button_style ); ?>"><span class="mid-line"></span></div>
                     </div>
                     <?php } ?>
@@ -1708,7 +1707,8 @@ function auxin_get_search_box( $args = array() ){
         'has_form'          => true,
         'has_submit_icon'   => false, // this option added for changing submit type
         'css_class'         => '',
-        'toggle_icon_class' => ''
+        'toggle_icon_class' => '',
+        'icon_classname'    => 'auxicon-search-4'
     );
 
     $args = wp_parse_args( $args, $defaults );
@@ -1718,7 +1718,7 @@ ob_start();
 ?>
     <div <?php echo esc_attr( $id_attr ); ?> class="aux-search-section <?php echo esc_attr( $args[ 'css_class' ] ); ?>">
     <?php if( $args['has_toggle_icon'] ){ ?>
-        <button class="aux-search-icon auxicon-search-4 <?php echo esc_attr( $args[ 'toggle_icon_class' ] ); ?> "></button>
+        <button class="aux-search-icon  <?php echo esc_attr( $args[ 'icon_classname' ] ); ?> <?php echo esc_attr( $args[ 'toggle_icon_class' ] ); ?> "></button>
     <?php } ?>
     <?php if( $args['has_form'] ){ ?>
         <div <?php  ?> class="aux-search-form <?php echo $args['has_submit_icon'] ? 'aux-iconic-search' : '' ?>">
@@ -1729,7 +1729,7 @@ ob_start();
                 <input type="text" class="aux-search-field"  placeholder="<?php echo esc_attr( $placeholder ); ?>" name="s" />
             <?php } ?>
             <?php if( $args['has_submit_icon'] ){ ?>
-                <div class="aux-submit-icon-container">
+                <div class="aux-submit-icon-container <?php echo esc_attr( $args[ 'icon_classname' ] ); ?> ">
                     <input type="submit" class="aux-iconic-search-submit" value="<?php esc_attr_e( 'Search', 'phlox' ); ?>" >
                 </div>
             <?php } elseif( $args['has_submit'] ){ ?>

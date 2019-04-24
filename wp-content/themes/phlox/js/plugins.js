@@ -1,4 +1,4 @@
-/*! Auxin WordPress Framework - v2.3.12 - 2019-03-14
+/*! Auxin WordPress Framework - v2.4.0 - 2019-04-23
  *  All required plugins 
  *  http://averta.net
  */
@@ -19555,101 +19555,303 @@ window.averta = {};
 
     var pluginName = "AuxinMasonryAnimate",
         defaults = {
-            columns       : 'aux-masonry-animation-col',
-            offset        : 0.2
+            columns      : 3,
+            tabletColumns: 2,
+            mobileColumns: 1,
+            columnClass  : 'aux-parallax-column',
+            numItems     : 8,
+            offset       : 0.2,
+            minHeight    : 500,
+            insetOffset  : 0.3
         },
-        $window =$(window);
+        
+        attributeDataMap = {
+            'd-columns'   : 'columns',
+            't-columns'   : 'tabletColumns',
+            'm-columns'   : 'mobileColumns',
+            'length'      : 'numItems',
+            'offset'      : 'offset',
+            'inset-offset': 'insetOffset',
+        },
+
+        $window = $(window)
 
     // The actual plugin constructor
     function Plugin ( element, options ) {
-        this.element   = element;
-        this.$element  = $(element);
-        this.settings  = $.extend( {}, defaults, options );
-        this._defaults = defaults;
-        this._name     = pluginName;
+
+		this.element = element;
+		this.$element = $(element);
+
+		// create element attribute options object
+		var elementData = {},
+			tempData;
+		for ( var attribute in attributeDataMap ) {
+            tempData = this.$element.data(attribute);
+			if ( tempData !== undefined ) {
+				elementData[attributeDataMap[attribute]] = tempData;
+			}
+		}
+
+		this.settings      = $.extend( {}, defaults, options, elementData );
+		this._defaults     = defaults;
+        this._name         = pluginName;
+        this.items         = this.$element.find('.aux-parallax-item');
+        this.oldBreakPoint = null,
+        this.loading       = false;
         this.init();
     }
 
     // Avoid Plugin.prototype conflicts
     $.extend( Plugin.prototype, {
+
+        /**
+         * Init Function
+        */
         init: function() {
-            this.$cols = this.$element.find( '.' + this.settings.columns );
-            this.$respEl     = this.$element.find('.aux-parallax-split');
-            this.$moveEl     = this.$element.find('.aux-move-parallel');
-            $window.on( 'scroll resize', this.update.bind( this ) );
-            $window.on( 'resize', this._responsive.bind( this ) );
-            this._responsive();
+            this.showLoading();
+            $window.on('load resize', this.initializeLayout.bind( this ) );
+            this.hideLoading();                
         },
 
+        /**
+         * a function for transform the columns based on short column on scroll
+        */
         update: function() {
-            if ( window.innerWidth < 991 ) {
-                this.$cols.css( window._jcsspfx + 'Transform', 'none' );
+            
+            if ( this.items.length <= this.columns.length || this.items.length % this.columns.length === 0 ) {
+                this.columns.css( window._jcsspfx + 'Transform', 'none' );
                 this.element.style.marginBottom = 0;
                 return;
+            };
+
+            var shortCol       = this.shortCol,
+                shortColRect   = shortCol.getBoundingClientRect(),
+                refDelta       = window.innerHeight - ( window.innerHeight * this.settings.offset ) - ( shortColRect.top ) ,
+                refDeltaNormal = refDelta / ( shortColRect.height ) ;
+
+            this.element.style.marginBottom = ( shortCol.offsetHeight * this.settings.insetOffset - this.element.offsetHeight ) + 'px';
+            
+            if ( refDeltaNormal >= 1 ) {
+                refDeltaNormal = 1;
+            } else if ( refDeltaNormal <= 0 ) {
+                refDeltaNormal = 0;
             }
 
-            // find shortest column
-            var shortCol;
-            this.$cols.each( function( index, element ) {
-                if ( !shortCol ) {
-                    shortCol = element;
-                    return;
-                }
-
-                if ( shortCol.offsetHeight > element.offsetHeight ) {
-                    shortCol = element;
-                }
-            }.bind( this ) );
-
-            this.element.style.marginBottom = shortCol.offsetHeight - shortCol.parentNode.offsetHeight + 'px';
-
-            var shortColRect = shortCol.getBoundingClientRect();
-            var refDelta =  window.innerHeight - ( window.innerHeight * this.settings.offset ) - shortColRect.top,
-                refDeltaNormal = refDelta / shortColRect.height;
-
-            this.$cols.each( function( index, element ) {
+            this.columns.each( function( index, column ) {  
                 var colTransform = 0;
-                if ( element !== shortCol ) {
-                    colTransform = (element.offsetHeight - index * 50 - shortColRect.height) * refDeltaNormal;
-                } else {
-                    colTransform = refDelta * -0.03;
-                }
 
-                element.style[window._jcsspfx + 'Transform'] = 'translateY(' +  -colTransform + 'px)';
-                element.style[window._jcsspfx + 'TransitionDuration'] = 900 + index * 200  + 'ms';
+                var columnOffBot = column.offsetHeight + column.offsetTop,
+                    shortColOffBot = ( shortColRect.height * this.settings.insetOffset ) + shortCol.offsetTop;
+                
+                colTransform = -1 * ( columnOffBot - shortColOffBot ) * refDeltaNormal;
+
+
+                column.style[window._jcsspfx + 'Transform'] = 'translateY(' + colTransform + 'px)';
             }.bind( this ) );
 
         },
 
-        _responsive: function( e ){
-            if( window.innerWidth < 991 ) {
-                this.$respEl.removeClass('aux-hide');
-                this.$moveEl.find('.aux-inner-col').removeClass('aux-parallax-item aux-has-gallery').addClass('aux-col').sort(function (a, b) {
-                   return $(a).attr('data-item-order') - $(b).attr('data-item-order');
-                })
-                .appendTo('.aux-parallax-split');
-                this.$moveEl.addClass('aux-hide');
-            } else {
-                this.$moveEl.removeClass('aux-hide');
-                this.$moveEl.find('.aux-masonry-animation-col').each(function(index, el) {
-                    var $colItems = this.$respEl.find('.aux-inner-col').filter(function() {
-                      return $(this).data("column-num") == index + 1;
-                    });
-                    $colItems.removeClass('aux-col').addClass('aux-parallax-item').appendTo( el );
-                }.bind(this) );
-                this.$respEl.addClass('aux-hide');
-            }
-        }
+        /**
+         * a function for initialze the layout based on breakpoints
+        */
 
+        initializeLayout: function(){
+            var columnsNum,
+                currentBreakPoint;
+
+            if ( $window.width() < 1024 && $window.width() > 768 ) {
+                columnsNum = this.settings.tabletColumns;
+                currentBreakPoint = 'tablet';
+            } else if ( $window.width() < 768 ) {
+                columnsNum = this.settings.mobileColumns;
+                currentBreakPoint = 'mobile';
+            } else {
+                columnsNum = this.settings.columns;
+                currentBreakPoint = 'desktop';
+            }
+
+            
+            if ( this.oldBreakPoint === currentBreakPoint ) return;
+            this.oldBreakPoint = currentBreakPoint;
+
+            var colObject = this.initializeColumn( columnsNum ),
+                columns = [],
+                self = this,
+                shortCol;
+            
+            if ( this.columns ) {
+                this.columns.remove();
+            }
+
+            Object.keys( colObject ).forEach( function ( key ) {
+                var columnNode = document.createElement('div');
+                    columnNode.classList.add( self.settings.columnClass + '-' + key );
+
+                    colObject[key]['posts'].forEach( function( item ) {
+                        columnNode.appendChild( item );
+                    })
+
+                    self.element.appendChild( columnNode );
+                    columns.push( columnNode );
+
+                    if ( !shortCol || columnNode.offsetHeight < shortCol.offsetHeight ) {
+                        shortCol = columnNode;
+                    }
+            });
+
+            this.shortCol = shortCol;
+            this.columns  = $(columns);
+            $window.on('scroll resize', this.update.bind( this ) );
+        },
+
+        /**
+         * a function for return an object of columns with their items
+        */
+        initializeColumn: function( columnsNum ){
+            
+            if ( this.settings.numItems !== this.items.length ) {
+                this.settings.numItems = this.items.length;
+            }
+
+            var colObj        = {},
+                numExtraItems = this.settings.numItems < columnsNum ? 0 : this.settings.numItems % columnsNum,
+                orderdItems   = 0 !== numExtraItems ?  this.items.slice( 0, -1 * numExtraItems ): this.items, 
+                extraItems    = 0 !== numExtraItems ? this.items.slice( -1 * numExtraItems )    : null;
+
+            for( var i = 1; i <= columnsNum; i++ ) {
+
+                colObj[i] = {
+                    posts   : [],
+                }
+
+            }
+
+            orderdItems.each( function( index, item ) {
+                var currentIndex = index + 1,
+                    columnIndex = currentIndex % columnsNum ;
+                    columnIndex = 0 === columnIndex ? columnsNum : columnIndex ;
+                    colObj[columnIndex].posts.push(item);
+            }); 
+            
+
+            if ( extraItems ) {
+                switch( columnsNum ) {
+                    case 5:
+                        if ( 1 === 5 - numExtraItems ) {
+                            extraItems.each( function( index, item ) {
+                                var currentIndex = index + 1;
+                                colObj[currentIndex].posts.push(item);
+                            }); 
+                        } else if ( 2 === 5 - numExtraItems ) {
+                            extraItems.each( function( index, item ) {
+                                var currentIndex = index * 2 + 1;
+                                colObj[currentIndex].posts.push(item);
+                            }); 
+                        } else if ( 3 === 5 - numExtraItems ) {
+                            extraItems.each( function( index, item ) {
+                                var currentIndex = ( index + 1 ) * 2 ;
+                                colObj[currentIndex].posts.push(item);
+                            });     
+                        } else {
+                            extraItems.each( function( index, item ) {
+                                var currentIndex = index + 1;
+                                colObj[currentIndex].posts.push(item);
+                            });    
+                        }
+                        break;
+                    
+                    case 4: 
+                        if ( 1 === 4 - numExtraItems ) {
+                            extraItems.each( function( index, item ) {
+                                var currentIndex = index + 1;
+                                colObj[currentIndex].posts.push(item);
+                            }); 
+                        } else if ( 2 === 4 - numExtraItems ) {
+                            extraItems.each( function( index, item ) {
+                                var currentIndex = ( index + 1 ) * 2 ;
+                                colObj[currentIndex].posts.push(item);
+                            }); 
+                        } else {
+                            extraItems.each( function( index, item ) {
+                                var currentIndex = index + 1;
+                                colObj[currentIndex].posts.push(item);
+                            });   
+                        }
+                        break;
+                    
+                    case 3:
+                        if ( 1 === 3 - numExtraItems ) { 
+                            extraItems.each( function( index, item ) {
+                                var currentIndex = index * 2 + 1;
+                                colObj[currentIndex].posts.push(item);
+                            }); 
+                        } else {
+                            extraItems.each( function( index, item ) {
+                                var currentIndex = ( index + 1 ) * 2 ;
+                                colObj[currentIndex].posts.push(item);
+                            }); 
+                        }
+                        break;
+                    
+                    case 2: 
+                        extraItems.each( function( index, item ) {
+                            var currentIndex = index + 1;
+                            colObj[currentIndex].posts.push(item)
+                        });
+                        break;
+                    default:
+                        extraItems.each( function( index, item ) {
+                            var currentIndex = index + 1;
+                            colObj[currentIndex].posts.push(item)
+                        });
+                }
+
+            }
+
+            return colObj;
+        },   
+
+        /**
+         * a function for showing the loading
+        */
+        showLoading: function() {
+            this.$element.css('height', this.settings.minHeight);
+            this.$element.find('.aux-items-loading').addClass('aux-loading-hide');
+        },
+        
+        /**
+         * a function for hiding the loading
+        */
+
+        hideLoading: function() {
+            this.$element.css('height', 'auto');
+            this.$element.find('.aux-items-loading').removeClass('aux-loading-hide');
+        },
+
+        /**
+         * a function for insert items
+        */
+        insertItem: function( items ) {
+            this.oldBreakPoint = null;
+            this.columns.remove();
+            this.items = items;
+            this.initializeLayout();
+        }
     } );
 
+    // A really lightweight plugin wrapper around the constructor,
+    // preventing against multiple instantiations
     $.fn[ pluginName ] = function( options ) {
-        return this.each( function() {
+        var _arguments = arguments;
+        return this.each(function() {
             if ( !$.data( this, "plugin_" + pluginName ) ) {
-                $.data( this, "plugin_" +
-                    pluginName, new Plugin( this, options ) );
+                 $.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
+            } else if ( typeof options === 'string' && options.indexOf(0) !== '_' )  {
+                // access to public methods method
+                var plugin = $.data( this, "plugin_" + pluginName);
+                plugin[options].apply( plugin, Array.prototype.slice.call( _arguments, 1 ) );
             }
-        } );
+        });
     };
 
 } )( jQuery, window, document );

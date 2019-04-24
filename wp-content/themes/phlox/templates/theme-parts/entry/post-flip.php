@@ -4,7 +4,7 @@
     <?php if ( $has_attach && $show_media ) { ?>
         <div class="entry-media"><?php echo $the_media; ?></div>
     <?php } ?>
-    
+
     <?php ob_start();?>
     <div class="entry-main">
         <header class="entry-header">
@@ -84,12 +84,12 @@
                     <?php
                     if( 'link' == $post_format ) {
                         echo '<a href="'. esc_url( $the_link ) .'" class="link-format-excerpt">' . $the_link . '</a>';
-            
+
                     } elseif ( has_excerpt() ) { ?>
                         <p><?php the_excerpt() ;?></p><?php
                     } else { ?>
                         <p><?php auxin_the_trim_excerpt( null, (int) $excerpt_len, null, true ); ?></p><?php
-            
+
                         // clear the floated elements at the end of content
                         echo '<div class="clear"></div>';
                     }
@@ -136,12 +136,12 @@
                     </div>
                 <?php } ?>
             </footer>
-        <?php } 
+        <?php }
         ?>
     </div>
     <?php echo $entry_main = ob_get_clean(); ?>
     </div>
     <div class="aux-flip-back">
-        <?php echo $entry_main;?>
-    </div> 
+        <?php echo wp_kses_post( $entry_main ); ?>
+    </div>
 </article>

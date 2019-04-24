@@ -2116,6 +2116,33 @@ function auxin_define_options_info( $fields_sections_list ){
             'type'        => 'text'
         );
 
+        $options[] = array(
+            'title'       => __( 'Basket Animation', 'phlox' ),
+            'description' => '',
+            'id'          => 'site_header_cart_animation',
+            'section'     => 'header-section-layout',
+            'dependency'  => array(
+                array(
+                     'id'      => 'site_header_top_layout',
+                     'value'   => 'no-header',
+                     'operator'=> '!='
+                ),
+                array(
+                     'id'      => 'show_header_cart',
+                     'value'   => array('1'),
+                     'operator'=> ''
+                ),
+                array(
+                     'id'      => 'site_header_card_mode',
+                     'value'   => array('0'),
+                     'operator'=> ''
+                )
+            ),
+            'default'     => 0,
+            'transport'   => 'refresh',
+            'type'        => 'switch'
+        );
+
         $options[] =    array(
             'title'       => __( 'Cart Dropdown Skin', 'phlox' ),
             'description' => '',
@@ -5897,7 +5924,7 @@ function auxin_define_options_info( $fields_sections_list ){
         'type'        => 'text'
     );
 
-    if ( auxin_is_plugin_active( 'wp-ulike/wp-ulike.php')){
+    if ( class_exists( 'wp_ulike' ) ){
         $options[] = array(
             'title'       => __( 'Display Like Button', 'phlox' ),
             'description' => sprintf(__( 'Enable it to display %s like button%s on blog posts. Please note WP Ulike plugin needs to be activaited to use this option.', 'phlox' ), '<strong>', '</strong>'),

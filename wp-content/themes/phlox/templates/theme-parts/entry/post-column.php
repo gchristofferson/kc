@@ -5,8 +5,14 @@
                             <?php } ?>
 
                             <div class="entry-main">
-
+                            <?php
+                                $taxonomy_name    = ! isset( $taxonomy_name    ) ? 'category' : $taxonomy_name;
+                                $max_taxonomy_num = ! isset( $max_taxonomy_num ) ? 3 : $max_taxonomy_num;
+                                $cat_terms        = wp_get_post_terms( $post->ID, $taxonomy_name );
+                                $featured_color   = get_post_meta( $post->ID, 'auxin_featured_color_enabled', true ) ? get_post_meta( $post->ID, 'auxin_featured_color', true ) : auxin_get_option( 'post_single_featured_color' );
+                            ?>
                             <?php ob_start(); ?>
+
                                 <header class="entry-header">
                                 <?php
                                 if( auxin_is_true(  $display_title ) || 'quote' == $post_format) {
@@ -14,7 +20,10 @@
 
                                     <h4 class="entry-title">
                                         <a href="<?php echo !empty( $the_link ) ? esc_url( $the_link ) : esc_url( get_permalink() ); ?>">
-                                            <?php echo !empty( $the_name ) ? $the_name : get_the_title(); ?>
+                                            <?php
+                                                $the_name = ! empty( $the_name ) ? $the_name : get_the_title();
+                                                echo empty( $words_num ) ? $the_name : wp_trim_words( $the_name, $words_num );
+                                            ?>
                                         </a>
                                     </h4>
                                 <?php
@@ -38,6 +47,12 @@
                             if( 'quote' !== $post_format && auxin_is_true( $show_info ) ) {
                                 $show_date = ! isset( $show_date ) ? true : $show_date;
                             ?>
+                                <?php if ( ! empty( $cat_terms ) && isset( $show_badge ) && auxin_is_true( $show_badge ) ) { ?>
+                                    <span class="entry-badge aux-featured-color" data-featured-color="<?php echo !empty( $featured_color ) ? esc_html( $featured_color ) : ''; ?>">
+                                        <a href="<?php the_permalink(); ?>"><?php echo esc_html( $cat_terms[0]->name ); ?></a>
+                                    </span>
+                                <?php } ?>
+
                                 <div class="entry-info">
                                 <?php if( auxin_is_true( $show_date ) ){ ?>
                                     <div class="entry-date">
@@ -46,7 +61,7 @@
                                         </a>
                                     </div>
                                 <?php } ?>
-                                <?php if ( 'author' === $author_or_readmore && $display_author_header) { ?>
+                                <?php if ( 'author' === $author_or_readmore && isset( $display_author_header ) && auxin_is_true( $display_author_header ) ) { ?>
                                     <span class="meta-sep"><?php esc_html_e("by", 'phlox'); ?></span>
                                     <span class="author vcard">
                                         <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" rel="author" title="<?php echo esc_attr( sprintf( __( 'View all posts by %s', 'phlox'), get_the_author() ) ); ?>" >
@@ -59,10 +74,7 @@
                                 ?>
                                     <span class="entry-tax <?php echo esc_attr( $tax_class_name ); ?>">
                                         <?php
-                                            $taxonomy_name    = ! isset( $taxonomy_name    ) ? 'category' : $taxonomy_name;
-                                            $max_taxonomy_num = ! isset( $max_taxonomy_num ) ? 3 : $max_taxonomy_num;
-
-                                            if( $cat_terms = wp_get_post_terms( $post->ID, $taxonomy_name ) ){
+                                            if( $cat_terms ){
 
                                                 foreach( $cat_terms as $index => $term ){
                                                     if( $index + 1 > $max_taxonomy_num ){
@@ -100,7 +112,7 @@
                                         <a href="<?php the_permalink(); ?>" class="aux-read-more"><?php echo esc_html( auxin_get_option( 'post_index_read_more_text' ) ); ?></a>
                                     </div>
                                     <?php
-                                    } elseif ( 'author' === $author_or_readmore && 'quote' !== $post_format && 'link' !== $post_format && $display_author_footer) { ?>
+                                    } elseif ( 'author' === $author_or_readmore && 'quote' !== $post_format && 'link' !== $post_format && isset( $display_author_footer ) && auxin_is_true( $display_author_footer ) ) { ?>
                                     <div class="author vcard">
                                         <?php echo get_avatar( get_the_author_meta("user_email"), 32 ); ?>
                                         <span class="meta-sep"><?php esc_html_e("by", 'phlox'); ?></span>

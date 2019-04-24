@@ -1,4 +1,4 @@
-/*! Auxin WordPress Framework - v2.3.12 (2019-03-14)
+/*! Auxin WordPress Framework - v2.4.0 (2019-04-23)
  *  Scripts for initializing plugins 
  *  http://averta.net
  *  (c) 2014-2019 averta;
@@ -319,7 +319,7 @@ for ( var i = 0 ; UlikeHeart.length > i; i++){
 
         $scope.find('.aux-tilt-box').tilt({
             maxTilt : $(this).data('max-tilt'),
-            easing: 'cubic-bezier(0.23, 1, 0.32, 1)',
+            easing: 'cubic-bezier(0.23, 1, 0.32, 1) 50ms',
             speed: $(this).data('time'),
             perspective: 2000
         });
@@ -642,9 +642,8 @@ for ( var i = 0 ; UlikeHeart.length > i; i++){
     // Masonry Animate
     $.fn.AuxinMasonryAnimateInit = function( $scope ){
         $scope = $scope || $(this);
-
         // init masonry Animation
-        $scope.find('.aux-widget-recent-products-parallax').AuxinMasonryAnimate();
+        $scope.find('.aux-product-parallax-wrapper').AuxinMasonryAnimate();
     }
 
 })(jQuery, window, document);
@@ -1488,131 +1487,141 @@ for ( var i = 0 ; UlikeHeart.length > i; i++){
     $.fn.AuxinMobileMenuInit = function( $scope ){
         $scope = $scope || $(this);
 
-        // burger mobile menu and search intraction
-        // @if TODO
-        // Selectors should be more accurate in future
-        // @endif
-        var $burger            = $scope.find('#nav-burger'),
-            $burgerIcon        = $burger.find('>.aux-burger'),
-            isClosed           = true,
-            animDuration       = 600,
-            $window            = $(window),
-            $menu              = $scope.find('header .aux-master-menu'),
-            $scroll_to_links   = $menu.find( '.aux-menu-item > a[href^="#"]' ),
-            anim, $menuContainer;
+        var $burgerBtns = $scope.find('.aux-burger-box');
+            $window     = $(window);
 
-        /* ------------------------------------------------------------------------------ */
-        function toggleExpnadableMenu() {
-            $burgerIcon.toggleClass( 'aux-close' );
+        $burgerBtns.each(  function( button ) {
 
-            if ( anim ) {
-                anim.stop( true );
+            var args = {
+                menu         : $( $(this).data( 'target-content') ),
+                icon         : $(this).find('>.aux-burger'),
+                isClosed     : true,
+                animDuration : 600,
+                type         : $(this).data( 'target-panel' ),
+                anim         : null,
             }
 
-            if ( isClosed ) {
-                anim = CTween.animate($menuContainer, animDuration, { height: $menu.outerHeight() + 'px' }, {
-                    ease: 'easeInOutQuart',
-                    complete: function() {
-                        $menuContainer.css( 'height', 'auto' );
-                    }
-                } );
-            } else {
-                $menuContainer.css( 'height', $menu.outerHeight() + 'px' );
-                anim = CTween.animate($menuContainer, animDuration, { height: 0 }, { ease: 'easeInOutQuart' } );
-            }
+            args.scrollToLinks = args.menu.find( '.aux-menu-item > a[href^="#"]' );
+            args.targetWrapper = $( args.menu.data( 'switch-parent' ) );
+            args.activeWidth   = args.menu.data( 'switch-width' )
 
-            isClosed = !isClosed;
-        }
+            /* Functions */
+            /* ------------------------------------------------------------------------------ */
 
-        /* ------------------------------------------------------------------------------ */
-        function toggleOffcanvasMenu() {
-            $burgerIcon.toggleClass( 'aux-close' );
-            $menuContainer.toggleClass( 'aux-open' );
-            isClosed = !isClosed;
-        }
-
-        /* ------------------------------------------------------------------------------ */
-        function toggleOverlayMenu() {
-            $burgerIcon.toggleClass( 'aux-close' );
-            if ( isClosed ) {
-                $menuContainer.show();
-            }
-            auxinToggleOverlayContainer( $menuContainer, isClosed );
-            isClosed = !isClosed;
-        }
-        /* ------------------------------------------------------------------------------ */
-        function closeOnEsc( toggleFunction ) {
-            $(document).keydown( function(e) {
-                if ( e.keyCode == 27 && !isClosed ) {
-                    toggleFunction();
+            args.toggleExpnadableMenu = function() {
+                args.icon.toggleClass( 'aux-close' );
+            
+                if ( args.anim ) {
+                    args.anim.stop( true );
                 }
-            });
-        }
 
-        /* ------------------------------------------------------------------------------ */
+                if ( args.isClosed ) {
+                    args.anim = CTween.animate(args.targetWrapper, args.animDuration, { height: args.menu.outerHeight() + 'px' }, {
+                        ease: 'easeInOutQuart',
+                        complete: function() {
+                            args.targetWrapper.css( 'height', 'auto' );
+                        }
+                    } );
+                } else {
+                    args.targetWrapper.css( 'height', args.menu.outerHeight() + 'px' );
+                    args.anim = CTween.animate(args.targetWrapper, args.animDuration, { height: 0 }, { ease: 'easeInOutQuart' } );
+                }
 
-        switch ( $burger.data( 'target-panel' ) ) {
-            case 'toggle-bar':
-                $menuContainer  = $scope.find('header .aux-toggle-menu-bar');
-                $burger.click( toggleExpnadableMenu );
-                //$scroll_to_links.click( toggleExpnadableMenu );
+                args.isClosed = !args.isClosed;
 
-                break;
-            case 'offcanvas':
-                $menuContainer  = $scope.find('#offmenu')
-                $burger.click( toggleOffcanvasMenu );
-                $menuContainer.find('.aux-close').click( toggleOffcanvasMenu );
-                //$scroll_to_links.click( toggleOffcanvasMenu );
+            }
 
-                // setup swipe
-                //var touchSwipe = new averta.TouchSwipe( $scope.find(document) );
-                var activeWidth = $menu.data( 'switch-width' ),
-                    dir = ( $menuContainer.hasClass( 'aux-pin-right' ) ? 'right' : 'left' );
+            /* ------------------------------------------------------------------------------ */
 
-                if ( activeWidth !== undefined ) {
-                    $window.on( 'resize', function() {
-                        if ( window.innerWidth > activeWidth ) {
+            args.toggleOffcanvasMenu = function () {
+                args.icon.toggleClass( 'aux-close' );
+                args.targetWrapper.toggleClass( 'aux-open' );
+                args.isClosed = !args.isClosed;
+            }
 
-                            $menuContainer.hide();
-                        } else {
-                            if ( !isClosed ) {
+            /* ------------------------------------------------------------------------------ */
 
+            args.toggleOverlayMenu = function () {
+                args.icon.toggleClass( 'aux-close' );
+                if ( args.isClosed ) {
+                    args.targetWrapper.show();
+                }
+                auxinToggleOverlayContainer( args.targetWrapper, args.isClosed );
+                args.isClosed = !args.isClosed;
+            }
+
+            /* ------------------------------------------------------------------------------ */
+
+            args.closeOnEsc = function ( toggleFunction ) {
+                $(document).keydown( function(e) {
+                    if ( e.keyCode == 27 && !args.isClosed ) {
+                        toggleFunction();
+                    }
+                });
+            }
+
+            /* ------------------------------------------------------------------------------ */
+
+            switch ( args.type ) { 
+                case 'toggle-bar':
+                    $(this).on( 'click', args.toggleExpnadableMenu );
+                    // args.scrollToLinks.on( 'click', args.toggleExpnadableMenu );
+                    break;
+
+                case 'offcanvas':
+                    args.targetWrapper = args.targetWrapper.closest('.aux-offcanvas-menu ');
+                    $(this).on( 'click', args.toggleOffcanvasMenu );
+                    args.targetWrapper.find('.aux-close').click( args.toggleOffcanvasMenu );
+                    // args.scrollToLinks.on( 'click', args.toggleOffcanvasMenu );
+
+                    args.dir         = ( args.targetWrapper.hasClass( 'aux-pin-right' ) ? 'right' : 'left' );
+
+                    if ( args.activeWidth !== undefined ) {
+                        $window.on( 'resize', function() {
+                            if ( window.innerWidth > args.activeWidth ) {
+            
+                                args.targetWrapper.hide();
+                            } else {
+                                if ( !args.isClosed ) {
+            
+                                }
+                                args.targetWrapper.show();
                             }
-                            $menuContainer.show();
-                        }
-                    });
-                }
+                        });
+                    }
 
-                closeOnEsc( toggleOffcanvasMenu );
-                break;
+                    args.closeOnEsc( args.toggleOffcanvasMenu );
+                    break;
 
-            case 'overlay':
-                var activeWidth = $menu.data( 'switch-width' ),
-                    oldSkinClassName = $menu.attr( 'class' ).match( /aux-skin-\w+/ )[0];
-                $menuContainer = $scope.find('#fs-menu-search');
-                $burger.click( toggleOverlayMenu );
-                $menuContainer.find( '.aux-panel-close' ).click( toggleOverlayMenu );
-                //$scroll_to_links.click( toggleOverlayMenu );
+                case 'overlay':
+                var oldSkinClassName   = args.menu.attr( 'class' ).match( /aux-skin-\w+/ )[0];
+                    args.targetWrapper = args.targetWrapper.closest('.aux-fs-popup');
 
+                $(this).on( 'click', args.toggleOverlayMenu );
+                args.targetWrapper.find( '.aux-panel-close' ).click( args.toggleOverlayMenu );
+                
                 var checkForHide = function() {
-                    if ( window.innerWidth > activeWidth ) {
-                        $menuContainer.hide();
-                        $menu.addClass( oldSkinClassName );
+                    if ( window.innerWidth > args.activeWidth ) {
+                        args.targetWrapper.hide();
+                        args.menu.addClass( oldSkinClassName );
                     } else {
-                        if ( !isClosed ) {
-                            $menuContainer.show();
+                        if ( !args.isClosed ) {
+                            args.targetWrapper.show();
                         }
-                        $menu.removeClass( oldSkinClassName );
+                        args.menu.removeClass( oldSkinClassName );
                     }
                 }
-
-                if ( activeWidth !== undefined ) {
+        
+                if ( args.activeWidth !== undefined ) {
                     checkForHide();
                     $window.on( 'resize', checkForHide );
                 }
+        
+                args.closeOnEsc( args.toggleOverlayMenu );
+                
+            }
 
-                closeOnEsc( toggleOverlayMenu );
-        }
+        })
 
     };
 

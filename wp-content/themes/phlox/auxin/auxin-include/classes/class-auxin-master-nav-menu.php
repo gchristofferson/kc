@@ -154,12 +154,10 @@ class Auxin_Master_Nav_Menu {
         );
 
 
-        if( ! is_admin() ){
-            // Change the walker class and default args for front end navigation menu
-            add_filter( 'wp_nav_menu_args'      , array( $this, 'change_nav_menu_frontend_walker' ), 9, 1 );
-            // Add HTML comment before and after of menu section
-            add_filter( 'wp_nav_menu'           , array( $this, 'add_html_comment_nav_menu_front' ), 9, 1 );
-        }
+        // Change the walker class and default args for front end navigation menu
+        add_filter( 'wp_nav_menu_args'      , array( $this, 'change_nav_menu_frontend_walker' ), 9, 1 );
+        // Add HTML comment before and after of menu section
+        add_filter( 'wp_nav_menu'           , array( $this, 'add_html_comment_nav_menu_front' ), 9, 1 );
     }
 
     /* Back End
@@ -173,10 +171,12 @@ class Auxin_Master_Nav_Menu {
      * Modifies the walker class and default args for front end menu
      */
     public function change_nav_menu_frontend_walker( $args ){
+
         // This line will block our custom args from nav menu (This will fix nav issues on Elementor header builder)
         if( $args['fallback_cb'] !== 'wp_page_menu' ) {
             return $args;
         }
+
 
         $args['container']  = 'nav';
         $args['before']     = "\n";
@@ -186,6 +186,7 @@ class Auxin_Master_Nav_Menu {
         $master_menu_theme_locations = array( 'header-primary', 'header-secondary', 'element');
 
         $menu_direction  = isset( $args['direction'] ) ? $args['direction'] : 'horizontal';           // the menu type on desktop size (toggle, accordion, horizontal, vertical, cover)
+
 
         if( in_array( $args['theme_location'], $master_menu_theme_locations ) ){
             $args['menu_class']  = 'aux-master-menu aux-no-js';
@@ -197,13 +198,13 @@ class Auxin_Master_Nav_Menu {
 
                 $args['menu_class'] .= ' aux-skin-' . esc_attr( auxin_get_option( 'site_vertical_header_navigation_sub_skin', 'default' ) );
                 
-            } else {
+            } else if ( 'element' != $args['theme_location'] ) {
 
                 $args['menu_class'] .= ' aux-skin-' . esc_attr( auxin_get_option( 'site_header_navigation_sub_skin', 'default' ) );
 
             }
 
-
+            $args['menu_class'] .= isset( $args['extra_class'] ) && ! empty( $args['menu_class'] )  ? $args['extra_class'] : '';
             $args['walker']      = new Auxin_Walker_Nav_Menu_Front();
         }
 
@@ -217,6 +218,15 @@ class Auxin_Master_Nav_Menu {
         // the mobile menu options for header-primary menu
         // ---------------------------------------------------------------------
         $data_switch_attr = '';
+
+        if ( 'element' == $args['theme_location'] ){ 
+            $mobile_menu_type    = isset( $args['mobile_menu_type'] ) && ! empty( $args['mobile_menu_type'] ) ? $args['mobile_menu_type'] : 'toggle';
+            $mobile_under        = isset( $args['mobile_under'] ) && ! empty( $args['mobile_under'] ) ? $args['mobile_under'] : 765 ;
+            $mobile_menu_target  = isset( $args['mobile_menu_target'] ) && ! empty( $args['mobile_menu_target'] ) ? $args['mobile_menu_target'] : '.aux-elementor-header .aux-toggle-menu-bar';
+            $data_switch_attr    = ' data-switch-type="'. esc_attr( $mobile_menu_type ) .'" data-switch-parent="'. esc_attr( $mobile_menu_target ) .'" data-switch-width="'. esc_attr( $mobile_under ) .'" ';
+            $args['menu_class'] .= ' aux-' . $menu_direction;
+        }
+
         if( 'header-primary' == $args['theme_location'] ){
 
             // Specifies the submenu opening effect
@@ -264,7 +274,7 @@ class Auxin_Master_Nav_Menu {
         // ---------------------------------------------------------------------
 
         $args['items_wrap'] = "\n\n\t" . '<ul id="%1$s" class="%2$s" data-type="' . esc_attr( $menu_direction ) . '" '. $data_switch_attr ." >\n" .'%3$s'. "\t</ul>\n\n";
-
+        
         return $args;
     }
 

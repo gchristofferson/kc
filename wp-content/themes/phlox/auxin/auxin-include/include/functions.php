@@ -853,7 +853,7 @@ function auxin_the_resized_attachment( $attach_id = null, $width = null , $heigh
          * @param mixed $attr          Attributes for the image markup.
          * @param int   $attach_id     Image attachment ID.
          */
-        $attr = apply_filters( 'wp_get_attachment_image_attributes', $attr, $attachment );
+        $attr = apply_filters( 'wp_get_attachment_image_attributes', $attr, $attachment, $size_array );
         $attr = array_map( 'esc_attr', $attr );
         $html = rtrim("<img $hwstring");
         foreach ( $attr as $name => $value ) {
@@ -1501,6 +1501,24 @@ function auxin_get_the_resized_attachments_list( $post_id, $attachment_meta_key 
             $string_size = $width . 'x' . $height;
             $hwstring = image_hwstring( $width, $height );
 
+            $size       = $width;
+            $image_meta = get_post_meta( $attach_id, '_wp_attachment_metadata', true );
+
+            // if size is valid and defined
+            if( ! is_numeric( $size ) ){
+                $size_array = _wp_get_image_size_from_meta( $size, $image_meta );
+                if( $size_array ){
+                    $width  = $size_array[0];
+                    $height = $size_array[1];
+                }
+            } else {
+                $size = '';
+                $size_array = array(
+                    absint( $width  ),
+                    absint( $height )
+                );
+            }
+
             // default image attributes
             $default_attr = array(
                 'src'   => $src,
@@ -1521,7 +1539,7 @@ function auxin_get_the_resized_attachments_list( $post_id, $attachment_meta_key 
              * @param mixed $attr          Attributes for the image markup.
              * @param int   $attach_id     Image attachment ID.
              */
-            $img_attr = apply_filters( 'wp_get_attachment_image_attributes', $img_attr, $attachment );
+            $img_attr = apply_filters( 'wp_get_attachment_image_attributes', $img_attr, $attachment, $size_array );
             $img_attr = array_map( 'esc_attr', $img_attr );
             $html = rtrim("<img $hwstring");
             foreach ( $img_attr as $name => $value ) {
@@ -2088,20 +2106,6 @@ function auxin_maybe_render_metabox_hub_for_post_type( $args ){
 
 }
 
-
-/**
- * Whether a plugin is active or not
- *
- * @param  string $plugin_basename  plugin directory name and mail file address
- * @return bool                     True if plugin is active and FALSE otherwise
- */
-if( ! function_exists( 'auxin_is_plugin_active' ) ){
-    function auxin_is_plugin_active( $plugin_basename ){
-        include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-        return is_plugin_active( $plugin_basename );
-    }
-}
-
 /*-----------------------------------------------------------------------------------*/
 /*  A function to insert latest post slider
 /*-----------------------------------------------------------------------------------*/
@@ -2564,7 +2568,7 @@ function auxin_registered_nav_menus() {
 
     $terms = get_terms( 'nav_menu' );
 
-    $menus = array( 
+    $menus = array(
         'default' => __( 'Theme Default' , 'phlox' ),
         'none'    => __( '- No Menu -', 'phlox' )
     );
@@ -2641,7 +2645,7 @@ function auxin_filter_output( $args, $type, $align, $classname = null, $sort_arg
         }
 
         $lists_output  = '<ul>';
-        
+
         if ( sizeof( $terms ) > 1 ) {
             $lists_output .= '<li data-filter="all" data-category-id="all"><a href="#"><span data-select="' . __('All', 'phlox') . '">' . __('All', 'phlox') . '</span></a></li>';
         }
