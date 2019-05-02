@@ -6,8 +6,8 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: phlox, gallery, elementor, siteorigin, auxin, averta, auxin-elements, framework, widget, fullwidth, masonry, timeline, parallax
 Requires PHP: 5.4
 Requires at least: 4.6
-Tested up to: 5.1.0
-Stable tag: 2.4.0
+Tested up to: 5.1.1
+Stable tag: 2.4.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -154,8 +154,9 @@ Bugs can be reported in our [support forums](http://support.averta.net/en/item/p
 
 == Changelog ==
 
-= Version 2.4.0 / 10.04.2019) =
-
+= Version 2.4.1 / 30.04.2019) =
+- [Fix]: An issue with importing some menu labels fixed.
+- [Improvement]: Improvements in Phlox shop applied. 
 
 = Version 2.3.11 / 03.01.2019) =
 - [Improvement]: Changing the google analytic tracking option to tracking ID option.

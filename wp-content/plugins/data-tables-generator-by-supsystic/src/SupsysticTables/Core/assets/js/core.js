@@ -669,6 +669,15 @@ var g_stbServerSideProcessingIsActive = false;
             } else if (responsiveMode === 2) {
                 // Responsive Mode: Horizontal Scroll
                 config.scrollX = true;
+                var firstRow = $table.find('tbody tr:first-child td');
+                if(firstRow.length) {
+   					var cntCols = firstRow.length;
+                	$table.find('thead tr:first-child th').each(function(i, th){
+                		if(cntCols > i && $(th).css('width')) {
+                			firstRow.eq(i).css('width', $(th).css('width'));
+                		}
+                	});
+                }
             }
             if(responsiveMode === 2 || responsiveMode === 3) {
                 // Responsive Mode: 2 - Horizontal Scroll, 3 - Disable Responsivity
@@ -850,6 +859,9 @@ var g_stbServerSideProcessingIsActive = false;
 				var searching = $table.data('searching-settings');
 				if(searching && ('columnSearch' in searching) && searching.columnSearch == 'on') {
 					self.setColumnSearch($table);
+				}
+				if(!g_stbServerSideProcessing && $table.data('merged')) {
+					tableInstance.fnResetFakeRowspan();
 				}
 			});
             if(addInstance) {
@@ -1227,8 +1239,9 @@ var g_stbServerSideProcessingIsActive = false;
 			if(inputs.length == 0) {
                 return;
 			}
-			$(document).off('keyup change', ".dataTables_wrapper:first .stbColumnsSearchWrapper .search-column")
-						.on('keyup change', ".dataTables_wrapper:first .stbColumnsSearchWrapper .search-column",function () {
+			//$(document).off('keyup change', ".dataTables_wrapper:first .stbColumnsSearchWrapper .search-column")
+			//			.on('keyup change', ".dataTables_wrapper:first .stbColumnsSearchWrapper .search-column",function () {
+			inputs.off('keyup.dtg change.dtg').on('keyup.dtg change.dtg',function () {
 				var input = $(this),
 					position = input.parents('th:first').index(),
 					value = this.value,

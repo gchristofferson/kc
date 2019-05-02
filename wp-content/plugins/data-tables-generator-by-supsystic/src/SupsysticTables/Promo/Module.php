@@ -253,9 +253,10 @@ class SupsysticTables_Promo_Module extends SupsysticTables_Core_BaseModule
 				->setLocalSource('css/supsystic-ui.css')*/
 						
 				wp_enqueue_style('tables-ui-styles', $pluginUrl. '/app/assets/css/supsystic-ui.css');
-				wp_enqueue_style('supsystic-jquery-ui', $pluginUrl. '/app/assets/css/jquery-ui.min.css');
-				wp_enqueue_style('supsystic-jquery-ui.theme', $pluginUrl. '/app/assets/css/jquery-ui.theme.min.css');
-				wp_enqueue_style('supsystic-jquery-ui.structure', $pluginUrl. '/app/assets/css/jquery-ui.structure.min.css');
+				//wp_enqueue_style('supsystic-jquery-ui', $pluginUrl. '/app/assets/css/jquery-ui.min.css');
+				//wp_enqueue_style('supsystic-jquery-ui.theme', $pluginUrl. '/app/assets/css/jquery-ui.theme.min.css');
+				//wp_enqueue_style('supsystic-jquery-ui.structure', $pluginUrl. '/app/assets/css/jquery-ui.structure.min.css');
+				wp_enqueue_style('jquery-ui','//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css');
 				wp_enqueue_style('supsystic-font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 				
 				wp_localize_script($this->config('db_prefix'). 'plug-deactivation', 'dtsPluginsData', array(

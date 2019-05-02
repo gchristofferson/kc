@@ -46,7 +46,7 @@ Class Auxin_SVG_Support {
         add_action( 'get_image_tag', array( $this, 'get_image_tag_override' ), 10, 6 );
         add_filter( 'wp_generate_attachment_metadata', array( $this, 'skip_svg_regeneration' ), 10, 2 );
         add_filter( 'wp_get_attachment_metadata', array( $this, 'metadata_error_fix' ), 10, 2 );
-        add_filter( 'wp_get_attachment_image_attributes', array( $this, 'fix_direct_image_output' ), 10, 3 );
+        add_filter( 'wp_get_attachment_image_attributes', array( $this, 'fix_direct_image_output' ), 10, 2 );
     }
 
     /**
@@ -429,7 +429,7 @@ Class Auxin_SVG_Support {
      * @param string|array $size Requested size. Image size or array of width and height values
      *                                 (in that order). Default 'thumbnail'.
      */
-    public function fix_direct_image_output( $attr, $attachment, $size ) {
+    public function fix_direct_image_output( $attr, $attachment ) {
 
         if ( ! $attachment instanceof WP_Post ) {
             return $attr;

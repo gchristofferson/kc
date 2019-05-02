@@ -90,6 +90,54 @@
 		}
 		return this;
 	};
+	$.fn.dataTableExt.oApi.fnResetFakeRowspan = function (oSettings) {
+		if(oSettings) {
+			var displayRows = oSettings.aiDisplay,
+				mergedData = $(oSettings.nTable).data('merged');
+			if(!mergedData || mergedData.length == 0 || displayRows.length == 0) return this;
+
+			var rows = oSettings.aoData,
+				rowNums = {};
+			$.each(displayRows, function(index, rowNum) {
+				var cells = rows[rowNum].anCells;
+				rowNums[cells[0].getAttribute('data-y')] = rowNum;
+				for(var i = 0; i < cells.length; i++) {
+					$(cells[i]).css('display', '');			
+					cells[i].setAttribute('rowspan', 1);
+					cells[i].setAttribute('colspan', 1);
+				}
+			});
+			$.each(mergedData, function(index, value) {
+				var firstRow = Number(value.row) + 1,
+					lastRow = firstRow + Number(value.rowspan) - 1,
+					colspan = Number(value.colspan),
+					firstCol = Number(value.col),
+					lastCol = firstCol + colspan - 1,
+					rowspan = 0;
+				for(var r = firstRow; r <= lastRow; r++) {
+					if(r in rowNums) {
+						if(rowspan == 0) {
+							firstRow = r;
+						}
+						for(var c = firstCol + (firstRow == r ? 1 : 0); c <= lastCol; c++) {
+							rows[rowNums[r]].anCells[c].style.display = 'none';
+						}
+						rowspan++;
+					}
+				}
+				if(rowspan > 0) {
+					var mergedCell = rows[rowNums[firstRow]].anCells[firstCol];
+					if(rowspan > 1) {
+						mergedCell.setAttribute('rowspan', rowspan);
+					}
+					if(colspan > 1) {
+						mergedCell.setAttribute('colspan', colspan);
+					}
+				}
+			});
+		}
+		return this;
+	};
 
 	$.extend( $.fn.dataTableExt.oSort, {
 		"natural-asc": function ( a, b ) {

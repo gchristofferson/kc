@@ -1,4 +1,4 @@
-/*! Auxin WordPress Framework - v2.4.0 (2019-04-23)
+/*! Auxin WordPress Framework - v2.4.1 (2019-04-30)
  *  Scripts for initializing plugins 
  *  http://averta.net
  *  (c) 2014-2019 averta;
@@ -319,7 +319,7 @@ for ( var i = 0 ; UlikeHeart.length > i; i++){
 
         $scope.find('.aux-tilt-box').tilt({
             maxTilt : $(this).data('max-tilt'),
-            easing: 'cubic-bezier(0.23, 1, 0.32, 1) 50ms',
+            easing: 'cubic-bezier(0.23, 1, 0.32, 1)',
             speed: $(this).data('time'),
             perspective: 2000
         });

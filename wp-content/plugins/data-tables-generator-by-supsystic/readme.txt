@@ -2,7 +2,7 @@
 Contributors: supsystic.com
 Tags: csv, excel, table, tablesorter,data table, table, database, table generator, builder, generator, cells, chart, charting, charts, column chart, gauge chart, graph, graphs, html5, line chart, pie chart, scatter chart, spreadsheet, visualise data, Woo, Woo Commerce, WooCommerce, product table, woocommerce product, product tables, catalog, product catalog, price list, pricing list, order forms, woocommerce tables, wholesale
 Tested up to: 5.1.1
-Stable tag: 1.9.74
+Stable tag: 1.9.76
 
 Create data tables with charts and graphs.  Custom design, navigation, searching and ordering functions. Export to PDF, CSV, Print. Excel spreadsheet. WooCommerce Integration.
 
@@ -213,6 +213,22 @@ It's perfect for product [Price List](http://woo.supsystic.com/price-list "Price
 Create custom order forms which increase your conversion rate!
 
 == Changelog ==
+
+= 1.9.76 / 30.04.2019 =
+ * Hot fixes for 1.9.75 release - now all things with any configurations work great!
+ * Fixed recalc complex forlumas
+ * Fixed lightbox image with link issue
+ * Add edit link for admin after table
+
+= 1.9.75 / 24.04.2019 =
+ * Added variable products
+ * Fix for frontend diagrams refresh
+ * Fix column search
+ * Added export remote images and import images from Google Sheets
+ * Fixed column width for horizontal mode
+ * Fix deactivation gialog
+ * Fixed merged cells by searching
+ * Minor issues fix
 
 = 1.9.74 / 03.04.2019 =
  * Fix for CSS

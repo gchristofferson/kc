@@ -1,9 +1,9 @@
 # Averta Copyright (c) {2019}
 msgid ""
 msgstr ""
-"Project-Id-Version: Phlox 2.4.0\n"
+"Project-Id-Version: Phlox 2.4.1\n"
 "Report-Msgid-Bugs-To: http://averta.net/phlox/wordpress-theme/\n"
-"POT-Creation-Date: 2019-04-23 07:02:14+00:00\n"
+"POT-Creation-Date: 2019-04-30 05:27:09+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1206,35 +1206,35 @@ msgid "Theme Panel"
 msgstr ""
 
 #: auxin/auxin-include/classes/class-auxin-welcome-base.php:130
-#: auxin/auxin-include/classes/class-auxin-welcome-base.php:181
+#: auxin/auxin-include/classes/class-auxin-welcome-base.php:184
 #: build/phlox/auxin/auxin-include/classes/class-auxin-welcome-base.php:133
-#: build/phlox/auxin/auxin-include/classes/class-auxin-welcome-base.php:184
+#: build/phlox/auxin/auxin-include/classes/class-auxin-welcome-base.php:187
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-welcome-base.php:133
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-welcome-base.php:184
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-welcome-base.php:187
 msgid "Welcome"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-welcome-base.php:181
-#: build/phlox/auxin/auxin-include/classes/class-auxin-welcome-base.php:184
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-welcome-base.php:184
+#: auxin/auxin-include/classes/class-auxin-welcome-base.php:184
+#: build/phlox/auxin/auxin-include/classes/class-auxin-welcome-base.php:187
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-welcome-base.php:187
 msgid "Welcome to %s Theme"
-msgstr ""
-
-#: auxin/auxin-include/classes/class-auxin-welcome-base.php:198
-#: build/phlox/auxin/auxin-include/classes/class-auxin-welcome-base.php:201
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-welcome-base.php:201
-msgid "Version %s"
-msgstr ""
-
-#: auxin/auxin-include/classes/class-auxin-welcome-base.php:200
-#: build/phlox/auxin/auxin-include/classes/class-auxin-welcome-base.php:203
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-welcome-base.php:203
-msgid "Activated"
 msgstr ""
 
 #: auxin/auxin-include/classes/class-auxin-welcome-base.php:201
 #: build/phlox/auxin/auxin-include/classes/class-auxin-welcome-base.php:204
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-welcome-base.php:204
+msgid "Version %s"
+msgstr ""
+
+#: auxin/auxin-include/classes/class-auxin-welcome-base.php:203
+#: build/phlox/auxin/auxin-include/classes/class-auxin-welcome-base.php:206
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-welcome-base.php:206
+msgid "Activated"
+msgstr ""
+
+#: auxin/auxin-include/classes/class-auxin-welcome-base.php:204
+#: build/phlox/auxin/auxin-include/classes/class-auxin-welcome-base.php:207
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-welcome-base.php:207
 msgid "How to deactivate?"
 msgstr ""
 
@@ -5826,7 +5826,7 @@ msgstr ""
 #: auxin-content/include/hooks-admin.php:536
 #: build/phlox/auxin-content/include/hooks-admin.php:297
 #: build/phlox-pro/auxin-content/include/hooks-admin.php:427
-msgid "Customize Phlox"
+msgid "Customize %s"
 msgstr ""
 
 #: auxin-content/include/hooks-admin.php:537
@@ -5871,7 +5871,7 @@ msgstr ""
 #: auxin-content/include/hooks-admin.php:563
 #: build/phlox/auxin-content/include/hooks-admin.php:324
 #: build/phlox-pro/auxin-content/include/hooks-admin.php:454
-msgid "Learn about any aspect of Phlox Theme."
+msgid "Learn about any aspect of %s Theme."
 msgstr ""
 
 #: auxin-content/include/hooks-admin.php:564
@@ -5970,16 +5970,17 @@ msgid ""
 "again."
 msgstr ""
 
-#: auxin-content/init/constant.php:32 auxin-content/init/constant.php:34
-#: build/phlox/auxin-content/init/constant.php:25
-#: build/phlox-pro/auxin-content/init/constant.php:25
-#: build/phlox-pro/auxin-content/init/constant.php:26
+#: auxin-content/init/constant-i18n.php:17
+#: auxin-content/init/constant-i18n.php:19
+#: build/phlox/auxin-content/init/constant-i18n.php:16
+#: build/phlox-pro/auxin-content/init/constant-i18n.php:16
+#: build/phlox-pro/auxin-content/init/constant-i18n.php:17
 msgid "Phlox Pro"
 msgstr ""
 
-#: auxin-content/init/constant.php:38
-#: build/phlox/auxin-content/init/constant.php:29
-#: build/phlox-pro/auxin-content/init/constant.php:30
+#: auxin-content/init/constant-i18n.php:23
+#: build/phlox/auxin-content/init/constant-i18n.php:20
+#: build/phlox-pro/auxin-content/init/constant-i18n.php:21
 msgid "PHLOX"
 msgstr ""
 

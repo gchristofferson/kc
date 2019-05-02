@@ -126,7 +126,7 @@ if( ! class_exists( 'Auxin' ) ){
 
 
             locate_template( AUXIN_CON . 'init/constant.php', true, true );
-
+            locate_template( AUXIN_CON . 'init/constant-i18n.php', true, true );
 
             // theme name
             $theme_data = wp_get_theme();

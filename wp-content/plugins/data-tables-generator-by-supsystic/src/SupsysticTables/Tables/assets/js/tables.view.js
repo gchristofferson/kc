@@ -858,7 +858,7 @@ var g_stbCopyPasteColsCount = [];
 
 		formSettings.find('input[name="styles[headerBackgroundColor]"]').on('change', function() {
 			var color = $(this).val();
-			tablesModel.updatePreviewCss([{selector: wrapperSelector + ' th', param: 'background-color', value: color}]);
+			tablesModel.updatePreviewCss([{selector: wrapperSelector + ' th', param: 'background-color', value: color + ' !important'}]);
 			$(this).parent().find('.color-picker-preview').css('backgroundColor', color);
 		});
 		formSettings.find('input[name="styles[headerFontColor]"]').on('change', function() {
@@ -877,10 +877,11 @@ var g_stbCopyPasteColsCount = [];
 			tablesModel.updatePreviewCss([
 				{selector: wrapperSelector + ' tbody tr', param: 'background-color', value: color},
 				{selector: wrapperSelector + ' table.stripe tbody tr.even', param: 'background-color', value: even},
+				{selector: wrapperSelector + ' table.stripe.order-column tbody tr > .sorting_1', param: 'background-color', value: even},
 				{selector: wrapperSelector + ' table.hover tbody tr:hover', param: 'background-color', value: hover},
-				{selector: wrapperSelector + ' table.order-column tbody tr>.sorting_1', param: 'background-color', value: even},
-				{selector: wrapperSelector + ' table.order-column tbody tr.even>.sorting_1', param: 'background-color', value: hover},
-				{selector: wrapperSelector + ' table.order-column tbody tr:hover>.sorting_1', param: 'background-color', value: tablesModel.getLightenDarkenColor(color, -60)},
+				{selector: wrapperSelector + ' table.stripe.order-column tbody tr.even > .sorting_1', param: 'background-color', value: hover},
+				{selector: wrapperSelector + ' table.order-column tbody tr > .sorting_1', param: 'background-color', value: even},
+				{selector: wrapperSelector + ' table.hover.order-column tbody tr:hover > .sorting_1', param: 'background-color', value: tablesModel.getLightenDarkenColor(color, -60)},
 				{selector: wrapperSelector + ' tbody td', param: 'background-color', value: 'inherit'},
 			]);
 			$(this).parent().find('.color-picker-preview').css('backgroundColor', color);
@@ -912,7 +913,7 @@ var g_stbCopyPasteColsCount = [];
 			tablesModel.updatePreviewCss([{selector: wrapperSelector + ' td', param: 'font-family', value: family == 'default' ? '' : family}]);
 		});
 
-		var searchSelector = tableSelector + '_filter input,'+wrapperSelector+' .stbColumnsSearchWrapper input';
+		var searchSelector = tableSelector + '_filter input, '+wrapperSelector+' .stbColumnsSearchWrapper input';
 		formSettings.find('input[name="styles[searchBackgroundColor]"]').on('change', function() {
 			var color = $(this).val();
 			tablesModel.updatePreviewCss([{selector: searchSelector, param: 'background-color',	value: color.length ? color + ' !important' : ''}]);

@@ -71,7 +71,11 @@
                 and context.table.meta.columnsWidth[cellIndex] is not empty
             %}
                 {#style="min-width: {{ context.table.meta.columnsWidth[cellIndex] }}%; width: {{ context.table.meta.columnsWidth[cellIndex] }}%;"#}
-                style="min-width: {{ context.table.meta.columnsWidth[cellIndex] }}%; "
+                {% if context.table.settings.responsiveMode == 2 %}
+                    style="min-width: {{ context.table.meta.columnsWidth[cellIndex] }}%; width: {{ context.table.meta.columnsWidth[cellIndex] }}%;"
+                {% else %}
+                    style="min-width: {{ context.table.meta.columnsWidth[cellIndex] }}%; "
+                {% endif %}
             {% else %}
                 style="width: {{ cell.width }}px"
             {% endif %}
@@ -492,6 +496,9 @@
         {% endif %}
     {% endblock %}
     </table>
+    {% if show_edit_link %}
+        {{ show_edit_link | raw }}
+    {% endif %}
     <!-- /#supsystic-table-{{ table.id }}.supsystic-table -->
 
     {% block signature %}

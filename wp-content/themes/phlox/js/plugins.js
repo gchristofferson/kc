@@ -1,4 +1,4 @@
-/*! Auxin WordPress Framework - v2.4.0 - 2019-04-23
+/*! Auxin WordPress Framework - v2.4.1 - 2019-04-30
  *  All required plugins 
  *  http://averta.net
  */
@@ -19610,7 +19610,9 @@ window.averta = {};
         init: function() {
             this.showLoading();
             $window.on('load resize', this.initializeLayout.bind( this ) );
-            this.hideLoading();                
+            setTimeout( function(){
+                this.hideLoading();                
+            }.bind(this), 1000);
         },
 
         /**
@@ -19815,7 +19817,10 @@ window.averta = {};
          * a function for showing the loading
         */
         showLoading: function() {
-            this.$element.css('height', this.settings.minHeight);
+            this.$element.css({
+                'height' : this.settings.minHeight,
+                'overflow' : 'hidden'
+            });
             this.$element.find('.aux-items-loading').addClass('aux-loading-hide');
         },
         
@@ -19824,7 +19829,11 @@ window.averta = {};
         */
 
         hideLoading: function() {
-            this.$element.css('height', 'auto');
+            this.$element.css({
+                'height' : 'auto',
+                'overflow' : 'visible'
+            });
+
             this.$element.find('.aux-items-loading').removeClass('aux-loading-hide');
         },
 

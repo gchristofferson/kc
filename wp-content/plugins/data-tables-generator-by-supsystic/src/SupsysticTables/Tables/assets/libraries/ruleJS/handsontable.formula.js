@@ -181,7 +181,8 @@
         });
 
         if (rerender) {
-          instance.render();
+          //instance.render();
+          instance.renderWithRecalc();
         }
       }
     };

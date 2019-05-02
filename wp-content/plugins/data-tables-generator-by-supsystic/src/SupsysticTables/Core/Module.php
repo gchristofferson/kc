@@ -16,7 +16,8 @@ class SupsysticTables_Core_Module extends SupsysticTables_Core_BaseModule
 
 	private $frontendMethods = array(
 		'ajax' => array(
-			'tables' => array('saveEditableFields', 'getPageRows')
+			'tables' => array('saveEditableFields', 'getPageRows'),
+			'woocommerce' => array('productsAddToCart')
 		),
 		'post' => array(
 			'importer' => array('import'),
@@ -125,6 +126,14 @@ class SupsysticTables_Core_Module extends SupsysticTables_Core_BaseModule
 				->setHookName($hookName)
 				->setModuleSource($this, 'js/create-table.js')
 				->setDependencies(array('jquery', 'jquery-ui-dialog'))
+				->setCachingAllowed($cachingAllowed)
+				->setVersion($pluginVersion)
+		);
+
+		$ui->add(
+			$ui->createStyle('supsystic-tables-base')
+				->setHookName($hookName)
+				->setModuleSource($this, 'css/base.css')
 				->setCachingAllowed($cachingAllowed)
 				->setVersion($pluginVersion)
 		);

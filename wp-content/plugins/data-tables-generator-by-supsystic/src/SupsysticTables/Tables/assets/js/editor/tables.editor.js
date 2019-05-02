@@ -553,7 +553,7 @@ var g_stbIsDataEdited = {'settings': false, 'source': false, 'history': false, '
 				alert('Failed to load table data: ' + error);
 			}).always(function (response) {
 				$('#loadingProgress').remove();
-				editor.render();
+				if(!g_stbPagination) editor.renderWithRecalc();
 				$('#buttonSave').attr('disabled', false);
 				g_stbDoSaving = false;
 			});
@@ -711,10 +711,11 @@ var g_stbIsDataEdited = {'settings': false, 'source': false, 'history': false, '
 					}
 					r++;
 				}
-				this.render();
+				
 				this.updateSettings({
 					manualRowResize: true
 				});
+				this.renderWithRecalc();
 			}
 		})();
 
@@ -774,6 +775,12 @@ var g_stbIsDataEdited = {'settings': false, 'source': false, 'history': false, '
 			}
 		})();
 
+		editor.getCellValuePagination = (function () {
+			return function (row, col) {
+				return row >= this.pageStart && row <= this.pageStop ? this.getData()[row][col] : this.bufferData[row][col];
+			}
+		})();
+
 		editor.getSourceDataPagination = (function () {
 			return function (fromX, fromY, toX, toY) {
 				this.copyInBuffer();
@@ -802,6 +809,16 @@ var g_stbIsDataEdited = {'settings': false, 'source': false, 'history': false, '
 				return rangeData;
 			}
 		})();
+
+		editor.renderWithRecalc = (function () {
+			return function () {
+				var recalcLimit = 5;
+				do {
+					this.render();
+					recalcLimit--;
+				} while(this.plugin.matrix.needRecalc() && recalcLimit > 0);
+			}
+        })();
 
 		Handsontable.dom.addEvent(window, 'hashchange', function (event) {
 			if (g_stbPagination) {

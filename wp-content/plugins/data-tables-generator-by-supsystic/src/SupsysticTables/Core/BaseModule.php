@@ -13,7 +13,7 @@ abstract class SupsysticTables_Core_BaseModule extends Rsc_Mvc_Module
         $dispathcer = $this->getEnvironment()->getDispatcher();
         $dispathcer->on('after_ui_loaded', array($this, 'afterUiLoaded'));
         $dispathcer->on('after_modules_loaded', array($this, 'afterModulesLoaded'));
-        add_action('admin_enqueue_scripts', array($this, 'adminEnqueueScriptsAction'));
+        //add_action('admin_enqueue_scripts', array($this, 'adminEnqueueScriptsAction'));
         
     }
 

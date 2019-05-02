@@ -178,6 +178,9 @@ class Auxin_Welcome_Base {
     protected function the_header( $type ){
 
         $sections = $this->get_sections();
+        if( empty( $sections ) ){
+            return;
+        }
 
         $welcome_description = ! empty( $sections[ $type ]['description'] ) ? $sections[ $type ]['description'] : '';
 
@@ -220,6 +223,9 @@ class Auxin_Welcome_Base {
     protected function the_nav( $type ){
 
         $nav_tabs = $this->get_sections();
+        if( empty( $nav_tabs ) ){
+            return;
+        }
 
         echo '<nav class="aux-welcome-nav-bar">';
         echo '<ul>';
@@ -277,7 +283,8 @@ class Auxin_Welcome_Base {
      */
     protected function current_tab( $tab_id = '' ){
         $tab  = ! empty( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : '';
-        $tab  = in_array( $tab, array_keys( $this->get_sections() ) ) ? $tab : 'dashboard';
+        $sec  = $this->get_sections();
+        $tab  = in_array( $tab, array_keys( $sec ) ) ? $tab : array_keys( $sec )[0];
 
         if( empty( $tab_id ) ){
             return $tab;
@@ -352,6 +359,9 @@ class Auxin_Welcome_Base {
     protected function the_content( $type ){
 
         $sections = $this->get_sections();
+        if( empty( $sections ) ){
+            return;
+        }
 
         do_action( 'auxin_admin_before_welcome_section_content', $type, $sections );
 

@@ -294,7 +294,7 @@ function auxin_welcome_page_display_section_dashboard(){
         </div>
         <div class="aux-col2">
             <div class="aux-big-banner aux-customize-banner">
-                <h3><?php _e( "Customize Phlox", 'phlox' ); ?></h3>
+                <h3><?php echo wp_sprintf( __( "Customize %s", 'phlox' ), THEME_NAME_I18N ) ?></h3>
                 <p><?php _e( "Customize any part of your website.", 'phlox' ); ?></p>
                 <a class="aux-wl-button aux-round aux-large aux-black" href="<?php echo self_admin_url( 'customize.php' ); ?>"><?php _e( "Customize", 'phlox' ); ?></a>
             </div>
@@ -321,7 +321,7 @@ function auxin_welcome_page_display_section_dashboard(){
             <div class="aux-info-block aux-info-block-documentation">
                 <img class="welcome-icon" src="<?php echo esc_url( AUXIN_URL ) . 'css/images/welcome/documentation.svg'; ?>">
                 <h4><?php _e( "Documentation", 'phlox' ); ?></h4>
-                <p><?php _e( "Learn about any aspect of Phlox Theme.", 'phlox' ); ?></p>
+                <p><?php echo wp_sprintf( __( "Learn about any aspect of %s Theme.", 'phlox' ), THEME_NAME_I18N ) ?></p>
                 <div><a class="aux-wl-button aux-round aux-large aux-orange" href="<?php echo esc_url( $doc_link ); ?>" target="_blank"><?php _e( "Start Reading", 'phlox' ); ?></a></div>
             </div>
         </div>

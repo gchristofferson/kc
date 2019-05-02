@@ -583,8 +583,12 @@ class Auxin_Demo_Importer {
                             unset( $item_value['menu-item-url'] );
                             break;
                         case 'taxonomy':
-                            $get_term       = get_term_by( 'name', $item_value['menu-item-title'], $item_value['menu-item-object'] );
-                            $item_value['menu-item-object-id'] = is_object( $get_term ) ? (int) $get_term->term_id : 0;
+                            $get_term  = get_term_by( 'name', $item_value['menu-item-title'], $item_value['menu-item-object'] );
+                            if( $get_term === false ){
+                                $item_value['menu-item-object-id'] = auxin_get_transient( 'auxin_category_new_id_of' . $item_value['menu-item-object-id'] );
+                            } else {
+                                $item_value['menu-item-object-id'] = is_object( $get_term ) ? (int) $get_term->term_id : 0;
+                            }
                             unset( $item_value['menu-item-url'] );
                             break;
                         default:
@@ -610,7 +614,7 @@ class Auxin_Demo_Importer {
                         switch ( $meta_key ) {
                             case '_menu_item_object_id':
                                 // Create a flag transient
-                                auxin_set_transient( 'auxin_menu_item_old_parent_id_' . $meta_value, $item_id, 3600 );
+                                auxin_set_transient( 'auxin_menu_item_old_parent_id_' . $meta_value, $item_id );
                                 // Change exporter's object ID value
                                 switch ( $item_value['menu-item-type'] ) {
                                     case 'post_type':
@@ -756,7 +760,7 @@ class Auxin_Demo_Importer {
                                         continue;
                                     }
 
-                                    auxin_set_transient( 'auxin_category_new_id_of' . $value, $term['term_id'], 3600 );
+                                    auxin_set_transient( 'auxin_category_new_id_of' . $value, $term['term_id'] );
 
                                     $add_these_terms[]  = intval($term['term_id']);
                                 }
@@ -850,7 +854,7 @@ class Auxin_Demo_Importer {
                                     update_comment_meta( $comment_ID, $meta_key, $meta_value );
                                 }
                             }
-                            auxin_set_transient( 'auxin_comment_new_comment_id_' . $comment_old_ID, $comment_ID, 3600 );
+                            auxin_set_transient( 'auxin_comment_new_comment_id_' . $comment_old_ID, $comment_ID );
                         }
                     }
                 }

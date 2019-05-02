@@ -12,7 +12,7 @@
  * Plugin Name:       Phlox Core Elements
  * Plugin URI:        https://wordpress.org/plugins/auxin-elements/
  * Description:       Exclusive and comprehensive plugin that extends the functionality of Phlox theme by adding new Elements, widgets and options.
- * Version:           2.4.0
+ * Version:           2.4.1
  * Author:            averta
  * Author URI:        http://averta.net
  * Text Domain:       auxin-elements

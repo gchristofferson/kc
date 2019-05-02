@@ -123,7 +123,7 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 		$styles = '';
 		$customStyles = '';
 
-		if(!empty($tableObj->meta) && !empty($tableObj->meta)) {
+		if(!empty($tableObj->meta) && !empty($tableObj->meta) && isset($tableObj->meta['css'])) {
 			$styles = $tableObj->meta['css'];
 			$styles = trim(preg_replace('/\/\*.*\*\//Us', '', $styles));
 		}
@@ -395,6 +395,9 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 				}
 			}
 		}
+		if(!empty($table->meta['mergedCells'])) {
+			unset($table->settings['features']['ordering']);
+		}
 		foreach($table->rows as $key => $row) {
 			if(isset($row['cells']) && !empty($row['cells'])) {
 				foreach($row['cells'] as $index => $cell) {
@@ -435,7 +438,26 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 			$this->tableSearch = '';
 		}
 
-		$renderData = $twig->render($this->getShortcodeTemplate(), array('table' => $table, 'is_feed' => is_feed()));
+		$show_edit_link = '';
+        if( is_user_logged_in() ) {
+            $user = wp_get_current_user();
+            $roles = is_array($user->roles) ? $user->roles : array($user->roles);
+            $pluginSettings = get_option($this->getController()->getConfig()->get('db_prefix') . 'settings', 'access_roles');
+            if (!empty($roles) && !empty($pluginSettings)) {
+                foreach ($roles as $role) {
+                    if (in_array($role, $pluginSettings)) {
+                        $show_edit_link = $this->_getTblLink($id);
+                        break;
+                    }
+                }
+            }
+
+            if (current_user_can('manage_options')) {
+                $show_edit_link = $this->_getTblLink($id);
+            }
+        }
+
+		$renderData = $twig->render($this->getShortcodeTemplate(), array('table' => $table, 'is_feed' => is_feed(), 'show_edit_link' => $show_edit_link));
         $renderData = preg_replace('/\s+/', ' ', trim($renderData));
 
 		if(!$table->isSSP && !in_array($table->view_id, $this->_tablesStyles)) {
@@ -449,6 +471,10 @@ class SupsysticTables_Tables_Module extends SupsysticTables_Core_BaseModule
 		$this->checkSpreadsheet = false;
 
 		return $renderData;
+    }
+
+    private function _getTblLink($id) {
+        return "<a href=".$this->getController()->generateUrl('tables', 'view', array( 'id' => $id ) ).">". $this->getEnvironment()->translate('Edit'). " <i class='fa fa-fw fa-pencil'></i></a>";
     }
 
 	public function getMirrorFooter($table) {

@@ -3,8 +3,8 @@ Contributors: averta, averta_support
 Tags: one-column, two-columns, three-columns, left-sidebar, right-sidebar, grid-layout, custom-menu, custom-colors, editor-style, featured-images, featured-image-header, footer-widgets, full-width-template, post-formats, sticky-post, theme-options, translation-ready, blog, e-commerce, portfolio, threaded-comments, translation-ready
 Requires PHP: 5.4
 Requires at least: 4.6
-Tested up to: 5.1.0
-Stable tag: 2.4.0
+Tested up to: 5.1.1
+Stable tag: 2.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,6 +92,12 @@ Phlox bundles the following third-party resources:
 
 
 == Changelog ==
+
+= 2.4.1 =
+* Released: 30.04.2019
+- [Fix]: An issue with importing some menu labels fixed.
+- [Improvement]: Improvements in Phlox shop applied.
+
 
 = 2.3.11 =
 - [Fix]: An issue with background color of header section fixed.

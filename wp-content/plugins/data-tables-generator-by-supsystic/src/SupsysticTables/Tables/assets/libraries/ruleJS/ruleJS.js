@@ -139,6 +139,17 @@ var ruleJS = (function (root) {
       })[0];
     };
 
+    this.needRecalc = function () {
+      var need = false;
+      jQuery.each(instance.matrix.data, function (i, item) {
+        if(item.needUpdate || item.error === '#NEED_UPDATE') {
+          need = true;
+          return false;
+        }
+      });
+      return need;
+    };
+
     /**
      * remove item from data array
      * @param {String} id
@@ -437,16 +448,20 @@ var ruleJS = (function (root) {
             }
           }
         }
+        var renderedResult = renderedValue || error;
         if (element.innerText) {
-          element.innerText = renderedValue || error;
+          if(renderedResult != element.innerText) instance.isEdited = true;
+          element.innerText = renderedResult;
         } else {
-          element.textContent = renderedValue || error;
+          if(renderedResult != element.textContent) instance.isEdited = true;
+          element.textContent = renderedResult;
         }
         /* */
       }
 
-
-      element.value = value || error;
+      var parseResult = value || error;
+      if(parseResult != element.value) instance.isEdited = true;
+      element.value = parseResult;
 
       return parsed;
     };
@@ -1301,7 +1316,7 @@ var ruleJS = (function (root) {
         var cellId = instance.utils.translateCellCoords({row: element.row, col: element.col});
 
         // get value
-        value = item ? item.value : (isEditorPagination ? window.editor.bufferData[cellCoords.row][cellCoords.col] : fnCellValue(cellCoords.row, cellCoords.col));
+        value = item ? item.value : (isEditorPagination ? window.editor.getCellValuePagination(cellCoords.row, cellCoords.col) : fnCellValue(cellCoords.row, cellCoords.col));
 
         if (instance.utils.isNull(value)) {
           value = 0;
@@ -1466,20 +1481,24 @@ var ruleJS = (function (root) {
         error = null;
 
     try {
-
-      parser.setObj(element);
-      result = parser.parse(formula);
-      var id;
-
       if (element instanceof HTMLElement) {
         id = element.getAttribute('data-cell-id');
       } else if (element && element.id) {
         id = element.id;
       }
 
-      var deps = instance.matrix.getDependencies(id);
+      var curItem = instance.matrix.getItem(id);
 
-      if (deps.indexOf(id) !== -1) {
+      parser.setObj(element);
+      result = parser.parse(formula);
+      var id;
+
+      
+
+      var deps = instance.matrix.getDependencies(id),
+        isFrontend = (typeof instance.isFrontend != 'undefined' || instance.isFrontend);
+
+      if (!isFrontend && deps.indexOf(id) !== -1) {
         result = null;
 
         deps.forEach(function (id) {
@@ -1488,9 +1507,15 @@ var ruleJS = (function (root) {
 
         throw Error('REF');
       }
-
+      
       if(!error && result === 0) {
         result = "0";
+      }
+
+      if(!isFrontend && curItem && curItem.value != result) {
+        deps.forEach(function (id) {
+          instance.matrix.updateItem(id, {value: null, needUpdate: true});
+        });
       }
 
     } catch (ex) {
@@ -1650,7 +1675,15 @@ var ruleJS = (function (root) {
     instance.custom = {};
 
     if (rootElement) {
-      instance.matrix.scan();
+      var recalcLimit = 5;
+      instance.isFrontend = true;
+      do {
+        instance.isEdited = false;
+        instance.matrix.scan();
+        recalcLimit--;
+      } while(instance.isEdited && recalcLimit > 0);
+      
+      //instance.matrix.scan();
 	  helper.unescapeHTML(rootElement);
     }
   };
