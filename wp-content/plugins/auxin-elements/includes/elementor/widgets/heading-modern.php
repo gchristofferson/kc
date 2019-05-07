@@ -139,12 +139,15 @@ class ModernHeading extends Widget_Base {
                 'label'   => __( 'HTML Tag', 'auxin-elements' ),
                 'type'    => Controls_Manager::SELECT,
                 'options' => array(
-                    'h1'      => 'H1',
-                    'h2'      => 'H2',
-                    'h3'      => 'H3',
-                    'h4'      => 'H4',
-                    'h5'      => 'H5',
-                    'h6'      => 'H6'
+					'h1'   => 'H1',
+					'h2'   => 'H2',
+					'h3'   => 'H3',
+					'h4'   => 'H4',
+					'h5'   => 'H5',
+					'h6'   => 'H6',
+					'div'  => 'div',
+					'span' => 'span',
+					'p'    => 'p'
                 ),
                 'default'   => 'h2',
             )
@@ -301,12 +304,15 @@ class ModernHeading extends Widget_Base {
                 'label'   => __( 'HTML Tag', 'auxin-elements' ),
                 'type'    => Controls_Manager::SELECT,
                 'options' => array(
-                    'h1'      => 'H1',
-                    'h2'      => 'H2',
-                    'h3'      => 'H3',
-                    'h4'      => 'H4',
-                    'h5'      => 'H5',
-                    'h6'      => 'H6'
+					'h1'   => 'H1',
+					'h2'   => 'H2',
+					'h3'   => 'H3',
+					'h4'   => 'H4',
+					'h5'   => 'H5',
+					'h6'   => 'H6',
+					'div'  => 'div',
+					'span' => 'span',
+					'p'    => 'p'
                 ),
                 'default'   => 'h3'
             )

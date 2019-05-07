@@ -513,6 +513,77 @@ class Auxin_Customize_Select2_Multiple_Control extends Auxin_Customize_Control {
     }
 }
 
+/**
+ * Customize import options Control class.
+ */
+class Auxin_Customize_Import_Control extends Auxin_Customize_Control {
+    /**
+     * @access public
+     * @var string
+     */
+    public $type = 'auxin_import';
+
+
+
+    /**
+     * Don't render the control content from PHP, as it's rendered via JS on load.
+     */
+    public function render_content() {
+        $data_device = isset( $this->device ) ? 'data-device="' . esc_attr( $this->device ) . '"' : '';
+    ?>
+        <label <?php echo $data_device; ?>>
+            <?php if ( ! empty( $this->label ) ) : ?>
+                <span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
+            <?php endif;
+            if ( ! empty( $this->description ) ) : ?>
+                <span class="description customize-control-description"><?php echo $this->description; ?></span>
+            <?php endif; ?>
+        </label>
+        <form class="auxin-import-export-form" <?php echo $data_device; ?>>
+            <input type="file" id="auxin-select-import" accept=".txt">
+            <?php wp_nonce_field( 'auxin-import-control', 'auxin-import-nonce' ); ?>
+            <button class="button button-primary button-hero" id="auxin-import-data" type="submit"> <span><?php esc_html_e('Submit', 'phlox'); ?></span></button>
+        </form>
+        <hr />
+    <?php
+    }
+}
+
+/**
+ * Customize export options Control class.
+ */
+class Auxin_Customize_Export_Control extends Auxin_Customize_Control {
+    /**
+     * @access public
+     * @var string
+     */
+    public $type = 'auxin_export';
+
+
+
+    /**
+     * Don't render the control content from PHP, as it's rendered via JS on load.
+     */
+    public function render_content() {
+        $data_device = isset( $this->device ) ? 'data-device="' . esc_attr( $this->device ) . '"' : '';
+    ?>
+        <label <?php echo $data_device; ?>>
+            <?php if ( ! empty( $this->label ) ) : ?>
+                <span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
+            <?php endif;
+            if ( ! empty( $this->description ) ) : ?>
+                <span class="description customize-control-description"><?php echo $this->description; ?></span>
+            <?php endif; ?>
+        </label>
+        <form class="auxin-import-export-form" <?php echo $data_device; ?>>
+            <?php wp_nonce_field( 'auxin-export-control', 'auxin-export-nonce' ); ?>
+            <button class="button button-primary button-hero" id="auxin-export-data" type="submit"> <span><?php esc_html_e('Submit', 'phlox'); ?></span></button>
+        </form>
+        <hr />
+    <?php
+    }
+}
+
 
 /**
  *
@@ -1080,7 +1151,7 @@ class Auxin_Customize_Typography_Template_Part_Control extends Auxin_Customize_C
                 <li class="aux-option-item" data-value="1024" data-device="tablet"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-tablet.svg' ); ?>"></li>
                 <li class="aux-option-item" data-value="768" data-device="mobile"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-mobile.svg' ); ?>"></li>
             </ul>
-            <div class="aux-control aux-control-has-unit" data-type="slider" data-default="" data-name="font-size"> 
+            <div class="aux-control aux-control-has-unit" data-type="slider" data-default="" data-name="font-size">
                 <ul class="aux-units" data-default="px">
                     <li class="aux-option-item" data-value="px">PX</li>
                     <li class="aux-option-item" data-value="em">EM</li>
@@ -1166,7 +1237,7 @@ class Auxin_Customize_Typography_Template_Part_Control extends Auxin_Customize_C
                 <li class="aux-option-item" data-value="1024" data-device="tablet"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-tablet.svg' ); ?>"></li>
                 <li class="aux-option-item" data-value="768" data-device="mobile"><img src="<?php echo esc_url( AUXIN_URL . 'images/visual-select/aux-oc-mobile.svg' ); ?>"></li>
             </ul>
-            <div class="aux-control aux-control-has-unit" data-type="slider" data-default="" data-name="letter-spacing"> 
+            <div class="aux-control aux-control-has-unit" data-type="slider" data-default="" data-name="letter-spacing">
                 <ul class="aux-units" data-default="px">
                     <li class="aux-option-item" data-value="px">PX</li>
                     <li class="aux-option-item" data-value="em">EM</li>
@@ -1210,7 +1281,7 @@ class Auxin_Customize_Typography_Controller extends Auxin_Customize_Control {
         $this->statuses = '';
         parent::__construct( $manager, $id, $args );
     }
-    
+
     /**
      * Refresh the parameters passed to the JavaScript via JSON.
      */
@@ -1219,7 +1290,7 @@ class Auxin_Customize_Typography_Controller extends Auxin_Customize_Control {
         $this->json['statuses'] = $this->statuses;
         $this->json['defaultValue'] = $this->setting->default;
     }
-    
+
     /**
      * Don't render the control content from PHP, as it's rendered via JS on load.f
      */

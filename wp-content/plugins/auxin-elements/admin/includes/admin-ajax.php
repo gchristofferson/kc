@@ -281,3 +281,114 @@ function auxin_ajax_upgrader(){
     $handler->run( $_POST['key'], $_POST['type'] );
 }
 add_action( 'wp_ajax_auxin_start_upgrading', 'auxin_ajax_upgrader' );
+
+
+/**
+ * wordpress ajax for auxin customizer export
+ *
+ * @return json
+ */
+function auxin_customizer_export(){
+
+    if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'auxin-export-control' ) ) {
+		wp_send_json_error( __( 'Token Error.', 'auxin-elements' ) );
+    }
+
+    // Get theme options
+    $theme_options = auxin_options();
+
+    // Get theme mods
+    $theme_mods = get_theme_mods();
+    $filters    = array( 0, 'nav_menu_locations', 'custom_css_post_id', 'last_checked_version' );
+    foreach ( $filters as $filter ) {
+        if ( isset( $theme_mods[ $filter ] ) ) {
+            unset( $theme_mods[ $filter ] );
+        }
+    }
+
+    if( empty( $theme_options ) && empty( $theme_mods ) ){
+        wp_send_json_error( __( 'No data found!', 'auxin-elements' ) );
+    }
+
+    $b64_content = base64_encode( maybe_serialize( array(
+        'theme_options' => $theme_options,
+        'theme_mods'    => $theme_mods
+    ) ) );
+
+    wp_send_json_success( array(
+        'content'  => $b64_content,
+        'fileName' => THEME_ID . '_export_' . current_time('timestamp') . '.txt'
+    ) );
+
+}
+add_action( 'wp_ajax_auxin_customizer_export', 'auxin_customizer_export' );
+
+
+/**
+ * wordpress ajax for auxin customizer import
+ *
+ * @return json
+ */
+function auxin_customizer_import(){
+    // Check security
+    if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'auxin-import-control' ) ) {
+		wp_send_json_error( __( 'Token Error.', 'auxin-elements' ) );
+    }
+
+    // Check input file
+    if ( ! isset( $_FILES['file'] ) || 0 < $_FILES['file']['error'] ) {
+        wp_send_json_error( __( 'Please upload a valid file.', 'auxin-elements' ) );
+    }
+
+    // Get and decode file content
+    global $wp_filesystem;
+    if ( empty($wp_filesystem) ) {
+        require_once( ABSPATH . '/wp-admin/includes/file.php' );
+        WP_Filesystem();
+    }
+    $json_content  = $wp_filesystem->get_contents( $_FILES['file']['tmp_name'] );
+    $array_content = maybe_unserialize( base64_decode( $json_content ) );
+
+    // Check array empty
+    if ( empty( $array_content ) || ! is_array( $array_content ) ) {
+        wp_send_json_error( __( 'Invalid or Empty Data.', 'auxin-elements' ) );
+    }
+
+    if( isset( $array_content['theme_options'] ) ){
+        // Get image options names
+        $get_options    = auxin_get_defined_options();
+        $custom_images  = array();
+        foreach ( $get_options['fields'] as $key => $value ) {
+            if ( ! array_search(  'image', $value ) ) {
+                continue;
+            }
+            $custom_images[]   = $value['id'];
+        }
+        // Update options
+        foreach ( $array_content['theme_options'] as $auxin_key => $auxin_value ) {
+            if ( in_array( $auxin_key, $custom_images ) && ! empty( $auxin_value ) ) {
+                continue;
+            }
+            // Update exclusive auxin options
+            auxin_update_option( $auxin_key , $auxin_value );
+        }
+    }
+
+    if( isset( $array_content['theme_mods'] ) ){
+        foreach ( $array_content['theme_mods'] as $theme_mods_key => $theme_mods_value ) {
+            // Start theme mods loop:
+            if( $theme_mods_key === 'custom_logo' ) {
+                continue;
+            }
+            // Update theme mods
+            set_theme_mod( $theme_mods_key , $theme_mods_value );
+        }
+    }
+
+    // force to flush dynamic asset files
+    delete_transient( 'auxin_' . AUXELS_SLUG . '_version' );
+
+    wp_send_json_success( __( 'Successfully Imported.', 'auxin-elements' ) );
+
+}
+add_action( 'wp_ajax_auxin_customizer_import', 'auxin_customizer_import' );

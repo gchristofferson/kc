@@ -4,7 +4,7 @@ Tags: one-column, two-columns, three-columns, left-sidebar, right-sidebar, grid-
 Requires PHP: 5.4
 Requires at least: 4.6
 Tested up to: 5.1.1
-Stable tag: 2.4.1
+Stable tag: 2.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,6 +92,13 @@ Phlox bundles the following third-party resources:
 
 
 == Changelog ==
+
+
+= 2.4.2 =
+* Released: 05.05.2019
+- [New]: Export and import options added to customizer.
+- [Improvement]: Improvements in accordion element.
+
 
 = 2.4.1 =
 * Released: 30.04.2019

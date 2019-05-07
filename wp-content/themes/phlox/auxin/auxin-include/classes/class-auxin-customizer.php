@@ -157,10 +157,7 @@ class Auxin_Customizer{
      * @return array   The list of exclude options
      */
     public function exclude_types(){
-        return apply_filters( 'auxin_customizer_excludes_types', array(
-            'import',
-            'export'
-        ) );
+        return apply_filters( 'auxin_customizer_excludes_types', array() );
     }
 
     /**
@@ -331,10 +328,10 @@ class Auxin_Customizer{
                     continue;
                 }
 
-                
+
                 if( in_array( $field['type'], $this->special_types() )) {
                     $field['category'] = 'special';
-                } else {    
+                } else {
                     $field['category'] = 'general';
                 }
 
@@ -620,6 +617,16 @@ class Auxin_Customizer{
             case 'link':
                 $control_args['type'] = 'auxin_link';
                 $control_type_class = 'Auxin_Customize_Link_Control';
+                break;
+
+            case 'import':
+                $control_args['type'] = 'auxin_import';
+                $control_type_class = 'Auxin_Customize_Import_Control';
+                break;
+
+            case 'export':
+                $control_args['type'] = 'auxin_export';
+                $control_type_class = 'Auxin_Customize_Export_Control';
                 break;
 
             case 'code':

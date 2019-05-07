@@ -506,7 +506,7 @@ function auxin_add_theme_options_in_plugin( $fields_sections_list ){
 
     $fields_sections_list['fields'][] = array(
         'title'         => __('Google Analytics Code', 'auxin-elements'),
-        'description'   => sprintf( __('You can %s set up Analytics tracking %s and add the tracking ID here.', 'auxin-elements'), 
+        'description'   => sprintf( __('You can %s set up Analytics tracking %s and add the tracking ID here.', 'auxin-elements'),
         '<a href="https://support.google.com/analytics/answer/1008080" target="_blank">',
         '</a>' ),
         'id'            => 'auxin_user_google_analytics',
@@ -1678,6 +1678,39 @@ function auxin_add_theme_options_in_plugin( $fields_sections_list ){
         'type'       => 'text',
     );
 
+    // Sub section - Custom Search -------------------------------
+
+    $fields_sections_list['sections'][] = array(
+        'id'            => 'tools-section-import-export',
+        'parent'        => 'tools-section', // section parent's id
+        'title'         => __( 'Import/Export', 'auxin-elements' ),
+        'description'   => __( 'Import or Export options', 'auxin-elements' )
+    );
+
+
+    //--------------------------------
+
+    $fields_sections_list['fields'][] = array(
+        'title'       => __( 'Export Data', 'auxin-elements' ),
+        'description' => __( 'Your theme options code which you can import later.', 'auxin-elements' ),
+        'id'         => 'auxin_customizer_export',
+        'section'    => 'tools-section-import-export',
+        'dependency' => array(),
+        'transport'  => 'postMessage',
+        'default'    => '',
+        'type'       => 'export',
+    );
+
+    $fields_sections_list['fields'][] = array(
+        'title'       => __( 'Import Data', 'auxin-elements' ),
+        'description' => __( 'Paste the exported theme options code to import into theme.', 'auxin-elements' ),
+        'id'         => 'auxin_customizer_import',
+        'section'    => 'tools-section-import-export',
+        'dependency' => array(),
+        'transport'  => 'postMessage',
+        'default'    => '',
+        'type'       => 'import',
+    );
 
     return $fields_sections_list;
 }
@@ -1717,7 +1750,7 @@ function auxin_ele_add_theme_options_to_js_file( $js ){
     $js['theme_options_custom'] = auxin_get_option( 'auxin_user_custom_js' );
 
     $js['theme_options_google_marketing'] = auxin_get_option( 'auxin_user_google_marketing' );
-    
+
     // @deprecated in version 2.5.0
     unset( $js['theme_options_google_analytics'] );
 
@@ -2286,16 +2319,16 @@ function auxels_add_blog_archive_custom_template_layouts( $result, $template_typ
 
     // get template type id
     $post_loadmore_type = auxin_get_option( 'post_index_loadmore_type', '' );
-    // get the length of content 
+    // get the length of content
     $excerpt_len = esc_attr( auxin_get_option( 'blog_content_on_listing_length' ) );
 
     // default value for showing info
     $show_post_info = $show_post_date = $show_post_author = $show_post_categories = true;
-    
+
     // Use taxonomy template option if is category or tag archive page
 
     if( is_category() || is_tag() ){
-        $author_or_readmore      = auxin_get_option( 'display_post_taxonomy_author_readmore', 'readmore'); 
+        $author_or_readmore      = auxin_get_option( 'display_post_taxonomy_author_readmore', 'readmore');
         $post_loadmore_type      = auxin_get_option( 'post_taxonomy_loadmore_type', '' );
         $excerpt_len             = auxin_get_option( 'post_taxonomy_archive_on_listing_length', '' );
         $show_post_info          = auxin_get_option( 'display_post_taxonomy_info', true );
@@ -2305,7 +2338,7 @@ function auxels_add_blog_archive_custom_template_layouts( $result, $template_typ
         $display_comments        = auxin_get_option( 'display_post_taxonomy_widget_comments', true);
         $display_author_header   = auxin_get_option( 'display_post_taxonomy_author_header', true);
         $display_author_footer   = auxin_get_option( 'display_post_taxonomy_author_footer', false);
-        
+
     } elseif ( auxin_is_blog() ) {
         $author_or_readmore      = auxin_get_option( 'blog_display_author_readmore', 'readmore');
         $display_author_header   = auxin_get_option( 'blog_display_author_header', true);
@@ -2901,11 +2934,11 @@ function auxin_override_inner_body_sections(){
     if( auxin_is_true( auxin_get_option( 'site_header_override_template', '0' ) ) ) {
         remove_action( 'auxin_after_inner_body_open', 'auxin_the_top_header_section', 4 );
         remove_action( 'auxin_after_inner_body_open', 'auxin_the_main_header_section', 4 );
-        add_action( 'auxin_after_inner_body_open', 'auxin_get_header_template', 4 );        
+        add_action( 'auxin_after_inner_body_open', 'auxin_get_header_template', 4 );
     }
     if( auxin_is_true( auxin_get_option( 'site_footer_override_template', '0' ) ) ) {
         remove_action( 'auxin_before_the_footer', 'auxin_the_site_footer' );
-        add_action( 'auxin_before_the_footer', 'auxin_get_footer_template' );        
+        add_action( 'auxin_before_the_footer', 'auxin_get_footer_template' );
     }
 }
 add_action( 'wp_loaded', 'auxin_override_inner_body_sections' );

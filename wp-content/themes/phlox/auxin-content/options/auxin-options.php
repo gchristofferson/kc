@@ -9838,53 +9838,6 @@ function auxin_define_options_info( $fields_sections_list ){
         'icon'        => 'axicon-tools'
     );
 
-    // Sub section - Import in Tools -------------------------------
-
-    $sections[] = array(
-        'id'          => 'tools-section-import',
-        'parent'      => 'tools-section', // section parent's id
-        'title'       => __( 'Import Theme Options', 'phlox' ),
-        'description' => __( 'Import Theme Options', 'phlox' ),
-        'add_to'      => 'option_panel'
-    );
-
-    $options[] = array(
-        'title'       => __( 'Theme options code', 'phlox' ),
-        'description' => 'Paste the exported theme options code to import into theme.',
-        'id'          => 'auxin_import_options',
-        'section'     => 'tools-section-import',
-        'dependency'  => array(),
-        'default'     => '',
-        'type'        => 'import',
-        'add_to'      => 'option_panel'
-    );
-
-
-
-
-
-
-    // Sub section - Export in Tools -------------------------------
-
-    $sections[] = array(
-        'id'          => 'tools-section-export',
-        'parent'      => 'tools-section', // section parent's id
-        'title'       => __( 'Export Theme Options', 'phlox' ),
-        'description' => __( 'Export Theme Options', 'phlox' ),
-        'add_to'      => 'option_panel'
-    );
-
-    $options[] = array(
-        'title'       => __( 'Export Theme Options', 'phlox' ),
-        'description' => __( 'Your theme options code which you can import later.', 'phlox' ),
-        'id'          => 'auxin_export_options',
-        'section'     => 'tools-section-export',
-        'dependency'  => array(),
-        'default'     => '',
-        'type'        => 'export',
-        'add_to'      => 'option_panel'
-    );
-
     // Sub section - Go to top options -------------------------------
 
     $sections[] = array(

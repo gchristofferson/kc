@@ -1,9 +1,9 @@
 # Averta Copyright (c) {2019}
 msgid ""
 msgstr ""
-"Project-Id-Version: Phlox 2.4.1\n"
+"Project-Id-Version: Phlox 2.4.2\n"
 "Report-Msgid-Bugs-To: http://averta.net/phlox/wordpress-theme/\n"
-"POT-Creation-Date: 2019-04-30 05:27:09+00:00\n"
+"POT-Creation-Date: 2019-05-05 04:57:35+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -126,9 +126,15 @@ msgid "The description"
 msgstr ""
 
 #: auxin/auxin-include/classes/class-auxin-customize-control.php:123
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:542
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:577
 #: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:126
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:545
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:580
 #: build/phlox/comments.php:86
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:126
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:545
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:580
 #: build/phlox-pro/comments.php:86 comments.php:83
 msgid "Submit"
 msgstr ""
@@ -145,66 +151,66 @@ msgstr ""
 msgid "Choose .."
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:682
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:685
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:685
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:753
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:756
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:756
 msgid "Add File"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:683
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:686
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:686
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:754
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:757
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:757
 msgid "Change File"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:684
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:686
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:687
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:689
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:687
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:689
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:755
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:757
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:758
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:760
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:758
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:760
 msgid "Select File"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:685
-#: auxin/auxin-include/classes/class-auxin-customizer.php:501
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:756
+#: auxin/auxin-include/classes/class-auxin-customizer.php:498
 #: auxin-content/admin/metaboxes/exclude/metabox-fields-product-image.php:36
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:688
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:501
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:688
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:494
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:759
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:498
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:759
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:491
 msgid "Remove"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:687
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:690
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:690
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:758
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:761
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:761
 msgid "Choose File"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1064
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1067
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1067
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1135
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1138
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1138
 msgid "Family"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1074
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1077
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1077
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1145
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1148
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1148
 msgid "Size"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1090
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1093
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1093
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1161
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1164
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1164
 msgid "Weight"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1094
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1111
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1123
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1134
-#: auxin/auxin-include/classes/class-auxin-customizer.php:502
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1165
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1182
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1194
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1205
+#: auxin/auxin-include/classes/class-auxin-customizer.php:499
 #: auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:49
 #: auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:318
 #: auxin-content/admin/metaboxes/metabox-fields-post-content-setting.php:50
@@ -213,11 +219,11 @@ msgstr ""
 #: auxin-content/options/auxin-options.php:4622
 #: auxin-content/options/auxin-options.php:5774
 #: auxin-content/options/auxin-options.php:8034
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1097
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1114
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1126
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1137
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:502
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1168
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1185
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1197
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1208
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:499
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:52
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:321
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-post-content-setting.php:53
@@ -226,11 +232,11 @@ msgstr ""
 #: build/phlox/auxin-content/options/auxin-options.php:4157
 #: build/phlox/auxin-content/options/auxin-options.php:5309
 #: build/phlox/auxin-content/options/auxin-options.php:7544
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1097
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1114
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1126
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1137
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:495
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1168
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1185
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1197
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1208
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:492
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:52
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:321
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-post-content-setting.php:53
@@ -242,107 +248,107 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1102
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1115
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1124
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1173
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1186
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1195
 #: auxin-content/admin/metaboxes/exclude/metabox-fields-portfolio-display.php:66
 #: auxin-content/options/auxin-options.php:2257
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1105
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1118
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1127
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1176
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1189
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1198
 #: build/phlox/auxin-content/options/auxin-options.php:1985
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1105
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1118
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1127
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1176
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1189
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1198
 #: build/phlox-pro/auxin-content/options/auxin-options.php:1985
 msgid "Normal"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1103
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1174
 #: auxin/auxin-include/compatibility/go-pricing.php:464
 #: auxin/auxin-include/compatibility/go-pricing.php:547
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1106
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1177
 #: build/phlox/auxin/auxin-include/compatibility/go-pricing.php:464
 #: build/phlox/auxin/auxin-include/compatibility/go-pricing.php:547
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1106
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1177
 #: build/phlox-pro/auxin/auxin-include/compatibility/go-pricing.php:464
 #: build/phlox-pro/auxin/auxin-include/compatibility/go-pricing.php:547
 msgid "Bold"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1107
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1110
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1110
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1178
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1181
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1181
 msgid "Transform"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1112
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1115
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1115
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1183
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1186
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1186
 msgid "Uppercase"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1113
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1116
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1116
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1184
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1187
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1187
 msgid "Lowercase"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1114
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1117
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1117
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1185
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1188
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1188
 msgid "Capitalize"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1119
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1122
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1122
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1190
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1193
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1193
 msgid "Style"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1125
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1196
 #: auxin/auxin-include/compatibility/go-pricing.php:464
 #: auxin/auxin-include/compatibility/go-pricing.php:547
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1128
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1199
 #: build/phlox/auxin/auxin-include/compatibility/go-pricing.php:464
 #: build/phlox/auxin/auxin-include/compatibility/go-pricing.php:547
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1128
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1199
 #: build/phlox-pro/auxin/auxin-include/compatibility/go-pricing.php:464
 #: build/phlox-pro/auxin/auxin-include/compatibility/go-pricing.php:547
 msgid "Italic"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1126
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1129
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1129
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1197
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1200
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1200
 msgid "Oblique"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1130
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1133
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1133
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1201
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1204
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1204
 msgid "Decoration"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1135
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1138
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1138
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1206
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1209
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1209
 msgid "Underline"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1136
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1139
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1139
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1207
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1210
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1210
 msgid "Overline"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1137
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1140
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1140
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1208
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1211
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1211
 msgid "Line Through"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1138
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1209
 #: auxin/auxin-include/classes/class-auxin-metabox-view.php:786
 #: auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:361
 #: auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:705
@@ -358,7 +364,7 @@ msgstr ""
 #: auxin-content/options/auxin-options.php:7659
 #: auxin-content/options/auxin-options.php:8361
 #: auxin-content/options/auxin-options.php:8759
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1141
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1212
 #: build/phlox/auxin/auxin-include/classes/class-auxin-metabox-view.php:789
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:364
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:708
@@ -374,7 +380,7 @@ msgstr ""
 #: build/phlox/auxin-content/options/auxin-options.php:7169
 #: build/phlox/auxin-content/options/auxin-options.php:7871
 #: build/phlox/auxin-content/options/auxin-options.php:8269
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1141
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1212
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-metabox-view.php:789
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:364
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:708
@@ -393,31 +399,31 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1143
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1146
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1146
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1214
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1217
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1217
 msgid "Line Height"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1160
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1163
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1163
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1231
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1234
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1234
 msgid "Letter Spacing"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1380
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1451
 #: auxin/auxin-include/classes/class-auxin-master-nav-menu.php:69
 #: auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:319
 #: auxin-content/options/auxin-options.php:745
 #: auxin-content/options/auxin-options.php:4902
 #: auxin-content/options/auxin-options.php:8314
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1383
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1454
 #: build/phlox/auxin/auxin-include/classes/class-auxin-master-nav-menu.php:72
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:322
 #: build/phlox/auxin-content/options/auxin-options.php:681
 #: build/phlox/auxin-content/options/auxin-options.php:4437
 #: build/phlox/auxin-content/options/auxin-options.php:7824
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1383
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1454
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-master-nav-menu.php:72
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:322
 #: build/phlox-pro/auxin-content/options/auxin-options.php:681
@@ -426,46 +432,46 @@ msgstr ""
 msgid "Top"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1381
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1452
 #: auxin/auxin-include/classes/class-auxin-master-nav-menu.php:68
 #: auxin-content/admin/metaboxes/metabox-fields-general-layout.php:158
 #: auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:648
 #: auxin-content/options/auxin-options.php:5283
 #: auxin-content/options/auxin-options.php:6441
 #: auxin-content/options/auxin-options.php:8693
-#: auxin-content/options/auxin-options.php:11359
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1384
+#: auxin-content/options/auxin-options.php:11312
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1455
 #: build/phlox/auxin/auxin-include/classes/class-auxin-master-nav-menu.php:71
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-general-layout.php:161
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:651
 #: build/phlox/auxin-content/options/auxin-options.php:4818
 #: build/phlox/auxin-content/options/auxin-options.php:5976
 #: build/phlox/auxin-content/options/auxin-options.php:8203
-#: build/phlox/auxin-content/options/auxin-options.php:9948
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1384
+#: build/phlox/auxin-content/options/auxin-options.php:9901
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1455
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-master-nav-menu.php:71
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-general-layout.php:161
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:651
 #: build/phlox-pro/auxin-content/options/auxin-options.php:4818
 #: build/phlox-pro/auxin-content/options/auxin-options.php:5976
 #: build/phlox-pro/auxin-content/options/auxin-options.php:8203
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9948
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9901
 msgid "Right"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1382
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1453
 #: auxin/auxin-include/classes/class-auxin-master-nav-menu.php:70
 #: auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:321
 #: auxin-content/options/auxin-options.php:746
 #: auxin-content/options/auxin-options.php:4904
 #: auxin-content/options/auxin-options.php:8316
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1385
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1456
 #: build/phlox/auxin/auxin-include/classes/class-auxin-master-nav-menu.php:73
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:324
 #: build/phlox/auxin-content/options/auxin-options.php:682
 #: build/phlox/auxin-content/options/auxin-options.php:4439
 #: build/phlox/auxin-content/options/auxin-options.php:7826
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1385
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1456
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-master-nav-menu.php:73
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:324
 #: build/phlox-pro/auxin-content/options/auxin-options.php:682
@@ -474,7 +480,7 @@ msgstr ""
 msgid "Bottom"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customize-control.php:1383
+#: auxin/auxin-include/classes/class-auxin-customize-control.php:1454
 #: auxin/auxin-include/classes/class-auxin-master-nav-menu.php:67
 #: auxin-content/admin/metaboxes/metabox-fields-general-layout.php:156
 #: auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:640
@@ -484,8 +490,8 @@ msgstr ""
 #: auxin-content/options/auxin-options.php:5749
 #: auxin-content/options/auxin-options.php:6437
 #: auxin-content/options/auxin-options.php:8685
-#: auxin-content/options/auxin-options.php:11351
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1386
+#: auxin-content/options/auxin-options.php:11304
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customize-control.php:1457
 #: build/phlox/auxin/auxin-include/classes/class-auxin-master-nav-menu.php:70
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-general-layout.php:159
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:643
@@ -495,8 +501,8 @@ msgstr ""
 #: build/phlox/auxin-content/options/auxin-options.php:5284
 #: build/phlox/auxin-content/options/auxin-options.php:5972
 #: build/phlox/auxin-content/options/auxin-options.php:8195
-#: build/phlox/auxin-content/options/auxin-options.php:9940
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1386
+#: build/phlox/auxin-content/options/auxin-options.php:9893
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customize-control.php:1457
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-master-nav-menu.php:70
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-general-layout.php:159
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:643
@@ -506,7 +512,7 @@ msgstr ""
 #: build/phlox-pro/auxin-content/options/auxin-options.php:5284
 #: build/phlox-pro/auxin-content/options/auxin-options.php:5972
 #: build/phlox-pro/auxin-content/options/auxin-options.php:8195
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9940
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9893
 msgid "Left"
 msgstr ""
 
@@ -528,14 +534,47 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customizer.php:229
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:231
+#: auxin/auxin-include/classes/class-auxin-customizer.php:226
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:228
 msgid "More Customization"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customizer.php:231
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:233
+#: auxin/auxin-include/classes/class-auxin-customizer.php:228
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:230
 msgid "Go Pro"
+msgstr ""
+
+#: auxin/auxin-include/classes/class-auxin-customizer.php:470
+#: auxin/auxin-include/classes/class-auxin-customizer.php:485
+#: auxin/auxin-include/classes/class-auxin-metabox-view.php:537
+#: auxin/auxin-include/classes/class-auxin-metabox-view.php:567
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:470
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:485
+#: build/phlox/auxin/auxin-include/classes/class-auxin-metabox-view.php:540
+#: build/phlox/auxin/auxin-include/classes/class-auxin-metabox-view.php:570
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:463
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:478
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-metabox-view.php:540
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-metabox-view.php:570
+msgid "Add Image"
+msgstr ""
+
+#: auxin/auxin-include/classes/class-auxin-customizer.php:471
+#: auxin/auxin-include/classes/class-auxin-customizer.php:486
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:471
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:486
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:464
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:479
+msgid "Change Image"
+msgstr ""
+
+#: auxin/auxin-include/classes/class-auxin-customizer.php:472
+#: auxin/auxin-include/classes/class-auxin-customizer.php:487
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:472
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:487
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:465
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:480
+msgid "Submit Image"
 msgstr ""
 
 #: auxin/auxin-include/classes/class-auxin-customizer.php:473
@@ -550,7 +589,7 @@ msgstr ""
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:481
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-metabox-view.php:540
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-metabox-view.php:570
-msgid "Add Image"
+msgid "Select Image"
 msgstr ""
 
 #: auxin/auxin-include/classes/class-auxin-customizer.php:474
@@ -559,67 +598,55 @@ msgstr ""
 #: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:489
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:467
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:482
-msgid "Change Image"
-msgstr ""
-
-#: auxin/auxin-include/classes/class-auxin-customizer.php:475
-#: auxin/auxin-include/classes/class-auxin-customizer.php:490
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:475
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:490
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:468
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:483
-msgid "Submit Image"
-msgstr ""
-
-#: auxin/auxin-include/classes/class-auxin-customizer.php:476
-#: auxin/auxin-include/classes/class-auxin-customizer.php:491
-#: auxin/auxin-include/classes/class-auxin-metabox-view.php:537
-#: auxin/auxin-include/classes/class-auxin-metabox-view.php:567
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:476
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:491
-#: build/phlox/auxin/auxin-include/classes/class-auxin-metabox-view.php:540
-#: build/phlox/auxin/auxin-include/classes/class-auxin-metabox-view.php:570
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:469
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:484
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-metabox-view.php:540
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-metabox-view.php:570
-msgid "Select Image"
-msgstr ""
-
-#: auxin/auxin-include/classes/class-auxin-customizer.php:477
-#: auxin/auxin-include/classes/class-auxin-customizer.php:492
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:477
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:492
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:470
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:485
 msgid "Choose Image"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customizer.php:499
-#: auxin/auxin-include/classes/class-auxin-customizer.php:504
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:499
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:504
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:492
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:497
+#: auxin/auxin-include/classes/class-auxin-customizer.php:496
+#: auxin/auxin-include/classes/class-auxin-customizer.php:501
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:496
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:501
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:489
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:494
 msgid "Select image"
+msgstr ""
+
+#: auxin/auxin-include/classes/class-auxin-customizer.php:497
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:497
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:490
+msgid "Change image"
 msgstr ""
 
 #: auxin/auxin-include/classes/class-auxin-customizer.php:500
 #: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:500
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:493
-msgid "Change image"
-msgstr ""
-
-#: auxin/auxin-include/classes/class-auxin-customizer.php:503
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:503
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:496
 msgid "No image selected"
 msgstr ""
 
-#: auxin/auxin-include/classes/class-auxin-customizer.php:505
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:505
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:498
+#: auxin/auxin-include/classes/class-auxin-customizer.php:502
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:502
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:495
 msgid "Choose image"
+msgstr ""
+
+#: auxin/auxin-include/classes/class-auxin-customizer.php:513
+#: auxin/auxin-include/classes/class-auxin-metabox-view.php:598
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:513
+#: build/phlox/auxin/auxin-include/classes/class-auxin-metabox-view.php:601
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:506
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-metabox-view.php:601
+msgid "Add Audio"
+msgstr ""
+
+#: auxin/auxin-include/classes/class-auxin-customizer.php:514
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:514
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:507
+msgid "Change Audio"
+msgstr ""
+
+#: auxin/auxin-include/classes/class-auxin-customizer.php:515
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:515
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:508
+msgid "Submit Audio"
 msgstr ""
 
 #: auxin/auxin-include/classes/class-auxin-customizer.php:516
@@ -628,34 +655,34 @@ msgstr ""
 #: build/phlox/auxin/auxin-include/classes/class-auxin-metabox-view.php:601
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:509
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-metabox-view.php:601
-msgid "Add Audio"
+msgid "Select Audio"
 msgstr ""
 
 #: auxin/auxin-include/classes/class-auxin-customizer.php:517
 #: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:517
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:510
-msgid "Change Audio"
-msgstr ""
-
-#: auxin/auxin-include/classes/class-auxin-customizer.php:518
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:518
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:511
-msgid "Submit Audio"
-msgstr ""
-
-#: auxin/auxin-include/classes/class-auxin-customizer.php:519
-#: auxin/auxin-include/classes/class-auxin-metabox-view.php:598
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:519
-#: build/phlox/auxin/auxin-include/classes/class-auxin-metabox-view.php:601
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:512
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-metabox-view.php:601
-msgid "Select Audio"
-msgstr ""
-
-#: auxin/auxin-include/classes/class-auxin-customizer.php:520
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:520
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:513
 msgid "Choose Audio"
+msgstr ""
+
+#: auxin/auxin-include/classes/class-auxin-customizer.php:528
+#: auxin/auxin-include/classes/class-auxin-metabox-view.php:629
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:528
+#: build/phlox/auxin/auxin-include/classes/class-auxin-metabox-view.php:632
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:521
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-metabox-view.php:632
+msgid "Add Video"
+msgstr ""
+
+#: auxin/auxin-include/classes/class-auxin-customizer.php:529
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:529
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:522
+msgid "Change Video"
+msgstr ""
+
+#: auxin/auxin-include/classes/class-auxin-customizer.php:530
+#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:530
+#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:523
+msgid "Submit Video"
 msgstr ""
 
 #: auxin/auxin-include/classes/class-auxin-customizer.php:531
@@ -664,33 +691,12 @@ msgstr ""
 #: build/phlox/auxin/auxin-include/classes/class-auxin-metabox-view.php:632
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:524
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-metabox-view.php:632
-msgid "Add Video"
+msgid "Select Video"
 msgstr ""
 
 #: auxin/auxin-include/classes/class-auxin-customizer.php:532
 #: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:532
 #: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:525
-msgid "Change Video"
-msgstr ""
-
-#: auxin/auxin-include/classes/class-auxin-customizer.php:533
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:533
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:526
-msgid "Submit Video"
-msgstr ""
-
-#: auxin/auxin-include/classes/class-auxin-customizer.php:534
-#: auxin/auxin-include/classes/class-auxin-metabox-view.php:629
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:534
-#: build/phlox/auxin/auxin-include/classes/class-auxin-metabox-view.php:632
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:527
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-metabox-view.php:632
-msgid "Select Video"
-msgstr ""
-
-#: auxin/auxin-include/classes/class-auxin-customizer.php:535
-#: build/phlox/auxin/auxin-include/classes/class-auxin-customizer.php:535
-#: build/phlox-pro/auxin/auxin-include/classes/class-auxin-customizer.php:528
 msgid "Choose Video"
 msgstr ""
 
@@ -1992,6 +1998,29 @@ msgstr ""
 msgid "Terms Not Found"
 msgstr ""
 
+#: auxin/auxin-include/include/functions.php:2789
+#: build/phlox/auxin/auxin-include/include/functions.php:2736
+#: build/phlox-pro/auxin/auxin-include/include/functions.php:2736
+msgid "Search..."
+msgstr ""
+
+#: auxin/auxin-include/include/functions.php:2789
+#: build/phlox/auxin/auxin-include/include/functions.php:2736
+#: build/phlox-pro/auxin/auxin-include/include/functions.php:2736
+msgid "Type here.."
+msgstr ""
+
+#: auxin/auxin-include/include/functions.php:2795
+#: auxin/auxin-include/include/functions.php:2798
+#: build/phlox/auxin/auxin-include/include/functions.php:2742
+#: build/phlox/auxin/auxin-include/include/functions.php:2745
+#: build/phlox/searchform.php:13
+#: build/phlox-pro/auxin/auxin-include/include/functions.php:2742
+#: build/phlox-pro/auxin/auxin-include/include/functions.php:2745
+#: build/phlox-pro/searchform.php:13 searchform.php:10
+msgid "Search"
+msgstr ""
+
 #: auxin/auxin-include/include/hooks-admin.php:110
 #: build/phlox/auxin/auxin-include/include/hooks-admin.php:70
 #: build/phlox-pro/auxin/auxin-include/include/hooks-admin.php:106
@@ -2446,29 +2475,6 @@ msgstr ""
 #: build/phlox/auxin/auxin-include/include/templates/templates-header.php:1286
 #: build/phlox-pro/auxin/auxin-include/include/templates/templates-header.php:1286
 msgid "Shopping Cart"
-msgstr ""
-
-#: auxin/auxin-include/include/templates/templates-header.php:1782
-#: build/phlox/auxin/auxin-include/include/templates/templates-header.php:1727
-#: build/phlox-pro/auxin/auxin-include/include/templates/templates-header.php:1727
-msgid "Search..."
-msgstr ""
-
-#: auxin/auxin-include/include/templates/templates-header.php:1782
-#: build/phlox/auxin/auxin-include/include/templates/templates-header.php:1727
-#: build/phlox-pro/auxin/auxin-include/include/templates/templates-header.php:1727
-msgid "Type here.."
-msgstr ""
-
-#: auxin/auxin-include/include/templates/templates-header.php:1788
-#: auxin/auxin-include/include/templates/templates-header.php:1791
-#: build/phlox/auxin/auxin-include/include/templates/templates-header.php:1733
-#: build/phlox/auxin/auxin-include/include/templates/templates-header.php:1736
-#: build/phlox/searchform.php:13
-#: build/phlox-pro/auxin/auxin-include/include/templates/templates-header.php:1733
-#: build/phlox-pro/auxin/auxin-include/include/templates/templates-header.php:1736
-#: build/phlox-pro/searchform.php:13 searchform.php:10
-msgid "Search"
 msgstr ""
 
 #: auxin/auxin-include/include/templates/templates-post.php:20
@@ -4081,29 +4087,29 @@ msgid "Display go to top button"
 msgstr ""
 
 #: auxin-content/admin/metaboxes/metabox-fields-general-layout.php:132
-#: auxin-content/options/auxin-options.php:11310
+#: auxin-content/options/auxin-options.php:11263
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-general-layout.php:135
-#: build/phlox/auxin-content/options/auxin-options.php:9899
+#: build/phlox/auxin-content/options/auxin-options.php:9852
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-general-layout.php:135
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9899
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9852
 msgid "Enable it to display Go to Top button."
 msgstr ""
 
 #: auxin-content/admin/metaboxes/metabox-fields-general-layout.php:144
-#: auxin-content/options/auxin-options.php:11339
+#: auxin-content/options/auxin-options.php:11292
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-general-layout.php:147
-#: build/phlox/auxin-content/options/auxin-options.php:9928
+#: build/phlox/auxin-content/options/auxin-options.php:9881
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-general-layout.php:147
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9928
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9881
 msgid "Go to top button position"
 msgstr ""
 
 #: auxin-content/admin/metaboxes/metabox-fields-general-layout.php:145
-#: auxin-content/options/auxin-options.php:11340
+#: auxin-content/options/auxin-options.php:11293
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-general-layout.php:148
-#: build/phlox/auxin-content/options/auxin-options.php:9929
+#: build/phlox/auxin-content/options/auxin-options.php:9882
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-general-layout.php:148
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9929
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9882
 msgid "Specifies the position of Go to Top button."
 msgstr ""
 
@@ -4115,7 +4121,7 @@ msgstr ""
 #: auxin-content/options/auxin-options.php:5753
 #: auxin-content/options/auxin-options.php:6433
 #: auxin-content/options/auxin-options.php:8689
-#: auxin-content/options/auxin-options.php:11355
+#: auxin-content/options/auxin-options.php:11308
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-general-layout.php:160
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:647
 #: build/phlox/auxin-content/admin/metaboxes/metabox-fields-post-content-setting.php:61
@@ -4124,7 +4130,7 @@ msgstr ""
 #: build/phlox/auxin-content/options/auxin-options.php:5288
 #: build/phlox/auxin-content/options/auxin-options.php:5968
 #: build/phlox/auxin-content/options/auxin-options.php:8199
-#: build/phlox/auxin-content/options/auxin-options.php:9944
+#: build/phlox/auxin-content/options/auxin-options.php:9897
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-general-layout.php:160
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-general-title-setting.php:647
 #: build/phlox-pro/auxin-content/admin/metaboxes/metabox-fields-post-content-setting.php:61
@@ -4133,7 +4139,7 @@ msgstr ""
 #: build/phlox-pro/auxin-content/options/auxin-options.php:5288
 #: build/phlox-pro/auxin-content/options/auxin-options.php:5968
 #: build/phlox-pro/auxin-content/options/auxin-options.php:8199
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9944
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9897
 msgid "Center"
 msgstr ""
 
@@ -10473,105 +10479,72 @@ msgid "Extras"
 msgstr ""
 
 #: auxin-content/options/auxin-options.php:11257
-#: auxin-content/options/auxin-options.php:11258
 #: build/phlox/auxin-content/options/auxin-options.php:9846
-#: build/phlox/auxin-content/options/auxin-options.php:9847
 #: build/phlox-pro/auxin-content/options/auxin-options.php:9846
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9847
-msgid "Import Theme Options"
-msgstr ""
-
-#: auxin-content/options/auxin-options.php:11263
-#: build/phlox/auxin-content/options/auxin-options.php:9852
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9852
-msgid "Theme options code"
-msgstr ""
-
-#: auxin-content/options/auxin-options.php:11283
-#: auxin-content/options/auxin-options.php:11284
-#: auxin-content/options/auxin-options.php:11289
-#: build/phlox/auxin-content/options/auxin-options.php:9872
-#: build/phlox/auxin-content/options/auxin-options.php:9873
-#: build/phlox/auxin-content/options/auxin-options.php:9878
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9872
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9873
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9878
-msgid "Export Theme Options"
-msgstr ""
-
-#: auxin-content/options/auxin-options.php:11290
-#: build/phlox/auxin-content/options/auxin-options.php:9879
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9879
-msgid "Your theme options code which you can import later."
-msgstr ""
-
-#: auxin-content/options/auxin-options.php:11304
-#: build/phlox/auxin-content/options/auxin-options.php:9893
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9893
 msgid "Go to Top Button "
 msgstr ""
 
-#: auxin-content/options/auxin-options.php:11305
-#: build/phlox/auxin-content/options/auxin-options.php:9894
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9894
+#: auxin-content/options/auxin-options.php:11258
+#: build/phlox/auxin-content/options/auxin-options.php:9847
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9847
 msgid "Go to Top Button Options"
 msgstr ""
 
-#: auxin-content/options/auxin-options.php:11309
-#: build/phlox/auxin-content/options/auxin-options.php:9898
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9898
+#: auxin-content/options/auxin-options.php:11262
+#: build/phlox/auxin-content/options/auxin-options.php:9851
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9851
 msgid "Display Go to top button"
 msgstr ""
 
-#: auxin-content/options/auxin-options.php:11321
-#: build/phlox/auxin-content/options/auxin-options.php:9910
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9910
+#: auxin-content/options/auxin-options.php:11274
+#: build/phlox/auxin-content/options/auxin-options.php:9863
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9863
 msgid "Animate scroll"
 msgstr ""
 
-#: auxin-content/options/auxin-options.php:11322
-#: build/phlox/auxin-content/options/auxin-options.php:9911
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9911
+#: auxin-content/options/auxin-options.php:11275
+#: build/phlox/auxin-content/options/auxin-options.php:9864
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9864
 msgid ""
 "Specifies whether animate or instantly go to top of page, when goto top "
 "button clicks."
 msgstr ""
 
-#: auxin-content/options/auxin-options.php:11375
-#: build/phlox/auxin-content/options/auxin-options.php:9964
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9964
+#: auxin-content/options/auxin-options.php:11328
+#: build/phlox/auxin-content/options/auxin-options.php:9917
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9917
 msgid "Performance"
 msgstr ""
 
-#: auxin-content/options/auxin-options.php:11376
-#: build/phlox/auxin-content/options/auxin-options.php:9965
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9965
+#: auxin-content/options/auxin-options.php:11329
+#: build/phlox/auxin-content/options/auxin-options.php:9918
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9918
 msgid "Performance Options"
 msgstr ""
 
-#: auxin-content/options/auxin-options.php:11380
-#: build/phlox/auxin-content/options/auxin-options.php:9969
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9969
+#: auxin-content/options/auxin-options.php:11333
+#: build/phlox/auxin-content/options/auxin-options.php:9922
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9922
 msgid "Enable image preload preview"
 msgstr ""
 
-#: auxin-content/options/auxin-options.php:11381
-#: build/phlox/auxin-content/options/auxin-options.php:9970
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9970
+#: auxin-content/options/auxin-options.php:11334
+#: build/phlox/auxin-content/options/auxin-options.php:9923
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9923
 msgid ""
 "Specifies whether to preload images in order to reduce page loading time or "
 "load them normally."
 msgstr ""
 
-#: auxin-content/options/auxin-options.php:11392
-#: build/phlox/auxin-content/options/auxin-options.php:9981
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9981
+#: auxin-content/options/auxin-options.php:11345
+#: build/phlox/auxin-content/options/auxin-options.php:9934
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9934
 msgid "Image preload transition duration"
 msgstr ""
 
-#: auxin-content/options/auxin-options.php:11393
-#: build/phlox/auxin-content/options/auxin-options.php:9982
-#: build/phlox-pro/auxin-content/options/auxin-options.php:9982
+#: auxin-content/options/auxin-options.php:11346
+#: build/phlox/auxin-content/options/auxin-options.php:9935
+#: build/phlox-pro/auxin-content/options/auxin-options.php:9935
 msgid ""
 "Specifies the duration of blur fade transition (in milliseconds) when an "
 "image completely loaded."

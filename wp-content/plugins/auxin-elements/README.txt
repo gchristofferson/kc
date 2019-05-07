@@ -7,7 +7,7 @@ Tags: phlox, gallery, elementor, siteorigin, auxin, averta, auxin-elements, fram
 Requires PHP: 5.4
 Requires at least: 4.6
 Tested up to: 5.1.1
-Stable tag: 2.4.1
+Stable tag: 2.4.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -40,6 +40,7 @@ This plugin adds plenty of premium functionalities to Phlox theme, such as one-c
 * Sticky Footer
 * Fully Responsive
 * Cross Browser IE8+ and Other Modern Browsers
+
 
 = Some demo sites by Phlox theme =
 * [Minimal Portfolio](http://demo.phlox.pro/portfolio-minimal/?utm_source=wporg-auxin-elements&utm_medium=wporg&utm_campaign=wporg-profile&utm_term=25)
@@ -153,6 +154,10 @@ Bugs can be reported in our [support forums](http://support.averta.net/en/item/p
 
 
 == Changelog ==
+
+= Version 2.4.2 / 05.05.2019) =
+- [New]: Export and import options added to customizer.
+- [Improvement]: Improvements in accordion element.
 
 = Version 2.4.1 / 30.04.2019) =
 - [Fix]: An issue with importing some menu labels fixed.

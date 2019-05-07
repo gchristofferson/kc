@@ -63,6 +63,11 @@ class Auxin_Upgrader_Plugin extends Plugin_Upgrader {
             $this->update_current++;
             $this->skin->plugin_info = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin, false, true);
 
+            // Fix VC issue with auto update
+            if( $plugin === 'js_composer/js_composer.php' ) {
+                add_filter( 'upgrader_pre_download',  '__return_false', 9999);
+            }
+
             if ( !isset( $this->update_list->response[ $plugin ] ) ) {
                 $this->skin->set_result('up_to_date');
                 $this->skin->before();

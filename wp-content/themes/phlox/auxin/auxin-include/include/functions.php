@@ -2698,3 +2698,57 @@ function auxin_filter_output( $args, $type, $align, $classname = null, $sort_arg
 
 
 }
+
+/**
+ * Returns markup for search box
+ *
+ * @param  array  $args the search params
+ *
+ * @return string       Markupp for search box
+ */
+function auxin_get_search_box( $args = array() ){
+
+    $defaults = array(
+        'id'                => '',
+        'has_toggle_icon'   => true,
+        'has_field'         => true,
+        'has_submit'        => true,
+        'has_form'          => true,
+        'has_submit_icon'   => false, // this option added for changing submit type
+        'css_class'         => '',
+        'toggle_icon_class' => '',
+        'icon_classname'    => 'auxicon-search-4'
+    );
+
+    $args = wp_parse_args( $args, $defaults );
+    $id_attr = !empty( $args['id']) ? 'id="' . esc_attr( $args['id'] ) . '"' : '';
+
+ob_start();
+?>
+    <div <?php echo esc_attr( $id_attr ); ?> class="aux-search-section <?php echo esc_attr( $args[ 'css_class' ] ); ?>">
+    <?php if( $args['has_toggle_icon'] ){ ?>
+        <button class="aux-search-icon  <?php echo esc_attr( $args[ 'icon_classname' ] ); ?> <?php echo esc_attr( $args[ 'toggle_icon_class' ] ); ?> "></button>
+    <?php } ?>
+    <?php if( $args['has_form'] ){ ?>
+        <div <?php  ?> class="aux-search-form <?php echo $args['has_submit_icon'] ? 'aux-iconic-search' : '' ?>">
+            <form action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get" >
+            <?php if( $args['has_field'] ){
+                $placeholder  = $args['has_submit_icon'] ? __('Search...', 'phlox') : __('Type here..', 'phlox');
+            ?>
+                <input type="text" class="aux-search-field"  placeholder="<?php echo esc_attr( $placeholder ); ?>" name="s" />
+            <?php } ?>
+            <?php if( $args['has_submit_icon'] ){ ?>
+                <div class="aux-submit-icon-container <?php echo esc_attr( $args[ 'icon_classname' ] ); ?> ">
+                    <input type="submit" class="aux-iconic-search-submit" value="<?php esc_attr_e( 'Search', 'phlox' ); ?>" >
+                </div>
+            <?php } elseif( $args['has_submit'] ){ ?>
+                <input type="submit" class="aux-black aux-search-submit aux-uppercase" value="<?php esc_attr_e( 'Search', 'phlox' ); ?>" >
+            <?php } ?>
+            </form>
+        </div><!-- end searchform -->
+    <?php } ?>
+    </div>
+
+<?php
+    return ob_get_clean();
+}

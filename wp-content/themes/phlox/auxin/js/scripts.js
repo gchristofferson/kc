@@ -1,4 +1,4 @@
-/*! Auxin WordPress Framework - v2.4.1 - 2019-04-30
+/*! Auxin WordPress Framework - v2.4.2 - 2019-05-05
  *  Scripts for initializing admin plugins 
 
  *  http://averta.net
@@ -813,7 +813,7 @@
 
         function auxin_embed_controller_styles ( prefix, controlID, cssValue ) {
             var optionName = prefix + controlID.split('_control')[0];
-            
+
             if ( ! Object.hasOwnProperty.call( wp.customize.previewer, 'preview' ) ) {
                 return;
             }
@@ -832,7 +832,7 @@
 
         function auxin_embed_fonts_url ( fontsList ) {
             if ( fontsList.length ) {
-                
+
                 if ( ! Object.hasOwnProperty.call( wp.customize.previewer, 'preview' ) ) {
                     return;
                 }
@@ -846,7 +846,7 @@
                         var LinkTag = document.createElement( 'link' );
                         LinkTag.rel = 'stylesheet';
                         LinkTag.href = font;
-                        iframeHead.appendChild( LinkTag );    
+                        iframeHead.appendChild( LinkTag );
                     }
                 });
             } else {
@@ -864,8 +864,8 @@
                     var control = this,
                         input = this.container.eq(0).find('.aux-typo-controller-input')[0],
                         container = this.container.eq(0).find('.aux-typo-controller-container')[0]
-                        
-                    OptionControls.inputAdapter( input, container, 
+
+                    OptionControls.inputAdapter( input, container,
                         function( optionControl ){ // for onchange
                             auxin_embed_controller_styles('auxin-customizer-css-', control.id, optionControl.toCSS() );
                             auxin_embed_fonts_url( optionControl.getFonts() ) ;
@@ -897,7 +897,7 @@
                         input = this.container.eq(0).find('.aux-slider-controller-input')[0],
                         container = this.container.eq(0).find('.aux-slider-controller-container')[0];
 
-                    OptionControls.inputAdapter( input, container, 
+                    OptionControls.inputAdapter( input, container,
                         function( optionControl ){ // for onchange
                             auxin_embed_controller_styles('auxin-customizer-css-', control.id, optionControl.generateCSS() );
                         },
@@ -927,7 +927,7 @@
                         input = this.container.eq(0).find('.aux-dimension-controller-input')[0],
                         container = this.container.eq(0).find('.aux-dimension-controller-container')[0];
 
-                    OptionControls.inputAdapter( input, container, 
+                    OptionControls.inputAdapter( input, container,
                         function( optionControl ){ // for onchange
                             auxin_embed_controller_styles('auxin-customizer-css-', control.id, optionControl.generateCSS() );
                         },
@@ -1379,6 +1379,101 @@
             });
         }
 
+        // export
+        // =====================================================================
+
+        if( wp.customize ){
+
+            wp.customize.controlConstructor['auxin_export'] = wp.customize.AuxinControl.extend({
+
+                ready: function() {
+                    // call superclass
+                    wp.customize.AuxinControl.prototype.ready.apply( this, arguments );
+
+                    var control = this;
+                    control.picker = this.container.find( 'form' );
+
+                    control.picker.on( 'submit', function(e) {
+                        e.preventDefault();
+                        var $this = $(this),
+                        $button = $this.find('button').addClass('aux-button-loading');
+
+                        $.ajax({
+                            url : auxin.ajaxurl,
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                nonce: $this.find('#auxin-export-nonce').val(),
+                                action: 'auxin_customizer_export' // the ajax handler
+                            },
+                            success: function( response ) {
+                                $button.removeClass('aux-button-loading');
+                                if ( response.success ) {
+                                    var element = document.createElement('a');
+                                    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(response.data.content));
+                                    element.setAttribute('download', response.data.fileName);
+                                    element.style.display = 'none';
+                                    document.body.appendChild(element);
+                                    element.click();
+                                    document.body.removeChild(element);
+                                }
+                            }
+                        });
+                    });
+                }
+
+            });
+        }
+
+
+        // import
+        // =====================================================================
+
+        if( wp.customize ){
+
+            wp.customize.controlConstructor['auxin_import'] = wp.customize.AuxinControl.extend({
+
+                ready: function() {
+                    // call superclass
+                    wp.customize.AuxinControl.prototype.ready.apply( this, arguments );
+
+                    var control = this;
+                    control.picker = this.container.find( 'form' );
+
+                    control.picker.on( 'submit', function(e) {
+                        e.preventDefault();
+                        var $this = $(this),
+                        $button = $this.find('button').addClass('aux-button-loading');
+
+                        var data = new FormData();
+                        data.append('file', $this.find('#auxin-select-import').prop('files')[0]);
+                        data.append('action', 'auxin_customizer_import');
+                        data.append('nonce', $this.find('#auxin-import-nonce').val());
+
+                        $.ajax({
+                            url : auxin.ajaxurl,
+                            type: 'POST',
+                            dataType: 'json',
+                            processData: false,
+                            contentType: false,
+                            data: data,
+                            success: function( response ) {
+                                $button.removeClass('aux-button-loading');
+                                if ( response.success ) {
+                                    setTimeout(function(){
+                                        location.reload();
+                                    }, 1000);
+                                }
+                            }
+                        });
+                    });
+
+                }
+
+            });
+        }
+
+
         // select
         // =====================================================================
 
@@ -1637,7 +1732,7 @@
                 $('.aux-format-tab').hide();
                 get_format_section( format ).show();
             }
-        } 
+        }
         // Fix gutenberg issue
         if( typeof wp.blocks !== "undefined" ){
             var lastFormat = '';
@@ -1651,7 +1746,7 @@
             format = format.replace('post-format-', '');
             return $('.axi-metabox-container .tabs .aux-tab-post-' + format );
         }
-    
+
         if( $format_select_buttons.length ){
 
             var $format_tabs = $('.aux-format-tab'),

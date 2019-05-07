@@ -672,6 +672,17 @@ body.wp-admin #wpwrap #qm { margin-left: 160px !important; }
 --------------------------------- */
 .so-panels-dialog.so-panels-dialog-add-widget .widget-type-list .widget-type .widget-icon.aux-element { color: #ff6962; margin-top: 0; }
 
+/* Spinner button
+--------------------------------- */
+.aux-button-loading { position: relative; }
+.aux-button-loading:after { content: ''; position: absolute; left: 50%; top: 50%; -webkit-transform: translateX(-50%) translateY(-50%); -ms-transform: translateX(-50%) translateY(-50%); transform: translateX(-50%) translateY(-50%); width: 20px; height: 20px; background-image: url(images/welcome/loader.svg); background-repeat: no-repeat; }
+.aux-button-loading:before { visibility: hidden; }
+.aux-button-loading > span { visibility: hidden; }
+.aux-button-loading.aux-button-success { background: #00BA26 !important; }
+.aux-button-loading.aux-button-success:after { background-image: url(images/welcome/success.svg); }
+.aux-button-loading.aux-button-error { background: #FF5858 !important; }
+.aux-button-loading.aux-button-error:after { background-image: url(images/welcome/warning.svg); width: 3px; height: 17px; }
+
 /*!===================== _elements._css ============================*/
 /** Colors map */
 /* @TODO:mj colors variable imported here since we only need it on button element options in backend */
@@ -1059,6 +1070,10 @@ body.wp-admin #wpwrap #qm { margin-left: 160px !important; }
 .aux-controller-template .aux-control:not(:last-child) { margin-bottom: 20px; }
 .aux-controller-template .aux-control[data-type='responsive'] label { display: inline-block; margin-bottom: 0; font-size: 12px; line-height: normal; font-weight: 400; }
 
+/*  Import/Exporter Style */
+.auxin-import-export-form { text-align: center; }
+.auxin-import-export-form .button { width: 90%; margin: 10px 0 !important; }
+
 /*!===================== _metabox-tab.scss =========================*/
 [id*="axi_meta_hub"] .inside { padding: 0; margin: 0 !important; }
 
@@ -1320,14 +1335,6 @@ body.wp-admin #wpwrap #qm { margin-left: 160px !important; }
 .auxin-wizard-panel .aux-welcome-page-templates .aux-isotope-filters .aux-isotope-search-wrapper { width: 16%; }
 .auxin-wizard-panel .aux-welcome-page-templates .aux-isotope-filters .aux-isotope-search-wrapper > input { width: 100%; border: 1px solid #CBCBCB; padding: 6px 17px; border-radius: 37px; }
 .auxin-wizard-panel .aux-welcome-page-templates .aux-isotope-filters .aux-iso-hidden { display: none; }
-.auxin-wizard-panel .aux-button-loading { position: relative; }
-.auxin-wizard-panel .aux-button-loading:after { content: ''; position: absolute; left: 50%; top: 50%; -webkit-transform: translateX(-50%) translateY(-50%); -ms-transform: translateX(-50%) translateY(-50%); transform: translateX(-50%) translateY(-50%); width: 20px; height: 20px; background-image: url(images/welcome/loader.svg); background-repeat: no-repeat; }
-.auxin-wizard-panel .aux-button-loading:before { visibility: hidden; }
-.auxin-wizard-panel .aux-button-loading > span { visibility: hidden; }
-.auxin-wizard-panel .aux-button-loading.aux-button-success { background: #00BA26 !important; }
-.auxin-wizard-panel .aux-button-loading.aux-button-success:after { background-image: url(images/welcome/success.svg); }
-.auxin-wizard-panel .aux-button-loading.aux-button-error { background: #FF5858 !important; }
-.auxin-wizard-panel .aux-button-loading.aux-button-error:after { background-image: url(images/welcome/warning.svg); width: 3px; height: 17px; }
 .auxin-wizard-panel .aux-template-lightbox { padding: 20px 30px; background: #FFFFFF; border-radius: 7px; min-width: 450px; text-align: center; box-shadow: 0 3px 35px rgba(0, 0, 0, 0.16); }
 .auxin-wizard-panel .aux-template-lightbox h3 { font-size: 22px; font-weight: 600; line-height: 30px; margin: 20px 0 6px; }
 .auxin-wizard-panel .aux-template-lightbox h3.aux-loading-title { margin: 0 0 25px; }

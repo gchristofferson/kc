@@ -196,7 +196,7 @@ function auxin_widget_accordion_callback( $atts, $shortcode_content = null ){
             );
             $output .= sprintf( '<div %s><p>%s</p></div>',
                 auxin_make_html_attributes( $content_attrs ),
-                trim( $value['content'], '<p></p>' )
+                preg_replace('/<p[^>]*>(.*)<\/p[^>]*>/i', '$1', $value['content'])
             );
 
             $output .= '</section>';
