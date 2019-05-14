@@ -42,8 +42,9 @@ if (!class_exists('Foobox_Free')) {
 			$this->init( FOOBOXFREE_FILE, FOOBOXFREE_SLUG, FOOBOX_BASE_VERSION, 'FooBox FREE' );
 
 			if (is_admin()) {
+				//enqueue FooBox assets in the admin if necessary
+				add_action('admin_enqueue_scripts', array($this, 'admin_enqueue'), 20);
 
-				add_action('admin_head', array($this, 'admin_inline_content'));
 				add_action('foobox-free-settings_custom_type_render', array($this, 'custom_admin_settings_render'));
 				new FooBox_Free_Settings();
 
@@ -58,7 +59,6 @@ if (!class_exists('Foobox_Free')) {
 
 				// Render JS to the front-end pages
 				add_action('wp_enqueue_scripts', array($this, 'frontend_print_scripts'), 20);
-				add_action('foobox-free_inline_scripts', array($this, 'inline_dynamic_js'));
 
 				// Render CSS to the front-end pages
 				add_action('wp_enqueue_scripts', array($this, 'frontend_print_styles'));
@@ -72,14 +72,8 @@ if (!class_exists('Foobox_Free')) {
 		}
 
 		function enqueue_block_editor_assets() {
-			$this->admin_print_scripts();
-			$this->admin_print_styles();
-			$script = $this->generate_javascript();
-
-			wp_add_inline_script(
-				'foobox-free-min',
-				$script
-			);
+			$this->frontend_print_scripts();
+			$this->frontend_print_styles();
 		}
 
 		function custom_admin_settings_render($args = array()) {
@@ -123,20 +117,13 @@ if (!class_exists('Foobox_Free')) {
 			require_once FOOBOXFREE_PATH . "includes/upgrade.php";
 		}
 
-		function admin_print_styles() {
-			parent::admin_print_styles();
-			$this->frontend_print_styles();
-		}
+		function admin_enqueue() {
+			$screen_id = foo_current_screen_id();
 
-		function admin_print_scripts() {
-			parent::admin_print_scripts();
-			$this->register_and_enqueue_js( self::JS );
-		}
-
-		function admin_inline_content() {
-			if ( 'toplevel_page_' . FOOBOX_BASE_SLUG === foo_current_screen_id() ||
-				 'foobox_page_' . FOOBOX_BASE_PAGE_SLUG_SETTINGS === foo_current_screen_id() ) {
-				$this->inline_dynamic_js();
+			if ( 'toplevel_page_' . FOOBOX_BASE_SLUG === $screen_id ||
+				 'foobox_page_' . FOOBOX_BASE_PAGE_SLUG_SETTINGS === $screen_id ) {
+				$this->frontend_print_scripts();
+				$this->frontend_print_styles();
 			}
 		}
 
@@ -164,40 +151,9 @@ if (!class_exists('Foobox_Free')) {
 
 			wp_add_inline_script(
 				'foobox-free-min',
-				$foobox_js
+				$foobox_js,
+				'before'
 			);
-		}
-
-		function inline_dynamic_js() {
-			if (!apply_filters('foobox_enqueue_scripts', true)) return;
-
-			$foobox_js = $this->generate_javascript();
-
-			$defer_js = !$this->is_option_checked( 'disable_defer_js', true );
-
-			$script_type = $defer_js ? 'text/foobox' : 'text/javascript';
-
-			echo '<script type="' . $script_type . '">' . $foobox_js . '</script>';
-
-			if ( $defer_js ) {
-				?>
-				<script type="text/javascript">
-					if (window.addEventListener){
-						window.addEventListener("DOMContentLoaded", function() {
-							var arr = document.querySelectorAll("script[type='text/foobox']");
-							for (var x = 0; x < arr.length; x++) {
-								var script = document.createElement("script");
-								script.type = "text/javascript";
-								script.innerHTML = arr[x].innerHTML;
-								arr[x].parentNode.replaceChild(script, arr[x]);
-							}
-						});
-					} else {
-						console.log("FooBox does not support the current browser.");
-					}
-				</script>
-				<?php
-			}
 		}
 
 		/**

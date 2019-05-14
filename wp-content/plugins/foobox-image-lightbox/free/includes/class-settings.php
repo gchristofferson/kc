@@ -136,14 +136,6 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 			);
 
 			$settings[] = array(
-				'id'      => 'disable_defer_js',
-				'title'   => __( 'Disable Defer Javascript', 'foobox' ),
-				'desc'    => __( 'By default, we defer running the FooBox javascript to work with most optimization plugins. You can choose to turn this off if there are problems.', 'foobox-image-lightbox' ),
-				'type'    => 'checkbox',
-				'tab'     => 'advanced'
-			);
-
-			$settings[] = array(
 				'id'      => 'dropie7support',
 				'title'   => __( 'Drop IE7 Support', 'foobox' ),
 				'desc'    => __( 'Drop support for IE7, which removes some CSS hacks to get things working in IE7. This also allows the FooBox CSS to pass CSS validation.', 'foobox-image-lightbox' ),

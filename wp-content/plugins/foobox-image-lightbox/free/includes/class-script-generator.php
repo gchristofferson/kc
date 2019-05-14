@@ -125,19 +125,10 @@ if ( !class_exists( 'FooBox_Free_Script_Generator' ) ) {
 
 			$info = $foobox->get_plugin_info();
 
-			$js = '/* Run FooBox FREE (v' . $info['version'] . ') */';
+			$seperator = $debug ? '",
+		"' : '", "';
 
-			$js_options = self::generate_js_options( $fbx_options );
-
-			if ( !empty($js_options) ) {
-				$js .= sprintf( '
-(function( FOOBOX, $, undefined ) {
-  FOOBOX.o = %s;
-  FOOBOX.init = function() {
-    $(".fbx-link").removeClass("fbx-link");
-', $js_options );
-				$js_options = 'FOOBOX.o';
-			}
+			$foobox_selectors = array();
 
 			if ( foo_check_plugin_settings_page( FOOBOXFREE_SLUG ) ) {
 				$foobox_selectors[] = '.demo-gallery,.bad-image';
@@ -168,35 +159,56 @@ if ( !class_exists( 'FooBox_Free_Script_Generator' ) ) {
 
 			$foobox_selectors[] = '.foobox';
 
-			if ( self::is_option_checked( $fbx_options, 'disable_others', false ) ) {
-				$js .= '    $(".fbx-link").unbind(".prettyphoto").unbind(".fb");
-';
+			$js_options = self::generate_js_options( $fbx_options );
+			$disable_others = self::is_option_checked( $fbx_options, 'disable_others', false );
+			$foobox_ready_event = apply_filters( 'foobox_generate_javascript_ready_event', true );
+			$preload_foobox_font = apply_filters( 'foobox_generate_javascript_preload_font', true );
+			if ( $debug ) {
+				$pre_js      = apply_filters( 'foobox_generate_javascript_pre', 'console.log("FooBox - Custom JavaScript (Pre)");' );
+				$post_js     = apply_filters( 'foobox_generate_javascript_post', 'console.log("FooBox - Custom JavaScript (Post)");' );
+				$captions_js = apply_filters( 'foobox_generate_javascript_captions', 'console.log("FooBox - Custom Captions Code");' );
+				$custom_js   = apply_filters( 'foobox_generate_javascript_custom', 'console.log("FooBox - Custom Extra JS");' );
+			} else {
+				$pre_js      = apply_filters( 'foobox_generate_javascript_pre', '' );
+				$post_js     = apply_filters( 'foobox_generate_javascript_post', '' );
+				$captions_js = apply_filters( 'foobox_generate_javascript_captions', '' );
+				$custom_js   = apply_filters( 'foobox_generate_javascript_custom', '' );
 			}
-
-			//output the call to foobox!
-			$seperator = $debug ? ',
-	' : ', ';
-
-			$js .= self::generate_javascript_call( '"' . implode($seperator, $foobox_selectors) . '"', $js_options );
-
-			$ready_event = 'FooBox.ready';
-
-			$preload = '
-  jQuery("body").append("<span aria-hidden=\"true\" class=\"foobox_font_preload\" style=\"font-family:\'foobox\'; color:transparent; position:absolute; top:-9999px; left: -9999px;\">f</span>");';
-
-			$js .= '
-  };
-})( window.FOOBOX = window.FOOBOX || {}, FooBox.$ );
-
-' . $ready_event . '(function() {
-' . $preload . '
-  FOOBOX.init();
-  jQuery(\'body\').on(\'post-load\', function(){ FOOBOX.init(); });
-';
-
-			$js .= '
-});
-';
+			$js = sprintf( '/* Run FooBox FREE (v%s) */
+var FOOBOX = window.FOOBOX = {
+	ready: %s,
+	preloadFont: %s,
+	disableOthers: %s,
+	o: %s,
+	selectors: [
+		%s
+	],
+	pre: function( $ ){
+		// Custom JavaScript (Pre)
+		%s
+	},
+	post: function( $ ){
+		// Custom JavaScript (Post)
+		%s
+		// Custom Captions Code
+		%s
+	},
+	custom: function( $ ){
+		// Custom Extra JS
+		%s
+	}
+};',
+				$info['version'],
+				$foobox_ready_event ? 'true' : 'false',
+				$preload_foobox_font ? 'true' : 'false',
+				$disable_others ? 'true' : 'false',
+				$js_options,
+				'"' . implode($seperator, $foobox_selectors) . '"',
+				$pre_js,
+				$post_js,
+				$captions_js,
+				$custom_js
+				);
 
 			return $js;
 		}
